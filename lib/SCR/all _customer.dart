@@ -45,10 +45,14 @@ class _All_CustomerState extends State<All_Customer> {
                   Positioned(
                       left: size.width * .05,
                       top: size.height * .05,
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                        size: 50,
+                      child: GestureDetector(onTap:(){
+                        Navigator.pop(context);
+                      } ,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 30,
+                        ),
                       )),
                   Positioned(top: size.height*.06,right: size.width*.02,
                     child: Container(height: 75,width: 75,

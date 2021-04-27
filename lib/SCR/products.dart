@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'cart.dart';
 
 class Products extends StatefulWidget {
   @override
@@ -11,7 +14,7 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    for (int i=0;i<10;i++){
+    for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
     return Scaffold(
@@ -32,7 +35,7 @@ class _ProductsState extends State<Products> {
                   ),
                   Positioned(
                       left: size.width * .1,
-                      top: size.height * .1,
+                      top: size.height * .12,
                       child: Text(
                         'Transaction',
                         style: TextStyle(
@@ -41,12 +44,48 @@ class _ProductsState extends State<Products> {
                             color: Colors.white),
                       )),
                   Positioned(
+                      right: size.width * .05,
+                      top: size.height * .05,
+                      child: Container(
+                          child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(onTap: (){
+                              Get.to(Cart());
+                            },
+                              child: Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('Product 3',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18)),
+                              Text('12 jd',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18)),
+                            ],
+                          ),
+                        ],
+                      ))),
+                  Positioned(
                       left: size.width * .05,
                       top: size.height * .05,
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                        size: 50,
+                      child: GestureDetector(onTap:(){
+                        Navigator.pop(context);
+                      } ,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 30,
+                        ),
                       ))
                 ],
               )),
@@ -277,7 +316,10 @@ class _ProductsState extends State<Products> {
                               },
                             );
                             AlertDialog alert = AlertDialog(
-                              title: Text("Promotion list",style: TextStyle(color: Colors.red),),
+                              title: Text(
+                                "Promotion list",
+                                style: TextStyle(color: Colors.red),
+                              ),
                               content: Container(
                                 height: size.height * .8,
                                 width: size.width * .8,
@@ -296,9 +338,17 @@ class _ProductsState extends State<Products> {
                               },
                             );
                           },
-                          child: Text(
-                            'Show All Promotion',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          child: Row(
+                            children: [
+                              Image.asset('assets/images/iso'),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Show All Promotion',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -645,61 +695,63 @@ class _ProductsState extends State<Products> {
   Widget AlirtItem() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container( padding: EdgeInsets.all(4), decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[100],
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[100].withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+      child: Container(
+        padding: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[100],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey[100].withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [    Text('369'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('369'),
                   Text('Promotion No'),
-
-
                 ],
               ),
-            )
-        ,   Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [ Text('bol 100+30'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('bol 100+30'),
                   Text('Promotion Name'),
-
-
                 ],
               ),
-        )
-            ,   Padding(
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [  Text('bol 100+30'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('bol 100+30'),
                   Text('Promotion Details'),
-
-
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('18-4-2021'),
+                  Text('16-4-2021'),
                 ],
               ),
             )
-
-            ,   Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [    Text('18-4-2021'),
-                  Text('16-4-2021'),
-
-
-                ],
-              ),
-            ) ],
+          ],
         ),
       ),
     );

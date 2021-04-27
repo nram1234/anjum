@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:anjum/SCR/login.dart';
 import 'package:get/get.dart';
 
+import 'SCR/Bill.dart';
 import 'SCR/all _customer.dart';
 import 'SCR/dashboard.dart';
 import 'SCR/home.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home: Login()//All_Customer()//Dashboard()//Login()// Home()//Products_Expand()//Products()//All_Customer()//,
+      home: Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 }

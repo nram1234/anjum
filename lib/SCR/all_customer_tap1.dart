@@ -26,7 +26,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
       padding: const EdgeInsets.all(8.0),
       child: Card(elevation: 8,
         child: Container(
-          height: size.height * .15,
+          height: size.height * .2,
           child: Row(mainAxisAlignment: MainAxisAlignment.end,
             children: [
 

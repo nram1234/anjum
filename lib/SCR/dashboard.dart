@@ -41,10 +41,14 @@ class _DashboardState extends State<Dashboard> {
                         Positioned(
                             left: size.width * .05,
                             top: size.height * .05,
-                            child: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                              size: 50,
+                            child: GestureDetector(onTap: (){
+                              Navigator.pop(context);
+                            },
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 30,
+                              ),
                             ))
                       ],
                     )),
