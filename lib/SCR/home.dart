@@ -63,15 +63,15 @@ class _HomeState extends State<Home> {
                       Container(
                         child: Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
+
+                              Image.asset('assets/images/van.png')  , Text(
                                 'Start of Journey',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Image.asset('assets/images/van.png')
                             ],
                           ),
                         ),
