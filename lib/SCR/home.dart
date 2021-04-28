@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                                 'Start of Journey',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,fontSize: 20),
                               ),
                             ],
                           ),
@@ -160,7 +160,7 @@ class _HomeState extends State<Home> {
                               child: Center(
                                 child: Row(
                                   children: [
-                                    Image.asset('assets/images/log.png',height: size.height*.05,width:size.height*.05,),
+                                    Image.asset('assets/images/log.png',height: size.height*.05,width:size.height*.05,color: Colors.green,),
                                     Text('logout')
                                   ],
                                 ),
