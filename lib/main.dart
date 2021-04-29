@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 
 import 'SCR/Bill.dart';
 import 'SCR/all _customer.dart';
+import 'SCR/cashpayment.dart';
 import 'SCR/dashboard.dart';
 import 'SCR/home.dart';
+import 'SCR/printer-1.dart';
 import 'SCR/products.dart';
 import 'SCR/products_Expand.dart';
 import 'Translation/Trans.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home: Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+      home:Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 }
