@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:anjum/SCR/login.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'SCR/Bill.dart';
 import 'SCR/all _customer.dart';
 import 'SCR/cashpayment.dart';
