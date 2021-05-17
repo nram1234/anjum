@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dashboard.dart';
 
@@ -28,6 +29,7 @@ class _CashPayState extends State<CashPay> {
   String dropdownValue1 = 'left';
   @override
   Widget build(BuildContext context) {
+     
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;

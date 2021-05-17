@@ -1,0 +1,10 @@
+final String sales_order_invoice_request_stock_items_tabelname='sales_order_invoice_request_stock_items';
+final String sales_order_invoice_request_stock_items_id='id';
+final String sales_order_invoice_request_stock_items_sales_order_request_id='sales_order_request_id';
+final String sales_order_invoice_request_stock_items_user_id="user_id";
+final String sales_order_invoice_request_stock_items_store_id='store_id';
+final String sales_order_invoice_request_stock_items_item_id='item_id';
+final String sales_order_invoice_request_stock_items_measurement_unit_id='measurement_unit_id';
+final String sales_order_invoice_request_stock_items_quantity='quantity';
+final String sales_order_invoice_request_stock_items_created_at='created_at';
+final String sales_order_invoice_request_stock_items_updated_at='updated_at';

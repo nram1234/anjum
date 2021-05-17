@@ -32,7 +32,8 @@ dependencies:
   get: ^3.22.2
   adobe_xd: ^1.1.0+1
   sqflite: ^2.0.0+3
-  path: ^1.8.0
+  path_provider:
+  permission_handler:
 
 
 dev_dependencies:
