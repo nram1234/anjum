@@ -43,6 +43,7 @@ Future<Database> get db async{
 
       await db.execute('''
 
+
 CREATE TABLE  $sales_order_request_details_tabelname  (
    $sales_order_request_details_id INTEGER NOT NULL,
    $sales_order_request_details_user_id INTEGER   NOT NULL,
