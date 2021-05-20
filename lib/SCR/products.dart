@@ -1,16 +1,21 @@
+import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/json/products_json.dart';
+import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'cart.dart';
 
-class Products extends StatefulWidget {
+class ProductsScr extends StatefulWidget {
   @override
-  _ProductsState createState() => _ProductsState();
+  _ProductsScrState createState() => _ProductsScrState();
 }
 
-class _ProductsState extends State<Products> {
+class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
-
+  AllNetworking _allNetworking = AllNetworking();
+  UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
+  int itemcount=0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -123,11 +128,16 @@ class _ProductsState extends State<Products> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: ListView.builder(
-                          itemCount: 100,
-                          itemBuilder: (context, pos) {
-                            return item(size: size);
-                          }),
+                      child: FutureBuilder<Products_json>(
+                        future: _allNetworking.products(employee_id: _userAndPermissions.user.customerId),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                              itemCount: snapshot.data.products.length,
+                              itemBuilder: (context, pos) {
+                                return item(size: size,);
+                              });
+                        }
+                      ),
                     ),
                     Row(
                       children: [
@@ -161,7 +171,8 @@ class _ProductsState extends State<Products> {
     ));
   }
 
-  Widget item({size}) {
+  Widget item({size,Products  products}) {
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -182,30 +193,36 @@ class _ProductsState extends State<Products> {
                       SizedBox(
                         height: 8,
                       ),
-                      Text('Safi  - corn oil 1 liter'),
+                      Text(products.itemNameEn),
                       SizedBox(
                         height: 4,
                       ),
                       Row(
                         children: [
-                          Text('Min Order : 2   box'),
+                          Text(products.minimumQuantity),
                         ],
                       ),
-                      Text('Price - 20.00 JD'),
+                      Text(products.itemCost),
                       //  Expanded(child: Container()),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            color: Colors.orange,
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                              child: Text(
-                                "+",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                          InkWell(onTap: (){
+                            setState(() {
+                              itemcount++;
+                            });
+                          },
+                            child: Container(
+                              color: Colors.orange,
+                              height: 30,
+                              width: 30,
+                              child: Center(
+                                child: Text(
+                                  "+",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
                               ),
                             ),
                           ),
@@ -213,22 +230,31 @@ class _ProductsState extends State<Products> {
                             width: 20,
                           ),
                           Text(
-                            '5',
+                            itemcount.toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           SizedBox(
                             width: 20,
                           ),
-                          Container(
-                            color: Colors.orange,
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                              child: Text(
-                                "-",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                          InkWell(onTap: (){
+                            setState(() {
+
+                              if(itemcount>0){
+                                itemcount--;
+                              }
+                            });
+                          },
+                            child: Container(
+                              color: Colors.orange,
+                              height: 30,
+                              width: 30,
+                              child: Center(
+                                child: Text(
+                                  "-",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
                               ),
                             ),
                           ),
@@ -245,8 +271,8 @@ class _ProductsState extends State<Products> {
                   Container(
                     width: size.width * .3,
                     color: Colors.indigo,
-                    child: Image.asset(
-                      'assets/images/add.png',
+                    child: Image.network(
+                      products.image,
                       width: size.width,
                     ),
                   ),
@@ -272,8 +298,8 @@ class _ProductsState extends State<Products> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('item no:  12 '),
-                        Text('item name:  oil')
+                        Text(products.itemNumber),
+                        Text('item name:  ${products.itemNameEn}')
                       ],
                     ),
                   ),
@@ -281,7 +307,7 @@ class _ProductsState extends State<Products> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text('Item Price ::  12 '), Text('Tax:  16')],
+                      children: [Text('Item Price :${products.itemCost}'), Text('Tax:  ${products.tax}')],
                     ),
                   ),
                   Container(

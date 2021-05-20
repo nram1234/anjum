@@ -1,4 +1,7 @@
 import 'package:anjum/SCR/products.dart';
+import 'package:anjum/SCR/products_Expand.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +11,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final NetWorkController _controller = Get.put(NetWorkController());
+  UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -41,9 +46,10 @@ class _DashboardState extends State<Dashboard> {
                         Positioned(
                             left: size.width * .05,
                             top: size.height * .05,
-                            child: GestureDetector(onTap: (){
-                              Navigator.pop(context);
-                            },
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
                               child: Icon(
                                 Icons.arrow_forward,
                                 color: Colors.white,
@@ -70,96 +76,104 @@ class _DashboardState extends State<Dashboard> {
                             SizedBox(
                               height: size.height * .01,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.replay),
-                                    Text('Last data sync is 14/04/2021  12:90'),
-                                  ],
+                            if (_controller.connectionStatus.value)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.replay),
+                                      Text(
+                                          'Last data sync is 14/04/2021  12:90'),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
                             SizedBox(
                               height: size.height * .02,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            Wrap(
                               children: [
-                                item(
-                                    color: Colors.pink[200],
-                                    size: size,
-                                    name: 'Payment',
-                                    path: 'assets/images/payment.png'),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(Products());
-                                  },
+                               if(_userAndPermissions.permissions.payment=='yes')     Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: item(
+                                      color: Colors.pink[200],
+                                      size: size,
+                                      name: 'Payment',
+                                      path: 'assets/images/payment.png'),
+                                ),
+                                  Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(ProductsScr());
+                                    },
+                                    child: item(
+                                        color: Colors.orange[200],
+                                        size: size,
+                                        name: 'Sales Order',
+                                        path: 'assets/images/order.png'),
+                                  ),
+                                ),
+                                if(_userAndPermissions.permissions.returnInvoice=='yes')       Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(onTap:(){
+                                    Get.to(Products_Expand());
+                                  } ,
+                                    child: item(
+                                        color: Colors.pink[200],
+                                        size: size,
+                                        name: 'Return Invoice',
+                                        path: 'assets/images/returninvoice.png'),
+                                  ),
+                                ),
+                                if(_userAndPermissions.permissions.invoice=='yes')   Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: item(
+                                      color: Colors.purpleAccent[200],
+                                      size: size,
+                                      name: 'Invoice',
+                                      path: 'assets/images/invoice.png'),
+                                )
+
+
+                              ,
+                                Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: item(
+                                      color: Colors.purple[200],
+                                      size: size,
+                                      name: 'History',
+                                      path: 'assets/images/history.png'),
+                              ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: item(
+                                      color: Colors.lightGreen[200],
+                                      size: size,
+                                      name: 'SOA',
+                                      path: 'assets/images/soaa.png'),
+                                )
+
+                              ,
+                                if(_userAndPermissions.permissions.beforeAfterPhoto=='yes') Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: item(
+                                      color: Colors.green[200],
+                                      size: size,
+                                      name: 'Before/After',
+                                      path: 'assets/images/befor.png'),
+                              ),
+                                if(_userAndPermissions.permissions.takePhoto=='yes')     Padding(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: item(
                                       color: Colors.orange[200],
                                       size: size,
-                                      name: 'Sales Order',
-                                      path: 'assets/images/order.png'),
+                                      name: 'Photo',
+                                      path: 'assets/images/pic.png'),
                                 )
+
                               ],
-                            ),
-                            SizedBox(
-                              height: size.height * .02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                item(
-                                    color: Colors.pink[200],
-                                    size: size,
-                                    name: 'Return Invoice',
-                                    path: 'assets/images/returninvoice.png'),
-                                item(
-                                    color: Colors.purpleAccent[200],
-                                    size: size,
-                                    name: 'Invoice',
-                                    path: 'assets/images/invoice.png')
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * .02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                item(
-                                    color: Colors.purple[200],
-                                    size: size,
-                                    name: 'History',
-                                    path: 'assets/images/history.png'),
-                                item(
-                                    color: Colors.lightGreen[200],
-                                    size: size,
-                                    name: 'SOA',
-                                    path: 'assets/images/soaa.png')
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * .02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                item(
-                                    color: Colors.green[200],
-                                    size: size,
-                                    name: 'Before/After',
-                                    path: 'assets/images/befor.png'),
-                                item(
-                                    color: Colors.orange[200],
-                                    size: size,
-                                    name: 'Photo',
-                                    path: 'assets/images/pic.png')
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * .01,
                             ),
                           ],
                         ),
@@ -247,3 +261,42 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
+
+//
+//
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceAround,
+// children: [
+
+// ],
+// ),
+// SizedBox(
+// height: size.height * .02,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceAround,
+// children: [
+
+// ],
+// ),
+// SizedBox(
+// height: size.height * .02,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceAround,
+// children: [
+
+// ],
+// ),
+// SizedBox(
+// height: size.height * .02,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceAround,
+// children: [
+
+// ],
+// ),
+// SizedBox(
+// height: size.height * .01,
+// ),

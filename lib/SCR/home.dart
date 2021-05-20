@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'all _customer.dart';
+import 'dashboard.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -60,26 +64,30 @@ class _HomeState extends State<Home> {
                       SizedBox(
                         height: 8,
                       ),
-                      Container(
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
+                      InkWell(onTap: (){
+                               Get.to(All_Customer());
+                      },
+                        child: Container(
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
 
-                              Image.asset('assets/images/van.png')  , Text(
-                                'Start of Journey',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,fontSize: 20),
-                              ),
-                            ],
+                                Image.asset('assets/images/van.png')  , Text(
+                                  'Start of Journey',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,fontSize: 20),
+                                ),
+                              ],
+                            ),
                           ),
+                          width: size.width * .9,
+                          height: size.height * .08,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
                         ),
-                        width: size.width * .9,
-                        height: size.height * .08,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
                       ),
                       SizedBox(
                         height: size.height * .02,
@@ -158,9 +166,9 @@ class _HomeState extends State<Home> {
                               width: size.width * .64,
                               height: size.height * .2,
                               child: Center(
-                                child: Row(
+                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    Image.asset('assets/images/log.png',height: size.height*.05,width:size.height*.05,color: Colors.green,),
+                                    Image.asset('assets/images/log.png',height: size.height*.07,width:size.height*.07,color: Colors.green,),
                                     Text('logout')
                                   ],
                                 ),

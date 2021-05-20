@@ -12,6 +12,7 @@ import 'SCR/products.dart';
 import 'SCR/products_Expand.dart';
 import 'SCR/testscr.dart';
 import 'Translation/Trans.dart';
+import 'network/binding/network_binding.dart';
 void main() {
   runApp(MyApp());
 }
@@ -26,11 +27,12 @@ class MyApp extends StatelessWidget {
       translations: LocalizationService(),
       fallbackLocale: LocalizationService.fallbackLocale,debugShowCheckedModeBanner: false,
       title: 'Anjum',
+      initialBinding: NetWorkBinding(),
       theme: ThemeData(
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home:Tesst()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+      home:Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 
