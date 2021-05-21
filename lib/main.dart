@@ -12,6 +12,7 @@ import 'SCR/products.dart';
 import 'SCR/products_Expand.dart';
 import 'SCR/testscr.dart';
 import 'Translation/Trans.dart';
+
 import 'network/binding/network_binding.dart';
 void main() {
   runApp(MyApp());
