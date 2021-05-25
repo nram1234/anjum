@@ -5,7 +5,7 @@ class Customer_json {
 
   Customer_json.fromJson(Map<String, dynamic> json) {
     if (json['customers'] != null) {
-      customers = new List<Customers>();
+      customers = <Customers>[];
       json['customers'].forEach((v) {
         customers.add(new Customers.fromJson(v));
       });

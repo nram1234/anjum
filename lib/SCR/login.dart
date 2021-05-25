@@ -17,8 +17,8 @@ class _LoginState extends State<Login> {
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController url = TextEditingController();
-   UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
-  final NetWorkController _controller=Get.put(NetWorkController());
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+  final NetWorkController _controller = Get.put(NetWorkController());
   AllNetworking _allNetworking = AllNetworking();
 
   @override
@@ -193,16 +193,13 @@ class _LoginState extends State<Login> {
                                 user_name: name.text, password: password.text)
                             .then((value) {
                           if (value != null) {
+                            _userAndPermissions.setuser(value.user);
+                            _userAndPermissions
+                                .setPermissions(value.permissions);
 
-
-
-_userAndPermissions.setuser(value.user);
-_userAndPermissions.setPermissions(value.permissions);
-
-Get.to(Home());
+                            Get.to(Home());
                             return;
                           }
-
                         });
                         //     .catchError((e) {
                         //   print(e.toString());

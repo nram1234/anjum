@@ -5,6 +5,9 @@ import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'cashpayment.dart';
+import 'chequepay.dart';
+
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -95,6 +98,21 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             Wrap(
                               children: [
+                                if (_userAndPermissions.permissions.order ==
+                                    'yes')
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.to(ProductsScr());
+                                      },
+                                      child: item(
+                                          color: Colors.orange[200],
+                                          size: size,
+                                          name: 'Sales Order',
+                                          path: 'assets/images/order.png'),
+                                    ),
+                                  ),
                                 if (_userAndPermissions.permissions.payment ==
                                     'yes')
                                   InkWell(
@@ -106,24 +124,91 @@ class _DashboardState extends State<Dashboard> {
                                           child: Column(
                                             children: [
                                               Text('Select Payment Method'),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
                                               Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceAround,
+                                                    MainAxisAlignment
+                                                        .spaceAround,
                                                 children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          10),
+                                                  InkWell(onTap: (){
+                                                    Get.to(CashPay());
+
+                                                  },
+                                                    child: Container(
+                                                      padding: EdgeInsets.all(4),
+                                                      width: size.width * .4,
+                                                      height: 60,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                11.0),
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                          width: 1.0,
+                                                          color: const Color(
+                                                              0xFFEBEBEB),
+                                                        ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Row(  mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                          children: [
+                                                            Text(
+                                                              'Cash',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                            Image.asset(
+                                                              'assets/images/dollar.png',
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Cash',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 20),
+                                                  ),
+                                                  InkWell(onTap: (){
+                                                    Get.to(ChequePay());
+
+                                                  },
+                                                    child: Container(
+                                                      padding: EdgeInsets.all(4),
+                                                      width: size.width * .4,
+                                                      height: 60,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                11.0),
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                          width: 1.0,
+                                                          color: const Color(
+                                                              0xFFEBEBEB),
+                                                        ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Row(  mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                          children: [
+                                                            Text(
+                                                              'Cheque',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                            Image.asset(
+                                                              'assets/images/ch.png',
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   )
@@ -136,7 +221,7 @@ class _DashboardState extends State<Dashboard> {
                                         isDismissible: true,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(10),
+                                                BorderRadius.circular(10),
                                             side: BorderSide(
                                                 color: Colors.white54,
                                                 style: BorderStyle.solid,
@@ -152,19 +237,6 @@ class _DashboardState extends State<Dashboard> {
                                           path: 'assets/images/payment.png'),
                                     ),
                                   ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(ProductsScr());
-                                    },
-                                    child: item(
-                                        color: Colors.orange[200],
-                                        size: size,
-                                        name: 'Sales Order',
-                                        path: 'assets/images/order.png'),
-                                  ),
-                                ),
                                 if (_userAndPermissions
                                         .permissions.returnInvoice ==
                                     'yes')
@@ -229,7 +301,7 @@ class _DashboardState extends State<Dashboard> {
                                         name: 'Photo',
                                         path: 'assets/images/pic.png'),
                                   ),
-                                 ],
+                              ],
                             ),
                           ],
                         ),

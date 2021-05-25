@@ -1,9 +1,9 @@
-
-
+import 'package:anjum/controllers/allBanksController.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dashboard.dart';
-
 
 class ChequePay extends StatefulWidget {
   @override
@@ -12,6 +12,8 @@ class ChequePay extends StatefulWidget {
 
 class _ChequePayState extends State<ChequePay> {
   String getDate, date2;
+  var bata = Get.find<AllBanksController>();
+
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
@@ -23,8 +25,23 @@ class _ChequePayState extends State<ChequePay> {
     date2 = time.toString().substring(0, 10);
     return date2;
   }
-  String dropdownValue = '1';
-  String dropdownValue1 = 'left';
+
+  AllBanks dropdownValueAllBanks;
+
+  //List<AllBanks>_listAllBanks=[];
+  List<DropdownMenuItem<AllBanks>> _listDropdownAllBanks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < bata.allBanks.length; i++) {
+      _listDropdownAllBanks.add(DropdownMenuItem<AllBanks>(
+        value: bata.allBanks[i],
+        child: Text(bata.allBanks[i].bankNameEn),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -39,52 +56,59 @@ class _ChequePayState extends State<ChequePay> {
             Container(
                 height: size.height * 2,
                 width: size.width,
-                child: Stack(
+                child: Column(
                   children: [
-                    Image.asset(
-                      'assets/images/bk.png',
-                      width: size.width,
-                      fit: BoxFit.fill,
-                    ),
-                    Positioned(
-                        left: size.width * .05,
-                        top: size.height * .05,
-                        child: InkWell(
-                          onTap: (){  Navigator.pop(context);},
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                        )),
-                    Positioned(
-                      right: size.width * .05,
-                      top: size.height * .1,
-                      child: Container(
-                          child: InkWell(
+                    Stack(
+                      children: [
+                        Image.asset(
+                          'assets/images/bk.png',
+                          width: size.width,
+                          fit: BoxFit.fill,
+                        ),
+                        Positioned(
+                            left: size.width * .05,
+                            top: size.height * .05,
+                            child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard()),
-                                );
+                                Navigator.pop(context);
                               },
                               child: Icon(
-                                Icons.home,
+                                Icons.arrow_back,
                                 color: Colors.white,
-                                size: 30,
-                              ))),
+                                size: 50,
+                              ),
+                            )),
+                        Positioned(
+                          right: size.width * .05,
+                          top: size.height * .1,
+                          child: Container(
+                              child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Dashboard()),
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.home,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ))),
+                        ),
+                        Positioned(
+                            left: size.width * .1,
+                            top: size.height * .12,
+                            child: Text(
+                              'Cheque Payment',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )),
+                      ],
                     ),
-                    Positioned(
-                        left: size.width * .1,
-                        top: size.height * .12,
-                        child: Text(
-                          'Cheque Payment',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )), ],
+                  ],
                 )),
             Positioned(
                 right: 0,
@@ -98,336 +122,92 @@ class _ChequePayState extends State<ChequePay> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30))),
-                  child: Column(
-                    children: [
-                      //cheque no
-                      Positioned(
-                        top: size.height * .25,
-                        left: size.width * .04,
-                        child: Text("Cheque  no",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .31,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: TextField(),
+                  child: SingleChildScrollView(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 8,
                         ),
-                      ),
-
-                      //bank
-                      Positioned(
-                        top: size.height * .25,
-                        left: size.width * .04,
-                        child: Text("Bank",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .31,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
+                        forinput(size: size, titel: 'Cheque No'),
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Text('Bank'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            width: size.width * .2,
+                            padding: const EdgeInsets.all(4.0),
+                            width: size.width * .85,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9.0),
-                              color: const Color(0xffffffff),
-                              border: Border.all(width: 1.0, color: const Color(0xffd4edff)),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
                             ),
-                            child: DropdownButton<String>(
-                              value: dropdownValue,
-                              elevation: 30,
-                              style: const TextStyle(color: Colors.grey),
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  dropdownValue = newValue;
-                                });
-                              },
-                              items: <String>['1', '2', '3', '4']
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
+                            child: DropdownButtonHideUnderline(
+                                child: DropdownButton<AllBanks>(
+                                    value: dropdownValueAllBanks,
+                                    onChanged: (AllBanks newValue) {
+                                      dropdownValueAllBanks = newValue;
+                                      setState(() {});
+                                    },
+                                    items: _listDropdownAllBanks)),
                           ),
-                        ),
-                      ),
-
-                      //branch
-                      Positioned(
-                        top: size.height * .25,
-                        left: size.width * .04,
-                        child: Text("branch",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .31,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: Container(
-                            width: size.width * .2,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9.0),
-                              color: const Color(0xffffffff),
-                              border: Border.all(width: 1.0, color: const Color(0xffd4edff)),
-                            ),
-                            child: DropdownButton<String>(
-                              value: dropdownValue,
-                              elevation: 30,
-                              style: const TextStyle(color: Colors.grey),
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  dropdownValue = newValue;
-                                });
-                              },
-                              items: <String>['1', '2', '3', '4']
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //drawer
-                      Positioned(
-                        top: size.height * .25,
-                        left: size.width * .04,
-                        child: Text("drawer",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .31,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: Container(
-                            width: size.width * .2,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9.0),
-                              color: const Color(0xffffffff),
-                              border: Border.all(width: 1.0, color: const Color(0xffd4edff)),
-                            ),
-                            child: DropdownButton<String>(
-                              value: dropdownValue,
-                              elevation: 30,
-                              style: const TextStyle(color: Colors.grey),
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  dropdownValue = newValue;
-                                });
-                              },
-                              items: <String>['1', '2', '3', '4']
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      //add note
-                      Positioned(
-                        top: size.height * .25,
-                        left: size.width * .04,
-                        child: Text("Add Note",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-
-                      ),
-                      Positioned(
-                        top: size.height * .31,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: TextField(),
-                        ),
-                      ),
-                      //date
-                      Positioned(
-                        top: size.height * .021,
-                        left: size.width * .04,
-                        child: Text("Date",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .07,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints.tightFor(
-                                height: size.height * 1,
-                                width: size.width * .8),
-                            child: ElevatedButton(
-                              child: Row(
-                                children: [
-                                  Text('Select Date'),
-                                  SizedBox(width: size.width * .48),
-                                  Icon(Icons.calendar_today)
-                                ],
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                elevation: 20,
-                                primary: Colors.white,
-                                onPrimary: Colors.blueGrey,
-                                shape: const BeveledRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(5))),
-                              ),
-                              onPressed: () async {
-                                pickdate().then((String value) {
-                                  setState(() {
-                                    getDate = value;
-                                  });
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      //Amount of Cash
-                      Positioned(
-                        top: size.height * .13,
-                        left: size.width * .04,
-                        child: Text("Amount of Cash",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .19,
-                        left: size.width * .04,
-                        child:  Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: TextField(),
-                        ),
-                      ),
-                      //image
-                      Positioned(
-                        top: size.height * .13,
-                        left: size.width * .04,
-                        child: Text("Image",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .19,
-                        left: size.width * .04,
-                        child:  Container(
-                          width: size.width * .8,
-                          height: size.height * .2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: InkWell(
-                            onTap: (){},
-                            child: Image.asset(
-                              'assets/images/imgpicker.png',
-                              width: size.width*.8,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //button
-                      Positioned(
-                        bottom: size.height * .021,
-                        left: size.width * .14,
-                        child: Container(
-                          width: size.width * .7,
-                          height: size.height * .06,
-
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints.tightFor(
-                                height: size.height * 1,
-                                width: size.width * 1),
-                            child: ElevatedButton(
-                              child: Text('Submit'),
-                              style: ElevatedButton.styleFrom(
-                                elevation: 20,
-                                primary: Colors.indigo,
-                                onPrimary: Colors.white70,
-                                shape: const BeveledRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(5))),
-                              ),
-                              onPressed: () {
-
-                                Navigator.pop(context);
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => Bill()),
-                                // );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 )),
-
           ],
         ),
+      ),
+    );
+  }
+
+  Widget forinput({size, titel, TextEditingController textEditingController}) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+            child: Text(titel),
+          ),
+          Container(
+            width: size.width * .85,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: textEditingController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

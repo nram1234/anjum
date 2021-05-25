@@ -15,7 +15,7 @@ class All_customer_tap1 extends StatefulWidget {
 }
 
 class _All_customer_tap1State extends State<All_customer_tap1> {
-  AllNetworking _allNetworking = AllNetworking();
+
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   var bata = Get.find<AllCustomersControllers>();
 
