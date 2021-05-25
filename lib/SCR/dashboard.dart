@@ -52,7 +52,7 @@ class _DashboardState extends State<Dashboard> {
                                 Navigator.pop(context);
                               },
                               child: Icon(
-                                Icons.arrow_forward,
+                                Icons.arrow_back,
                                 color: Colors.white,
                                 size: 30,
                               ),
@@ -100,28 +100,29 @@ class _DashboardState extends State<Dashboard> {
                                   InkWell(
                                     onTap: () {
                                       Get.bottomSheet(
-                                        Container(height: size.height*.2,
+                                        Container(
+                                          height: size.height * .2,
                                           width: size.width * .45,
                                           child: Column(
                                             children: [
                                               Text('Select Payment Method'),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
+                                                MainAxisAlignment
+                                                    .spaceAround,
                                                 children: [
                                                   Container(
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
+                                                      BorderRadius.circular(
+                                                          10),
                                                     ),
                                                     child: Center(
                                                       child: Text(
                                                         'Cash',
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.bold,
+                                                            FontWeight.bold,
                                                             fontSize: 20),
                                                       ),
                                                     ),
@@ -135,7 +136,7 @@ class _DashboardState extends State<Dashboard> {
                                         isDismissible: true,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                            BorderRadius.circular(10),
                                             side: BorderSide(
                                                 color: Colors.white54,
                                                 style: BorderStyle.solid,
@@ -227,8 +228,8 @@ class _DashboardState extends State<Dashboard> {
                                         size: size,
                                         name: 'Photo',
                                         path: 'assets/images/pic.png'),
-                                  )
-                              ],
+                                  ),
+                                 ],
                             ),
                           ],
                         ),

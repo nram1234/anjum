@@ -110,13 +110,13 @@ class _HomeState extends State<Home> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-
-                                Image.asset('assets/images/van.png')  , Text(
+                                Text(
                                   'Start of Journey',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,fontSize: 20),
                                 ),
+                                Image.asset('assets/images/van.png')  ,
                               ],
                             ),
                           ),
@@ -132,12 +132,12 @@ class _HomeState extends State<Home> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          item(
-                              color: Colors.cyan[200],
-                              size: size,
-                              name: 'Catalog',
-                              path: 'assets/images/catalog.png'),
+                        children: [  item(
+                            color: Colors.orange[200],
+                            size: size,
+                            name: 'Orders Status',
+                            path: 'assets/images/box.png'),
+
                           GestureDetector(
                             onTap: () {},
                             child: item(
@@ -147,10 +147,10 @@ class _HomeState extends State<Home> {
                                 path: 'assets/images/g.png'),
                           ),
                           item(
-                              color: Colors.orange[200],
+                              color: Colors.cyan[200],
                               size: size,
-                              name: 'Orders Status',
-                              path: 'assets/images/box.png'),
+                              name: 'Catalog',
+                              path: 'assets/images/catalog.png'),
                         ],
                       ),
                       SizedBox(
@@ -158,12 +158,12 @@ class _HomeState extends State<Home> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          item(
-                              color: Colors.orange[200],
-                              size: size,
-                              name: 'printers',
-                              path: 'assets/images/printer1.png'),
+                        children: [   item(
+                            color: Colors.purpleAccent[200],
+                            size: size,
+                            name: 'Promotion List',
+                            path: 'assets/images/promotion.png'),
+
                           GestureDetector(
                             onTap: () {},
                             child: item(
@@ -173,13 +173,13 @@ class _HomeState extends State<Home> {
                                 path: 'assets/images/report.png'),
                           ),
                           item(
-                              color: Colors.purpleAccent[200],
+                              color: Colors.orange[200],
                               size: size,
-                              name: 'Promotion List',
-                              path: 'assets/images/promotion.png'),
+                              name: 'printers',
+                              path: 'assets/images/printer1.png'),
                         ],
                       ),
-                      SizedBox(
+                     SizedBox(
                         height: size.height * .02,
                       ),
                       Padding(
@@ -216,11 +216,12 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {},
                               child: item(
-                                  color: Colors.cyan[200],
+                                  color: Colors.grey[500],
                                   size: size,
-                                  name: 'logout',
-                                  path: 'assets/images/log.png'),
-                            ),
+                                  name: 'Reprint',
+                                  path: 'assets/images/reprint.png'),
+                            )
+                           ,
                             GestureDetector(
                               onTap: () {//_userAndPermissions.user.id.toString()
                                 _allNetworking.Get_employee_data(user_id:59.toString() ).then((value) {
@@ -250,15 +251,15 @@ print(value);
                                   name: 'update',
                                   path: 'assets/images/report.png'),
                             ),
-
                             GestureDetector(
                               onTap: () {},
                               child: item(
-                                  color: Colors.grey[500],
+                                  color: Colors.cyan[200],
                                   size: size,
-                                  name: 'Reprint',
-                                  path: 'assets/images/reprint.png'),
-                            )
+                                  name: 'logout',
+                                  path: 'assets/images/log.png'),
+                            ),
+
                           ],
                         ),
                       )
