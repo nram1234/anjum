@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/root_controller.dart';
 
 import 'all_customer_tap1.dart';
 
@@ -8,6 +9,7 @@ class All_Customer extends StatefulWidget {
 }
 
 class _All_CustomerState extends State<All_Customer> {
+
   PageController _pageController = PageController(
     initialPage: 0,
     keepPage: true,
@@ -49,7 +51,7 @@ class _All_CustomerState extends State<All_Customer> {
                         Navigator.pop(context);
                       } ,
                         child: Icon(
-                          Icons.arrow_forward,
+                          Icons.arrow_back,
                           color: Colors.white,
                           size: 30,
                         ),

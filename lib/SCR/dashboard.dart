@@ -12,7 +12,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final NetWorkController _controller = Get.put(NetWorkController());
-  UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -94,15 +95,63 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             Wrap(
                               children: [
-                               if(_userAndPermissions.permissions.payment=='yes')     Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: item(
-                                      color: Colors.pink[200],
-                                      size: size,
-                                      name: 'Payment',
-                                      path: 'assets/images/payment.png'),
-                                ),
-                                  Padding(
+                                if (_userAndPermissions.permissions.payment ==
+                                    'yes')
+                                  InkWell(
+                                    onTap: () {
+                                      Get.bottomSheet(
+                                        Container(height: size.height*.2,
+                                          width: size.width * .45,
+                                          child: Column(
+                                            children: [
+                                              Text('Select Payment Method'),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'Cash',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        backgroundColor: Colors.white,
+                                        isDismissible: true,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            side: BorderSide(
+                                                color: Colors.white54,
+                                                style: BorderStyle.solid,
+                                                width: 2)),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: item(
+                                          color: Colors.pink[200],
+                                          size: size,
+                                          name: 'Payment',
+                                          path: 'assets/images/payment.png'),
+                                    ),
+                                  ),
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: GestureDetector(
                                     onTap: () {
@@ -115,37 +164,41 @@ class _DashboardState extends State<Dashboard> {
                                         path: 'assets/images/order.png'),
                                   ),
                                 ),
-                                if(_userAndPermissions.permissions.returnInvoice=='yes')       Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(onTap:(){
-                                    Get.to(Products_Expand());
-                                  } ,
-                                    child: item(
-                                        color: Colors.pink[200],
-                                        size: size,
-                                        name: 'Return Invoice',
-                                        path: 'assets/images/returninvoice.png'),
+                                if (_userAndPermissions
+                                        .permissions.returnInvoice ==
+                                    'yes')
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.to(Products_Expand());
+                                      },
+                                      child: item(
+                                          color: Colors.pink[200],
+                                          size: size,
+                                          name: 'Return Invoice',
+                                          path:
+                                              'assets/images/returninvoice.png'),
+                                    ),
                                   ),
-                                ),
-                                if(_userAndPermissions.permissions.invoice=='yes')   Padding(
+                                if (_userAndPermissions.permissions.invoice ==
+                                    'yes')
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: item(
+                                        color: Colors.purpleAccent[200],
+                                        size: size,
+                                        name: 'Invoice',
+                                        path: 'assets/images/invoice.png'),
+                                  ),
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: item(
-                                      color: Colors.purpleAccent[200],
-                                      size: size,
-                                      name: 'Invoice',
-                                      path: 'assets/images/invoice.png'),
-                                )
-
-
-                              ,
-                                Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: item(
                                       color: Colors.purple[200],
                                       size: size,
                                       name: 'History',
                                       path: 'assets/images/history.png'),
-                              ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: item(
@@ -153,26 +206,28 @@ class _DashboardState extends State<Dashboard> {
                                       size: size,
                                       name: 'SOA',
                                       path: 'assets/images/soaa.png'),
-                                )
-
-                              ,
-                                if(_userAndPermissions.permissions.beforeAfterPhoto=='yes') Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: item(
-                                      color: Colors.green[200],
-                                      size: size,
-                                      name: 'Before/After',
-                                      path: 'assets/images/befor.png'),
-                              ),
-                                if(_userAndPermissions.permissions.takePhoto=='yes')     Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: item(
-                                      color: Colors.orange[200],
-                                      size: size,
-                                      name: 'Photo',
-                                      path: 'assets/images/pic.png'),
-                                )
-
+                                ),
+                                if (_userAndPermissions
+                                        .permissions.beforeAfterPhoto ==
+                                    'yes')
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: item(
+                                        color: Colors.green[200],
+                                        size: size,
+                                        name: 'Before/After',
+                                        path: 'assets/images/befor.png'),
+                                  ),
+                                if (_userAndPermissions.permissions.takePhoto ==
+                                    'yes')
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: item(
+                                        color: Colors.orange[200],
+                                        size: size,
+                                        name: 'Photo',
+                                        path: 'assets/images/pic.png'),
+                                  )
                               ],
                             ),
                           ],

@@ -198,16 +198,16 @@ class _LoginState extends State<Login> {
 
 _userAndPermissions.setuser(value.user);
 _userAndPermissions.setPermissions(value.permissions);
-print(
-    '000000000000000000000000000000000000000000000000000');
+
 Get.to(Home());
                             return;
                           }
 
-                        }).catchError((e) {
-                          print(e.toString());
-                          Get.snackbar("", e.toString());
                         });
+                        //     .catchError((e) {
+                        //   print(e.toString());
+                        //   Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");
+                        // });
                       } else {
                         Get.snackbar("", 'تاكد من ادخال البيانات ');
                       }

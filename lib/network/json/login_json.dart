@@ -38,7 +38,7 @@ class User {
   String email;
   int type;
   String customerId;
-  String businessUnitId;
+  int businessUnitId;
   String appDeviceId;
   String groupType;
   String reference;
@@ -51,7 +51,7 @@ class User {
   String cashBoxAccount;
   String debitAmount;
   String storeId;
-  String supervisorId;
+  int supervisorId;
   int salesmanagerId;
   String address;
   String image;

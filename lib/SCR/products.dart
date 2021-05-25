@@ -87,7 +87,7 @@ class _ProductsScrState extends State<ProductsScr> {
                         Navigator.pop(context);
                       } ,
                         child: Icon(
-                          Icons.arrow_forward,
+                          Icons.arrow_back,
                           color: Colors.white,
                           size: 30,
                         ),

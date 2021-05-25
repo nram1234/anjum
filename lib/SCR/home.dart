@@ -1,3 +1,15 @@
+import 'package:anjum/controllers/allBanksController.dart';
+import 'package:anjum/controllers/allCategoriesController.dart';
+import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/controllers/allStockItemsController.dart';
+import 'package:anjum/controllers/employeDataController.dart';
+import 'package:anjum/controllers/employeePermissionsController.dart';
+import 'package:anjum/controllers/salesOrderController.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/controllers/userDataController.dart';
+import 'package:anjum/network/controllers/network_controller.dart';
+import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +22,34 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  AllNetworking _allNetworking = AllNetworking();
+  UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() =>   UserDataController());
+    Get.lazyPut(() =>   AllBanksController());
+    Get.lazyPut(() =>   AllCategoriesController());
+    Get.lazyPut(() =>   AllChequesController());
+    Get.lazyPut(() =>   AllCustomersControllers());
+
+
+    Get.lazyPut(() =>   AllStockItemsController());
+    Get.lazyPut(() =>   AllCategoriesController());
+    Get.lazyPut(() =>   EmployeDataController());
+    Get.lazyPut(() =>   EmployeePermissionsController());
+
+    Get.lazyPut(() =>   SalesOrderController());
+    Get.lazyPut(() =>   UserDataController());
+
+
+
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
@@ -33,7 +71,7 @@ class _HomeState extends State<Home> {
                       left: size.width * .1,
                       top: size.height * .05,
                       child: Image.asset(
-                        'assets/images/pesonimg.png',
+                        _userAndPermissions.user.image,
                         height: 75,
                         width: 75,
                       )),
@@ -41,7 +79,7 @@ class _HomeState extends State<Home> {
                       left: (size.width * .1) + 80,
                       top: size.height * .06,
                       child: Text(
-                        'Hello , Omar Ahmed',
+                        _userAndPermissions.user.username,
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )),
                 ],
@@ -149,31 +187,70 @@ class _HomeState extends State<Home> {
                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.pink[200].withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset:
-                                        Offset(0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              width: size.width * .64,
-                              height: size.height * .2,
-                              child: Center(
-                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Image.asset('assets/images/log.png',height: size.height*.07,width:size.height*.07,color: Colors.green,),
-                                    Text('logout')
-                                  ],
-                                ),
-                              ),
+
+                          //   Container(
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(10),
+                          //     color: Colors.white,
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //         color: Colors.pink[200].withOpacity(0.5),
+                          //         spreadRadius: 5,
+                          //         blurRadius: 7,
+                          //         offset:
+                          //         Offset(0, 3), // changes position of shadow
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   width: size.width * .3,
+                          //   height: size.height * .2,
+                          //   child: Center(
+                          //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //       children: [
+                          //         Image.asset('assets/images/log.png',height: size.height*.07,width:size.height*.07,color: Colors.green,),
+                          //         Text('logout')
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: item(
+                                  color: Colors.cyan[200],
+                                  size: size,
+                                  name: 'logout',
+                                  path: 'assets/images/log.png'),
                             ),
+                            GestureDetector(
+                              onTap: () {//_userAndPermissions.user.id.toString()
+                                _allNetworking.Get_employee_data(user_id:59.toString() ).then((value) {
+                                  //insert to database
+
+print(value);
+
+                                 Get.find<UserDataController>().updateserData(value.result.userData);
+
+                                 Get.find<AllBanksController>().updateallBanksData(value.result.allBanks);
+                                 Get.find<AllCategoriesController>().updateallCategoriesData(value.result.allCategories);
+                                 Get.find<AllChequesController>().updateallChequesData(value.result.allCheques);
+                                 Get.find<AllCustomersControllers>().updateallCustomers(value.result.allCustomers);
+                                 Get.find<AllStockItemsController>().updateallStockItemsData(value.result.allStockItems);
+                                 Get.find<AllCategoriesController>().updateallCategoriesData(value.result.allCategories);
+                                 Get.find<EmployeDataController>().updateemployeDatasData(value.result.employeData);
+                                 Get.find<EmployeePermissionsController>().updateemployeePermissionsData(value.result.employeePermissions);
+                                 Get.find<SalesOrderController>().updatesalesOrderData(value.result.salesOrder);
+                                });
+//                                 _allNetworking.tesyyt().then((value) {
+//                                   print(value.body);
+//                                 });
+                              },
+                              child: item(
+                                  color: Colors.cyan[200],
+                                  size: size,
+                                  name: 'update',
+                                  path: 'assets/images/report.png'),
+                            ),
+
                             GestureDetector(
                               onTap: () {},
                               child: item(
