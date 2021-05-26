@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class UserDataController extends GetxController{
 
-  List<UserData> userData;
+  List<UserData> userData=[];
     updateserData(List<UserData> userData){
     this.userData=userData;
     update();

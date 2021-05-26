@@ -152,7 +152,8 @@ class _DashboardState extends State<Dashboard> {
                                                         ),
                                                       ),
                                                       child: Center(
-                                                        child: Row(  mainAxisAlignment:
+                                                        child:
+                                                        Row(  mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                           children: [

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class AllBanksController extends GetxController{
 
-  List<AllBanks> allBanks;
+  List<AllBanks> allBanks=[];
   void updateallBanksData(List<AllBanks> allBanks){
     this.allBanks=allBanks;
     update();

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class AllStockItemsController extends GetxController{
 
-  List<AllStockItems> allStockItems;
+  List<AllStockItems> allStockItems=[];
   void updateallStockItemsData(List<AllStockItems> allStockItems){
     this.allStockItems=allStockItems;
     update();

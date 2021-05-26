@@ -1150,7 +1150,7 @@ class AllBanks {
     userId = json['user_id'];
     note = json['note'];
     if (json['all_bank_branches'] != null) {
-      allBankBranches = new List<AllBankBranches>();
+      allBankBranches = <AllBankBranches>[];
       json['all_bank_branches'].forEach((v) {
         allBankBranches.add(new AllBankBranches.fromJson(v));
       });

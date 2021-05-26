@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'SCR/Bill.dart';
 import 'SCR/all _customer.dart';
+import 'SCR/cart.dart';
 import 'SCR/cashpayment.dart';
 import 'SCR/dashboard.dart';
 import 'SCR/home.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home:Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+      home: Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 

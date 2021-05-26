@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class EmployeePermissionsController extends GetxController{
 
-  List<EmployeePermissions> employeePermissions;
+  List<EmployeePermissions> employeePermissions=[];
   void updateemployeePermissionsData(List<EmployeePermissions> employeePermissions){
     this.employeePermissions=employeePermissions;
     update();

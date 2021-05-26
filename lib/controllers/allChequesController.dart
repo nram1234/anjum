@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class AllChequesController extends GetxController{
 
-  List<AllCheques> allCheques;
+  List<AllCheques> allCheques=[];
   void updateallChequesData(List<AllCheques> allCheques){
     this.allCheques=allCheques;
     update();
