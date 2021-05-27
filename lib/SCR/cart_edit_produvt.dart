@@ -144,7 +144,7 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                               flex: 1,
                               child: Container(
                                 height: size.height * .1,
-                                color: Colors.indigo,
+                                color: Color(0xff2C4B89),
                                 child: Center(
                                     child: Text(
                                       'End Visit',
@@ -269,7 +269,7 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                   ),
                   Container(
                     width: size.width * .3,
-                    color: Colors.indigo,
+                    color: Color(0xff2C4B89),
                     child: Image.network(
                       products.image,
                       width: size.width,
@@ -675,7 +675,7 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.indigo,
+                            color: Color(0xff2C4B89),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 50,

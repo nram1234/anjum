@@ -13,7 +13,7 @@ class ChequePay extends StatefulWidget {
 class _ChequePayState extends State<ChequePay> {
   String getDate, date2;
   var bata = Get.find<AllBanksController>();
-  String Chequetime = "";
+  String Chequetime =   'Select Date' ;
 
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(

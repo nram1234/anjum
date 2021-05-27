@@ -1,4 +1,7 @@
+import 'package:anjum/controllers/allItemsController.dart';
+import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/products_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +16,12 @@ class ProductsScr extends StatefulWidget {
 
 class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
-  AllNetworking _allNetworking = AllNetworking();
+  var bata = Get.find< AllItemsController>();
   UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
   int itemcount=0;
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
@@ -128,16 +132,11 @@ class _ProductsScrState extends State<ProductsScr> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: FutureBuilder<Products_json>(
-                        future: _allNetworking.products(employee_id: _userAndPermissions.user.customerId),
-                        builder: (context, snapshot) {
-                          return ListView.builder(
-                              itemCount: snapshot.data.products.length,
-                              itemBuilder: (context, pos) {
-                                return item(size: size,);
-                              });
-                        }
-                      ),
+                      child: ListView.builder(
+                          itemCount: bata.allItems.length,
+                          itemBuilder: (context, pos) {
+                            return item(size: size,);
+                          }),
                     ),
                     Row(
                       children: [
@@ -171,7 +170,7 @@ class _ProductsScrState extends State<ProductsScr> {
     ));
   }
 
-  Widget item({size,Products  products}) {
+  Widget item({size,ItemDetails  products}) {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -676,7 +675,7 @@ class _ProductsScrState extends State<ProductsScr> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.indigo,
+                            color: Color(0xff2C4B89),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 50,

@@ -2,6 +2,7 @@ import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
@@ -43,7 +44,7 @@ class _HomeState extends State<Home> {
 
     Get.lazyPut(() => SalesOrderController());
     Get.lazyPut(() => UserDataController());
-
+    Get.lazyPut(() => AllItemsController());
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
@@ -97,11 +98,10 @@ class _HomeState extends State<Home> {
                         height: 16,
                       ),
                       InkWell(
-                        onTap: updatethedata
-                            ? () {
+                        onTap: () {
                                 Get.to(All_Customer());
-                              }
-                            : null,
+                              },
+
                         child: Container(padding: EdgeInsets.all(8),
                           child: Center(
                             child: Row(
@@ -252,6 +252,7 @@ class _HomeState extends State<Home> {
                                         .updateallCustomers(
                                             value.result.allCustomers);
                                     Get.find<AllStockItemsController>().allStockItems.clear();
+
                                     Get.find<AllStockItemsController>()
                                         .updateallStockItemsData(
                                             value.result.allStockItems);
@@ -271,6 +272,18 @@ class _HomeState extends State<Home> {
                                     Get.find<SalesOrderController>()
                                         .updatesalesOrderData(
                                             value.result.salesOrder);
+
+
+
+
+                                    Get.find<AllItemsController>().allItems.clear();
+                                    Get.find<AllItemsController>()
+                                        .updateallItemsData(
+                                        value.result.allItems);
+
+
+
+
 
                                     updatethedata=true;
                                   });

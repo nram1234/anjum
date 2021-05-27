@@ -175,7 +175,7 @@ class _BillState extends State<Bill> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.indigo,
+                          color: Color(0xff2C4B89),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         height: 50,

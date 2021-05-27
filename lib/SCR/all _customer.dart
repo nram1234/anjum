@@ -126,7 +126,7 @@ class _All_CustomerState extends State<All_Customer> {
                   flex: 1,
                   child: Container(
                     height: size.height * .1,
-                    color: Colors.indigo,
+                    color: Color(0xff2C4B89),
                     child: Center(
                         child: Text(
                       'End Visit',

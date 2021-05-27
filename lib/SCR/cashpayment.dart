@@ -1,11 +1,7 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'dashboard.dart';
-
 
 class CashPay extends StatefulWidget {
   @override
@@ -13,11 +9,12 @@ class CashPay extends StatefulWidget {
 }
 
 class _CashPayState extends State<CashPay> {
-  String getDate, date2;
+  String date2 = 'Select Date';
+
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
-        firstDate:DateTime.now(),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2050),
         context: context);
     print(time);
@@ -28,7 +25,6 @@ class _CashPayState extends State<CashPay> {
 
   @override
   Widget build(BuildContext context) {
-     
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -42,7 +38,6 @@ class _CashPayState extends State<CashPay> {
                 width: size.width,
                 child: Stack(
                   children: [
-
                     Image.asset(
                       'assets/images/bk.png',
                       width: size.width,
@@ -52,7 +47,9 @@ class _CashPayState extends State<CashPay> {
                         left: size.width * .05,
                         top: size.height * .05,
                         child: InkWell(
-                          onTap: (){  Navigator.pop(context);},
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                           child: Icon(
                             Icons.arrow_back,
                             color: Colors.white,
@@ -86,7 +83,8 @@ class _CashPayState extends State<CashPay> {
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
-                        )), ],
+                        )),
+                  ],
                 )),
             Positioned(
                 right: 0,
@@ -100,111 +98,224 @@ class _CashPayState extends State<CashPay> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30))),
-                  child: Column(
-                    children: [
-                      //button
-
-
-                      Positioned(
-                        top: size.height * .021,
-                        left: size.width * .04,
-                        child: Text("Date",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Container(
-                        width: size.width * .85,
-                        height: size.height * .2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1.0,
-                            color: const Color(0xFFEBEBEB),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              offset: Offset(0, 6.0),
-                              blurRadius: 10.0,
-                            ),
-                          ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Date",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
                         ),
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints.tightFor(
-                              height: size.height * 1,
-                              width: size.width * .8),
-                          child: ElevatedButton(
-                            child: Row(
-                              children: [
-                                Text('Select Date'),
-                                SizedBox(width: size.width * .46),
-                                Icon(Icons.calendar_today)
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                pickdate().then((value) {
+                                  if (value != null) {
+                                    date2 = value;
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              child: Container(
+                                height: 50,
+                                width: size.width * .85,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: Center(child: Text(date2)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Amount of Cash',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Center(
+                          child: Container(
+                            width: size.width * .85,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
                               ],
                             ),
-                            style: ElevatedButton.styleFrom(
-                              elevation: 20,
-                              primary: Colors.white,
-                              onPrimary: Colors.blueGrey,
-                              shape: const BeveledRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(5))),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                              ),
                             ),
-                            onPressed: () async {
-                              pickdate().then((String value) {
-                                setState(() {
-                                  getDate = value;
-                                });
-                              });
-                            },
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: size.height * .13,
-                        left: size.width * .04,
-                        child: Text("Amount of Cash",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
-                      ),
-                      Positioned(
-                        top: size.height * .19,
-                        left: size.width * .04,
-                        child:  Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
-                          ),
-                          child: TextField(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Add note',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
                         ),
-                      ),
-                      Positioned(
-                        top: size.height * .25,
-                        left: size.width * .04,
-                        child: Text("Add Note",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold),),
+                        Center(
+                          child: Container(
+                            width: size.width * .85,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                return showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Container(
+                                        width: size.width * .8,
+                                        height: 60,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                        Text('Anjum',
+                                            style: TextStyle(
+                                                fontSize: 25,
+                                                color: Colors.indigoAccent,
+                                                fontWeight:
+                                                    FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ),
+                                      content: Container(
+                                        width: size.width * .8,
 
-                      ),
-                      Positioned(
-                        top: size.height * .31,
-                        left: size.width * .04,
-                        child: Container(
-                          width: size.width * .8,
-                          height: size.height * .04,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
-                            color: const Color(0xffffffff),
-                            border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xffd4edff)),
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text('Payment done sucessfully'),
+                                              Row(
+                                                children: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                              Icons.arrow_back),
+                                                          SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Text('Back')
+                                                          , SizedBox( width: 50,) ,   Row(
+                                                            children: [
+                                                              TextButton(
+                                                                  onPressed: () {
+
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Icon(
+                                                                          Icons.print),
+                                                                      SizedBox(
+                                                                        width: 8,
+                                                                      ),
+                                                                      Text('Print')
+                                                                    ],
+                                                                  ))
+                                                            ],
+                                                          )    ],
+                                                      ))
+                                                ],
+                                              )
+                                        ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                width: size.width * .85,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff2C4B89),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                )),
+                              ),
+                            ),
                           ),
-                          child: TextField(),
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 )),
-
           ],
         ),
       ),

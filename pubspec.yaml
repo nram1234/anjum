@@ -37,6 +37,7 @@ dependencies:
   dio:
   connectivity: ^3.0.3
   http:
+  dotted_line: ^3.0.0
 
 
 

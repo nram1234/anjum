@@ -393,7 +393,7 @@ class _CartEditProductState extends State<Cart> {
                                 child: Container(
                                   height: 50,
                                   decoration: BoxDecoration(
-                                    color: Colors.indigo,
+                                    color: Color(0xff2C4B89),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Center(
@@ -561,7 +561,7 @@ class _CartEditProductState extends State<Cart> {
                                   height: 50,
                                   width: size.width * .9,
                                   decoration: BoxDecoration(
-                                    color: Colors.indigo,
+                                    color: Color(0xff2C4B89),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Center(

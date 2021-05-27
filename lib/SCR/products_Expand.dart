@@ -113,7 +113,7 @@ class _Products_ExpandState extends State<Products_Expand> {
                   ),
                   Container(
                     width: size.width * .3,
-                    color: Colors.indigo,
+                    color: Color(0xff2C4B89),
                   ),
                 ],
               ),

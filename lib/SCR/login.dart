@@ -215,7 +215,7 @@ class _LoginState extends State<Login> {
                       height: 50,
                       width: size.width * .85,
                       decoration: BoxDecoration(
-                        color: Colors.indigo,
+                        color: Color(0xff2C4B89),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
