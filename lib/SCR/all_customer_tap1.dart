@@ -7,8 +7,10 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dashboard.dart';
+import 'myMapScr.dart';
 
 class All_customer_tap1 extends StatefulWidget {
   @override
@@ -255,7 +257,15 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                         width: 16,
                       ),
                       Icon(Icons.map),
-                      Text('view map'),
+                      InkWell(onTap: (){
+                     //   location
+                        List<String>l= data.customerInfo.location.split(',');
+                        // var lat=double.tryParse(l[0].trim());
+                        // var Lng=double.tryParse(l[1].trim());
+
+                        LatLng loc= LatLng(double.tryParse(l[0].trim()), double.tryParse(l[1].trim()));
+                        Get.to(MyMapScr(loc: loc,  name:  data.customerInfo.customerNameEn,));
+                      },child: Text('view map')),
                     ],
                   ),
                 ),
