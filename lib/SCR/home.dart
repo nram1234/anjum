@@ -98,9 +98,9 @@ class _HomeState extends State<Home> {
                         height: 16,
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap:updatethedata? () {
                                 Get.to(All_Customer());
-                              },
+                              }:null,
 
                         child: Container(padding: EdgeInsets.all(8),
                           child: Center(
@@ -286,6 +286,7 @@ class _HomeState extends State<Home> {
 
 
                                     updatethedata=true;
+                                    print(updatethedata  );
                                   });
 //                                 _allNetworking.tesyyt().then((value) {
 //                                   print(value.body);

@@ -126,174 +126,25 @@ class _ChequePayState extends State<ChequePay> {
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30))),
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 8,
-                        ),
-                        forinput(size: size, titel: 'Cheque No'),
-                        Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Text('Bank'),
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              padding: const EdgeInsets.all(4.0),
-                              width: size.width * .85,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<AllBanks>(
-                                      value: dropdownValueAllBanks,
-                                      onChanged: (AllBanks newValue) {
-                                        dropdownValueAllBanks = newValue;
-                                        _listDropdownAllBankBranches.clear();
-                                        for (int i = 0;
-                                            i < newValue.allBankBranches.length;
-                                            i++) {
-                                          _listDropdownAllBankBranches.add(
-                                              DropdownMenuItem<AllBankBranches>(
-                                            value: newValue.allBankBranches[i],
-                                            child: Text(newValue
-                                                .allBankBranches[i].branchNameEn),
-                                          ));
-                                        }
-                                        setState(() {});
-                                      },
-                                      items: _listDropdownAllBanks)),
-                            ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 8,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Text('Bank Branches'),
-                        ),
-                        Center(
-                          child: Padding(
+                          forinput(size: size, titel: 'Cheque No'),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              padding: const EdgeInsets.all(4.0),
-                              width: size.width * .85,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<AllBankBranches>(
-                                      value: dropdownValueAllBankBranches,
-                                      onChanged: (AllBankBranches newValue) {
-                                        dropdownValueAllBankBranches = newValue;
-
-                                        setState(() {});
-                                      },
-                                      items: _listDropdownAllBankBranches)),
-                            ),
+                            child: Text('Bank'),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Text('Bank Branches'),
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              padding: const EdgeInsets.all(4.0),
-                              width: size.width * .85,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<AllBankBranches>(
-                                      value: dropdownValueAllBankBranches,
-                                      onChanged: (AllBankBranches newValue) {
-                                        dropdownValueAllBankBranches = newValue;
-
-                                        setState(() {});
-                                      },
-                                      items: _listDropdownAllBankBranches)),
-                            ),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Add note'),
-                        ),
-                        Center(
-                          child: Container(
-                            width: size.width * .85,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: TextField(
-
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                pickdate().then((value) {
-                                  if (value != null) {
-                                    Chequetime = value;
-                                    setState(() {});
-                                  }
-                                });
-                              },
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
+                                padding: const EdgeInsets.all(4.0),
                                 width: size.width * .85,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -308,20 +159,105 @@ class _ChequePayState extends State<ChequePay> {
                                     ),
                                   ],
                                 ),
-                                child: Text(Chequetime),
+                                child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<AllBanks>(
+                                        value: dropdownValueAllBanks,
+                                        onChanged: (AllBanks newValue) {
+                                          dropdownValueAllBanks = newValue;
+                                          _listDropdownAllBankBranches.clear();
+                                          for (int i = 0;
+                                              i < newValue.allBankBranches.length;
+                                              i++) {
+                                            _listDropdownAllBankBranches.add(
+                                                DropdownMenuItem<AllBankBranches>(
+                                              value: newValue.allBankBranches[i],
+                                              child: Text(newValue
+                                                  .allBankBranches[i].branchNameEn),
+                                            ));
+                                          }
+                                          setState(() {});
+                                        },
+                                        items: _listDropdownAllBanks)),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Text('Bank Branches'),
-                        ),
-                        Center(
-                          child: Padding(
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
+                            child: Text('Bank Branches'),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                padding: const EdgeInsets.all(4.0),
+                                width: size.width  ,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<AllBankBranches>(
+                                        value: dropdownValueAllBankBranches,
+                                        onChanged: (AllBankBranches newValue) {
+                                          dropdownValueAllBankBranches = newValue;
+
+                                          setState(() {});
+                                        },
+                                        items: _listDropdownAllBankBranches)),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Bank Branches'),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                padding: const EdgeInsets.all(4.0),
+                                width: size.width * .85,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<AllBankBranches>(
+                                        value: dropdownValueAllBankBranches,
+                                        onChanged: (AllBankBranches newValue) {
+                                          dropdownValueAllBankBranches = newValue;
+
+                                          setState(() {});
+                                        },
+                                        items: _listDropdownAllBankBranches)),
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Add note'),
+                          ),
+                          Center(
                             child: Container(
-                              padding: const EdgeInsets.all(4.0),
                               width: size.width * .85,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -331,71 +267,138 @@ class _ChequePayState extends State<ChequePay> {
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
+                                    offset: Offset(0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
-                              child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<AllBankBranches>(
-                                      value: dropdownValueAllBankBranches,
-                                      onChanged: (AllBankBranches newValue) {
-                                        dropdownValueAllBankBranches = newValue;
+                              child: TextField(
 
-                                        setState(() {});
-                                      },
-                                      items: _listDropdownAllBankBranches)),
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: Container(
-                            width: size.width * .85,
-                            height: size.height * .2,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                              border: Border.all(
-                                width: 1.0,
-                                color: const Color(0xFFEBEBEB),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
-                                  offset: Offset(0, 6.0),
-                                  blurRadius: 10.0,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
                                 ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Image.asset(
-                                'assets/images/cam.png',
-                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
-                        ),
-                        Center(
-                          child: Padding(
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  pickdate().then((value) {
+                                    if (value != null) {
+                                      Chequetime = value;
+                                      setState(() {});
+                                    }
+                                  });
+                                },
+                                child: Container(height: 50,
+                                  width: size.width * .85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(child: Text(Chequetime)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
+                            child: Text('Bank Branches'),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                padding: const EdgeInsets.all(4.0),
+                                width: size.width * .85,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<AllBankBranches>(
+                                        value: dropdownValueAllBankBranches,
+                                        onChanged: (AllBankBranches newValue) {
+                                          dropdownValueAllBankBranches = newValue;
+
+                                          setState(() {});
+                                        },
+                                        items: _listDropdownAllBankBranches)),
+                              ),
+                            ),
+                          ),
+                          Center(
                             child: Container(
-                              height: 50,
                               width: size.width * .85,
+                              height: size.height * .2,
                               decoration: BoxDecoration(
-                                color: Colors.indigo,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white,
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFFEBEBEB),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    offset: Offset(0, 6.0),
+                                    blurRadius: 10.0,
+                                  ),
+                                ],
                               ),
                               child: Center(
-                                  child: Text(
-                                    'Submit',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  )),
+                                child: Image.asset(
+                                  'assets/images/cam.png',
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                             ),
                           ),
-                        )        ],
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 50,
+                                width: size.width * .85,
+                                decoration: BoxDecoration(
+                                  color: Colors.indigo,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )),
+                              ),
+                            ),
+                          )        ],
+                      ),
                     ),
                   ),
                 )),
