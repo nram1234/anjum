@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'cart.dart';
+import 'filter.dart';
 
 class ProductsScr extends StatefulWidget {
   @override
@@ -16,15 +17,15 @@ class ProductsScr extends StatefulWidget {
 }
 
 class _ProductsScrState extends State<ProductsScr> {
-
   List<Widget> alert_item = [];
+
   // var bata = Get.find< AllItemsController>();
-  var cartitem = Get.find< CartItemController>();
-  UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
+  var cartitem = Get.find<CartItemController>();
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
@@ -63,9 +64,10 @@ class _ProductsScrState extends State<ProductsScr> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(onTap: (){
-                              Get.to(Cart());
-                            },
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(Cart());
+                              },
                               child: Icon(
                                 Icons.add_shopping_cart,
                                 color: Colors.white,
@@ -80,7 +82,6 @@ class _ProductsScrState extends State<ProductsScr> {
                               Text(cartitem.cartlist.length.toString(),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18)),
-
                             ],
                           ),
                         ],
@@ -88,9 +89,10 @@ class _ProductsScrState extends State<ProductsScr> {
                   Positioned(
                       left: size.width * .05,
                       top: size.height * .05,
-                      child: GestureDetector(onTap:(){
-                        Navigator.pop(context);
-                      } ,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: Icon(
                           Icons.arrow_back,
                           color: Colors.white,
@@ -119,48 +121,70 @@ class _ProductsScrState extends State<ProductsScr> {
                           color: Colors.grey[100]),
                       width: size.width * .9,
                       height: 50,
-                      child: TextField(
-                        onChanged: (v) {},
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          suffixIcon: Icon(Icons.search),
-                        ),
+                      child: Row(
+                        children: [
+                          GestureDetector(onTap: (){
+                            Get.to(Filter());
+                          },
+                            child: Container(
+                              width: size.width * .1,
+                              height: size.width * .1,
+                              child: Image.asset('assets/images/filter.png'),
+                            ),
+                          ),
+                          Container(
+                            width: size.width * .7,
+                            child: TextField(
+                              onChanged: (v) {},
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                suffixIcon: Icon(Icons.search),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(
                       flex: 1,
                       child: ListView.builder(
-                          itemCount: 100,//bata.allItems.length,
+                          itemCount: 100, //bata.allItems.length,
                           itemBuilder: (context, pos) {
-                            return item(size: size,funadd: (){
-                             // cartitem.addToCart(item: bata.allItems[pos]);
-                            }
-                           // ,products:bata.allItems[pos]
-                           ,funremov: (){
-                                 //   cartitem.removefromcart(item: bata.allItems[pos]);
+                            return item(
+                                size: size,
+                                funadd: () {
+                                  // cartitem.addToCart(item: bata.allItems[pos]);
                                 }
-
-                            );// AlirtItem( );
+                                // ,products:bata.allItems[pos]
+                                ,
+                                funremov: () {
+                                  //   cartitem.removefromcart(item: bata.allItems[pos]);
+                                }); // AlirtItem( );
                           }),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: InkWell(onTap: (){
-                       print('oooooooooo') ;
-                      },
-                        child: Container(height: 50,width: size.width*.9,
+                      child: InkWell(
+                        onTap: () {
+                          print('oooooooooo');
+                        },
+                        child: Container(
+                          height: 50,
+                          width: size.width * .9,
                           decoration: BoxDecoration(
-
                             border: Border.all(
                               color: Colors.grey,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(12),
-                          ),child: Center(child: Text('Add To Cart'),),
+                          ),
+                          child: Center(
+                            child: Text('Add To Cart'),
+                          ),
                         ),
                       ),
                     ),
@@ -196,7 +220,7 @@ class _ProductsScrState extends State<ProductsScr> {
     ));
   }
 
-  Widget item({size,ItemDetails  products,funadd,funremov}) {
+  Widget item({size, ItemDetails products, funadd, funremov}) {
     var count = cartitem.cartlist.where((c) => c == products).toList().length;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -233,7 +257,8 @@ class _ProductsScrState extends State<ProductsScr> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(onTap:funadd,
+                          InkWell(
+                            onTap: funadd,
                             child: Container(
                               color: Colors.orange,
                               height: 30,
@@ -242,7 +267,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                 child: Text(
                                   "+",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
                             ),
@@ -258,7 +284,8 @@ class _ProductsScrState extends State<ProductsScr> {
                           SizedBox(
                             width: 20,
                           ),
-                          InkWell(onTap: funremov,
+                          InkWell(
+                            onTap: funremov,
                             child: Container(
                               color: Colors.orange,
                               height: 30,
@@ -267,7 +294,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                 child: Text(
                                   "-",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
                             ),
@@ -321,7 +349,10 @@ class _ProductsScrState extends State<ProductsScr> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text('Item Price :${products.itemCost}'), Text('Tax:  ${products.tax}')],
+                      children: [
+                        Text('Item Price :${products.itemCost}'),
+                        Text('Tax:  ${products.tax}')
+                      ],
                     ),
                   ),
                   Container(
@@ -732,7 +763,7 @@ class _ProductsScrState extends State<ProductsScr> {
     );
   }
 
-  Widget AlirtItem({ItemDetails  products,funadd,funremov}) {
+  Widget AlirtItem({ItemDetails products, funadd, funremov}) {
     var count = cartitem.cartlist.where((c) => c == products).toList().length;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -767,8 +798,9 @@ class _ProductsScrState extends State<ProductsScr> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(onTap:funadd ,child: Text('bol 100+30')),
-                  GestureDetector(onTap: funremov,child: Text('Promotion Name')),
+                  GestureDetector(onTap: funadd, child: Text('bol 100+30')),
+                  GestureDetector(
+                      onTap: funremov, child: Text('Promotion Name')),
                 ],
               ),
             ),
@@ -797,8 +829,6 @@ class _ProductsScrState extends State<ProductsScr> {
       ),
     );
   }
-
-
 }
 
 //
