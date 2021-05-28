@@ -4,6 +4,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
+import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/salesOrderController.dart';
@@ -45,6 +46,11 @@ class _HomeState extends State<Home> {
     Get.lazyPut(() => SalesOrderController());
     Get.lazyPut(() => UserDataController());
     Get.lazyPut(() => AllItemsController());
+
+
+
+    Get.lazyPut(() => CartItemController());
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(

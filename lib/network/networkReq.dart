@@ -13,7 +13,7 @@ import 'json/products_json.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 class AllNetworking {
-  var paseurl = 'http://18.220.206.74/';
+ static var  paseurl = 'http://18.220.206.74/';
 
   //Response response;
   Dio dio = new Dio();

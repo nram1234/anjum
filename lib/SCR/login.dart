@@ -187,6 +187,10 @@ class _LoginState extends State<Login> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      if(url.text.isNotEmpty){
+                        AllNetworking.paseurl=url.text;
+                      }
+                      print( AllNetworking.paseurl);
                       if (name.text != null && password.text != null) {
                         _allNetworking
                             .login(
@@ -209,7 +213,7 @@ class _LoginState extends State<Login> {
                         Get.snackbar("", 'تاكد من ادخال البيانات ');
                       }
 
-                      //     Get.offAll(Home());
+                          Get.offAll(Home());
                     },
                     child: Container(
                       height: 50,

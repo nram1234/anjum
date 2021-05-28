@@ -320,7 +320,8 @@ class _ChequePayState extends State<ChequePay> {
                             child: Text('Bank Branches'),
                           ),
                           Center(
-                            child: Padding(
+                            child:
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),

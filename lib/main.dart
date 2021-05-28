@@ -3,6 +3,8 @@ import 'package:anjum/SCR/login.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'SCR/Bill.dart';
+import 'SCR/OrderStatus.dart';
+import 'SCR/OrderStatusdetails.dart';
 import 'SCR/all _customer.dart';
 import 'SCR/cart.dart';
 import 'SCR/cashpayment.dart';
@@ -17,15 +19,18 @@ import 'SCR/products_Expand.dart';
 import 'SCR/testscr.dart';
 import 'Translation/Trans.dart';
 
+import 'controllers/cartItemController.dart';
 import 'network/binding/network_binding.dart';
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     _requestPermission();
     return GetMaterialApp(
       locale: LocalizationService.locale,
@@ -37,7 +42,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home: Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+      home:ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 
