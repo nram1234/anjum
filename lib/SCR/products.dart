@@ -1,6 +1,7 @@
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/products_json.dart';
@@ -20,16 +21,16 @@ class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
 
   // var bata = Get.find< AllItemsController>();
-  var cartitem = Get.find<CartItemController>();
+  var cartitem = Get.find<PriceListsInfoController>();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
 
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    for (int i = 0; i < 10; i++) {
-      alert_item.add(AlirtItem());
-    }
+    // for (int i = 0; i < 10; i++) {
+    //   alert_item.add(AlirtItem());
+    // }
     return Scaffold(
         body: Container(
       height: size.height,
@@ -79,7 +80,8 @@ class _ProductsScrState extends State<ProductsScr> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(cartitem.cartlist.length.toString(),
+                              //cartitem.cartlist.length.toString()
+                              Text("",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18)),
                             ],
@@ -152,14 +154,14 @@ class _ProductsScrState extends State<ProductsScr> {
                     Expanded(
                       flex: 1,
                       child: ListView.builder(
-                          itemCount: 100, //bata.allItems.length,
-                          itemBuilder: (context, pos) {
+                          itemCount:cartitem.showItemDataWithPrice.length// 100, //bata.allItems.length,
+                     ,     itemBuilder: (context, pos) {
                             return item(
                                 size: size,
                                 funadd: () {
                                   // cartitem.addToCart(item: bata.allItems[pos]);
                                 }
-                                // ,products:bata.allItems[pos]
+                                 ,products:cartitem.showItemDataWithPrice[pos].itemDetails[pos]
                                 ,
                                 funremov: () {
                                   //   cartitem.removefromcart(item: bata.allItems[pos]);
@@ -221,7 +223,7 @@ class _ProductsScrState extends State<ProductsScr> {
   }
 
   Widget item({size, ItemDetails products, funadd, funremov}) {
-    var count = cartitem.cartlist.where((c) => c == products).toList().length;
+    var count = cartitem.showItemDataWithPrice.where((c) => c == products).toList().length;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -762,73 +764,73 @@ class _ProductsScrState extends State<ProductsScr> {
       ),
     );
   }
-
-  Widget AlirtItem({ItemDetails products, funadd, funremov}) {
-    var count = cartitem.cartlist.where((c) => c == products).toList().length;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[100],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[100].withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('369'),
-                  Text(count.toString()),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(onTap: funadd, child: Text('bol 100+30')),
-                  GestureDetector(
-                      onTap: funremov, child: Text('Promotion Name')),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('bol 100+30'),
-                  Text('Promotion Details'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('18-4-2021'),
-                  Text('16-4-2021'),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  //
+  // Widget AlirtItem({ItemDetails products, funadd, funremov}) {
+  //   var count = cartitem.cartlist.where((c) => c == products).toList().length;
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Container(
+  //       padding: EdgeInsets.all(4),
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         color: Colors.grey[100],
+  //         boxShadow: [
+  //           BoxShadow(
+  //             color: Colors.grey[100].withOpacity(0.5),
+  //             spreadRadius: 5,
+  //             blurRadius: 7,
+  //             offset: Offset(0, 3), // changes position of shadow
+  //           ),
+  //         ],
+  //       ),
+  //       child: Column(
+  //         children: [
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 Text('369'),
+  //                 Text(count.toString()),
+  //               ],
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 GestureDetector(onTap: funadd, child: Text('bol 100+30')),
+  //                 GestureDetector(
+  //                     onTap: funremov, child: Text('Promotion Name')),
+  //               ],
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 Text('bol 100+30'),
+  //                 Text('Promotion Details'),
+  //               ],
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 Text('18-4-2021'),
+  //                 Text('16-4-2021'),
+  //               ],
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
 //

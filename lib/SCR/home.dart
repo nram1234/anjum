@@ -7,6 +7,7 @@ import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
+import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/salesOrderController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/controllers/userDataController.dart';
@@ -32,6 +33,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    Get.lazyPut(() => PriceListsInfoController());
     Get.lazyPut(() => UserDataController());
     Get.lazyPut(() => AllBanksController());
     Get.lazyPut(() => AllCategoriesController());
@@ -104,9 +107,9 @@ class _HomeState extends State<Home> {
                         height: 16,
                       ),
                       InkWell(
-                        onTap:updatethedata? () {
+                        onTap:  () {
                                 Get.to(All_Customer());
-                              }:null,
+                              } ,
 
                         child: Container(padding: EdgeInsets.all(8),
                           child: Center(

@@ -200,9 +200,9 @@ class _LoginState extends State<Login> {
                             _userAndPermissions.setuser(value.user);
                             _userAndPermissions
                                 .setPermissions(value.permissions);
-
+print(value.user);
                             Get.to(Home());
-                            return;
+
                           }
                         });
                         //     .catchError((e) {
