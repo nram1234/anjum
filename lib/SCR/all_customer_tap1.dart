@@ -31,7 +31,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
-                    pricelistinf.getListOfListPriceListsInfo(bata.allCustomers[pos]);
+                    pricelistinf.getListOfListPriceListsInfo(bata.allCustomers[pos].customerInfo);
 
                     Get.to(Dashboard(), arguments: 59);
                   },

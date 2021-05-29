@@ -5,7 +5,7 @@ import 'allCustomersControllers.dart';
 import 'allItemsController.dart';
 
 class PriceListsInfoController extends GetxController {
-  AllCustomers _allCustomers;
+  CustomerInfo _customerInfo;
   var bata = Get.find<AllCustomersControllers>();
   var allItemController = Get.find<AllItemsController>();
 
@@ -16,18 +16,17 @@ List<List< PriceListsInfo> >  _listpriceListsInfo = [];
   List<PriceListsInfo> listOfItemPrice=[];
   //--------------------------------------
 List<AllItems>showItemDataWithPrice=[];
-  getListOfListPriceListsInfo(AllCustomers allCustomers) {
+  getListOfListPriceListsInfo(CustomerInfo customerInfo) {
     _listpriceListsInfo.clear();
-    this._allCustomers = allCustomers;
-    // bata.allCustomers
-    //     .map((e) {
-    //       print('9999999999999999999999999');
-    //   _listpriceListsInfo.add(e.priceListsInfo);
-    // });
+    this._customerInfo = customerInfo;
+
     for(int i=0;i<bata.allCustomers.length;i++){
 for(int o=0;o<bata.allCustomers[i].priceListsInfo.length;o++){
 
   print(bata.allCustomers[i].priceListsInfo[o].itemUnits[0]);
+  if(bata.allCustomers[i].priceListsInfo[o].priceListId==_customerInfo.priceListId){
+    print('8888888888888888888888');
+  }
    //listOfItemPrice.add(bata.allCustomers[i].priceListsInfo[o]);
 }
 
