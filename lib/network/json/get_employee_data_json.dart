@@ -644,20 +644,20 @@ class PriceListsInfo {
         this.itemUnits});
 
   PriceListsInfo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    priceListId = json['price_list_id'];
-    itemId = json['item_id'];
-    sellingPrice = json['selling_price'];
-    toPrice = json['to_price'];
-    discount = json['discount'];
-    taxStatus = json['tax_status'];
-    useInSales = json['use_in_sales'];
-    useInReturn = json['use_in_return'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    id = json['id']??"";
+    userId = json['user_id']??"";
+    priceListId = json['price_list_id']??"";
+    itemId = json['item_id']??"";
+    sellingPrice = json['selling_price']??"";
+    toPrice = json['to_price']??"";
+    discount = json['discount']??"";
+    taxStatus = json['tax_status']??"";
+    useInSales = json['use_in_sales']??"";
+    useInReturn = json['use_in_return']??"";
+    createdAt = json['created_at']??"";
+    updatedAt = json['updated_at']??"";
     if (json['item_units'] != null) {
-      itemUnits = new List<ItemUnits>();
+      itemUnits = <ItemUnits>[];
       json['item_units'].forEach((v) {
         itemUnits.add(new ItemUnits.fromJson(v));
       });

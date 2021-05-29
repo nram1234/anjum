@@ -200,7 +200,9 @@ class _LoginState extends State<Login> {
                             _userAndPermissions.setuser(value.user);
                             _userAndPermissions
                                 .setPermissions(value.permissions);
-print(value.user);
+                            print( '00000000000000000000000000000000000');
+print(value.user.employeeNameEn);
+                            print( '00000000000000000000000000000000000');
                             Get.to(Home());
 
                           }
@@ -213,7 +215,7 @@ print(value.user);
                         Get.snackbar("", 'تاكد من ادخال البيانات ');
                       }
 
-                          Get.offAll(Home());
+
                     },
                     child: Container(
                       height: 50,

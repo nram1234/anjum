@@ -27,6 +27,8 @@ class _ProductsScrState extends State<ProductsScr> {
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
+
+    print(cartitem.showItemDataWithPrice.length);
     var size = MediaQuery.of(context).size;
     // for (int i = 0; i < 10; i++) {
     //   alert_item.add(AlirtItem());
