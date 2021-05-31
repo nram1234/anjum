@@ -20,19 +20,19 @@ class ProductsScr extends StatefulWidget {
 class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
 
-  // var bata = Get.find< AllItemsController>();
-  var cartitem = Get.find<PriceListsInfoController>();
+   var bata = Get.find< AllItemsController>();
+  //var cartitem = Get.find<PriceListsInfoController>();
+  var cartListItem=Get.find<CartItemController>();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
 
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
 
-    print(cartitem.showItemDataWithPrice.length);
     var size = MediaQuery.of(context).size;
-    // for (int i = 0; i < 10; i++) {
-    //   alert_item.add(AlirtItem());
-    // }
+    for (int i = 0; i < 10; i++) {
+      alert_item.add(AlirtItem());
+    }
     return Scaffold(
         body: Container(
       height: size.height,
@@ -119,25 +119,17 @@ class _ProductsScrState extends State<ProductsScr> {
                         topLeft: Radius.circular(30))),
                 child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.grey[100]),
-                      width: size.width * .9,
-                      height: 50,
-                      child: Row(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(onTap: (){
-                            Get.to(Filter());
-                          },
-                            child: Container(
-                              width: size.width * .1,
-                              height: size.width * .1,
-                              child: Image.asset('assets/images/filter.png'),
-                            ),
-                          ),
-                          Container(
-                            width: size.width * .7,
+
+                          Container(     decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey[100]),
+                            width: size.width * .8,
+                            height: 50,
+
                             child: TextField(
                               onChanged: (v) {},
                               decoration: InputDecoration(
@@ -150,24 +142,36 @@ class _ProductsScrState extends State<ProductsScr> {
                               ),
                             ),
                           ),
-                        ],
+                          GestureDetector(onTap: (){
+                            Get.to(Filter());
+                          },
+                            child: Container(
+                              width: size.width * .1,
+                              height: size.width * .1,
+                              child: Image.asset('assets/images/filter.png'),
+                            ),
+                          ),    ],
                       ),
                     ),
                     Expanded(
                       flex: 1,
                       child: ListView.builder(
-                          itemCount:cartitem.showItemDataWithPrice.length// 100, //bata.allItems.length,
+                          itemCount: bata.customerListItems.length// 100, //bata.allItems.length,
                      ,     itemBuilder: (context, pos) {
                             return item(
                                 size: size,
                                 funadd: () {
-                                  // cartitem.addToCart(item: bata.allItems[pos]);
-                                }
-                                 ,products:cartitem.showItemDataWithPrice[pos].itemDetails[pos]
-                                ,
+                                 cartListItem.addToCart(item: bata.allItems[pos]);
+                       setState(() {
+
+                       });         }
+                                 ,products://cartitem.showItemDataWithPrice[pos].itemDetails[pos]
+                             bata.customerListItems[pos]   ,
                                 funremov: () {
-                                  //   cartitem.removefromcart(item: bata.allItems[pos]);
-                                }); // AlirtItem( );
+                                  cartListItem.removefromcart(item: bata.allItems[pos]);
+                                  setState(() {
+
+                                  });      }); // AlirtItem( );
                           }),
                     ),
                     Padding(
@@ -224,8 +228,8 @@ class _ProductsScrState extends State<ProductsScr> {
     ));
   }
 
-  Widget item({size, ItemDetails products, funadd, funremov}) {
-    var count = cartitem.showItemDataWithPrice.where((c) => c == products).toList().length;
+  Widget item({Size size, AllItems products, funadd, funremov}) {
+   var count = cartListItem.cartlist.where((c) => c == products).toList().length;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -237,527 +241,510 @@ class _ProductsScrState extends State<ProductsScr> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+
+                children: [    Container(
+                  height: size.height*.15,width: size.height*.15,
+                  color: Colors.indigo,
+                  // child: Image.network(
+                  //   products.itemDetails[0].image,
+                  //   height: size.height*.1,width: size.height*.1,
+                  // ),
+                ),
+                  SizedBox(
+                    width: 8,
+                  ),   Column(
+                    mainAxisSize: MainAxisSize.max,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: 8,
                       ),
-                      Text(products.itemNameEn),
+                      Text(products.itemDetails[0].itemNameEn),
                       SizedBox(
                         height: 4,
                       ),
-                      Row(
-                        children: [
-                          Text(products.minimumQuantity),
-                        ],
-                      ),
-                      Text(products.itemCost),
+                      Text(products.itemDetails[0].minimumQuantity),
+                      //products.itemDetails[0].itemCost
+                      Text("5"),
                       //  Expanded(child: Container()),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: funadd,
-                            child: Container(
-                              color: Colors.orange,
-                              height: 30,
-                              width: 30,
-                              child: Center(
-                                child: Text(
-                                  "+",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            count.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: funremov,
-                            child: Container(
-                              color: Colors.orange,
-                              height: 30,
-                              width: 30,
-                              child: Center(
-                                child: Text(
-                                  "-",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                        ],
-                      )
+
                     ],
                   ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Container(
-                    width: size.width * .3,
-                    color: Colors.indigo,
-                    child: Image.network(
-                      products.image,
-                      width: size.width,
-                    ),
-                  ),
+
+
                 ],
               ),
               ExpansionTile(
-                title: Text('Details'),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
+                title: Row(
+                  children: [
+                    Text('Details'),
+                  SizedBox(width: size.width*.2,), Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: 10,
+                        InkWell(
+                          onTap: funadd,
+                          child: Container(
+                            color: Colors.orange,
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                              child: Text(
+                                "+",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ),
                         ),
-                        Text('Category: food')
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(products.itemNumber),
-                        Text('item name:  ${products.itemNameEn}')
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Item Price :${products.itemCost}'),
-                        Text('Tax:  ${products.tax}')
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(),
+                        SizedBox(
+                          width: 20,
+                        ),
                         Text(
-                          'Promotion',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          cartListItem.cartlist.where((c) => c == products).toList().length.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(),
-                        GestureDetector(
-                          onTap: () {
-                            Widget okButton = TextButton(
-                              child: Text("OK"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            );
-                            AlertDialog alert = AlertDialog(
-                              title: Text(
-                                "Promotion list",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                              content: Container(
-                                height: size.height * .8,
-                                width: size.width * .8,
-                                child: ListView(
-                                  children: alert_item,
-                                ),
-                              ),
-                              actions: [
-                                okButton,
-                              ],
-                            );
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return alert;
-                              },
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              Image.asset('assets/images/iso'),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Show All Promotion',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
+                        SizedBox(
+                          width: 20,
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [Text('Store ID'), Text('443')],
-                        ),
-                        Column(
-                          children: [Text('Unit'), Text('box')],
-                        ),
-                        Column(
-                          children: [Text('Quantity'), Text('4')],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Price per Item'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
+                        InkWell(
+                          onTap: funremov,
+                          child: Container(
+                            color: Colors.orange,
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                              child: Text(
+                                "-",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
                               ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('stock'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Tax %'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Price'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Total Price'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Total Tax'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Discount %'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Bounce'),
-                            Container(
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xff2C4B89),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: 50,
-                          width: size.width * .4,
-                          child: Center(
-                            child: Text(
-                              'ok',
-                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                         ),
-                        Container(
-                          width: size.width * .4,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Center(child: Text('Cancel')),
+                        SizedBox(
+                          width: 20,
                         ),
                       ],
-                    ),
-                  )
+                    )  ],
+                ),
+                children: [
+         Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,children: [         Padding(
+             padding: const EdgeInsets.all(8.0),
+             child:  Text('Category: food')
+         ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text('item Number: ${products.itemDetails[0].itemNumber}'),
+                 Container(child: Text('item name:  ${products.itemDetails[0].itemNameEn}'))
+               ],
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text('Item Price :${products.itemDetails[0].itemCost}'),
+                 Text('Tax:  ${products.itemDetails[0].tax}')
+               ],
+             ),
+           ),
+           Container(
+             height: 1,
+             color: Colors.grey,
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child:   Text(
+               'Promotion',
+               style: TextStyle(fontWeight: FontWeight.bold),
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child:  GestureDetector(
+               onTap: () {
+                 Widget okButton = TextButton(
+                   child: Text("OK"),
+                   onPressed: () {
+                     Navigator.of(context).pop();
+                   },
+                 );
+                 AlertDialog alert = AlertDialog(
+                   title: Center(
+                     child: Text(
+                       "Promotion list",
+                       style: TextStyle(color: Colors.red),
+                     ),
+                   ),
+                   content: Container(
+                     height: size.height * .8,
+                     width: size.width * .8,
+                     child: ListView(
+                       children: alert_item,
+                     ),
+                   ),
+                   actions: [
+                     okButton,
+                   ],
+                 );
+                 showDialog(
+                   context: context,
+                   builder: (BuildContext context) {
+                     return alert;
+                   },
+                 );
+               },
+               child: Row(
+                 children: [
+                   Image.asset('assets/images/iso.png',width: 30,height: 30,),
+                   Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Text(
+                       'Show All Promotion',
+                       style: TextStyle(fontWeight: FontWeight.bold),
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Column(
+                   children: [Text('Store ID'), Text('443')],
+                 ),
+                 Column(
+                   children: [Text('Unit'), Text('box')],
+                 ),
+                 Column(
+                   children: [Text('Quantity'), Text('4')],
+                 ),
+               ],
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+
+                 Column(
+                   children: [
+                     Text('stock'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),
+                 Column(
+                   children: [
+                     Text('Price per Item'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),  ],
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+
+                 Column(
+                   children: [
+                     Text('Price'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),
+                 Column(
+                   children: [
+                     Text('Tax %'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),   ],
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+
+                 Column(
+                   children: [
+                     Text('Total Tax'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),
+                 Column(
+                   children: [
+                     Text('Total Price'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),      ],
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+
+                 Column(
+                   children: [
+                     Text('Bounce'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),
+                 Column(
+                   children: [
+                     Text('Discount %'),
+                     Container(
+                       width: size.width * .4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(
+                                 0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: TextField(
+                         decoration: InputDecoration(
+                           border: InputBorder.none,
+                           focusedBorder: InputBorder.none,
+                           enabledBorder: InputBorder.none,
+                           errorBorder: InputBorder.none,
+                           disabledBorder: InputBorder.none,
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),   ],
+             ),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+
+                 Container(
+                   width: size.width * .4,
+                   height: 50,
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(10),
+                     color: Colors.white,
+                     boxShadow: [
+                       BoxShadow(
+                         color: Colors.grey.withOpacity(0.5),
+                         spreadRadius: 5,
+                         blurRadius: 7,
+                         offset:
+                         Offset(0, 3), // changes position of shadow
+                       ),
+                     ],
+                   ),
+                   child: Center(child: Text('Cancel')),
+                 ),
+                 Container(
+                   decoration: BoxDecoration(
+                     color: Color(0xff2C4B89),
+                     borderRadius: BorderRadius.circular(10),
+                   ),
+                   height: 50,
+                   width: size.width * .4,
+                   child: Center(
+                     child: Text(
+                       'ok',
+                       style: TextStyle(color: Colors.white),
+                     ),
+                   ),
+                 ),    ],
+             ),
+           )],)
                 ],
               )
             ],
@@ -766,73 +753,73 @@ class _ProductsScrState extends State<ProductsScr> {
       ),
     );
   }
-  //
-  // Widget AlirtItem({ItemDetails products, funadd, funremov}) {
-  //   var count = cartitem.cartlist.where((c) => c == products).toList().length;
-  //   return Padding(
-  //     padding: const EdgeInsets.all(8.0),
-  //     child: Container(
-  //       padding: EdgeInsets.all(4),
-  //       decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.circular(10),
-  //         color: Colors.grey[100],
-  //         boxShadow: [
-  //           BoxShadow(
-  //             color: Colors.grey[100].withOpacity(0.5),
-  //             spreadRadius: 5,
-  //             blurRadius: 7,
-  //             offset: Offset(0, 3), // changes position of shadow
-  //           ),
-  //         ],
-  //       ),
-  //       child: Column(
-  //         children: [
-  //           Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 Text('369'),
-  //                 Text(count.toString()),
-  //               ],
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 GestureDetector(onTap: funadd, child: Text('bol 100+30')),
-  //                 GestureDetector(
-  //                     onTap: funremov, child: Text('Promotion Name')),
-  //               ],
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 Text('bol 100+30'),
-  //                 Text('Promotion Details'),
-  //               ],
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 Text('18-4-2021'),
-  //                 Text('16-4-2021'),
-  //               ],
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+
+  Widget AlirtItem({ItemDetails products, funadd, funremov}) {
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[100],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey[100].withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  Text('Promotion No'),
+                  Text('369'),      ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  GestureDetector(
+                      onTap: funremov, child: Text('Promotion Name')),
+                  GestureDetector(onTap: funadd, child: Text('bol 100+30')), ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  Text('Promotion Details'),
+                  Text('bol 100+30'),       ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  Text('16-4-2021'),
+                  Text('18-4-2021'),    ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 //

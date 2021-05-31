@@ -1,4 +1,5 @@
 import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/customer_json.dart';
@@ -22,6 +23,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   var bata = Get.find<AllCustomersControllers>();
   var pricelistinf = Get.find<PriceListsInfoController>();
+  var allItemsController = Get.find< AllItemsController>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -31,7 +33,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
-                    pricelistinf.getListOfListPriceListsInfo(bata.allCustomers[pos].customerInfo);
+                    allItemsController.clearcustomerListItems();
+                    pricelistinf.makeAListOfPriceListsInfo(bata.allCustomers[pos].customerInfo);
 
                     Get.to(Dashboard(), arguments: 59);
                   },

@@ -10,5 +10,5 @@ const Map<String, String> en = {
   'qrclient': 'QR Client',
   'offer': 'Offers',
   'addoffer': 'Add Offer'
-  , 'user':  'USER NAME'
+  , 'user':  'user name'
 };

@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 
 class CartItemController extends GetxController{
 
- List<ItemDetails>cartlist=[];
- addToCart({ItemDetails item}){
+ List<AllItems>cartlist=[];
+ addToCart({AllItems item}){
    cartlist.add(item);
    update();
  }
- removefromcart({ItemDetails item}){
+ removefromcart({AllItems item}){
    cartlist.remove(item);
 
    update();
