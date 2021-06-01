@@ -11,7 +11,7 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  var bata = Get.find<AllCategoriesController>();
+  AllCategoriesController bata = Get.put(AllCategoriesController()) ;
   var slide=RangeValues(0.5,50);
   @override
   Widget build(BuildContext context) {

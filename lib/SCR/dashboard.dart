@@ -83,14 +83,12 @@ class _DashboardState extends State<Dashboard> {
                             if (_controller.connectionStatus.value)
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.replay),
-                                      Text(
-                                          'Last data sync is 14/04/2021  12:90'),
-                                    ],
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.replay),
+                                    Text(
+                                        'Last data sync is 14/04/2021  12:90'),
+                                  ],
                                 ),
                               ),
                             SizedBox(
@@ -245,7 +243,7 @@ class _DashboardState extends State<Dashboard> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: InkWell(
                                       onTap: () {
-                                        Get.to(Products_Expand());
+                                        Get.to(ProductsScr());
                                       },
                                       child: item(
                                           color: Colors.pink[200],
@@ -259,11 +257,13 @@ class _DashboardState extends State<Dashboard> {
                                     'yes')
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: item(
-                                        color: Colors.purpleAccent[200],
-                                        size: size,
-                                        name: 'Invoice',
-                                        path: 'assets/images/invoice.png'),
+                                    child: GestureDetector(
+                                      child: item(
+                                          color: Colors.purpleAccent[200],
+                                          size: size,
+                                          name: 'Invoice',
+                                          path: 'assets/images/invoice.png'),
+                                    ),
                                   ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -364,7 +364,7 @@ class _DashboardState extends State<Dashboard> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.5),
+            color:   Colors.white,
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(0, 3), // changes position of shadow

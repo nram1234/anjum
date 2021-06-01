@@ -26,23 +26,24 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   AllNetworking _allNetworking = AllNetworking();
-  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
 
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   bool updatethedata = false;
   bool showupdatethedata = false;
 
+  AllCategoriesController allCategoriesController = Get.put(AllCategoriesController(),permanent: true);
   @override
   Widget build(BuildContext context) {
 
-    Get.lazyPut(() => PriceListsInfoController());
+
     Get.lazyPut(() => UserDataController());
     Get.lazyPut(() => AllBanksController());
-    Get.lazyPut(() => AllCategoriesController());
+   // Get.lazyPut(() => AllCategoriesController(),fenix: true);
     Get.lazyPut(() => AllChequesController());
     Get.lazyPut(() => AllCustomersControllers());
 
     Get.lazyPut(() => AllStockItemsController());
-    Get.lazyPut(() => AllCategoriesController());
+
     Get.lazyPut(() => EmployeDataController());
     Get.lazyPut(() => EmployeePermissionsController());
 
@@ -74,10 +75,10 @@ class _HomeState extends State<Home> {
                   Positioned(
                       left: size.width * .1,
                       top: size.height * .05,
-                      child: Image.asset(
+                      child: Image.network(
                         _userAndPermissions.user.image,
-                        height: 75,
-                        width: 75,
+                        height:75,
+                        width:75,
                       )),
                   Positioned(
                       left: (size.width * .1) + 80,
@@ -107,11 +108,11 @@ class _HomeState extends State<Home> {
                         height: 16,
                       ),
                       InkWell(
-                        onTap:  () {
-                                Get.to(All_Customer());
-                              } ,
-
-                        child: Container(padding: EdgeInsets.all(8),
+                        onTap: () {
+                          Get.to(All_Customer());
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -228,85 +229,95 @@ class _HomeState extends State<Home> {
                                   path: 'assets/images/reprint.png'),
                             ),
 
-                              GestureDetector(
-                                onTap: () {
-                                  //_userAndPermissions.user.id.toString()
-                                  _allNetworking.Get_employee_data(
-                                          user_id: 59.toString())
-                                      .then((value) {
-                                    //insert to database
+                            GestureDetector(
+                              onTap: () {
+                                //_userAndPermissions.user.id.toString()
+                                _allNetworking.Get_employee_data(
+                                        user_id: 59.toString())
+                                    .then((value) {
+                                  //insert to database
 
-                                    print(value);
-                                    // Get.find<UserDataController>()
-                                    //     .userData
-                                    //     .clear();
-                                    Get.find<UserDataController>()
-                                        .updateserData(value.result.userData);
-                                    Get.find<AllBanksController>()
-                                        .allBanks
-                                        .clear();
-                                    Get.find<AllBanksController>()
-                                        .updateallBanksData(
-                                            value.result.allBanks);
-                                    Get.find<AllCategoriesController>().allCategories.clear();
-                                    Get.find<AllCategoriesController>()
-                                        .updateallCategoriesData(
-                                            value.result.allCategories);
-                                    Get.find<AllChequesController>().allCheques.clear();
-                                    Get.find<AllChequesController>()
-                                        .updateallChequesData(
-                                            value.result.allCheques);
-                                    Get.find<AllCustomersControllers>().allCustomers.clear();
-                                    Get.find<AllCustomersControllers>()
-                                        .updateallCustomers(
-                                            value.result.allCustomers);
-                                    Get.find<AllStockItemsController>().allStockItems.clear();
+                                  print(value);
+                                  Get.find<UserDataController>().userData.clear();
+                                  Get.find<UserDataController>()
+                                      .updateserData(value.result.userData);
+                                  Get.find<AllBanksController>().allBanks.clear();
+                                  Get.find<AllBanksController>().updateallBanksData(
+                                      value.result.allBanks);
 
-                                    Get.find<AllStockItemsController>()
-                                        .updateallStockItemsData(
-                                            value.result.allStockItems);
-                                    Get.find<AllCategoriesController>().allCategories.clear();
-                                    Get.find<AllCategoriesController>()
-                                        .updateallCategoriesData(
-                                            value.result.allCategories);
-                                    Get.find<EmployeDataController>().employeDatas.clear();
-                                    Get.find<EmployeDataController>()
-                                        .updateemployeDatasData(
-                                            value.result.employeData);
-                                    Get.find<EmployeePermissionsController>().employeePermissions.clear();
-                                    Get.find<EmployeePermissionsController>()
-                                        .updateemployeePermissionsData(
-                                            value.result.employeePermissions);
-
-                                    Get.find<SalesOrderController>()
-                                        .updatesalesOrderData(
-                                            value.result.salesOrder);
+                                  // Get.find<AllCategoriesController>()
+                                  //     .allCategories
+                                  //     .clear();
+                                  // Get.find<AllCategoriesController>()
+                                  //     .updateallCategoriesData(
+                                  //         value.result.allCategories);
+                                  allCategoriesController.allCategories.clear();
+                                  print(value.result.allCategories);
+                                  allCategoriesController.updateallCategoriesData(value.result.allCategories);
 
 
+                                  Get.find<AllChequesController>()
+                                      .allCheques
+                                      .clear();
+                                  Get.find<AllChequesController>()
+                                      .updateallChequesData(
+                                          value.result.allCheques);
+                                  Get.find<AllCustomersControllers>()
+                                      .allCustomers
+                                      .clear();
+                                  Get.find<AllCustomersControllers>()
+                                      .updateallCustomers(
+                                          value.result.allCustomers);
+                                  Get.find<AllStockItemsController>()
+                                      .allStockItems
+                                      .clear();
 
+                                  Get.find<AllStockItemsController>()
+                                      .updateallStockItemsData(
+                                          value.result.allStockItems);
+                                  Get.find<AllCategoriesController>()
+                                      .allCategories
+                                      .clear();
+                                  Get.find<AllCategoriesController>()
+                                      .updateallCategoriesData(
+                                          value.result.allCategories);
+                                  Get.find<EmployeDataController>()
+                                      .employeDatas
+                                      .clear();
+                                  Get.find<EmployeDataController>()
+                                      .updateemployeDatasData(
+                                          value.result.employeData);
+                                  Get.find<EmployeePermissionsController>()
+                                      .employeePermissions
+                                      .clear();
+                                  Get.find<EmployeePermissionsController>()
+                                      .updateemployeePermissionsData(
+                                          value.result.employeePermissions);
 
-                                    Get.find<AllItemsController>().allItems.clear();
-                                    Get.find<AllItemsController>()
-                                        .updateallItemsData(
-                                        value.result.allItems);
+                                  Get.find<SalesOrderController>()
+                                      .updatesalesOrderData(
+                                          value.result.salesOrder);
 
+                                  Get.find<AllItemsController>()
+                                      .allItems
+                                      .clear();
+                                  Get.find<AllItemsController>()
+                                      .updateallItemsData(
+                                          value.result.allItems);
 
-
-
-
-                                    updatethedata=true;
-                                    print(updatethedata  );
-                                  });
+                                  updatethedata = true;
+                                  print(updatethedata);
+                                });
 //                                 _allNetworking.tesyyt().then((value) {
 //                                   print(value.body);
 //                                 });
-                                },
-                                child: item(
-                                    color: Colors.cyan[200],
-                                    size: size,
-                                    name: 'update',
-                                    path: 'assets/images/report.png'),
-                              ),
+                              },
+                              child: item(
+                                  color: Colors.cyan[200],
+                                  size: size,
+                                  name: 'update',
+                                  path: 'assets/images/report.png'),
+                            ),
                             GestureDetector(
                               onTap: () {},
                               child: item(

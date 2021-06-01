@@ -6,8 +6,8 @@ import 'allItemsController.dart';
 
 class PriceListsInfoController extends GetxController {
   CustomerInfo _customerInfo;
-  var bata = Get.find<AllCustomersControllers>();
-  var allItemController = Get.find<AllItemsController>();
+  var bata = Get.find<AllCustomersControllers>( );
+  var allItemController = Get.find<AllItemsController>( );
 
   List<List<PriceListsInfo>> _listpriceListsInfo = [];
 

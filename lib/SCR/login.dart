@@ -13,12 +13,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
   bool _checkbox = false;
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController url = TextEditingController();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  final NetWorkController _controller = Get.put(NetWorkController());
+  final NetWorkController _controller = Get.put(NetWorkController(),permanent: true);
   AllNetworking _allNetworking = AllNetworking();
 
   @override
@@ -197,11 +198,13 @@ class _LoginState extends State<Login> {
                                 user_name: name.text, password: password.text)
                             .then((value) {
                           if (value != null) {
+                            print(value.user);
                             _userAndPermissions.setuser(value.user);
                             _userAndPermissions
                                 .setPermissions(value.permissions);
                             print( '00000000000000000000000000000000000');
 print(value.user.employeeNameEn);
+                            print(value.user.image);
                             print( '00000000000000000000000000000000000');
                             Get.to(Home());
 

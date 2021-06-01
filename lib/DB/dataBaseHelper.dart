@@ -9,43 +9,38 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'myModel.dart';
+import 'tabelname/item_tabel.dart';
+import 'tabelname/make_older.dart';
 import 'tabelname/sales_order_request_details.dart';
 import 'tabelname/sales_order_requests.dart';
 
 class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper.internal();
 
-static final DatabaseHelper _instance=DatabaseHelper.internal();
-DatabaseHelper.internal();
-factory DatabaseHelper()=>_instance;
-static Database _db;
-Future<Database> get db async{
-  if(_db!=null){
-    return _db;
-  }else{
-  return  _db= await initDb();
+  DatabaseHelper.internal();
+
+  factory DatabaseHelper() => _instance;
+  static Database _db;
+
+  Future<Database> get db async {
+    if (_db != null) {
+      return _db;
+    } else {
+      return _db = await initDb();
+    }
   }
 
-
-
-}
-
-
-
-
-
-
-
-   initDb() async {
-
-  Directory directionality= await getApplicationDocumentsDirectory();
-    String path = join( directionality.path, "anjum.db");
-  return await openDatabase(path, version: 1, onCreate: (Database db, int version) async {
-
-      await db.execute('''
-
+  initDb() async {
+    Directory directionality = await getApplicationDocumentsDirectory();
+    String path = join(directionality.path, "anjum.db");
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database db, int version) async {
+        await db.execute('''
 
 CREATE TABLE  $sales_order_request_details_tabelname  (
-   $sales_order_request_details_id INTEGER NOT NULL,
+   $sales_order_request_details_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
    $sales_order_request_details_user_id INTEGER   NOT NULL,
    $sales_order_request_details_sales_order_request_id INTEGER   NOT NULL,
    $sales_order_request_details_employee_id  INTEGER  NOT NULL,
@@ -58,26 +53,20 @@ CREATE TABLE  $sales_order_request_details_tabelname  (
    $sales_order_request_details_quantity INTEGER   ,
    $sales_order_request_details_total_price  REAL  ,
    $sales_order_request_details_total_tax  REAL  ,
- 
    $sales_order_request_details_total_price_before_tax  REAL   ,
    $sales_order_request_details_total_price_with_tax REAL   ,
-   
-   
   $sales_order_request_details_request_status TEXT  NOT NULL ,
      $sales_order_request_details_tax_type  TEXT  NOT NULL  ,
-     
-     
-     
    $sales_order_request_details_created_at INTEGER   NOT NULL  ,
    $sales_order_request_details_updated_at  INTEGER  NOT NULL    ,
    $sales_order_request_details_Item_Discount  REAL
 )
       ''');
 //
-      await db.execute('''
+        await db.execute('''
 
 CREATE TABLE  $sales_order_requests_tabelname  (
-   $sales_order_requests_id INTEGER  ,
+   $sales_order_requests_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL  ,
   $sales_order_requests_user_id INTEGER  ,
   $sales_order_requests_request_level INTEGER,
  $sales_order_requests_request_type TEXT,
@@ -93,24 +82,19 @@ CREATE TABLE  $sales_order_requests_tabelname  (
   $sales_order_requests_total_tax  REAL,
   $sales_order_requests_total_discount  REAL,
   $sales_order_requests_total_price REAL,
-
-
   $sales_order_requests_request_status  TEXT,
   $sales_order_requests_salesmanager_status  TEXT,
   $sales_order_requests_supervisor_status  TEXT,
   $sales_order_requests_is_successfully_submitted  INTEGER,
   $sales_order_requests_created_at  INTEGER,
-
-
   $sales_order_requests_updated_at INTEGER
 )
       ''');
 
-
-    await db.execute('''
+        await db.execute('''
 
 CREATE TABLE  $sales_order_invoice_request_stock_items_tabelname  (
-    $sales_order_invoice_request_stock_items_id  INTEGER NOT NULL,
+    $sales_order_invoice_request_stock_items_id  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
    $sales_order_invoice_request_stock_items_sales_order_request_id  INTEGER  ,
    $sales_order_invoice_request_stock_items_user_id  INTEGER  ,
    $sales_order_invoice_request_stock_items_store_id  INTEGER,
@@ -122,13 +106,10 @@ CREATE TABLE  $sales_order_invoice_request_stock_items_tabelname  (
 )
       ''');
 
-
-
-
-    await db.execute('''
+        await db.execute('''
 
 CREATE TABLE  $sales_order_cart_promotions_tabelname (
-    $sales_order_cart_promotions_id  INTEGER NOT NULL,
+    $sales_order_cart_promotions_id  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   $sales_order_cart_promotions_sales_order_cart_id  INTEGER NOT NULL,
   $sales_order_cart_promotions_discount_type  TEXT,
   $sales_order_cart_promotions_discount_percentage  REAL  ,
@@ -139,30 +120,152 @@ CREATE TABLE  $sales_order_cart_promotions_tabelname (
   $sales_order_cart_promotions_promotion_bonus_quantity  INTEGER  ,
   $sales_order_cart_promotions_created_at  INTEGER NOT NULL ,
   $sales_order_cart_promotions_updated_at  INTEGER
-)
+);
       ''');
 
-    },);
+        await db.execute('''
+CREATE TABLE  $make_older_tabelname (
+    $make_older_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    $make_older_user_id  INTEGER,
+    $make_older_request_level  INTEGER,
+    $make_older_requestType  TEXT,
+    $make_older_employeeId  INTEGER,
+    $make_older_customerId  INTEGER,
+    $make_older_storeId  INTEGER,
+    $make_older_supervisorId  INTEGER,
+    $make_older_salesmanagerId  INTEGER,
+    $make_older_noOfItems  INTEGER,
+    $make_older_supervisorNote  TEXT,
+    $make_older_salesmanagerNote  TEXT,
+    $make_older_totalPriceWithoutTaxDiscount  TEXT,
+    $make_older_totalTax  REAL,
+    $make_older_totalDiscount  INTEGER,
+    $make_older_totalPrice  INTEGER,
+    $make_older_requestStatus  TEXT
+
+)
+''');
+//
+//         await db.execute('''
+//
+// CREATE TABLE  $item_tabelname (
+//     $item_older_id  INTEGER PRIMARY   NOT NULL,
+//   $item_itemId  INTEGER  ,
+//   $item_categoryId   INTEGER  ,
+//   $item_measurementUnitId  INTEGER  ,
+//   $item_basePricePerUnit  REAL ,
+//   $item_bonus  REAL  ,
+//   $item_quantity  INTEGER,
+//   $item_taxType  TEXT,
+//   $item_totalTax  REAL  ,
+//   $item_totalPriceBeforeTax  REAL ,
+//   $item_totalPriceWithTax  REAL  ,
+//   $item_totalPrice  REAL  ,
+// )
+//       ''');
+      },
+    );
   }
 
-//ادخل داتا في تيبول  sales_order_invoice_request_stock_items
-  Future  insert_sales_order_cart_promotions(Sales_Order_Cart_Promotions_Model
-  sales_order_cart_promotions_model) async {
-    var dbClient = await  db;
-    dbClient.transaction((txn)   {
-
-
-      return  txn.insert(sales_order_cart_promotions_tabelname,
-          sales_order_cart_promotions_model.toJson(),
+//==============================================
+  Future insert_item_tabel(Item_Order__Db_json item) async {
+    var dbClient = await db;
+    dbClient.transaction((txn) {
+      return txn.insert(item_tabelname, item.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
+    });
+  }
 
+  Future<Item_Order__Db_json> get_item_withdata_tabel(int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient
+        .query(item_tabelname, where: '$item_itemId=?', whereArgs: [id]);
+    if (maps.length > 0) {
+      return Item_Order__Db_json.fromJson(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Item_Order__Db_json>> get_All_item_in_olderlist_() async {
+    List<Item_Order__Db_json> data = [];
+
+    var dbClient = await db;
+    // List<Map>maps = await
+    dbClient.query(item_tabelname).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(Item_Order__Db_json.fromJson(value[i]));
+      }
     });
 
+    return data;
   }
 
-  Future update_sales_order_cart_promotions(Sales_Order_Cart_Promotions_Model
-  sales_order_cart_promotions_model) async {
-    var dbClient = await  db;
+  Future delete_item_in_olderlist_byId(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .query(item_tabelname, where: '$item_itemId=?', whereArgs: [id]);
+  }
+
+//==============================================
+//==============================================
+  Future insert_make_older_(ListOrder item) async {
+    var dbClient = await db;
+    dbClient.transaction((txn) {
+      return txn.insert(make_older_tabelname, item.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    });
+  }
+
+  Future<Make_Order__Db_json> get_make_older(int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient
+        .query(make_older_tabelname, where: '$item_itemId=?', whereArgs: [id]);
+    if (maps.length > 0) {
+      return Make_Order__Db_json.fromJson(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Make_Order__Db_json>> get_All_make_older_() async {
+    List<Make_Order__Db_json> data = [];
+
+    var dbClient = await db;
+    // List<Map>maps = await
+    dbClient.query(make_older_tabelname).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(Make_Order__Db_json.fromJson(value[i]));
+      }
+    });
+
+    return data;
+  }
+
+  Future delete_make_older_byId(int id) async {
+    var dbClient = await db;
+    return await dbClient.query(make_older_tabelname,
+        where: '$item_older_id=?', whereArgs: [id]);
+  }
+
+  //==============================================
+
+//ادخل داتا في تيبول  sales_order_invoice_request_stock_items
+  Future insert_sales_order_cart_promotions(
+      Sales_Order_Cart_Promotions_Model
+          sales_order_cart_promotions_model) async {
+    var dbClient = await db;
+    dbClient.transaction((txn) {
+      return txn.insert(sales_order_cart_promotions_tabelname,
+          sales_order_cart_promotions_model.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    });
+  }
+
+  Future update_sales_order_cart_promotions(
+      Sales_Order_Cart_Promotions_Model
+          sales_order_cart_promotions_model) async {
+    var dbClient = await db;
     return await dbClient.update(sales_order_cart_promotions_tabelname,
         sales_order_cart_promotions_model.toJson(),
         where: '$sales_order_cart_promotions_id=?',
@@ -170,14 +273,10 @@ CREATE TABLE  $sales_order_cart_promotions_tabelname (
   }
 
   Future<Sales_Order_Cart_Promotions_Model> get_sales_order_cart_promotions(
-
-      int   id) async {
-    var dbClient = await  db;
-    List<Map>maps = await
-    dbClient.query(sales_order_cart_promotions_tabelname,
-
-        where: '$sales_order_cart_promotions_id=?',
-        whereArgs: [ id]);
+      int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(sales_order_cart_promotions_tabelname,
+        where: '$sales_order_cart_promotions_id=?', whereArgs: [id]);
     if (maps.length > 0) {
       return Sales_Order_Cart_Promotions_Model.fromJson(maps.first);
     } else {
@@ -185,17 +284,15 @@ CREATE TABLE  $sales_order_cart_promotions_tabelname (
     }
   }
 
-  Future<List<
-      Sales_Order_Cart_Promotions_Model>> get_All_sales_order_cart_promotions(
-      ) async {
-    List<
-        Sales_Order_Cart_Promotions_Model> data=[];
+  Future<List<Sales_Order_Cart_Promotions_Model>>
+      get_All_sales_order_cart_promotions() async {
+    List<Sales_Order_Cart_Promotions_Model> data = [];
 
-    var dbClient = await  db;
+    var dbClient = await db;
     // List<Map>maps = await
     dbClient.query(sales_order_cart_promotions_tabelname).then((value) {
-      for(int i=0;i<value.length;i++){
-        data.add( Sales_Order_Cart_Promotions_Model.fromJson(value[i]));
+      for (int i = 0; i < value.length; i++) {
+        data.add(Sales_Order_Cart_Promotions_Model.fromJson(value[i]));
       }
     });
 
@@ -206,122 +303,104 @@ CREATE TABLE  $sales_order_cart_promotions_tabelname (
     //     Sales_Order_Request_Details_Model.fromJson(data)).toList() :[];
     //
     //
-
-
   }
 
-  Future  delete_sales_order_cart_promotions(
-      int
-      id) async {
-    var dbClient = await  db;
-    return await
-    dbClient.query(sales_order_cart_promotions_tabelname,
-
-        where: '$sales_order_cart_promotions_id=?',
-        whereArgs: [ id]);
-
+  Future delete_sales_order_cart_promotions(int id) async {
+    var dbClient = await db;
+    return await dbClient.query(sales_order_cart_promotions_tabelname,
+        where: '$sales_order_cart_promotions_id=?', whereArgs: [id]);
   }
-
-
 
 //==========================================================================================
 
 //ادخل داتا في تيبول  sales_order_invoice_request_stock_items
-  Future  insert_sales_order_invoice_request_stock_items(Sales_Order_Invoice_Request_Stock_Items_Model
-  sales_order_invoice_request_stock_items_model) async {
-    var dbClient = await  db;
-    dbClient.transaction((txn)   {
-
-
-    return  txn.insert(sales_order_invoice_request_stock_items_tabelname,
+  Future insert_sales_order_invoice_request_stock_items(
+      Sales_Order_Invoice_Request_Stock_Items_Model
+          sales_order_invoice_request_stock_items_model) async {
+    var dbClient = await db;
+    dbClient.transaction((txn) {
+      return txn.insert(sales_order_invoice_request_stock_items_tabelname,
           sales_order_invoice_request_stock_items_model.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
+    });
+  }
 
+  Future update_sales_order_invoice_request_stock_items(
+      Sales_Order_Invoice_Request_Stock_Items_Model
+          sales_order_invoice_request_stock_items_model) async {
+    var dbClient = await db;
+    return await dbClient.update(
+        sales_order_invoice_request_stock_items_tabelname,
+        sales_order_invoice_request_stock_items_model.toJson(),
+        where: '$sales_order_invoice_request_stock_items_id=?',
+        whereArgs: [sales_order_invoice_request_stock_items_model.id]);
+  }
+
+  Future<Sales_Order_Invoice_Request_Stock_Items_Model>
+      get_sales_order_invoice_request_stock_items(int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(
+        sales_order_invoice_request_stock_items_tabelname,
+        where: '$sales_order_invoice_request_stock_items_id=?',
+        whereArgs: [id]);
+    if (maps.length > 0) {
+      return Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Sales_Order_Invoice_Request_Stock_Items_Model>>
+      get_All_sales_order_invoice_request_stock_items() async {
+    List<Sales_Order_Invoice_Request_Stock_Items_Model> data = [];
+
+    var dbClient = await db;
+    // List<Map>maps = await
+    dbClient
+        .query(sales_order_invoice_request_stock_items_tabelname)
+        .then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(
+            Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(value[i]));
+      }
     });
 
+    return data;
+    //
+    //
+    // return maps.isNotEmpty ? maps.map((data) =>
+    //     Sales_Order_Request_Details_Model.fromJson(data)).toList() :[];
+    //
+    //
   }
 
-Future update_sales_order_invoice_request_stock_items(Sales_Order_Invoice_Request_Stock_Items_Model
-sales_order_invoice_request_stock_items_model) async {
-  var dbClient = await  db;
-  return await dbClient.update(sales_order_invoice_request_stock_items_tabelname,
-      sales_order_invoice_request_stock_items_model.toJson(),
-      where: '$sales_order_invoice_request_stock_items_id=?',
-      whereArgs: [sales_order_invoice_request_stock_items_model.id]);
-}
-
-Future<Sales_Order_Invoice_Request_Stock_Items_Model> get_sales_order_invoice_request_stock_items(
-
-    int   id) async {
-  var dbClient = await  db;
-  List<Map>maps = await
-  dbClient.query(sales_order_invoice_request_stock_items_tabelname,
-
-      where: '$sales_order_invoice_request_stock_items_id=?',
-      whereArgs: [ id]);
-  if (maps.length > 0) {
-    return Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(maps.first);
-  } else {
-    return null;
-  }
-}
-
-Future<List<
-    Sales_Order_Invoice_Request_Stock_Items_Model>> get_All_sales_order_invoice_request_stock_items(
-    ) async {
-  List<
-      Sales_Order_Invoice_Request_Stock_Items_Model> data=[];
-
-  var dbClient = await  db;
-  // List<Map>maps = await
-  dbClient.query(sales_order_invoice_request_stock_items_tabelname).then((value) {
-    for(int i=0;i<value.length;i++){
-      data.add( Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(value[i]));
-    }
-  });
-
-  return data;
-  //
-  //
-  // return maps.isNotEmpty ? maps.map((data) =>
-  //     Sales_Order_Request_Details_Model.fromJson(data)).toList() :[];
-  //
-  //
-
-
-}
-
-  Future  delete_sales_order_invoice_request_stock_items(
-      int
-      id) async {
-    var dbClient = await  db;
-    return await
-    dbClient.query(sales_order_invoice_request_stock_items_tabelname,
-
+  Future delete_sales_order_invoice_request_stock_items(int id) async {
+    var dbClient = await db;
+    return await dbClient.query(
+        sales_order_invoice_request_stock_items_tabelname,
         where: '$sales_order_invoice_request_stock_items_id=?',
-        whereArgs: [ id]);
-
+        whereArgs: [id]);
   }
-
-
 
 //==========================================================================================
 //ادخل داتا في تيبول  Sales_Order_Request_Details
-  Future insert_Sales_Order_Request_Details(Sales_Order_Request_Details_Model
-  sales_order_request_details_model) async {
-  var data;
-   db.then((value) {
-     value.transaction((txn) {
-    data=   txn.insert(sales_order_request_details_tabelname, sales_order_request_details_model.toJson() );
-     });
-   });
-  return data;
-}
+  Future insert_Sales_Order_Request_Details(
+      Sales_Order_Request_Details_Model
+          sales_order_request_details_model) async {
+    var data;
+    db.then((value) {
+      value.transaction((txn) {
+        data = txn.insert(sales_order_request_details_tabelname,
+            sales_order_request_details_model.toJson());
+      });
+    });
+    return data;
+  }
 
-
-  Future update_Sales_Order_Request_Details(Sales_Order_Request_Details_Model
-  sales_order_request_details_model) async {
-    var dbClient = await  db;
+  Future update_Sales_Order_Request_Details(
+      Sales_Order_Request_Details_Model
+          sales_order_request_details_model) async {
+    var dbClient = await db;
     return await dbClient.update(sales_order_request_details_tabelname,
         sales_order_request_details_model.toJson(),
         where: 'sales_order_request_details_id=?',
@@ -329,14 +408,10 @@ Future<List<
   }
 
   Future<Sales_Order_Request_Details_Model> get_Sales_Order_Request_Details(
-
-   int   id) async {
-    var dbClient = await  db;
-    List<Map>maps = await
-    dbClient.query(sales_order_request_details_tabelname,
-
-        where: '$sales_order_request_details_id=?',
-        whereArgs: [ id]);
+      int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(sales_order_request_details_tabelname,
+        where: '$sales_order_request_details_id=?', whereArgs: [id]);
     if (maps.length > 0) {
       return Sales_Order_Request_Details_Model.fromJson(maps.first);
     } else {
@@ -344,17 +419,15 @@ Future<List<
     }
   }
 
-  Future<List<
-      Sales_Order_Request_Details_Model>> get_All_Sales_Order_Request_Details(
-       ) async {
-    List<
-        Sales_Order_Request_Details_Model> data=[];
+  Future<List<Sales_Order_Request_Details_Model>>
+      get_All_Sales_Order_Request_Details() async {
+    List<Sales_Order_Request_Details_Model> data = [];
 
-    var dbClient = await  db;
+    var dbClient = await db;
     // List<Map>maps = await
     dbClient.query(sales_order_request_details_tabelname).then((value) {
-      for(int i=0;i<value.length;i++){
-        data.add( Sales_Order_Request_Details_Model.fromJson(value[i]));
+      for (int i = 0; i < value.length; i++) {
+        data.add(Sales_Order_Request_Details_Model.fromJson(value[i]));
       }
     });
 
@@ -365,67 +438,41 @@ Future<List<
     //     Sales_Order_Request_Details_Model.fromJson(data)).toList() :[];
     //
     //
-
-
   }
 
-
-
-
-
-  Future  delete_Sales_Order_Request_Details(
-      int
-      id) async {
-    var dbClient = await  db;
- return await
-    dbClient.query(sales_order_request_details_tabelname,
-
-        where: '$sales_order_request_details_id=?',
-        whereArgs: [ id]);
-
+  Future delete_Sales_Order_Request_Details(int id) async {
+    var dbClient = await db;
+    return await dbClient.query(sales_order_request_details_tabelname,
+        where: '$sales_order_request_details_id=?', whereArgs: [id]);
   }
-
-
-
-
-
-
-
-
-
 
 //==========================================================================================
 //ادخل داتا في تيبول  insert_sales_order_requests
-  Future insert_sales_order_requests(Sales_Order_Requests_Model
-  sales_order_requests_model) async {
+  Future insert_sales_order_requests(
+      Sales_Order_Requests_Model sales_order_requests_model) async {
     var data;
     db.then((value) {
       value.transaction((txn) {
-        data=   txn.insert(sales_order_requests_tabelname, sales_order_requests_model.toJson() );
+        data = txn.insert(sales_order_requests_tabelname,
+            sales_order_requests_model.toJson());
       });
     });
     return data;
   }
 
-
-  Future update_sales_order_requests(Sales_Order_Requests_Model
-  sales_order_requests_model) async {
-    var dbClient = await  db;
-    return await dbClient.update(sales_order_requests_tabelname,
-        sales_order_requests_model.toJson(),
+  Future update_sales_order_requests(
+      Sales_Order_Requests_Model sales_order_requests_model) async {
+    var dbClient = await db;
+    return await dbClient.update(
+        sales_order_requests_tabelname, sales_order_requests_model.toJson(),
         where: '$sales_order_requests_id=?',
         whereArgs: [sales_order_requests_model.id]);
   }
 
-  Future<Sales_Order_Requests_Model> get_sales_order_requests(
-
-      int   id) async {
-    var dbClient = await  db;
-    List<Map>maps = await
-    dbClient.query(sales_order_requests_tabelname,
-
-        where: '$sales_order_requests_id=?',
-        whereArgs: [ id]);
+  Future<Sales_Order_Requests_Model> get_sales_order_requests(int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(sales_order_requests_tabelname,
+        where: '$sales_order_requests_id=?', whereArgs: [id]);
     if (maps.length > 0) {
       return Sales_Order_Requests_Model.fromJson(maps.first);
     } else {
@@ -433,17 +480,15 @@ Future<List<
     }
   }
 
-  Future<List<
-      Sales_Order_Requests_Model>> get_All_sales_order_requests(
-      ) async {
-    List<
-        Sales_Order_Requests_Model> data=[];
+  Future<List<Sales_Order_Requests_Model>>
+      get_All_sales_order_requests() async {
+    List<Sales_Order_Requests_Model> data = [];
 
-    var dbClient = await  db;
+    var dbClient = await db;
     // List<Map>maps = await
     dbClient.query(sales_order_requests_tabelname).then((value) {
-      for(int i=0;i<value.length;i++){
-        data.add( Sales_Order_Requests_Model.fromJson(value[i]));
+      for (int i = 0; i < value.length; i++) {
+        data.add(Sales_Order_Requests_Model.fromJson(value[i]));
       }
     });
 
@@ -454,81 +499,19 @@ Future<List<
     //     Sales_Order_Request_Details_Model.fromJson(data)).toList() :[];
     //
     //
-
-
   }
 
-
-
-
-
-  Future  delete_sales_order_requests(
-      int
-      id) async {
-    var dbClient = await  db;
-    return await
-    dbClient.query(sales_order_requests_tabelname,
-
-        where: '$sales_order_requests_id=?',
-        whereArgs: [ id]);
-
+  Future delete_sales_order_requests(int id) async {
+    var dbClient = await db;
+    return await dbClient.query(sales_order_requests_tabelname,
+        where: '$sales_order_requests_id=?', whereArgs: [id]);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  Future close()async{
-  await db.then((value) {
-    if(value.isOpen){
-      value.close();
-    }
-
-  });
+  Future close() async {
+    await db.then((value) {
+      if (value.isOpen) {
+        value.close();
+      }
+    });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

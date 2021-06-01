@@ -19,9 +19,21 @@ import 'SCR/products_Expand.dart';
 import 'SCR/testscr.dart';
 import 'Translation/Trans.dart';
 
+import 'controllers/allBanksController.dart';
+import 'controllers/allCategoriesController.dart';
+import 'controllers/allChequesController.dart';
+import 'controllers/allCustomersControllers.dart';
+import 'controllers/allItemsController.dart';
+import 'controllers/allStockItemsController.dart';
 import 'controllers/cartItemController.dart';
+import 'controllers/employeDataController.dart';
+import 'controllers/employeePermissionsController.dart';
+import 'controllers/priceListsInfoController.dart';
+import 'controllers/salesOrderController.dart';
+import 'controllers/userDataController.dart';
 import 'network/binding/network_binding.dart';
 void main() {
+
   runApp(MyApp());
 }
 
