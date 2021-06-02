@@ -1,3 +1,4 @@
+import 'package:anjum/SCR/printer-1.dart';
 import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -16,8 +17,10 @@ import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'OrderStatus.dart';
 import 'all _customer.dart';
 import 'dashboard.dart';
+import 'new/TimeLine.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -141,13 +144,19 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          item(
-                              color: Colors.orange[200],
-                              size: size,
-                              name: 'Orders Status',
-                              path: 'assets/images/box.png'),
+                          GestureDetector(onTap: (){
+                            Get.to(OrderStatus());
+                          },
+                            child: item(
+                                color: Colors.orange[200],
+                                size: size,
+                                name: 'Orders Status',
+                                path: 'assets/images/box.png'),
+                          ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(TimeLine());
+                            },
                             child: item(
                                 color: Colors.red[200],
                                 size: size,
@@ -180,11 +189,15 @@ class _HomeState extends State<Home> {
                                 name: 'Report',
                                 path: 'assets/images/report.png'),
                           ),
-                          item(
-                              color: Colors.orange[200],
-                              size: size,
-                              name: 'printers',
-                              path: 'assets/images/printer1.png'),
+                          GestureDetector(onTap: (){
+                            Get.to(Printer1());
+                          },
+                            child: item(
+                                color: Colors.orange[200],
+                                size: size,
+                                name: 'printers',
+                                path: 'assets/images/printer1.png'),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -233,7 +246,7 @@ class _HomeState extends State<Home> {
                               onTap: () {
                                 //_userAndPermissions.user.id.toString()
                                 _allNetworking.Get_employee_data(
-                                        user_id: 59.toString())
+                                        user_id: _userAndPermissions.user.id.toString())
                                     .then((value) {
                                   //insert to database
 
@@ -252,6 +265,7 @@ class _HomeState extends State<Home> {
                                   //     .updateallCategoriesData(
                                   //         value.result.allCategories);
                                   allCategoriesController.allCategories.clear();
+                                  print(value.result.allCategories.length);
                                   print(value.result.allCategories);
                                   allCategoriesController.updateallCategoriesData(value.result.allCategories);
 

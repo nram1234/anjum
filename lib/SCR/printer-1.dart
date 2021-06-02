@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_utils/src/platform/platform_io.dart';
 
 import 'dashboard.dart';
 import 'printer-2.dart';
@@ -102,7 +104,9 @@ class _Printer1State extends State<Printer1> {
                           child: ListView.builder(
                               itemCount: 5,
                               itemBuilder: (context, pos) {
-                                return item(size: size);
+                                return GestureDetector(onTap: (){
+                                  Get.to(Printer2);
+                                },child: item(size: size));
                               }),
                         ),
                       ],

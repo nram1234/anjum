@@ -160,7 +160,9 @@ class _OrderStatusState extends State<OrderStatus> {
                       child: ListView.builder(
                           itemCount: 50,
                           itemBuilder: (context, pos) {
-                            return listItem(size: size);
+                            return GestureDetector(  onTap: (){
+                              Get.to(OrderStatusdetails  );
+                            },child: listItem(size: size));
                           }),
                     ),
                   ],

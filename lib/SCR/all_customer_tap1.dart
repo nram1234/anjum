@@ -66,8 +66,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
               child: Container(padding: EdgeInsets.all(16),
                 child: Image.network(
                   data.customerInfo.image,
-                  width: size.height * .1,
-                  height: size.height * .1,
+                  width: size.height * .08,
+                  height: size.height * .08,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -151,7 +151,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                       ],
                                     ),
                                     child: SingleChildScrollView(
-                                      child: Column(
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         //  mainAxisSize: MainAxisSize.min,
@@ -239,11 +239,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                     right: Consts.padding,
                                     child: CircleAvatar(
                                       //backgroundColor: Colors.blueAccent,
-                                      backgroundImage: NetworkImage(
-                                          data.customerInfo.image,
-                                          scale: .2),
+                                      // backgroundImage: NetworkImage(
+                                      //     data.customerInfo.image,
+                                      //     scale: .2),
                                       radius: Consts.avatarRadius,
-                                    ),
+                                 child: ClipOval(child: Image.network(
+                                   data.customerInfo.image,fit: BoxFit.fill,
+                                 ),),   ),
                                   ),
                                   //...top circlular image part,
                                 ],
@@ -288,5 +290,5 @@ class Consts {
   Consts._();
 
   static const double padding = 16.0;
-  static const double avatarRadius = 66.0;
+  static const double avatarRadius = 70;
 }

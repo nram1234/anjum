@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:anjum/SCR/login.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'SCR/Bill.dart';
 import 'SCR/OrderStatus.dart';
@@ -32,13 +33,13 @@ import 'controllers/priceListsInfoController.dart';
 import 'controllers/salesOrderController.dart';
 import 'controllers/userDataController.dart';
 import 'network/binding/network_binding.dart';
-void main() {
-
+void main() async{
+  await GetStorage.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
+  var box = GetStorage();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home:Login()//ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+      home:Tesst()//ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 

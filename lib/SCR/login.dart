@@ -1,9 +1,11 @@
+import 'package:anjum/controllers/langController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'home.dart';
 
@@ -13,14 +15,43 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
+   var box = GetStorage();
   bool _checkbox = false;
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController url = TextEditingController();
+  TextEditingController user_Id = TextEditingController();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   final NetWorkController _controller = Get.put(NetWorkController(),permanent: true);
+  final LangController _langController = Get.put(LangController(),permanent: true);
+
   AllNetworking _allNetworking = AllNetworking();
+
+  @override
+  void initState() {
+    super.initState();
+  var lan=  box.read('lan');
+    var user=  box.read('user');
+    var passwor=  box.read('password');
+
+
+      name.text=user;
+      password.text=passwor;
+
+
+
+
+    if(lan!=null){
+      if(lan=='ar'){
+        var locale = Locale('ar', 'AR');
+        Get.updateLocale(locale);
+      }else{
+        var locale = Locale('en', 'En');
+        Get.updateLocale(locale);
+      }
+    }
+    print('llllllllllllllllllll');
+ print(box.read('lan')); }
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +167,38 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     child: TextField(
+                      controller: user_Id,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Userid'.tr,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          prefixIcon: Icon(Icons.ac_unit)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * .02,
+                  ),  Container(
+                    width: size.width * .85,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: TextField(
                       controller: url,
                       decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'change app URL (optional)',
+                          hintText: 'changeURL'.tr,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
@@ -154,20 +213,32 @@ class _LoginState extends State<Login> {
                     width: size.width * .85,
                     child: Row(
                       children: [
-                        Container(
-                          color: Colors.white,
-                          width: 75,
-                          height: 35,
-                          child: Center(child: Text('AR')),
+                        GestureDetector(onTap: (){
+                          box.write('lan', 'ar');
+                          var locale = Locale('ar', 'AR');
+                          Get.updateLocale(locale);
+                        },
+                          child: Container(
+                            color: Colors.white,
+                            width: 75,
+                            height: 35,
+                            child: Center(child: Text('AR')),
+                          ),
                         ),
-                        Container(
-                          color: Colors.white,
-                          width: 75,
-                          height: 35,
-                          child: Center(child: Text('EN')),
+                        GestureDetector(onTap: (){
+                          box.write('lan', 'en');
+                          var locale = Locale('en', 'US');
+                          Get.updateLocale(locale);
+                        },
+                          child: Container(
+                            color: Colors.white,
+                            width: 75,
+                            height: 35,
+                            child: Center(child: Text('EN')),
+                          ),
                         ),
                         Expanded(child: Container()),
-                        Text('Remember me'),
+                        Text('Rememberme'.tr),
                         Container(
                           height: 50,
                           width: 25,
@@ -192,10 +263,14 @@ class _LoginState extends State<Login> {
                         AllNetworking.paseurl=url.text;
                       }
                       print( AllNetworking.paseurl);
-                      if (name.text != null && password.text != null) {
+                      if (name.text != null && password.text != null&& user_Id.text != null) {
+                        if(_checkbox){
+                          box.write('user', name.text);
+                          box.write('password', password.text);
+                        }
                         _allNetworking
                             .login(
-                                user_name: name.text, password: password.text)
+                                user_name: name.text, password: password.text,user_id: int.tryParse(user_Id.text))
                             .then((value) {
                           if (value != null) {
                             print(value.user);
@@ -229,7 +304,7 @@ print(value.user.employeeNameEn);
                       ),
                       child: Center(
                           child: Text(
-                        'Login Now',
+                        'login'.tr,
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

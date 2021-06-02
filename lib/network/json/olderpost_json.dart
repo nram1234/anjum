@@ -1,32 +1,13 @@
-final String make_older_tabelname='make_order';
-final String make_older_id='id';
-final String make_older_user_id='user_id';
-final String make_older_request_level='request_level';
-final String make_older_requestType='request_type';
-final String make_older_employeeId='employee_id';
-final String make_older_customerId='customer_id';
-final String make_older_storeId='store_id';
-final String make_older_supervisorId='supervisor_id';
-final String make_older_salesmanagerId='salesmanager_id';
-final String make_older_noOfItems='no_of_items';
-final String make_older_supervisorNote='supervisor_note';
-final String make_older_salesmanagerNote='salesmanager_note';
-final String make_older_totalPriceWithoutTaxDiscount='total_price_without_tax_discount';
-final String make_older_totalTax='total_tax';
-final String make_older_totalDiscount='total_discount';
-final String make_older_totalPrice='total_price';
-final String make_older_requestStatus='request_status';
-//=============================================================================
-class Make_Order__Db_json {
-  List<ListOrder> listOrder;
+class OlderPost_json {
+  List<ListOrderToJson> listOrder;
 
-  Make_Order__Db_json({this.listOrder});
+  OlderPost_json({this.listOrder});
 
-  Make_Order__Db_json.fromJson(Map<String, dynamic> json) {
+  OlderPost_json.fromJson(Map<String, dynamic> json) {
     if (json['list_order'] != null) {
-      listOrder = <ListOrder>[];
+      listOrder = <ListOrderToJson>[];
       json['list_order'].forEach((v) {
-        listOrder.add(new ListOrder.fromJson(v));
+        listOrder.add(new ListOrderToJson.fromJson(v));
       });
     }
   }
@@ -40,7 +21,7 @@ class Make_Order__Db_json {
   }
 }
 
-class ListOrder {
+class ListOrderToJson {
   int userId;
   int requestLevel;
   String requestType;
@@ -59,7 +40,7 @@ class ListOrder {
   String requestStatus;
   List<Item> item;
 
-  ListOrder(
+  ListOrderToJson(
       {this.userId,
         this.requestLevel,
         this.requestType,
@@ -78,7 +59,7 @@ class ListOrder {
         this.requestStatus,
         this.item});
 
-  ListOrder.fromJson(Map<String, dynamic> json) {
+  ListOrderToJson.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     requestLevel = json['request_level'];
     requestType = json['request_type'];
@@ -185,4 +166,3 @@ class Item {
     return data;
   }
 }
-

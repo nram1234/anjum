@@ -21,16 +21,19 @@ class AllNetworking {
   Future<Login_json> login({
     @required String user_name,
     @required String password,
+    @required   int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "user_name": user_name,
       "password": password,
+      "user_id": user_id,
     };
     Login_json data;
     await dio
         .post(paseurl + "API/api/auth/login", queryParameters: formData)
         .then((value) {
+          print(value.data);
       if (value.data['error_message'] != null) {
         Get.snackbar('', value.data['error_message']);
         data = null;

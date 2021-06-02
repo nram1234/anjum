@@ -94,7 +94,7 @@ CREATE TABLE  $sales_order_requests_tabelname  (
         await db.execute('''
 
 CREATE TABLE  $sales_order_invoice_request_stock_items_tabelname  (
-    $sales_order_invoice_request_stock_items_id  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    $sales_order_invoice_request_stock_items_id  INTEGER PRIMARY KEY AUTOINCREMENT  ,
    $sales_order_invoice_request_stock_items_sales_order_request_id  INTEGER  ,
    $sales_order_invoice_request_stock_items_user_id  INTEGER  ,
    $sales_order_invoice_request_stock_items_store_id  INTEGER,
@@ -109,8 +109,8 @@ CREATE TABLE  $sales_order_invoice_request_stock_items_tabelname  (
         await db.execute('''
 
 CREATE TABLE  $sales_order_cart_promotions_tabelname (
-    $sales_order_cart_promotions_id  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  $sales_order_cart_promotions_sales_order_cart_id  INTEGER NOT NULL,
+    $sales_order_cart_promotions_id  INTEGER PRIMARY KEY AUTOINCREMENT  ,
+  $sales_order_cart_promotions_sales_order_cart_id  INTEGER  ,
   $sales_order_cart_promotions_discount_type  TEXT,
   $sales_order_cart_promotions_discount_percentage  REAL  ,
   $sales_order_cart_promotions_discount_amount  REAL ,
@@ -125,81 +125,85 @@ CREATE TABLE  $sales_order_cart_promotions_tabelname (
 
         await db.execute('''
 CREATE TABLE  $make_older_tabelname (
-    $make_older_id  INTEGER PRIMARY KEY AUTOINCREMENT,
-    $make_older_user_id  INTEGER,
-    $make_older_request_level  INTEGER,
-    $make_older_requestType  TEXT,
-    $make_older_employeeId  INTEGER,
-    $make_older_customerId  INTEGER,
-    $make_older_storeId  INTEGER,
-    $make_older_supervisorId  INTEGER,
-    $make_older_salesmanagerId  INTEGER,
-    $make_older_noOfItems  INTEGER,
-    $make_older_supervisorNote  TEXT,
-    $make_older_salesmanagerNote  TEXT,
-    $make_older_totalPriceWithoutTaxDiscount  TEXT,
-    $make_older_totalTax  REAL,
-    $make_older_totalDiscount  INTEGER,
-    $make_older_totalPrice  INTEGER,
+    $make_older_id  INTEGER PRIMARY KEY AUTOINCREMENT ,
+    $make_older_user_id  INTEGER ,
+    $make_older_request_level  INTEGER ,
+    $make_older_requestType  TEXT ,
+    $make_older_employeeId  INTEGER ,
+    $make_older_customerId  INTEGER ,
+    $make_older_storeId  INTEGER ,
+    $make_older_supervisorId  INTEGER ,
+    $make_older_salesmanagerId  INTEGER ,
+    $make_older_noOfItems  INTEGER ,
+    $make_older_supervisorNote  TEXT ,
+    $make_older_salesmanagerNote  TEXT ,
+    $make_older_totalPriceWithoutTaxDiscount  TEXT ,
+    $make_older_totalTax  REAL ,
+    $make_older_totalDiscount  INTEGER ,
+    $make_older_totalPrice  INTEGER ,
     $make_older_requestStatus  TEXT
 
 )
 ''');
-//
-//         await db.execute('''
-//
-// CREATE TABLE  $item_tabelname (
-//     $item_older_id  INTEGER PRIMARY   NOT NULL,
-//   $item_itemId  INTEGER  ,
-//   $item_categoryId   INTEGER  ,
-//   $item_measurementUnitId  INTEGER  ,
-//   $item_basePricePerUnit  REAL ,
-//   $item_bonus  REAL  ,
-//   $item_quantity  INTEGER,
-//   $item_taxType  TEXT,
-//   $item_totalTax  REAL  ,
-//   $item_totalPriceBeforeTax  REAL ,
-//   $item_totalPriceWithTax  REAL  ,
-//   $item_totalPrice  REAL  ,
-// )
-//       ''');
+
+        await db.execute('''
+
+CREATE TABLE  $item_tabelname (
+    $item_older_id  INTEGER ,
+  $item_itemId  INTEGER ,
+  $item_categoryId   INTEGER ,
+  $item_measurementUnitId  INTEGER ,
+  $item_basePricePerUnit  REAL ,
+  $item_bonus  REAL ,
+  $item_quantity  REAL ,
+  $item_taxType  TEXT ,
+  $item_totalTax  REAL ,
+  $item_totalPriceBeforeTax  REAL ,
+  $item_totalPriceWithTax  REAL ,
+  $item_totalPrice  REAL
+)
+      ''');
       },
     );
   }
 
 //==============================================
-  Future insert_item_tabel(Item_Order__Db_json item) async {
+  Future <int>insert_item_tabel(Item_Database item) async {
+    int id;
     var dbClient = await db;
-    dbClient.transaction((txn) {
-      return txn.insert(item_tabelname, item.toJson(),
-          conflictAlgorithm: ConflictAlgorithm.replace);
+    await   dbClient.transaction((txn) async{
+       await txn.insert(item_tabelname, item.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
+          id=value;
+      });
     });
-  }
+    return id;  }
 
-  Future<Item_Order__Db_json> get_item_withdata_tabel(int id) async {
+  Future<List<Item_Database>> get_All_item_in_olderlist_(int id) async {
     var dbClient = await db;
+    List<Item_Database> data = [];
     List<Map> maps = await dbClient
-        .query(item_tabelname, where: '$item_itemId=?', whereArgs: [id]);
-    if (maps.length > 0) {
-      return Item_Order__Db_json.fromJson(maps.first);
-    } else {
-      return null;
-    }
-  }
-
-  Future<List<Item_Order__Db_json>> get_All_item_in_olderlist_() async {
-    List<Item_Order__Db_json> data = [];
-
-    var dbClient = await db;
-    // List<Map>maps = await
-    dbClient.query(item_tabelname).then((value) {
+        .query(item_tabelname, where: '$item_older_id=?', whereArgs: [id]).then((value) {
       for (int i = 0; i < value.length; i++) {
-        data.add(Item_Order__Db_json.fromJson(value[i]));
-      }
+              data.add(Item_Database.fromJson(value[i]));
+            }
     });
-
-    return data;
+return data;
   }
+
+  // Future<List<Item_Order__Db_json>> get_All_item_in_olderlist_(int id) async {
+  //   List<Item_Order__Db_json> data = [];
+  //
+  //   var dbClient = await db;
+  //   // List<Map>maps = await
+  //   await   dbClient.query(item_tabelname).then((value) {
+  //     for (int i = 0; i < value.length; i++) {
+  //       data.add(Item_Order__Db_json.fromJson(value[i]));
+  //     }
+  //   });
+  //
+  //   return data;
+  // }
 
   Future delete_item_in_olderlist_byId(int id) async {
     var dbClient = await db;
@@ -209,13 +213,23 @@ CREATE TABLE  $make_older_tabelname (
 
 //==============================================
 //==============================================
-  Future insert_make_older_(ListOrder item) async {
+  Future   insert_make_older_(ListOrder item) async {
+    int id;
     var dbClient = await db;
-    dbClient.transaction((txn) {
-      return txn.insert(make_older_tabelname, item.toJson(),
-          conflictAlgorithm: ConflictAlgorithm.replace);
+    await  dbClient.insert(make_older_tabelname, item.toJson(),conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
+      //print(value);
+       id=value;
+
     });
-  }
+
+    // dbClient.transaction((txn) {
+    //    txn.insert(make_older_tabelname, item.toJson(),
+    //       conflictAlgorithm: ConflictAlgorithm.replace);
+    // }).then((value) {
+    //   id=value;
+    // });
+    return id;
+   }
 
   Future<Make_Order__Db_json> get_make_older(int id) async {
     var dbClient = await db;
@@ -255,8 +269,8 @@ CREATE TABLE  $make_older_tabelname (
       Sales_Order_Cart_Promotions_Model
           sales_order_cart_promotions_model) async {
     var dbClient = await db;
-    dbClient.transaction((txn) {
-      return txn.insert(sales_order_cart_promotions_tabelname,
+    dbClient.transaction((txn)async {
+      return await txn.insert(sales_order_cart_promotions_tabelname,
           sales_order_cart_promotions_model.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     });
@@ -290,7 +304,7 @@ CREATE TABLE  $make_older_tabelname (
 
     var dbClient = await db;
     // List<Map>maps = await
-    dbClient.query(sales_order_cart_promotions_tabelname).then((value) {
+    await  dbClient.query(sales_order_cart_promotions_tabelname).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Sales_Order_Cart_Promotions_Model.fromJson(value[i]));
       }
@@ -318,8 +332,8 @@ CREATE TABLE  $make_older_tabelname (
       Sales_Order_Invoice_Request_Stock_Items_Model
           sales_order_invoice_request_stock_items_model) async {
     var dbClient = await db;
-    dbClient.transaction((txn) {
-      return txn.insert(sales_order_invoice_request_stock_items_tabelname,
+    dbClient.transaction((txn)async {
+      return await txn.insert(sales_order_invoice_request_stock_items_tabelname,
           sales_order_invoice_request_stock_items_model.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     });
@@ -356,7 +370,7 @@ CREATE TABLE  $make_older_tabelname (
 
     var dbClient = await db;
     // List<Map>maps = await
-    dbClient
+    await  dbClient
         .query(sales_order_invoice_request_stock_items_tabelname)
         .then((value) {
       for (int i = 0; i < value.length; i++) {
@@ -388,7 +402,7 @@ CREATE TABLE  $make_older_tabelname (
       Sales_Order_Request_Details_Model
           sales_order_request_details_model) async {
     var data;
-    db.then((value) {
+    await  db.then((value) {
       value.transaction((txn) {
         data = txn.insert(sales_order_request_details_tabelname,
             sales_order_request_details_model.toJson());
@@ -425,7 +439,7 @@ CREATE TABLE  $make_older_tabelname (
 
     var dbClient = await db;
     // List<Map>maps = await
-    dbClient.query(sales_order_request_details_tabelname).then((value) {
+    await  dbClient.query(sales_order_request_details_tabelname).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Sales_Order_Request_Details_Model.fromJson(value[i]));
       }
@@ -451,7 +465,7 @@ CREATE TABLE  $make_older_tabelname (
   Future insert_sales_order_requests(
       Sales_Order_Requests_Model sales_order_requests_model) async {
     var data;
-    db.then((value) {
+    await   db.then((value) {
       value.transaction((txn) {
         data = txn.insert(sales_order_requests_tabelname,
             sales_order_requests_model.toJson());
@@ -486,7 +500,7 @@ CREATE TABLE  $make_older_tabelname (
 
     var dbClient = await db;
     // List<Map>maps = await
-    dbClient.query(sales_order_requests_tabelname).then((value) {
+    await   dbClient.query(sales_order_requests_tabelname).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Sales_Order_Requests_Model.fromJson(value[i]));
       }

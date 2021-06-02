@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'SalesOrderDetails.dart';
 class TimeLine extends StatefulWidget {
   @override
   _TimeLineState createState() => _TimeLineState();
@@ -215,7 +218,9 @@ class _TimeLineState extends State<TimeLine> {
                               borderRadius: BorderRadius.circular(6),
                             ),
                               color: Color(0xff2C4B89),
-                              onPressed: (){},
+                              onPressed: (){
+                              Get.to(SalesOrderDetails());
+                              },
                             child: Text("Details",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                           ),
                         )

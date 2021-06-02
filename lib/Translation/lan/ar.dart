@@ -6,8 +6,13 @@ const Map<String, String> ar = {
   'savep': 'تسجيل',
   'login': 'دخول',
   'password': 'كلمه السر',
-  'usercode': 'كود المستخدم','qrclient': 'اكواد العملاء',
+  'usercode': 'كود المستخدم',
+  'qrclient': 'اكواد العملاء',
   'offer': 'العروض',
-  'addoffer': 'اضافة عرض'
-   , 'user':  'اسم المستخدم'
+  'addoffer': 'اضافة عرض',
+  'user': 'رقم الهاتف',
+  'Rememberme': 'تذكرني',
+  'changeURL': 'تغيير عنوان قاعدة البيانات',
+  'Userid': 'رقم الشركه',
+
 };

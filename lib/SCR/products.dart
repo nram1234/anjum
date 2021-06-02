@@ -3,14 +3,16 @@ import 'package:anjum/DB/tabelname/make_older.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/json/olderpost_json.dart';
 import 'package:anjum/network/json/products_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'dart:convert';
 import 'cart.dart';
 import 'filter.dart';
 
@@ -22,9 +24,9 @@ class ProductsScr extends StatefulWidget {
 class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
 
-  var bata = Get.find<AllItemsController>();
+  AllItemsController bata = Get.find<AllItemsController>();
 
-  var cartListItem = Get.put(CartItemController(), permanent: true);
+  CartItemController cartListItem = Get.put(CartItemController(), permanent: true);
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
@@ -36,6 +38,7 @@ class _ProductsScrState extends State<ProductsScr> {
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
+    biledjsonpost();
     return Scaffold(
         body: Container(
       height: size.height,
@@ -187,19 +190,18 @@ class _ProductsScrState extends State<ProductsScr> {
                         onTap: () {
                           _databaseHelper
                               .insert_make_older_(ListOrder(
-                                  customerId: 12,
-                                  employeeId: 1,
-                                requestType: 'oo',
-                                  storeId: 11,
-                                  noOfItems: 2,
-                                  requestLevel: 1,
-                                  userId: 11,
-                                ))
+                            customerId: 12,
+                            employeeId: 1,
+                            requestType: 'oo',
+                            storeId: 11,
+                            noOfItems: 2,
+                            requestLevel: 1,
+                            userId: 11,
+                          ))
                               .then((value) {
-                               print(value);
-                          })
-                              .catchError((e) {
-                                print(e.toString());
+                            print(value);
+                          }).catchError((e) {
+                            print(e.toString());
                           });
                         },
                         child: Container(
@@ -861,6 +863,24 @@ class _ProductsScrState extends State<ProductsScr> {
         ),
       ),
     );
+  }
+
+  biledjsonpost({UserAndPermissions userAndPermissions ,CartItemController cartListItem} ) {
+    EmployeDataController employeDataController=EmployeDataController();
+    OlderPost_json listOrder = OlderPost_json(listOrder: [
+      ListOrderToJson(
+          item: [],
+          userId: userAndPermissions.user.id,
+          requestLevel:  5,
+          noOfItems: cartListItem.cartlist.length,
+          storeId: 44,
+          requestType: 'nn',
+          employeeId: 5,
+          customerId: 5)
+    ]);
+
+    String jsonUser = jsonEncode(listOrder);
+    print(jsonUser);
   }
 }
 
