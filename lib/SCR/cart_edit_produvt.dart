@@ -1,3 +1,4 @@
+import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/products_json.dart';
 import 'package:anjum/network/networkReq.dart';
@@ -15,6 +16,7 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
   AllNetworking _allNetworking = AllNetworking();
   UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
   int itemcount=0;
+  final TimeController c = Get.find();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -138,30 +140,44 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                               }
                           ),
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                height: size.height * .1,
-                                color: Color(0xff2C4B89),
-                                child: Center(
-                                    child: Text(
-                                      'End Visit',
-                                      style: TextStyle(
-                                          fontSize: 20, fontWeight: FontWeight.bold),
-                                    )),
+                        Container(
+                          height: size.height * .1,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: GestureDetector(onTap:(){
+                                  if(!Get.find<TimeController>().swatch.isRunning){
+                                    Get.find<TimeController>().startjor();
+                                  }else{
+                                    Get.find<TimeController>().stopjor();
+                                  }
+
+                                } ,
+                                  child: Container(
+                                    height: size.height * .1,
+                                    color: Color(0xff2C4B89),
+                                    child: Center(
+                                        child:Obx(() => Text(
+                                          c.startswatch.value?  'End Visit':'start',
+                                          style:
+                                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                        ))),
+                                  ),
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                height: size.height * .1,
-                                child: Center(child: Text('123')),
-                              ),
-                            )
-                          ],
-                        ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  height: size.height * .1,
+                                  child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
+                                    return Text(c.stoptimedisplay.value);
+                                  },)),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   )),

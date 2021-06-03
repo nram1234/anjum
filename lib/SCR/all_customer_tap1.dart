@@ -1,3 +1,4 @@
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
@@ -36,6 +37,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     allItemsController.clearcustomerListItems();
                     pricelistinf.makeAListOfPriceListsInfo(bata.allCustomers[pos].customerInfo);
 
+                   // 113  bata.allCustomers[pos].customerInfo.customerId
+                    Get.find< AllChequesController>().setcustomer(bata.allCustomers[pos].customerInfo.customerId);
                     Get.to(Dashboard(), arguments: 59);
                   },
                   child: item(size: size, data: bata.allCustomers[pos]));

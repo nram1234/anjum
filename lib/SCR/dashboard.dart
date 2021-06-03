@@ -1,5 +1,6 @@
 import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
+import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final NetWorkController _controller = Get.put(NetWorkController());
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-
+  final TimeController c = Get.find();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -312,45 +313,44 @@ class _DashboardState extends State<Dashboard> {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: Container(
+                  child:    Container(
                     height: size.height * .1,
-                    width: size.width,
-                    decoration: BoxDecoration(
-                        //   color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            topLeft: Radius.circular(30))),
                     child: Row(
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.indigo,
+                          child: GestureDetector(onTap:(){
+                            if(!Get.find<TimeController>().swatch.isRunning){
+                              Get.find<TimeController>().startjor();
+                            }else{
+                              Get.find<TimeController>().stopjor();
+                            }
+
+                          } ,
+                            child: Container(
+                              height: size.height * .1,
+                              color: Color(0xff2C4B89),
+                              child: Center(
+                                  child:Obx(() => Text(
+                                    c.startswatch.value?  'End Visit':'start',
+                                    style:
+                                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                  ))),
                             ),
-                            height: size.height * .1,
-                            child: Center(
-                                child: Text(
-                              'End Visit',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            )),
                           ),
                         ),
                         Expanded(
                           flex: 2,
                           child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                            )),
                             height: size.height * .1,
-                            child: Center(child: Text('123')),
+                            child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
+                              return Text(c.stoptimedisplay.value);
+                            },)),
                           ),
                         )
                       ],
                     ),
-                  ),
+                  )
                 )
               ],
             )));

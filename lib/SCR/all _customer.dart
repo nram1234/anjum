@@ -1,4 +1,6 @@
+import 'package:anjum/controllers/timeController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/root_controller.dart';
 
 import 'all_customer_tap1.dart';
@@ -9,16 +11,17 @@ class All_Customer extends StatefulWidget {
 }
 
 class _All_CustomerState extends State<All_Customer> {
-
+   
   PageController _pageController = PageController(
     initialPage: 0,
     keepPage: true,
   );
   int _curr = 0;
   List<Widget> _list = <Widget>[All_customer_tap1()];
-
+  final TimeController c = Get.put(TimeController(),permanent: true);
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(()=>TimeController());
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -124,22 +127,33 @@ class _All_CustomerState extends State<All_Customer> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    height: size.height * .1,
-                    color: Color(0xff2C4B89),
-                    child: Center(
-                        child: Text(
-                      'End Visit',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    )),
+                  child: GestureDetector(onTap:(){
+                    if(!Get.find<TimeController>().swatch.isRunning){
+                      Get.find<TimeController>().startjor();
+                    }else{
+                      Get.find<TimeController>().stopjor();
+                    }
+
+                  } ,
+                    child: Container(
+                      height: size.height * .1,
+                      color: Color(0xff2C4B89),
+                      child: Center(
+                          child:Obx(() => Text(
+                            c.startswatch.value?  'End Visit':'start',
+                            style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ))),
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 2,
                   child: Container(
                     height: size.height * .1,
-                    child: Center(child: Text('123')),
+                    child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
+                      return Text(c.stoptimedisplay.value);
+                    },)),
                   ),
                 )
               ],

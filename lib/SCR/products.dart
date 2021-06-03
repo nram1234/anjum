@@ -5,6 +5,7 @@ import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
+import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/olderpost_json.dart';
@@ -30,7 +31,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
-
+  final TimeController c = Get.find();
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class _ProductsScrState extends State<ProductsScr> {
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
-    biledjsonpost();
+   // biledjsonpost();
     return Scaffold(
         body: Container(
       height: size.height,
@@ -220,30 +221,44 @@ class _ProductsScrState extends State<ProductsScr> {
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: size.height * .1,
-                            color: Colors.indigo,
-                            child: Center(
-                                child: Text(
-                              'End Visit',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            )),
+                    Container(
+                      height: size.height * .1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(onTap:(){
+                              if(!Get.find<TimeController>().swatch.isRunning){
+                                Get.find<TimeController>().startjor();
+                              }else{
+                                Get.find<TimeController>().stopjor();
+                              }
+
+                            } ,
+                              child: Container(
+                                height: size.height * .1,
+                                color: Color(0xff2C4B89),
+                                child: Center(
+                                    child:Obx(() => Text(
+                                       c.startswatch.value?  'End Visit':'start',
+                                      style:
+                                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    ))),
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: size.height * .1,
-                            child: Center(child: Text('123')),
-                          ),
-                        )
-                      ],
-                    ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              height: size.height * .1,
+                              child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
+                                return Text(c.stoptimedisplay.value);
+                              },)),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               )),

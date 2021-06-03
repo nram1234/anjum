@@ -1,4 +1,5 @@
 import 'package:anjum/controllers/allBanksController.dart';
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,8 @@ class ChequePay extends StatefulWidget {
 
 class _ChequePayState extends State<ChequePay> {
   String getDate, date2;
-  var bata = Get.find<AllBanksController>();
+  var allBanks = Get.find<AllBanksController>();
+   var allCheques = Get.find<AllChequesController>();
   String Chequetime =   'Select Date' ;
 
   Future<String> pickdate() async {
@@ -33,20 +35,42 @@ class _ChequePayState extends State<ChequePay> {
   //------------------------------------
   AllBankBranches dropdownValueAllBankBranches;
   List<DropdownMenuItem<AllBankBranches>> _listDropdownAllBankBranches = [];
-
+  String drawerName;
+  List<DropdownMenuItem<String>> drawer_nameDRMlist = [];
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < bata.allBanks.length; i++) {
+    for (int i = 0; i < allBanks.allBanks.length; i++) {
       _listDropdownAllBanks.add(DropdownMenuItem<AllBanks>(
-        value: bata.allBanks[i],
-        child: Text(bata.allBanks[i].bankNameEn),
+        value: allBanks.allBanks[i],
+        child: Text(allBanks.allBanks[i].bankNameEn),
       ));
+    }
+    for (int i = 0; i < allCheques.allCheques.length; i++) {
+      print(allCheques.allCheques[i].customerId==allCheques.customer_id);
+      print(allCheques.allCheques[i].customerId);
+      print(allCheques.customer_id);
+      if(allCheques.allCheques[i].customerId==allCheques.customer_id){
+        print(allCheques.allCheques[i].customerId==allCheques.customer_id);
+
+        for(int o=0;o<allCheques.allCheques[i].listCheques.length;o++){
+          print(allCheques.allCheques[i].listCheques[o].drawerName);
+          drawer_nameDRMlist.add(DropdownMenuItem<String>(
+            value: allCheques.allCheques[i].listCheques[o].drawerName,
+            child: Text( allCheques.allCheques[i].listCheques[o].drawerName ),
+          ));
+       //   drawer_namelist.add(allCheques.allCheques[i].listCheques[o].drawerName);
+        }
+      }
+
+      //
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -218,7 +242,7 @@ class _ChequePayState extends State<ChequePay> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('Bank Branches'),
+                            child: Text('Drawer '),
                           ),
                           Center(
                             child: Padding(
@@ -240,14 +264,14 @@ class _ChequePayState extends State<ChequePay> {
                                   ],
                                 ),
                                 child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<AllBankBranches>(
-                                        value: dropdownValueAllBankBranches,
-                                        onChanged: (AllBankBranches newValue) {
-                                          dropdownValueAllBankBranches = newValue;
+                                    child: DropdownButton<String>(
+                                        value: drawerName,
+                                        onChanged: (String newValue) {
+                                          drawerName = newValue;
 
                                           setState(() {});
                                         },
-                                        items: _listDropdownAllBankBranches)),
+                                        items: drawer_nameDRMlist)),
                               ),
                             ),
                           ),
@@ -351,33 +375,33 @@ class _ChequePayState extends State<ChequePay> {
                               ),
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              width: size.width * .85,
-                              height: size.height * .2,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: const Color(0xFFEBEBEB),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    offset: Offset(0, 6.0),
-                                    blurRadius: 10.0,
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Image.asset(
-                                  'assets/images/cam.png',
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Center(
+                          //   child: Container(
+                          //     width: size.width * .85,
+                          //     height: size.height * .2,
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(10.0),
+                          //       color: Colors.white,
+                          //       border: Border.all(
+                          //         width: 1.0,
+                          //         color: const Color(0xFFEBEBEB),
+                          //       ),
+                          //       boxShadow: [
+                          //         BoxShadow(
+                          //           color: Colors.black.withOpacity(0.05),
+                          //           offset: Offset(0, 6.0),
+                          //           blurRadius: 10.0,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         'assets/images/cam.png',
+                          //         fit: BoxFit.fill,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
