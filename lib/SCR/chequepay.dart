@@ -14,8 +14,8 @@ class ChequePay extends StatefulWidget {
 class _ChequePayState extends State<ChequePay> {
   String getDate, date2;
   var allBanks = Get.find<AllBanksController>();
-   var allCheques = Get.find<AllChequesController>();
-  String Chequetime =   'Select Date' ;
+  var allCheques = Get.find<AllChequesController>();
+  String Chequetime = 'Select Date';
 
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
@@ -37,6 +37,7 @@ class _ChequePayState extends State<ChequePay> {
   List<DropdownMenuItem<AllBankBranches>> _listDropdownAllBankBranches = [];
   String drawerName;
   List<DropdownMenuItem<String>> drawer_nameDRMlist = [];
+
   @override
   void initState() {
     super.initState();
@@ -47,19 +48,21 @@ class _ChequePayState extends State<ChequePay> {
       ));
     }
     for (int i = 0; i < allCheques.allCheques.length; i++) {
-      print(allCheques.allCheques[i].customerId==allCheques.customer_id);
+      print('//==============================================================');
+      print(allCheques.allCheques[i].customerId == allCheques.customer_id);
       print(allCheques.allCheques[i].customerId);
       print(allCheques.customer_id);
-      if(allCheques.allCheques[i].customerId==allCheques.customer_id){
-        print(allCheques.allCheques[i].customerId==allCheques.customer_id);
+      print('//==============================================================');
+      if (allCheques.allCheques[i].customerId == allCheques.customer_id) {
+        print(allCheques.allCheques[i].customerId == allCheques.customer_id);
 
-        for(int o=0;o<allCheques.allCheques[i].listCheques.length;o++){
+        for (int o = 0; o < allCheques.allCheques[i].listCheques.length; o++) {
           print(allCheques.allCheques[i].listCheques[o].drawerName);
           drawer_nameDRMlist.add(DropdownMenuItem<String>(
             value: allCheques.allCheques[i].listCheques[o].drawerName,
-            child: Text( allCheques.allCheques[i].listCheques[o].drawerName ),
+            child: Text(allCheques.allCheques[i].listCheques[o].drawerName),
           ));
-       //   drawer_namelist.add(allCheques.allCheques[i].listCheques[o].drawerName);
+          //   drawer_namelist.add(allCheques.allCheques[i].listCheques[o].drawerName);
         }
       }
 
@@ -70,7 +73,6 @@ class _ChequePayState extends State<ChequePay> {
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -151,7 +153,7 @@ class _ChequePayState extends State<ChequePay> {
                           topLeft: Radius.circular(30))),
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -190,13 +192,18 @@ class _ChequePayState extends State<ChequePay> {
                                           dropdownValueAllBanks = newValue;
                                           _listDropdownAllBankBranches.clear();
                                           for (int i = 0;
-                                              i < newValue.allBankBranches.length;
+                                              i <
+                                                  newValue
+                                                      .allBankBranches.length;
                                               i++) {
                                             _listDropdownAllBankBranches.add(
-                                                DropdownMenuItem<AllBankBranches>(
-                                              value: newValue.allBankBranches[i],
+                                                DropdownMenuItem<
+                                                    AllBankBranches>(
+                                              value:
+                                                  newValue.allBankBranches[i],
                                               child: Text(newValue
-                                                  .allBankBranches[i].branchNameEn),
+                                                  .allBankBranches[i]
+                                                  .branchNameEn),
                                             ));
                                           }
                                           setState(() {});
@@ -214,7 +221,7 @@ class _ChequePayState extends State<ChequePay> {
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),
-                                width: size.width  ,
+                                width: size.width,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
@@ -232,7 +239,8 @@ class _ChequePayState extends State<ChequePay> {
                                     child: DropdownButton<AllBankBranches>(
                                         value: dropdownValueAllBankBranches,
                                         onChanged: (AllBankBranches newValue) {
-                                          dropdownValueAllBankBranches = newValue;
+                                          dropdownValueAllBankBranches =
+                                              newValue;
 
                                           setState(() {});
                                         },
@@ -291,12 +299,12 @@ class _ChequePayState extends State<ChequePay> {
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(0, 3), // changes position of shadow
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: TextField(
-
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
@@ -319,7 +327,8 @@ class _ChequePayState extends State<ChequePay> {
                                     }
                                   });
                                 },
-                                child: Container(height: 50,
+                                child: Container(
+                                  height: 50,
                                   width: size.width * .85,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -344,8 +353,7 @@ class _ChequePayState extends State<ChequePay> {
                             child: Text('Bank Branches'),
                           ),
                           Center(
-                            child:
-                            Padding(
+                            child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),
@@ -367,7 +375,8 @@ class _ChequePayState extends State<ChequePay> {
                                     child: DropdownButton<AllBankBranches>(
                                         value: dropdownValueAllBankBranches,
                                         onChanged: (AllBankBranches newValue) {
-                                          dropdownValueAllBankBranches = newValue;
+                                          dropdownValueAllBankBranches =
+                                              newValue;
 
                                           setState(() {});
                                         },
@@ -414,15 +423,16 @@ class _ChequePayState extends State<ChequePay> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    )),
+                                  'Submit',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                )),
                               ),
                             ),
-                          )        ],
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -469,7 +479,7 @@ class _ChequePayState extends State<ChequePay> {
                 ),
               ),
             ),
-           ],
+          ],
         ),
       ),
     );

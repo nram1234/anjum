@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/sales_order_cart_promotions.dart';
 import 'package:anjum/DB/tabelname/sales_order_invoice_request_stock_items.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'myModel.dart';
+
+import 'tabelname/insert_cheque_tabel.dart';
 import 'tabelname/item_tabel.dart';
 import 'tabelname/make_older.dart';
 import 'tabelname/sales_order_request_details.dart';
@@ -163,8 +166,124 @@ CREATE TABLE  $item_tabelname (
   $item_totalPrice  REAL
 )
       ''');
+        await db.execute('''
+
+CREATE TABLE  $insert_cheque_tabelname (
+    $insert_cheque_Column_user_id  INTEGER ,
+  $insert_cheque_Column_employee_id  INTEGER ,
+  $insert_cheque_Column_customer_id   INTEGER ,
+  $insert_cheque_Column_supervisor_id  INTEGER ,
+  $insert_cheque_Column_salesmanager_id  INTEGER ,
+  $insert_cheque_Column_payment_type  TEXT ,
+  $insert_cheque_Column_amount  INTEGER ,
+  $insert_cheque_Column_customer_name  TEXT ,
+  $insert_cheque_Column_salesman_name  TEXT ,
+  $insert_cheque_Column_payment_date  TEXT ,
+  $insert_cheque_Column_payment_no  TEXT ,
+  $insert_cheque_Column_reference_no  TEXT,
+  $insert_cheque_Column_bank_id  INTEGER ,
+  $insert_cheque_Column_branch_id  INTEGER ,
+  $insert_cheque_Column_drawer_name  TEXT ,
+  $insert_cheque_Column_cheque_no  INTEGER,
+    $insert_cheque_Column_due_date  TEXT ,
+  $insert_cheque_Column_note  TEXT 
+)
+      ''');
+
+        await db.execute('''
+
+CREATE TABLE  $insert_visit_DB_tabelname (
+    $insert_visit_DB_Column_user_id  TEXT ,
+  $insert_visit_DB_Column_employee_id  TEXT ,
+  $insert_visit_DB_Column_customer_id   TEXT ,
+  $insert_visit_DB_Column_start_lat  TEXT ,
+  $insert_visit_DB_Column_start_lang  TEXT ,
+  $insert_visit_DB_Column_end_lat  TEXT ,
+  $insert_visit_DB_Column_end_lang  TEXT ,
+  $insert_visit_DB_Column_start_date  TEXT ,
+  $insert_visit_DB_Column_end_date  TEXT ,
+  $insert_visit_DB_Column_current_visit_status  TEXT ,
+  $insert_visit_DB_Column_visit_type  TEXT 
+)
+      ''');
+
       },
     );
+  }
+
+
+  //=========================================
+  Future <int>insert_insert_cheque(insert_visit_DB item) async {
+    int id;
+    var dbClient = await db;
+    await   dbClient.transaction((txn) async{
+      await txn.insert(insert_visit_DB_tabelname, item.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
+        id=value;
+      });
+    });
+    return id;  }
+
+  Future<List<insert_visit_DB>> get_All_item_in_insert_cheque(int id) async {
+    var dbClient = await db;
+    List<insert_visit_DB> data = [];
+    List<Map> maps = await dbClient
+        .query(insert_visit_DB_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(insert_visit_DB.fromJson(value[i]));
+      }
+    });
+    return data;
+  }
+
+  Future delete_item_in_insert_cheque(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .query(insert_cheque_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]);
+  }
+
+//==============================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //=========================================
+  Future <int>insert_insert_cheque(Insert_cheque_DB item) async {
+    int id;
+    var dbClient = await db;
+    await   dbClient.transaction((txn) async{
+      await txn.insert(insert_cheque_tabelname, item.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
+        id=value;
+      });
+    });
+    return id;  }
+
+  Future<List<Insert_cheque_DB>> get_All_item_in_insert_cheque(int id) async {
+    var dbClient = await db;
+    List<Insert_cheque_DB> data = [];
+    List<Map> maps = await dbClient
+        .query(insert_cheque_tabelname, where: '$insert_cheque_Column_customer_id=?', whereArgs: [id]).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(Insert_cheque_DB.fromJson(value[i]));
+      }
+    });
+    return data;
+  }
+
+  Future delete_item_in_insert_cheque(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .query(insert_cheque_tabelname, where: '$insert_cheque_Column_customer_id=?', whereArgs: [id]);
   }
 
 //==============================================
