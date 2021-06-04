@@ -1,4 +1,4 @@
-final String insert_visit_DB_tabelname="insert_cheque";
+final String insert_visit_DB_tabelname="insert_visit";
 final String insert_visit_DB_Column_user_id="user_id";
 final String insert_visit_DB_Column_employee_id="employee_id";
 final String insert_visit_DB_Column_customer_id="customer_id";

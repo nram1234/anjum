@@ -213,7 +213,7 @@ CREATE TABLE  $insert_visit_DB_tabelname (
 
 
   //=========================================
-  Future <int>insert_insert_cheque(insert_visit_DB item) async {
+  Future <int>insert_insert_visit(insert_visit_DB item) async {
     int id;
     var dbClient = await db;
     await   dbClient.transaction((txn) async{
@@ -224,7 +224,7 @@ CREATE TABLE  $insert_visit_DB_tabelname (
     });
     return id;  }
 
-  Future<List<insert_visit_DB>> get_All_item_in_insert_cheque(int id) async {
+  Future<List<insert_visit_DB>> get_All_item_in_insert_visit(int id) async {
     var dbClient = await db;
     List<insert_visit_DB> data = [];
     List<Map> maps = await dbClient
@@ -236,7 +236,7 @@ CREATE TABLE  $insert_visit_DB_tabelname (
     return data;
   }
 
-  Future delete_item_in_insert_cheque(int id) async {
+  Future delete_item_in_insert_visit(int id) async {
     var dbClient = await db;
     return await dbClient
         .query(insert_cheque_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]);
