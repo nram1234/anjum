@@ -1,19 +1,19 @@
-final String insert_visit_DB_tabelname="insert_visit";
-final String insert_visit_DB_Column_user_id="user_id";
-final String insert_visit_DB_Column_employee_id="employee_id";
-final String insert_visit_DB_Column_customer_id="customer_id";
-final String insert_visit_DB_Column_start_lat="start_lat";
-final String insert_visit_DB_Column_start_lang="start_lang";
-final String insert_visit_DB_Column_end_lat="end_lat";
+final String insert_journeys_DB_tabelname="insert_journeys";
+final String insert_journeys_DB_Column_user_id="user_id";
+final String insert_journeys_DB_Column_employee_id="employee_id";
+final String insert_journeys_DB_Column_customer_id="customer_id";
+final String insert_journeys_DB_Column_start_lat="start_lat";
+final String insert_journeys_DB_Column_start_lang="start_lang";
+final String insert_journeys_DB_Column_end_lat="end_lat";
 
-final String insert_visit_DB_Column_end_lang="end_lang";
-final String insert_visit_DB_Column_start_date="start_date";
-final String insert_visit_DB_Column_end_date="end_date";
-final String insert_visit_DB_Column_current_visit_status="current_visit_status";
-final String insert_visit_DB_Column_visit_type="visit_type";
+final String insert_journeys_DB_Column_end_lang="end_lang";
+final String insert_journeys_DB_Column_start_date="start_date";
+final String insert_journeys_DB_Column_end_date="end_date";
+final String insert_journeys_DB_Column_current_visit_status="current_visit_status";
+final String insert_journeys_DB_Column_visit_type="visit_type";
 
 
-class Insert_visit_DB {
+class Insert_journeys_DB {
   String user_id;
   String employ_id;
   String customer_id;
@@ -27,7 +27,7 @@ class Insert_visit_DB {
 
   String visit_type;
 
-  Insert_visit_DB(
+  Insert_journeys_DB(
       {this.user_id,
         this.employ_id,
         this.start_lat,
@@ -40,7 +40,7 @@ class Insert_visit_DB {
         this.customer_id,
         this.visit_type});
 
-  Insert_visit_DB.fromJson(Map<String, dynamic> json) {
+  Insert_journeys_DB.fromJson(Map<String, dynamic> json) {
     user_id = json['user_id'];
     employ_id = json['employ_id'];
     start_lat = json['start_lat'];

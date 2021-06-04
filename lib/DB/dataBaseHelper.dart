@@ -12,6 +12,7 @@ import 'package:sqflite/sqflite.dart';
 import 'myModel.dart';
 
 import 'tabelname/insert_cheque_tabel.dart';
+import 'tabelname/insert_journeys_DB.dart';
 import 'tabelname/item_tabel.dart';
 import 'tabelname/make_older.dart';
 import 'tabelname/sales_order_request_details.dart';
@@ -206,40 +207,56 @@ CREATE TABLE  $insert_visit_DB_tabelname (
   $insert_visit_DB_Column_visit_type  TEXT 
 )
       ''');
+        await db.execute('''
 
+CREATE TABLE  $insert_journeys_DB_tabelname (
+    $insert_journeys_DB_Column_user_id  TEXT ,
+  $insert_journeys_DB_Column_employee_id  TEXT ,
+  $insert_journeys_DB_Column_customer_id   TEXT ,
+  $insert_journeys_DB_Column_start_lat  TEXT ,
+  $insert_journeys_DB_Column_start_lang  TEXT ,
+  $insert_journeys_DB_Column_end_lat  TEXT ,
+  $insert_journeys_DB_Column_end_lang  TEXT ,
+  $insert_journeys_DB_Column_start_date  TEXT ,
+  $insert_journeys_DB_Column_end_date  TEXT ,
+  $insert_journeys_DB_Column_current_visit_status  TEXT ,
+  $insert_journeys_DB_Column_visit_type  TEXT 
+)
+      ''');
       },
     );
   }
 
 
+
   //=========================================
-  Future <int>insert_insert_visit(insert_visit_DB item) async {
+  Future <int>insert_insert_journeys(Insert_journeys_DB item) async {
     int id;
     var dbClient = await db;
     await   dbClient.transaction((txn) async{
-      await txn.insert(insert_visit_DB_tabelname, item.toJson(),
+      await txn.insert(insert_journeys_DB_tabelname, item.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
         id=value;
       });
     });
     return id;  }
 
-  Future<List<insert_visit_DB>> get_All_item_in_insert_visit(int id) async {
+  Future<List<Insert_journeys_DB>> get_All_item_in_insert_journeys(int id) async {
     var dbClient = await db;
-    List<insert_visit_DB> data = [];
+    List<Insert_journeys_DB> data = [];
     List<Map> maps = await dbClient
-        .query(insert_visit_DB_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]).then((value) {
+        .query(insert_journeys_DB_tabelname, where: '$insert_journeys_DB_Column_user_id=?', whereArgs: [id]).then((value) {
       for (int i = 0; i < value.length; i++) {
-        data.add(insert_visit_DB.fromJson(value[i]));
+        data.add(Insert_journeys_DB.fromJson(value[i]));
       }
     });
     return data;
   }
 
-  Future delete_item_in_insert_visit(int id) async {
+  Future delete_item_in_insert_journeys(int id) async {
     var dbClient = await db;
     return await dbClient
-        .query(insert_cheque_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]);
+        .query(insert_journeys_DB_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]);
   }
 
 //==============================================
@@ -255,6 +272,42 @@ CREATE TABLE  $insert_visit_DB_tabelname (
 
 
 
+
+
+
+
+
+  //=========================================
+  Future <int>insert_insert_visit(Insert_visit_DB item) async {
+    int id;
+    var dbClient = await db;
+    await   dbClient.transaction((txn) async{
+      await txn.insert(insert_visit_DB_tabelname, item.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
+        id=value;
+      });
+    });
+    return id;  }
+
+  Future<List<Insert_visit_DB>> get_All_item_in_insert_visit(int id) async {
+    var dbClient = await db;
+    List<Insert_visit_DB> data = [];
+    List<Map> maps = await dbClient
+        .query(insert_visit_DB_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(Insert_visit_DB.fromJson(value[i]));
+      }
+    });
+    return data;
+  }
+
+  Future delete_item_in_insert_visit(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .query(insert_visit_DB_tabelname, where: '$insert_visit_DB_Column_user_id=?', whereArgs: [id]);
+  }
+
+//==============================================
 
   //=========================================
   Future <int>insert_insert_cheque(Insert_cheque_DB item) async {
