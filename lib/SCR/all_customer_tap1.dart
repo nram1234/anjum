@@ -38,7 +38,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     pricelistinf.makeAListOfPriceListsInfo(bata.allCustomers[pos].customerInfo);
 
                    // 113  bata.allCustomers[pos].customerInfo.customerId
-                    Get.find< AllChequesController>().setcustomer(bata.allCustomers[pos].customerInfo.customerId);
+                    Get.find< AllChequesController>().setcustomer(bata.allCustomers[pos]);
+                    Get.find< AllChequesController>().setcustomerID(bata.allCustomers[pos].customerInfo.customerId);
                     Get.to(Dashboard(), arguments: 59);
                   },
                   child: item(size: size, data: bata.allCustomers[pos]));

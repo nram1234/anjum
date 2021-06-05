@@ -1,5 +1,8 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
 import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,13 +18,19 @@ class _ChequePayState extends State<ChequePay> {
   String getDate, date2;
   var allBanks = Get.find<AllBanksController>();
   var allCheques = Get.find<AllChequesController>();
+  UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   String Chequetime = 'Select Date';
+  TextEditingController cheqnumber = TextEditingController();
+  TextEditingController addnote = TextEditingController();
+  TextEditingController chechamount = TextEditingController();
 
   Future<String> pickdate() async {
+    var lastDate = DateTime.now().add(new Duration(
+        days: int.tryParse(allCheques.customer.customerInfo.chequeDueDate)));
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
-        lastDate: DateTime(2050),
+        lastDate: lastDate, //DateTime(2050),
         context: context);
     print(time);
 
@@ -48,11 +57,11 @@ class _ChequePayState extends State<ChequePay> {
       ));
     }
     for (int i = 0; i < allCheques.allCheques.length; i++) {
-      print('//==============================================================');
-      print(allCheques.allCheques[i].customerId == allCheques.customer_id);
-      print(allCheques.allCheques[i].customerId);
-      print(allCheques.customer_id);
-      print('//==============================================================');
+      // print('//==============================================================');
+      // print(allCheques.allCheques[i].customerId == allCheques.customer_id);
+      // print(allCheques.allCheques[i].customerId);
+      // print(allCheques.customer_id);
+      // print('//==============================================================');
       if (allCheques.allCheques[i].customerId == allCheques.customer_id) {
         print(allCheques.allCheques[i].customerId == allCheques.customer_id);
 
@@ -74,8 +83,7 @@ class _ChequePayState extends State<ChequePay> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var sHeight = MediaQuery.of(context).size.height;
-    var sWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         height: size.height,
@@ -161,7 +169,10 @@ class _ChequePayState extends State<ChequePay> {
                           SizedBox(
                             height: 8,
                           ),
-                          forinput(size: size, titel: 'Cheque No'),
+                          forinput(
+                              size: size,
+                              titel: 'Cheque No',
+                              textEditingController: cheqnumber),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('Bank'),
@@ -305,6 +316,7 @@ class _ChequePayState extends State<ChequePay> {
                                 ],
                               ),
                               child: TextField(
+                                controller: addnote,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
@@ -350,7 +362,7 @@ class _ChequePayState extends State<ChequePay> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('Bank Branches'),
+                            child: Text('Chech Amount'),
                           ),
                           Center(
                             child: Padding(
@@ -371,16 +383,17 @@ class _ChequePayState extends State<ChequePay> {
                                     ),
                                   ],
                                 ),
-                                child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<AllBankBranches>(
-                                        value: dropdownValueAllBankBranches,
-                                        onChanged: (AllBankBranches newValue) {
-                                          dropdownValueAllBankBranches =
-                                              newValue;
-
-                                          setState(() {});
-                                        },
-                                        items: _listDropdownAllBankBranches)),
+                                child: TextField(
+                                  controller: chechamount,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -414,21 +427,64 @@ class _ChequePayState extends State<ChequePay> {
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                width: size.width * .85,
-                                decoration: BoxDecoration(
-                                  color: Colors.indigo,
-                                  borderRadius: BorderRadius.circular(10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  DatabaseHelper()
+                                      .insert_insert_cheque(
+                                          item: Insert_cheque_DB(
+                                              user_id: _userAndPermissions
+                                                  .user.userId,
+                                              employee_id:
+                                                  _userAndPermissions.user.id,
+                                              customer_id: int.parse(
+                                                  Get.find<AllChequesController>()
+                                                      .customer_id),
+                                              amount: int.tryParse(
+                                                  chechamount.text),
+                                              bank_id: int.tryParse(
+                                                  dropdownValueAllBanks.id),
+                                              branch_id: int.tryParse(
+                                                  dropdownValueAllBankBranches
+                                                      .id),
+                                              cheque_no:
+                                                  int.tryParse(cheqnumber.text),
+                                              customer_name: allCheques.customer
+                                                  .customerInfo.customerNameEn,
+                                              note: addnote.text,
+                                              payment_date: Chequetime,
+                                              payment_no: chechamount.text,
+                                              payment_type: "cheque",
+                                              reference_no: allCheques.customer.customerInfo.refId,
+                                              supervisor_id: _userAndPermissions.user.supervisorId,
+                                              salesmanager_id: _userAndPermissions.user.salesmanagerId,
+                                              due_date: Chequetime,
+                                              drawer_name: drawerName))
+                                      .then((value) {
+                                    print(
+                                        '999999999999999999999999999999999999999999');
+                                    print(value);
+                                  });
+ // DatabaseHelper().get_All_item_in_insert_cheque( ).then((value) {
+ //   print(value[0].toJson());
+ //
+ // });
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: size.width * .85,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )),
                                 ),
-                                child: Center(
-                                    child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
                               ),
                             ),
                           )
@@ -470,6 +526,7 @@ class _ChequePayState extends State<ChequePay> {
               ),
               child: TextField(
                 controller: textEditingController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,

@@ -1,3 +1,7 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
+import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +14,9 @@ class CashPay extends StatefulWidget {
 
 class _CashPayState extends State<CashPay> {
   String date2 = 'Select Date';
-
+  UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
+  var allCheques = Get.find<AllChequesController>();
+String amount='',addnote='';
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
@@ -25,7 +31,9 @@ class _CashPayState extends State<CashPay> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       body: Container(
@@ -168,7 +176,9 @@ class _CashPayState extends State<CashPay> {
                                 ),
                               ],
                             ),
-                            child: TextField(
+                            child: TextField(onChanged: (v){
+                              amount=v;
+                            },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -203,7 +213,9 @@ class _CashPayState extends State<CashPay> {
                                 ),
                               ],
                             ),
-                            child: TextField(
+                            child: TextField(onChanged: (v){
+                              addnote=v;
+                            },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -220,7 +232,41 @@ class _CashPayState extends State<CashPay> {
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
                               onTap: () {
-                                return showDialog(
+                                DatabaseHelper()
+                                    .insert_insert_cheque(
+                                  item: Insert_cheque_DB(
+                                    user_id:
+                                    _userAndPermissions.user.userId,
+                                    employee_id:
+                                    _userAndPermissions.user.id,
+                                    customer_id: int.parse(
+                                        Get
+                                            .find<AllChequesController>()
+                                            .customer_id),
+                                    amount:
+                                    int.tryParse(amount),
+                                    due_date: date2,
+
+
+                                    customer_name: allCheques.customer
+                                        .customerInfo.customerNameEn,
+                                    note: addnote ,
+
+                                    payment_type: "cash",
+                                    reference_no: allCheques
+                                        .customer.customerInfo.refId,
+                                    supervisor_id: _userAndPermissions.user
+                                        .supervisorId,
+                                    salesmanager_id: _userAndPermissions.user
+                                        .salesmanagerId,
+                                  ))
+                                      .then((value) {
+                                    print(
+                                        '999999999999999999999999999999999999999999');
+                                    print(value);
+                                  });
+
+                                  return showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
@@ -231,22 +277,21 @@ class _CashPayState extends State<CashPay> {
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: [
-                                        Text('Anjum',
-                                            style: TextStyle(
-                                                fontSize: 25,
-                                                color: Colors.indigoAccent,
-                                                fontWeight:
+                                            Text('Anjum',
+                                                style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.indigoAccent,
+                                                    fontWeight:
                                                     FontWeight.bold)),
                                           ],
                                         ),
                                       ),
                                       content: Container(
                                         width: size.width * .8,
-
                                         child: SingleChildScrollView(
                                           child: Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text('Payment done sucessfully'),
@@ -263,29 +308,34 @@ class _CashPayState extends State<CashPay> {
                                                           SizedBox(
                                                             width: 8,
                                                           ),
-                                                          Text('Back')
-                                                          , SizedBox( width: 50,) ,   Row(
+                                                          Text('Back'),
+                                                          SizedBox(
+                                                            width: 50,
+                                                          ),
+                                                          Row(
                                                             children: [
                                                               TextButton(
-                                                                  onPressed: () {
-
-                                                                  },
+                                                                  onPressed:
+                                                                      () {},
                                                                   child: Row(
                                                                     children: [
-                                                                      Icon(
-                                                                          Icons.print),
+                                                                      Icon(Icons
+                                                                          .print),
                                                                       SizedBox(
-                                                                        width: 8,
+                                                                        width:
+                                                                        8,
                                                                       ),
-                                                                      Text('Print')
+                                                                      Text(
+                                                                          'Print')
                                                                     ],
                                                                   ))
                                                             ],
-                                                          )    ],
+                                                          )
+                                                        ],
                                                       ))
                                                 ],
                                               )
-                                        ],
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -302,12 +352,12 @@ class _CashPayState extends State<CashPay> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
+                                      'Submit',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )),
                               ),
                             ),
                           ),

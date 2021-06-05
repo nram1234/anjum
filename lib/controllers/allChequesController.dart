@@ -3,15 +3,19 @@ import 'package:get/get.dart';
 
 class AllChequesController extends GetxController{
 String customer_id='';
-
+AllCustomers  customer ;
   List<AllCheques> allCheques=[];
   void updateallChequesData(List<AllCheques> allCheques){
     this.allCheques=allCheques;
     update();
   }
-setcustomer(String id){
+setcustomerID(String id){
     customer_id=id;
     update();
+}
+setcustomer (AllCustomers allCustomers){
+   this.customer=allCustomers;
+  update();
 }
 
 

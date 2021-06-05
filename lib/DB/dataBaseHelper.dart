@@ -310,7 +310,7 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
 //==============================================
 
   //=========================================
-  Future <int>insert_insert_cheque(Insert_cheque_DB item) async {
+  Future <int>insert_insert_cheque({@ required Insert_cheque_DB item}) async {
     int id;
     var dbClient = await db;
     await   dbClient.transaction((txn) async{
@@ -321,11 +321,11 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
     });
     return id;  }
 
-  Future<List<Insert_cheque_DB>> get_All_item_in_insert_cheque(int id) async {
+  Future<List<Insert_cheque_DB>> get_All_item_in_insert_cheque( ) async {
     var dbClient = await db;
     List<Insert_cheque_DB> data = [];
     List<Map> maps = await dbClient
-        .query(insert_cheque_tabelname, where: '$insert_cheque_Column_customer_id=?', whereArgs: [id]).then((value) {
+        .query(insert_cheque_tabelname ).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Insert_cheque_DB.fromJson(value[i]));
       }
