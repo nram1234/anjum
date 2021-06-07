@@ -439,7 +439,7 @@ class _ChequePayState extends State<ChequePay> {
                                               customer_id: int.parse(
                                                   Get.find<AllChequesController>()
                                                       .customer_id),
-                                              amount: int.tryParse(
+                                              amount: double.tryParse(
                                                   chechamount.text),
                                               bank_id: int.tryParse(
                                                   dropdownValueAllBanks.id),

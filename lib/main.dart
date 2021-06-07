@@ -17,6 +17,7 @@ import 'SCR/new/BeforeAndAfter.dart';
 import 'SCR/printer-1.dart';
 import 'SCR/products.dart';
 import 'SCR/products_Expand.dart';
+import 'SCR/reports.dart';
 import 'SCR/testscr.dart';
 import 'Translation/Trans.dart';
 
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arbf',
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home:Login()//ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+      home:Reports()//Login()//ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
 

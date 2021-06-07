@@ -34,13 +34,19 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
-                    allItemsController.clearcustomerListItems();
-                    pricelistinf.makeAListOfPriceListsInfo(bata.allCustomers[pos].customerInfo);
 
                    // 113  bata.allCustomers[pos].customerInfo.customerId
-                    Get.find< AllChequesController>().setcustomer(bata.allCustomers[pos]);
-                    Get.find< AllChequesController>().setcustomerID(bata.allCustomers[pos].customerInfo.customerId);
-                    Get.to(Dashboard(), arguments: 59);
+                    if(Get.find< AllChequesController>().customer==null){
+                      allItemsController.clearcustomerListItems();
+                      pricelistinf.makeAListOfPriceListsInfo(bata.allCustomers[pos].customerInfo);
+
+                      Get.find< AllChequesController>().setcustomer(bata.allCustomers[pos]);
+
+                      Get.find< AllChequesController>().setcustomerID(bata.allCustomers[pos].customerInfo.customerId);
+                      Get.to(Dashboard(), arguments: 59);       }else{
+                      Get.snackbar('', 'stop visiting first');
+                    }
+
                   },
                   child: item(size: size, data: bata.allCustomers[pos]));
             }));

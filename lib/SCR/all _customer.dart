@@ -1,3 +1,5 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -130,7 +132,10 @@ class _All_CustomerState extends State<All_Customer> {
                   child: GestureDetector(onTap:(){
                     if(!Get.find<TimeController>().swatch.isRunning){
                       Get.find<TimeController>().startjor();
+
                     }else{
+                      Get.find< AllChequesController>().customer=null;
+                    //  DatabaseHelper().
                       Get.find<TimeController>().stopjor();
                     }
 

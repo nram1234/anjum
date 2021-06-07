@@ -244,7 +244,7 @@ String amount='',addnote='';
                                             .find<AllChequesController>()
                                             .customer_id),
                                     amount:
-                                    int.tryParse(amount),
+                                    double.tryParse(amount),
                                     due_date: date2,
 
 

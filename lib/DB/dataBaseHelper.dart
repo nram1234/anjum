@@ -176,16 +176,16 @@ CREATE TABLE  $insert_cheque_tabelname (
   $insert_cheque_Column_supervisor_id  INTEGER ,
   $insert_cheque_Column_salesmanager_id  INTEGER ,
   $insert_cheque_Column_payment_type  TEXT ,
-  $insert_cheque_Column_amount  INTEGER ,
+  $insert_cheque_Column_amount  REAL ,
   $insert_cheque_Column_customer_name  TEXT ,
   $insert_cheque_Column_salesman_name  TEXT ,
   $insert_cheque_Column_payment_date  TEXT ,
-  $insert_cheque_Column_payment_no  TEXT ,
+  $insert_cheque_Column_payment_no  REAL ,
   $insert_cheque_Column_reference_no  TEXT,
   $insert_cheque_Column_bank_id  INTEGER ,
   $insert_cheque_Column_branch_id  INTEGER ,
   $insert_cheque_Column_drawer_name  TEXT ,
-  $insert_cheque_Column_cheque_no  INTEGER,
+  $insert_cheque_Column_cheque_no  REAL,
     $insert_cheque_Column_due_date  TEXT ,
   $insert_cheque_Column_note  TEXT 
 )
@@ -414,14 +414,14 @@ return data;
     }
   }
 
-  Future<List<Make_Order__Db_json>> get_All_make_older_() async {
-    List<Make_Order__Db_json> data = [];
+  Future<List<ListOrder>> get_All_make_older_() async {
+    List<ListOrder> data = [];
 
     var dbClient = await db;
     // List<Map>maps = await
     dbClient.query(make_older_tabelname).then((value) {
       for (int i = 0; i < value.length; i++) {
-        data.add(Make_Order__Db_json.fromJson(value[i]));
+        data.add(ListOrder.fromJson(value[i]));
       }
     });
 

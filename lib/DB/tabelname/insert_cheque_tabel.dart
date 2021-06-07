@@ -26,7 +26,7 @@ class Insert_cheque_DB {
   int supervisor_id;
   int salesmanager_id;
   String payment_type;
-  int amount;
+  double amount;
   String customer_name;
   String salesman_name;
   String payment_date;

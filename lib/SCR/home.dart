@@ -1,4 +1,5 @@
 import 'package:anjum/SCR/printer-1.dart';
+import 'package:anjum/SCR/reports.dart';
 import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -182,7 +183,9 @@ class _HomeState extends State<Home> {
                               name: 'Promotion List',
                               path: 'assets/images/promotion.png'),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(Reports());
+                            },
                             child: item(
                                 color: Colors.cyan[200],
                                 size: size,
