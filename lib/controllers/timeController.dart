@@ -18,7 +18,8 @@ if(swatch.isRunning){
 }
 update();
   }
-  startjor(){startswatch.value=true;
+  startjor(){
+    startswatch.value=true;
     swatch.start();
     starttime();
 update();

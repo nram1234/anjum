@@ -1,5 +1,7 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
@@ -11,6 +13,7 @@ import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/olderpost_json.dart';
 import 'package:anjum/network/json/products_json.dart';
 import 'package:anjum/network/networkReq.dart';
+import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -31,7 +34,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
-  final TimeController c = Get.find();
+  final TimeController c = Get.find<TimeController>();
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
@@ -228,12 +231,25 @@ class _ProductsScrState extends State<ProductsScr> {
                           Expanded(
                             flex: 1,
                             child: GestureDetector(onTap:(){
-                              if(!Get.find<TimeController>().swatch.isRunning){
-                                Get.find<TimeController>().startjor();
-                              }else{
-                                Get.find<TimeController>().stopjor();
-                              }
+                              if (!c.swatch.isRunning) {
+                                getMyLoction(firesvisittlocation);
 
+                                c.startjor();
+                              } else {
+                                getMyLoction(endvisittlocation );
+                                DatabaseHelper()
+                                    .insert_insert_visit(Insert_visit_DB(
+                                  customer_id: Get.find<AllChequesController>()
+                                      .customer
+                                      .customerInfo
+                                      .id,
+                                  user_id: _userAndPermissions.user.id.toString(),
+                                ))
+                                    .then((value) {
+                                  Get.find<AllChequesController>().customer = null;
+                                });
+                                c.stopjor();
+                              }
                             } ,
                               child: Container(
                                 height: size.height * .1,

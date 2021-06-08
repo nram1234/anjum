@@ -1,3 +1,5 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_journeys_DB.dart';
 import 'package:anjum/SCR/printer-1.dart';
 import 'package:anjum/SCR/reports.dart';
 import 'package:anjum/controllers/allBanksController.dart';
@@ -15,6 +17,7 @@ import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/controllers/userDataController.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/networkReq.dart';
+import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,14 +38,14 @@ class _HomeState extends State<Home> {
   bool updatethedata = false;
   bool showupdatethedata = false;
 
-  AllCategoriesController allCategoriesController = Get.put(AllCategoriesController(),permanent: true);
+  AllCategoriesController allCategoriesController =
+      Get.put(AllCategoriesController(), permanent: true);
+
   @override
   Widget build(BuildContext context) {
-
-
     Get.lazyPut(() => UserDataController());
     Get.lazyPut(() => AllBanksController());
-   // Get.lazyPut(() => AllCategoriesController(),fenix: true);
+    // Get.lazyPut(() => AllCategoriesController(),fenix: true);
     Get.lazyPut(() => AllChequesController());
     Get.lazyPut(() => AllCustomersControllers());
 
@@ -54,8 +57,6 @@ class _HomeState extends State<Home> {
     Get.lazyPut(() => SalesOrderController());
     Get.lazyPut(() => UserDataController());
     Get.lazyPut(() => AllItemsController());
-
-
 
     Get.lazyPut(() => CartItemController());
 
@@ -81,8 +82,8 @@ class _HomeState extends State<Home> {
                       top: size.height * .05,
                       child: Image.network(
                         _userAndPermissions.user.image,
-                        height:75,
-                        width:75,
+                        height: 75,
+                        width: 75,
                       )),
                   Positioned(
                       left: (size.width * .1) + 80,
@@ -113,7 +114,41 @@ class _HomeState extends State<Home> {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(All_Customer());
+                          startJourney = !startJourney;
+                          print(startJourney);
+                          if (startJourney) {
+                            getMyLoction(firesjornytlocation);
+                            jornystartTime = DateTime.now();
+                            setState(() {});
+                            Get.to(All_Customer());
+                          } else {
+                            setState(() {});
+                            jornyEndTime = DateTime.now();
+                            getMyLoction(endjornylocation);
+                            DatabaseHelper()
+                                .insert_insert_journeys(Insert_journeys_DB(
+                                    user_id:
+                                        _userAndPermissions.user.id.toString(),
+                                    start_date: jornystartTime.toString(),
+                                    end_date: jornyEndTime.toString(),
+                                    start_lang: firesjornytlocation == null
+                                        ? ""
+                                        : firesjornytlocation.longitude
+                                            .toString(),
+                                    start_lat: firesjornytlocation == null
+                                        ? ""
+                                        : firesjornytlocation.latitude
+                                            .toString(),
+                                    end_lang: endjornylocation == null
+                                        ? ""
+                                        : endjornylocation.longitude.toString(),
+                                    end_lat: endjornylocation == null
+                                        ? ""
+                                        : endjornylocation.latitude.toString()))
+                                .then((value) {
+                              print(value);
+                            });
+                          }
                         },
                         child: Container(
                           padding: EdgeInsets.all(8),
@@ -122,7 +157,9 @@ class _HomeState extends State<Home> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  'Start of Journey',
+                                  startJourney
+                                      ? 'End of Journey'
+                                      : 'Start of Journey',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -145,9 +182,10 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(onTap: (){
-                            Get.to(OrderStatus());
-                          },
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(OrderStatus());
+                            },
                             child: item(
                                 color: Colors.orange[200],
                                 size: size,
@@ -192,9 +230,10 @@ class _HomeState extends State<Home> {
                                 name: 'Report',
                                 path: 'assets/images/report.png'),
                           ),
-                          GestureDetector(onTap: (){
-                            Get.to(Printer1());
-                          },
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(Printer1());
+                            },
                             child: item(
                                 color: Colors.orange[200],
                                 size: size,
@@ -211,31 +250,38 @@ class _HomeState extends State<Home> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            //   Container(
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(10),
-                            //     color: Colors.white,
-                            //     boxShadow: [
-                            //       BoxShadow(
-                            //         color: Colors.pink[200].withOpacity(0.5),
-                            //         spreadRadius: 5,
-                            //         blurRadius: 7,
-                            //         offset:
-                            //         Offset(0, 3), // changes position of shadow
-                            //       ),
-                            //     ],
-                            //   ),
-                            //   width: size.width * .3,
-                            //   height: size.height * .2,
-                            //   child: Center(
-                            //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            //       children: [
-                            //         Image.asset('assets/images/log.png',height: size.height*.07,width:size.height*.07,color: Colors.green,),
-                            //         Text('logout')
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.pink[200].withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              width: size.width * .62,
+                              height: size.height * .2,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/log.png',
+                                      height: size.height * .07,
+                                      width: size.height * .07,
+                                      color: Colors.green,
+                                    ),
+                                    Text('logout')
+                                  ],
+                                ),
+                              ),
+                            ),
                             GestureDetector(
                               onTap: () {},
                               child: item(
@@ -245,104 +291,28 @@ class _HomeState extends State<Home> {
                                   path: 'assets/images/reprint.png'),
                             ),
 
-                            GestureDetector(
-                              onTap: () {
-                                //_userAndPermissions.user.id.toString()
-                                _allNetworking.Get_employee_data(
-                                        user_id: _userAndPermissions.user.id.toString())
-                                    .then((value) {
-                                  //insert to database
-
-                                  print(value);
-                                  Get.find<UserDataController>().userData.clear();
-                                  Get.find<UserDataController>()
-                                      .updateserData(value.result.userData);
-                                  Get.find<AllBanksController>().allBanks.clear();
-                                  Get.find<AllBanksController>().updateallBanksData(
-                                      value.result.allBanks);
-
-                                  // Get.find<AllCategoriesController>()
-                                  //     .allCategories
-                                  //     .clear();
-                                  // Get.find<AllCategoriesController>()
-                                  //     .updateallCategoriesData(
-                                  //         value.result.allCategories);
-                                  allCategoriesController.allCategories.clear();
-                                  print(value.result.allCategories.length);
-                                  print(value.result.allCategories);
-                                  allCategoriesController.updateallCategoriesData(value.result.allCategories);
-
-
-                                  Get.find<AllChequesController>()
-                                      .allCheques
-                                      .clear();
-                                  Get.find<AllChequesController>()
-                                      .updateallChequesData(
-                                          value.result.allCheques);
-                                  Get.find<AllCustomersControllers>()
-                                      .allCustomers
-                                      .clear();
-                                  Get.find<AllCustomersControllers>()
-                                      .updateallCustomers(
-                                          value.result.allCustomers);
-                                  Get.find<AllStockItemsController>()
-                                      .allStockItems
-                                      .clear();
-
-                                  Get.find<AllStockItemsController>()
-                                      .updateallStockItemsData(
-                                          value.result.allStockItems);
-                                  Get.find<AllCategoriesController>()
-                                      .allCategories
-                                      .clear();
-                                  Get.find<AllCategoriesController>()
-                                      .updateallCategoriesData(
-                                          value.result.allCategories);
-                                  Get.find<EmployeDataController>()
-                                      .employeDatas
-                                      .clear();
-                                  Get.find<EmployeDataController>()
-                                      .updateemployeDatasData(
-                                          value.result.employeData);
-                                  Get.find<EmployeePermissionsController>()
-                                      .employeePermissions
-                                      .clear();
-                                  Get.find<EmployeePermissionsController>()
-                                      .updateemployeePermissionsData(
-                                          value.result.employeePermissions);
-
-                                  Get.find<SalesOrderController>()
-                                      .updatesalesOrderData(
-                                          value.result.salesOrder);
-
-                                  Get.find<AllItemsController>()
-                                      .allItems
-                                      .clear();
-                                  Get.find<AllItemsController>()
-                                      .updateallItemsData(
-                                          value.result.allItems);
-
-                                  updatethedata = true;
-                                  print(updatethedata);
-                                });
-//                                 _allNetworking.tesyyt().then((value) {
-//                                   print(value.body);
-//                                 });
-                              },
-                              child: item(
-                                  color: Colors.cyan[200],
-                                  size: size,
-                                  name: 'update',
-                                  path: 'assets/images/report.png'),
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: item(
-                                  color: Colors.cyan[200],
-                                  size: size,
-                                  name: 'logout',
-                                  path: 'assets/images/log.png'),
-                            ),
+//                             GestureDetector(
+//                               onTap: () {
+//                                 //_userAndPermissions.user.id.toString()
+//
+// //                                 _allNetworking.tesyyt().then((value) {
+// //                                   print(value.body);
+// //                                 });
+//                               },
+//                               child: item(
+//                                   color: Colors.cyan[200],
+//                                   size: size,
+//                                   name: 'update',
+//                                   path: 'assets/images/report.png'),
+//                             ),
+//                             GestureDetector(
+//                               onTap: () {},
+//                               child: item(
+//                                   color: Colors.cyan[200],
+//                                   size: size,
+//                                   name: 'logout',
+//                                   path: 'assets/images/log.png'),
+//                             ),
                           ],
                         ),
                       )
@@ -353,6 +323,63 @@ class _HomeState extends State<Home> {
         ],
       ),
     ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _allNetworking.Get_employee_data(
+            user_id: _userAndPermissions.user.id.toString())
+        .then((value) {
+      //insert to database
+
+      print(value);
+      Get.find<UserDataController>().userData.clear();
+      Get.find<UserDataController>().updateserData(value.result.userData);
+      Get.find<AllBanksController>().allBanks.clear();
+      Get.find<AllBanksController>().updateallBanksData(value.result.allBanks);
+
+      // Get.find<AllCategoriesController>()
+      //     .allCategories
+      //     .clear();
+      // Get.find<AllCategoriesController>()
+      //     .updateallCategoriesData(
+      //         value.result.allCategories);
+      allCategoriesController.allCategories.clear();
+      print(value.result.allCategories.length);
+      print(value.result.allCategories);
+      allCategoriesController
+          .updateallCategoriesData(value.result.allCategories);
+
+      Get.find<AllChequesController>().allCheques.clear();
+      Get.find<AllChequesController>()
+          .updateallChequesData(value.result.allCheques);
+      Get.find<AllCustomersControllers>().allCustomers.clear();
+      Get.find<AllCustomersControllers>()
+          .updateallCustomers(value.result.allCustomers);
+      Get.find<AllStockItemsController>().allStockItems.clear();
+
+      Get.find<AllStockItemsController>()
+          .updateallStockItemsData(value.result.allStockItems);
+      Get.find<AllCategoriesController>().allCategories.clear();
+      Get.find<AllCategoriesController>()
+          .updateallCategoriesData(value.result.allCategories);
+      Get.find<EmployeDataController>().employeDatas.clear();
+      Get.find<EmployeDataController>()
+          .updateemployeDatasData(value.result.employeData);
+      Get.find<EmployeePermissionsController>().employeePermissions.clear();
+      Get.find<EmployeePermissionsController>()
+          .updateemployeePermissionsData(value.result.employeePermissions);
+
+      Get.find<SalesOrderController>()
+          .updatesalesOrderData(value.result.salesOrder);
+
+      Get.find<AllItemsController>().allItems.clear();
+      Get.find<AllItemsController>().updateallItemsData(value.result.allItems);
+
+      updatethedata = true;
+      print(updatethedata);
+    });
   }
 
   Widget item({String path, String name, size, Color color}) {

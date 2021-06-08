@@ -17,7 +17,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final NetWorkController _controller = Get.put(NetWorkController());
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  final TimeController c = Get.find();
+  final TimeController c = Get.find<TimeController>();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -68,290 +69,351 @@ class _DashboardState extends State<Dashboard> {
                     left: 0,
                     top: size.height * .2,
                     child: Container(
-                      height: size.height * .7,
-                      width: size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(30),
-                              topLeft: Radius.circular(30))),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: size.height * .01,
-                            ),
-                            if (_controller.connectionStatus.value)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.replay),
-                                    Text(
-                                        'Last data sync is 14/04/2021  12:90'),
-                                  ],
-                                ),
-                              ),
-                            SizedBox(
-                              height: size.height * .02,
-                            ),
-                            Wrap(
-                              children: [
-                                if (_userAndPermissions.permissions.order ==
-                                    'yes')
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.to(ProductsScr());
-                                      },
-                                      child: item(
-                                          color: Colors.orange[200],
-                                          size: size,
-                                          name: 'Sales Order',
-                                          path: 'assets/images/order.png'),
-                                    ),
-                                  ),
-                                if (_userAndPermissions.permissions.payment ==
-                                    'yes')
-                                  InkWell(
-                                    onTap: () {
-                                      Get.bottomSheet(
-                                        Container(
-                                          height: size.height * .2,
-                                          width: size.width * .45,
-                                          child: Column(
+                        height: size.height * .7,
+                        width: size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(30),
+                                topLeft: Radius.circular(30))),
+                        child: GetBuilder<TimeController>(builder: (_) {
+                          return c.swatch.isRunning
+                              ? SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: size.height * .01,
+                                      ),
+                                      if (_controller.connectionStatus.value)
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
                                             children: [
-                                              Text('Select Payment Method'),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  InkWell(onTap: (){
-                                                    Get.to(CashPay());
-
-                                                  },
-                                                    child: Container(
-                                                      padding: EdgeInsets.all(4),
-                                                      width: size.width * .4,
-                                                      height: 60,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                11.0),
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                          width: 1.0,
-                                                          color: const Color(
-                                                              0xFFEBEBEB),
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child:
-                                                        Row(  mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                          children: [
-                                                            Text(
-                                                              'Cash',
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 20),
-                                                            ),
-                                                            Image.asset(
-                                                              'assets/images/dollar.png',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  InkWell(onTap: (){
-                                                    Get.to(ChequePay());
-
-                                                  },
-                                                    child: Container(
-                                                      padding: EdgeInsets.all(4),
-                                                      width: size.width * .4,
-                                                      height: 60,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                11.0),
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                          width: 1.0,
-                                                          color: const Color(
-                                                              0xFFEBEBEB),
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: Row(  mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                          children: [
-                                                            Text(
-                                                              'Cheque',
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 20),
-                                                            ),
-                                                            Image.asset(
-                                                              'assets/images/ch.png',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
+                                              Icon(Icons.replay),
+                                              Text(
+                                                  'Last data sync is 14/04/2021  12:90'),
                                             ],
                                           ),
                                         ),
-                                        backgroundColor: Colors.white,
-                                        isDismissible: true,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            side: BorderSide(
-                                                color: Colors.white54,
-                                                style: BorderStyle.solid,
-                                                width: 2)),
-                                      );
+                                      SizedBox(
+                                        height: size.height * .02,
+                                      ),
+                                      Wrap(
+                                        children: [
+                                          if (_userAndPermissions
+                                                  .permissions.order ==
+                                              'yes')
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Get.to(ProductsScr());
+                                                },
+                                                child: item(
+                                                    color: Colors.orange[200],
+                                                    size: size,
+                                                    name: 'Sales Order',
+                                                    path:
+                                                        'assets/images/order.png'),
+                                              ),
+                                            ),
+                                          if (_userAndPermissions
+                                                  .permissions.payment ==
+                                              'yes')
+                                            InkWell(
+                                              onTap: () {
+                                                Get.bottomSheet(
+                                                  Container(
+                                                    height: size.height * .2,
+                                                    width: size.width * .45,
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                            'Select Payment Method'),
+                                                        SizedBox(
+                                                          height: 8,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Get.to(
+                                                                    CashPay());
+                                                              },
+                                                              child: Container(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(4),
+                                                                width:
+                                                                    size.width *
+                                                                        .4,
+                                                                height: 60,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              11.0),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  border: Border
+                                                                      .all(
+                                                                    width: 1.0,
+                                                                    color: const Color(
+                                                                        0xFFEBEBEB),
+                                                                  ),
+                                                                ),
+                                                                child: Center(
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Text(
+                                                                        'Cash',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize: 20),
+                                                                      ),
+                                                                      Image
+                                                                          .asset(
+                                                                        'assets/images/dollar.png',
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Get.to(
+                                                                    ChequePay());
+                                                              },
+                                                              child: Container(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(4),
+                                                                width:
+                                                                    size.width *
+                                                                        .4,
+                                                                height: 60,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              11.0),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  border: Border
+                                                                      .all(
+                                                                    width: 1.0,
+                                                                    color: const Color(
+                                                                        0xFFEBEBEB),
+                                                                  ),
+                                                                ),
+                                                                child: Center(
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Text(
+                                                                        'Cheque',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize: 20),
+                                                                      ),
+                                                                      Image
+                                                                          .asset(
+                                                                        'assets/images/ch.png',
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  backgroundColor: Colors.white,
+                                                  isDismissible: true,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      side: BorderSide(
+                                                          color: Colors.white54,
+                                                          style:
+                                                              BorderStyle.solid,
+                                                          width: 2)),
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: item(
+                                                    color: Colors.pink[200],
+                                                    size: size,
+                                                    name: 'Payment',
+                                                    path:
+                                                        'assets/images/payment.png'),
+                                              ),
+                                            ),
+                                          if (_userAndPermissions
+                                                  .permissions.returnInvoice ==
+                                              'yes')
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Get.to(ProductsScr());
+                                                },
+                                                child: item(
+                                                    color: Colors.pink[200],
+                                                    size: size,
+                                                    name: 'Return Invoice',
+                                                    path:
+                                                        'assets/images/returninvoice.png'),
+                                              ),
+                                            ),
+                                          if (_userAndPermissions
+                                                  .permissions.invoice ==
+                                              'yes')
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: GestureDetector(
+                                                child: item(
+                                                    color: Colors
+                                                        .purpleAccent[200],
+                                                    size: size,
+                                                    name: 'Invoice',
+                                                    path:
+                                                        'assets/images/invoice.png'),
+                                              ),
+                                            ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: item(
+                                                color: Colors.purple[200],
+                                                size: size,
+                                                name: 'History',
+                                                path:
+                                                    'assets/images/history.png'),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: item(
+                                                color: Colors.lightGreen[200],
+                                                size: size,
+                                                name: 'SOA',
+                                                path: 'assets/images/soaa.png'),
+                                          ),
+                                          if (_userAndPermissions.permissions
+                                                  .beforeAfterPhoto ==
+                                              'yes')
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: item(
+                                                  color: Colors.green[200],
+                                                  size: size,
+                                                  name: 'Before/After',
+                                                  path:
+                                                      'assets/images/befor.png'),
+                                            ),
+                                          if (_userAndPermissions
+                                                  .permissions.takePhoto ==
+                                              'yes')
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: item(
+                                                  color: Colors.orange[200],
+                                                  size: size,
+                                                  name: 'Photo',
+                                                  path:
+                                                      'assets/images/pic.png'),
+                                            ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.find<TimeController>().startjor();
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: item(
-                                          color: Colors.pink[200],
-                                          size: size,
-                                          name: 'Payment',
-                                          path: 'assets/images/payment.png'),
+                                    child: Container(
+                                      height: size.height * .1,
+                                      color: Color(0xff2C4B89),
+                                      child: Center(
+                                          child: Text(
+                                        'start Visit',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                     ),
                                   ),
-                                if (_userAndPermissions
-                                        .permissions.returnInvoice ==
-                                    'yes')
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Get.to(ProductsScr());
-                                      },
-                                      child: item(
-                                          color: Colors.pink[200],
-                                          size: size,
-                                          name: 'Return Invoice',
-                                          path:
-                                              'assets/images/returninvoice.png'),
-                                    ),
-                                  ),
-                                if (_userAndPermissions.permissions.invoice ==
-                                    'yes')
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: GestureDetector(
-                                      child: item(
-                                          color: Colors.purpleAccent[200],
-                                          size: size,
-                                          name: 'Invoice',
-                                          path: 'assets/images/invoice.png'),
-                                    ),
-                                  ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: item(
-                                      color: Colors.purple[200],
-                                      size: size,
-                                      name: 'History',
-                                      path: 'assets/images/history.png'),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: item(
-                                      color: Colors.lightGreen[200],
-                                      size: size,
-                                      name: 'SOA',
-                                      path: 'assets/images/soaa.png'),
-                                ),
-                                if (_userAndPermissions
-                                        .permissions.beforeAfterPhoto ==
-                                    'yes')
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: item(
-                                        color: Colors.green[200],
-                                        size: size,
-                                        name: 'Before/After',
-                                        path: 'assets/images/befor.png'),
-                                  ),
-                                if (_userAndPermissions.permissions.takePhoto ==
-                                    'yes')
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: item(
-                                        color: Colors.orange[200],
-                                        size: size,
-                                        name: 'Photo',
-                                        path: 'assets/images/pic.png'),
-                                  ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    )),
+                                );
+                        }))),
                 Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child:    Container(
-                    height: size.height * .1,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: GestureDetector(onTap:(){
-                            if(!Get.find<TimeController>().swatch.isRunning){
-                              Get.find<TimeController>().startjor();
-                            }else{
-                              Get.find<TimeController>().stopjor();
-                            }
-
-                          } ,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: size.height * .1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                if (!c.swatch.isRunning) {
+                                  c.startjor();
+                                } else {
+                                  c.stopjor();
+                                }
+                              },
+                              child: Container(
+                                height: size.height * .1,
+                                color: Color(0xff2C4B89),
+                                child: Center(
+                                    child: Obx(()=>Text(
+                                      c.startswatch.value
+                                          ? 'End Visit'
+                                          : 'start Visit',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ))),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
                             child: Container(
                               height: size.height * .1,
-                              color: Color(0xff2C4B89),
                               child: Center(
-                                  child:Obx(() => Text(
-                                    c.startswatch.value?  'End Visit':'start',
-                                    style:
-                                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                  ))),
+                                  child:
+                                      Obx(() => Text(c.stoptimedisplay.value))),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: size.height * .1,
-                            child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
-                              return Text(c.stoptimedisplay.value);
-                            },)),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                )
+                          )
+                        ],
+                      ),
+                    ))
               ],
             )));
   }
@@ -364,7 +426,7 @@ class _DashboardState extends State<Dashboard> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color:   Colors.white,
+            color: Colors.white,
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(0, 3), // changes position of shadow

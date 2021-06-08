@@ -1,6 +1,6 @@
 final String insert_visit_DB_tabelname="insert_visit";
 final String insert_visit_DB_Column_user_id="user_id";
-final String insert_visit_DB_Column_employee_id="employee_id";
+final String insert_visit_DB_Column_employee_id="employ_id";
 final String insert_visit_DB_Column_customer_id="customer_id";
 final String insert_visit_DB_Column_start_lat="start_lat";
 final String insert_visit_DB_Column_start_lang="start_lang";

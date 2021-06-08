@@ -2,6 +2,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
+import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/customer_json.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
@@ -24,7 +25,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   var bata = Get.find<AllCustomersControllers>();
   PriceListsInfoController pricelistinf = Get.put(PriceListsInfoController());
-  var allItemsController = Get.find< AllItemsController>();
+  var allItemsController = Get.find<AllItemsController>();
+  final TimeController c = Get.find<TimeController>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -34,25 +36,48 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
-
-                   // 113  bata.allCustomers[pos].customerInfo.customerId
-                    if(Get.find< AllChequesController>().customer==null){
+                    // 113  bata.allCustomers[pos].customerInfo.customerId
+                   // if(c.startswatch.value){}
+                    if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {
                       allItemsController.clearcustomerListItems();
-                      pricelistinf.makeAListOfPriceListsInfo(bata.allCustomers[pos].customerInfo);
+                      pricelistinf.makeAListOfPriceListsInfo(
+                          bata.allCustomers[pos].customerInfo);
 
-                      Get.find< AllChequesController>().setcustomer(bata.allCustomers[pos]);
+                      Get.find<AllChequesController>()
+                          .setcustomer(bata.allCustomers[pos]);
 
-                      Get.find< AllChequesController>().setcustomerID(bata.allCustomers[pos].customerInfo.customerId);
-                      Get.to(Dashboard(), arguments: 59);       }else{
-                      Get.snackbar('', 'stop visiting first');
+                      Get.find<AllChequesController>().setcustomerID(
+                          bata.allCustomers[pos].customerInfo.customerId);
+                      setState(() {});
+                      Get.to(Dashboard(), arguments: 59);
+                    } else {
+                      if (bata.allCustomers[pos].customerInfo.id ==
+                          Get.find<AllChequesController>()
+                              .customer
+                              .customerInfo
+                              .id) {
+                        Get.to(Dashboard(), arguments: 59);
+                      } else {
+                        Get.snackbar('', 'stop visiting first');
+                      }
                     }
-
                   },
                   child: item(size: size, data: bata.allCustomers[pos]));
             }));
   }
 
+  bool iscust(AllCustomers data) {
+    if (Get.find<AllChequesController>().customer != null) {
+      return Get.find<AllChequesController>().customer.customerInfo.id ==
+          data.customerInfo.id;
+    }else{
+      return false;
+    }
+  }
+
   Widget item({size, AllCustomers data}) {
+
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -73,7 +98,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Container(padding: EdgeInsets.all(16),
+              child: Container(
+                padding: EdgeInsets.all(16),
                 child: Image.network(
                   data.customerInfo.image,
                   width: size.height * .08,
@@ -111,23 +137,29 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     children: [
                       Icon(Icons.add_location),
                       Text("hghjgjhj"),
+                      Expanded(child: Container()),
+                  if(iscust(data))     Image.asset('assets/images/fast.png')
                     ],
                   ),
                 ),
                 Expanded(child: Container()),
-                Container(width: size.width*.6, height: 10,child:    DottedLine(
-                  direction: Axis.horizontal,
-                  lineLength: double.infinity,
-                  lineThickness: 1.0,
-                  dashLength: 4.0,
-                  dashColor: Colors.cyan,
-                  dashRadius: 0.0,
-                  dashGapLength: 4.0,
-                  dashGapColor: Colors.transparent,
-                  dashGapRadius: 0.0,
-                ),),
+                Container(
+                  width: size.width * .6,
+                  height: 10,
+                  child: DottedLine(
+                    direction: Axis.horizontal,
+                    lineLength: double.infinity,
+                    lineThickness: 1.0,
+                    dashLength: 4.0,
+                    dashColor: Colors.cyan,
+                    dashRadius: 0.0,
+                    dashGapLength: 4.0,
+                    dashGapColor: Colors.transparent,
+                    dashGapRadius: 0.0,
+                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only( bottom: 8),
+                  padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     children: [
                       Icon(Icons.info_sharp),
@@ -145,8 +177,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                       left: Consts.padding,
                                       right: Consts.padding,
                                     ),
-                                    margin:
-                                        EdgeInsets.only(top: Consts.avatarRadius),
+                                    margin: EdgeInsets.only(
+                                        top: Consts.avatarRadius),
                                     decoration: new BoxDecoration(
                                       color: Colors.white,
                                       shape: BoxShape.rectangle,
@@ -161,7 +193,9 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                       ],
                                     ),
                                     child: SingleChildScrollView(
-                                      child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         //  mainAxisSize: MainAxisSize.min,
@@ -253,9 +287,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                       //     data.customerInfo.image,
                                       //     scale: .2),
                                       radius: Consts.avatarRadius,
-                                 child: ClipOval(child: Image.network(
-                                   data.customerInfo.image,fit: BoxFit.fill,
-                                 ),),   ),
+                                      child: ClipOval(
+                                        child: Image.network(
+                                          data.customerInfo.image,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                   //...top circlular image part,
                                 ],
@@ -275,15 +313,22 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                         width: 16,
                       ),
                       Icon(Icons.map),
-                      InkWell(onTap: (){
-                     //   location
-                        List<String>l= data.customerInfo.location.split(',');
-                        // var lat=double.tryParse(l[0].trim());
-                        // var Lng=double.tryParse(l[1].trim());
+                      InkWell(
+                          onTap: () {
+                            //   location
+                            List<String> l =
+                                data.customerInfo.location.split(',');
+                            // var lat=double.tryParse(l[0].trim());
+                            // var Lng=double.tryParse(l[1].trim());
 
-                        LatLng loc= LatLng(double.tryParse(l[0].trim()), double.tryParse(l[1].trim()));
-                        Get.to(MyMapScr(loc: loc,  name:  data.customerInfo.customerNameEn,));
-                      },child: Text('view map')),
+                            LatLng loc = LatLng(double.tryParse(l[0].trim()),
+                                double.tryParse(l[1].trim()));
+                            Get.to(MyMapScr(
+                              loc: loc,
+                              name: data.customerInfo.customerNameEn,
+                            ));
+                          },
+                          child: Text('view map')),
                     ],
                   ),
                 ),

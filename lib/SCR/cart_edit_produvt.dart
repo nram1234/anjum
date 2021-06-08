@@ -1,7 +1,11 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/products_json.dart';
 import 'package:anjum/network/networkReq.dart';
+import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -147,10 +151,24 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                               Expanded(
                                 flex: 1,
                                 child: GestureDetector(onTap:(){
-                                  if(!Get.find<TimeController>().swatch.isRunning){
-                                    Get.find<TimeController>().startjor();
-                                  }else{
-                                    Get.find<TimeController>().stopjor();
+                                  if (!c.swatch.isRunning) {
+                                    getMyLoction(firesvisittlocation);
+
+                                    c.startjor();
+                                  } else {
+                                    getMyLoction(endvisittlocation );
+                                    DatabaseHelper()
+                                        .insert_insert_visit(Insert_visit_DB(
+                                      customer_id: Get.find<AllChequesController>()
+                                          .customer
+                                          .customerInfo
+                                          .id,
+                                      user_id: _userAndPermissions.user.id.toString(),
+                                    ))
+                                        .then((value) {
+                                      Get.find<AllChequesController>().customer = null;
+                                    });
+                                    c.stopjor();
                                   }
 
                                 } ,

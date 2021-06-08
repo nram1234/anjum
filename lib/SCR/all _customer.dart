@@ -1,9 +1,13 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/timeController.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/root_controller.dart';
+import 'package:location/location.dart';
 
 import 'all_customer_tap1.dart';
 
@@ -13,17 +17,18 @@ class All_Customer extends StatefulWidget {
 }
 
 class _All_CustomerState extends State<All_Customer> {
-   
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   PageController _pageController = PageController(
     initialPage: 0,
     keepPage: true,
   );
   int _curr = 0;
   List<Widget> _list = <Widget>[All_customer_tap1()];
-  final TimeController c = Get.put(TimeController(),permanent: true);
+  final TimeController c = Get.put(TimeController(), permanent: true);
+
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(()=>TimeController());
+    Get.lazyPut(() => TimeController());
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -52,17 +57,22 @@ class _All_CustomerState extends State<All_Customer> {
                   Positioned(
                       left: size.width * .05,
                       top: size.height * .05,
-                      child: GestureDetector(onTap:(){
-                        Navigator.pop(context);
-                      } ,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: Icon(
                           Icons.arrow_back,
                           color: Colors.white,
                           size: 30,
                         ),
                       )),
-                  Positioned(top: size.height*.06,right: size.width*.02,
-                    child: Container(height: 75,width: 75,
+                  Positioned(
+                    top: size.height * .06,
+                    right: size.width * .02,
+                    child: Container(
+                      height: 75,
+                      width: 75,
                       child: Image.asset(
                         'assets/images/add.png',
                         width: size.width,
@@ -123,47 +133,67 @@ class _All_CustomerState extends State<All_Customer> {
               },
             ),
           ),
-          Container(
-            height: size.height * .1,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: GestureDetector(onTap:(){
-                    if(!Get.find<TimeController>().swatch.isRunning){
-                      Get.find<TimeController>().startjor();
+    GetBuilder<TimeController>(builder: (_) {
+    return c.swatch.isRunning?
+            Container(
+                height: size.height * .1,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () async {
+                          if (!c.swatch.isRunning) {
+                             getMyLoction(firesvisittlocation);
 
-                    }else{
-                      Get.find< AllChequesController>().customer=null;
-                    //  DatabaseHelper().
-                      Get.find<TimeController>().stopjor();
-                    }
-
-                  } ,
-                    child: Container(
-                      height: size.height * .1,
-                      color: Color(0xff2C4B89),
-                      child: Center(
-                          child:Obx(() => Text(
-                            c.startswatch.value?  'End Visit':'start',
-                            style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                          ))),
+                            c.startjor();
+                          } else {
+                              getMyLoction(endvisittlocation );
+                            DatabaseHelper()
+                                .insert_insert_visit(Insert_visit_DB(
+                              customer_id: Get.find<AllChequesController>()
+                                  .customer
+                                  .customerInfo
+                                  .id,
+                              user_id: _userAndPermissions.user.id.toString(),
+                            ))
+                                .then((value) {
+                              Get.find<AllChequesController>().customer = null;
+                            });
+                            c.stopjor();
+                              setState(() {});
+                          }
+                        },
+                        child: Container(
+                          height: size.height * .1,
+                          color: Color(0xff2C4B89),
+                          child: Center(
+                              child: Obx(() => Text(
+                                    c.startswatch.value ? 'End Visit' : 'start',
+                                    style: TextStyle(
+                                        fontSize: 20, fontWeight: FontWeight.bold),
+                                  ))),
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        height: size.height * .1,
+                        child: Center(
+                            child: GetX<TimeController>(
+                          init: TimeController(),
+                          builder: (c) {
+                            return Text(c.stoptimedisplay.value);
+                          },
+                        )),
+                      ),
+                    )
+                  ],
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    height: size.height * .1,
-                    child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
-                      return Text(c.stoptimedisplay.value);
-                    },)),
-                  ),
-                )
-              ],
-            ),
-          )
+          ):SizedBox();
+             }
+           )
         ],
       ),
     );
