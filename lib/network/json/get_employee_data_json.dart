@@ -851,7 +851,7 @@ class AllItems {
     itemId = json['item_id'];
     status = json['status'];
     if (json['item_details'] != null) {
-      itemDetails = new List<ItemDetails>();
+      itemDetails = <ItemDetails>[];
       json['item_details'].forEach((v) {
         itemDetails.add(new ItemDetails.fromJson(v));
       });

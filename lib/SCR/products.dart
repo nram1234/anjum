@@ -1,6 +1,7 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
+import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
@@ -258,7 +259,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     child:Obx(() => Text(
                                        c.startswatch.value?  'End Visit':'start',
                                       style:
-                                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                     ))),
                               ),
                             ),
@@ -286,6 +287,14 @@ class _ProductsScrState extends State<ProductsScr> {
   Widget item({Size size, AllItems products, funadd, funremov}) {
     var count =
         cartListItem.cartlist.where((c) => c == products).toList().length;
+    var cat=Get.find<AllCategoriesController>().allCategories;
+    AllCategories categories;
+ for(int i =0;i<Get.find<AllCategoriesController>().allCategories.length;i++){
+   if(cat[i].id==products.id){
+     categories=cat[i];
+   }
+ }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -325,7 +334,7 @@ class _ProductsScrState extends State<ProductsScr> {
                       ),
                       Text(products.itemDetails[0].minimumQuantity),
                       //products.itemDetails[0].itemCost
-                      Text("5"),
+                      Text(products.itemDetails[0].stockStatus),
                       //  Expanded(child: Container()),
                     ],
                   ),
@@ -401,7 +410,8 @@ class _ProductsScrState extends State<ProductsScr> {
                     children: [
                       Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Category: food')),
+          //categories.categoryNameEn
+                          child: Text('categoryNameEn')),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -496,13 +506,17 @@ class _ProductsScrState extends State<ProductsScr> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              children: [Text('Store ID'), Text('443')],
+                              children: [Text('Store ID'), Text('مطلوب معرفته')],
                             ),
                             Column(
-                              children: [Text('Unit'), Text('box')],
+                              children: [Text('Unit'), Text(products.itemDetails[0].image)],
                             ),
                             Column(
-                              children: [Text('Quantity'), Text('4')],
+                              children: [Text('Quantity'), Text( cartListItem.cartlist
+                                  .where((c) => c == products)
+                                  .toList()
+                                  .length
+                                  .toString(),)],
                             ),
                           ],
                         ),
@@ -530,15 +544,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
+                                  child: Center(child: Text(products.itemDetails[0].stockStatus))
                                 ),
                               ],
                             ),
@@ -560,15 +566,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
+                                  child:Center(child: Text(products.itemDetails[0].itemCost??"")),
                                 ),
                               ],
                             ),
@@ -598,15 +596,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
+                                  child: Center(child: Text(products.itemDetails[0].sellingPrice)),
                                 ),
                               ],
                             ),
@@ -628,15 +618,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
+                                  child: Center(child: Text(products.itemDetails[0].tax)),
                                 ),
                               ],
                             ),
@@ -666,15 +648,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
+                                  child: Center(child: Text('هل هنضرب المنتج في الضريبه ولا نمشييها ازاي'))
                                 ),
                               ],
                             ),
@@ -696,15 +670,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
+                                  child: Center(child: Text('هنشوف الحساب')),
                                 ),
                               ],
                             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:anjum/SCR/login.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -36,6 +37,10 @@ import 'controllers/userDataController.dart';
 import 'network/binding/network_binding.dart';
 void main() async{
   await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(MyApp());
 }
 

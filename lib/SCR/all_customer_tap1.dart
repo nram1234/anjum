@@ -23,10 +23,17 @@ class All_customer_tap1 extends StatefulWidget {
 
 class _All_customer_tap1State extends State<All_customer_tap1> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  var bata = Get.find<AllCustomersControllers>();
+  var bata  ;
   PriceListsInfoController pricelistinf = Get.put(PriceListsInfoController());
   var allItemsController = Get.find<AllItemsController>();
   final TimeController c = Get.find<TimeController>();
+
+  @override
+  void initState() {
+    super.initState();
+    bata = Get.find<AllCustomersControllers>();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -49,14 +56,15 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                       Get.find<AllChequesController>().setcustomerID(
                           bata.allCustomers[pos].customerInfo.customerId);
                       setState(() {});
-                      Get.to(Dashboard(), arguments: 59);
+                      //arguments:  [bata.allCustomers[pos]]
+                      Get.to(Dashboard(),  );
                     } else {
                       if (bata.allCustomers[pos].customerInfo.id ==
                           Get.find<AllChequesController>()
                               .customer
                               .customerInfo
                               .id) {
-                        Get.to(Dashboard(), arguments: 59);
+                        Get.to(Dashboard());
                       } else {
                         Get.snackbar('', 'stop visiting first');
                       }
@@ -133,10 +141,10 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
-                    //data.customerInfo.area1??""+"\n"+data.customerInfo.area2??
+                    //+"\n"+data.customerInfo.area2??
                     children: [
                       Icon(Icons.add_location),
-                      Text("hghjgjhj"),
+                      Text(data.customerInfo.phoneNo??""),
                       Expanded(child: Container()),
                   if(iscust(data))     Image.asset('assets/images/fast.png')
                     ],
@@ -144,7 +152,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                 ),
                 Expanded(child: Container()),
                 Container(
-                  width: size.width * .6,
+                  width: size.width * .7,
                   height: 10,
                   child: DottedLine(
                     direction: Axis.horizontal,

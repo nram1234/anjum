@@ -171,7 +171,7 @@ class _All_CustomerState extends State<All_Customer> {
                               child: Obx(() => Text(
                                     c.startswatch.value ? 'End Visit' : 'start',
                                     style: TextStyle(
-                                        fontSize: 20, fontWeight: FontWeight.bold),
+                                        fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                   ))),
                         ),
                       ),

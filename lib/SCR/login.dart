@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     child: TextField(
-                      controller: password,
+                      controller: password,obscureText: true,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'password'.tr,

@@ -1,15 +1,19 @@
 import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'cashpayment.dart';
 import 'chequepay.dart';
+import 'new/BeforeAndAfter.dart';
 
 class Dashboard extends StatefulWidget {
+  //var thecustomers = Get.arguments;
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -21,6 +25,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+   // AllCustomers _customers=widget.thecustomers[0];
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
@@ -44,6 +49,18 @@ class _DashboardState extends State<Dashboard> {
                             top: size.height * .1,
                             child: Text(
                               'Transaction',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )),
+                        Positioned(
+                            right: size.width * .1,
+                            top: size.height * .14,
+                            child: Text(
+                              Get.find<AllChequesController>()
+                                  .customer
+                                  .customerInfo.customerNameEn,
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -322,15 +339,19 @@ class _DashboardState extends State<Dashboard> {
                                           if (_userAndPermissions.permissions
                                                   .beforeAfterPhoto ==
                                               'yes')
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: item(
-                                                  color: Colors.green[200],
-                                                  size: size,
-                                                  name: 'Before/After',
-                                                  path:
-                                                      'assets/images/befor.png'),
+                                            GestureDetector(onTap: (){
+                                              Get.to(BeforeAndAfter());
+                                            },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: item(
+                                                    color: Colors.green[200],
+                                                    size: size,
+                                                    name: 'Before/After',
+                                                    path:
+                                                        'assets/images/befor.png'),
+                                              ),
                                             ),
                                           if (_userAndPermissions
                                                   .permissions.takePhoto ==
@@ -363,7 +384,7 @@ class _DashboardState extends State<Dashboard> {
                                         'start Visit',
                                         style: TextStyle(
                                             fontSize: 20,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,color: Colors.white),
                                       )),
                                     ),
                                   ),
@@ -397,7 +418,7 @@ class _DashboardState extends State<Dashboard> {
                                           : 'start Visit',
                                       style: TextStyle(
                                           fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,color: Colors.white),
                                     ))),
                               ),
                             ),
