@@ -1,5 +1,6 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
-import 'package:anjum/DB/tabelname/make_older.dart';
+import 'package:anjum/DB/myModel.dart';
+
 import 'package:flutter/material.dart';
 
 import 'dashboard.dart';
@@ -100,8 +101,8 @@ class _NetSalesReportState extends State<NetSalesReport> {
                     ),
                     Container(
                       color: Colors.white,
-                      child: FutureBuilder<List<ListOrder>>(
-                          future: DatabaseHelper().get_All_make_older_(),
+                      child: FutureBuilder<List<Sales_Order_Requests_Model>>(
+                          future: DatabaseHelper().get_All_sales_order_requests(),
                           builder: (context, snapshot) {
                             print(snapshot);
                             double amountofInvoice = 0;
@@ -113,19 +114,19 @@ class _NetSalesReportState extends State<NetSalesReport> {
                               for (int i = 0; i < snapshot.data.length; i++) {
 
                                   if (snapshot
-                                          .data[i] .requestType ==
+                                          .data[i].request_type==
                                       'invoice') {
                                     amountofInvoice = amountofInvoice +
                                         snapshot
-                                            .data[i] .totalPrice;
+                                            .data[i] .total_price;
                                     noofInvoices++;
                                   } else if (snapshot
-                                          .data[i]. requestType ==
+                                          .data[i]. request_type  ==
                                       'return_invoice') {
                                     amountofReturnInvoice =
                                         amountofReturnInvoice +
                                             snapshot.data[i]
-                                                .totalPrice;
+                                                .total_price;
                                     noOfReturnInvoices++;
 
                                 }

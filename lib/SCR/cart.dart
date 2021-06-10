@@ -1,18 +1,6 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
 
-// import './catalog.dart';
-import 'package:adobe_xd/page_link.dart';
-
-// import './timeline.dart';
-import './OrderStatus.dart';
-
-// import './reprint.dart';
-// import './allcustomer.dart';
-// import './Reports.dart';
-// import './PromotionList.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'carteditproduct.dart';
 

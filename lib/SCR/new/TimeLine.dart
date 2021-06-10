@@ -1,3 +1,8 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/myModel.dart';
+import 'package:anjum/DB/tabelname/make_older.dart';
+import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +13,76 @@ class TimeLine extends StatefulWidget {
   _TimeLineState createState() => _TimeLineState();
 }
 
+List<DatainItem> theData = [];
+
+Future<List<DatainItem>> getcustomeridinlist() async {
+
+  List<int> idd = [];
+  List<Sales_Order_Requests_Model> listcustomerId = [];
+  List<AllCustomers> mycustomer = [];
+  theData.clear();
+  mycustomer.clear();
+  listcustomerId.clear();
+  idd.clear();
+  var listofallcustomer = Get.find<AllCustomersControllers>().allCustomers;
+  DatabaseHelper().get_All_sales_order_requests().then((value) {
+//     listcustomerId = value;
+    for (int i = 0; i < value.length; i++,) {
+      if (!idd.contains(value[i].customer_id)) {
+        idd.add(value[i].customer_id);
+        print(value[i].customer_id);
+      }
+
+      for (int i = 0; i < listofallcustomer.length; i++) {
+        for (int o = 0; o < idd.length; o++) {
+          if (int.parse(listofallcustomer[i].customerInfo.id) == idd[o]) {
+            if (!mycustomer.contains(listofallcustomer[i])) {
+              mycustomer.add(listofallcustomer[i]);
+              //
+              //
+              theData.add(DatainItem(
+                  time: value[i].created_at.toString(),
+                  salesOrdertybe: value[i].request_type,
+                  custormerpic: listofallcustomer[o].customerInfo.image,
+                  customername:
+                      listofallcustomer[o].customerInfo.customerNameEn));
+
+
+
+
+            }
+          }
+        }
+        print(mycustomer);
+      }
+
+// for(int i=0;i<listofallcustomer.length;i++){
+//   if()
+// }
+//       //  listcustomerId.add(value[i].customerId);
+//       for (int o = 0; o < listofallcustomer.length; o++) {
+//         print(value[i].customer_id == listofallcustomer[o].customerInfo.id);
+//        // listofallcustomer[o].customerInfo.id
+//       var m=  DatainItem(
+//             time: value[i].created_at.toString(),
+//             salesOrdertybe: value[i].request_type,
+//             custormerpic: listofallcustomer[o].customerInfo.image,customername: listofallcustomer[o].customerInfo.customerNameEn);
+//         if (value[i].customer_id ==113 &&   !theData.contains(m ) ) {
+//
+//           theData.add(DatainItem(
+//               time: value[i].created_at.toString(),
+//               salesOrdertybe: value[i].request_type,
+//               custormerpic: listofallcustomer[o].customerInfo.image,customername: listofallcustomer[o].customerInfo.customerNameEn));
+//         }
+//       }
+    }
+  });
+  print(theData);
+  return theData;
+}
+
 class _TimeLineState extends State<TimeLine> {
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -174,15 +248,35 @@ class _TimeLineState extends State<TimeLine> {
                           height: 15,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ListView.builder(
-                            itemCount: 10,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return TimeLineCardUI();
-                            },
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: StreamBuilder<List<DatainItem>>(
+                              stream: getcustomeridinlist() .asStream(),
+                              builder: (context, snapshot) {
+
+                                if (snapshot.hasData) {
+
+                                  return ListView.builder(
+                                    itemCount: snapshot.data.length,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return TimeLineCardUI(
+                                          size: size,
+                                          customername:
+                                              snapshot.data[index].customername,
+                                          custormerpic:
+                                              snapshot.data[index].custormerpic,
+                                          salesOrdertybe: snapshot
+                                              .data[index].salesOrdertybe,
+                                          time: snapshot.data[index].time);
+                                    },
+                                  );
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              }),
                         )
                       ],
                     ),
@@ -194,88 +288,112 @@ class _TimeLineState extends State<TimeLine> {
     );
   }
 
-  Widget TimeLineCardUI() {
+  Widget TimeLineCardUI(
+      {String time,
+      Size size,
+      String salesOrdertybe,
+      String custormerpic,
+      String customername}) {
     return Row(
       children: [
         Expanded(
           flex: 2,
           child: Container(
             alignment: Alignment.topCenter,
-            child: Text("16-11-2021"),
+            child: Text(time.substring(0, 10)),
           ),
         ),
         Expanded(
           flex: 7,
           child: Container(
-            height: 120,
+            height: size.height * .18,
             margin: EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               // color: Colors.green
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10)),
-                    child: FadeInImage.assetNetwork(
-                      placeholder: "assets/images/pic.png",
-                      image: 'https://fakeimg.pl/300/',
-                      fit: BoxFit.fill,
-                      height: double.infinity,
+            child: Card(
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/images/pic.png",
+                        image: custormerpic,
+                        fit: BoxFit.fill,
+                        height: double.infinity,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Seoedi",
-                          style: TextStyle(color: Colors.black, fontSize: 17),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Seoedi",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        Spacer(),
-                        Container(
-                          alignment: Alignment.center,
-                          child: RaisedButton(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            color: Color(0xff2C4B89),
-                            onPressed: () {
-                              Get.to(SalesOrderDetails());
-                            },
-                            child: Text(
-                              "Details",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            customername,
+                            style: TextStyle(color: Colors.black, fontSize: 17),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            salesOrdertybe,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Spacer(),
+                          Container(
+                            alignment: Alignment.center,
+                            child: RaisedButton(
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              color: Color(0xff2C4B89),
+                              onPressed: () {
+                                Get.to(SalesOrderDetails());
+                              },
+                              child: Text(
+                                "Details",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         )
       ],
     );
   }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getcustomeridinlist();
+  // }
+}
+
+class DatainItem {
+  String time;
+  String salesOrdertybe;
+  String custormerpic;
+
+  String customername;
+
+  DatainItem(
+      {this.time, this.salesOrdertybe, this.custormerpic, this.customername});
 }

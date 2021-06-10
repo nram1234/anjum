@@ -1,4 +1,5 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
@@ -31,11 +32,13 @@ class _ProductsScrState extends State<ProductsScr> {
 
   AllItemsController bata = Get.find<AllItemsController>();
 
-  CartItemController cartListItem = Get.put(CartItemController(), permanent: true);
+  CartItemController cartListItem =
+      Get.put(CartItemController(), permanent: true);
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
   final TimeController c = Get.find<TimeController>();
+
   //int itemcount=0;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class _ProductsScrState extends State<ProductsScr> {
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
-   // biledjsonpost();
+    // biledjsonpost();
     return Scaffold(
         body: Container(
       height: size.height,
@@ -193,17 +196,42 @@ class _ProductsScrState extends State<ProductsScr> {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
+                          double totalprice = 0;
+                          for (int i = 0;
+                              i < cartListItem.cartlist.length;
+                              i++) {
+                            totalprice = totalprice +
+                                double.tryParse(cartListItem
+                                    .cartlist[i].itemDetails[0].sellingPrice);
+                          }
                           _databaseHelper
-                              .insert_make_older_(ListOrder(
-                            customerId: 12,
-                            employeeId: 1,
-                            requestType: 'oo',
-                            storeId: 11,
-                            noOfItems: 2,
-                            requestLevel: 1,
-                            userId: 11,
+                              .insert_sales_order_requests(
+                                  Sales_Order_Requests_Model(
+                            user_id: _userAndPermissions.user.id,
+                            customer_id: int.tryParse(
+                                Get.find<AllChequesController>().customer_id),
+                            employee_id: _userAndPermissions.user.userId,
+                            request_status: 'accepted',
+                            salesmanager_id:
+                                _userAndPermissions.user.salesmanagerId,
+                            request_type: 'salesOrder',
+                            salesmanager_status: 'pending',
+                            store_id: 1,
+                            total_price: totalprice,
+                            created_at: DateTime.now().toString(),
+                            supervisor_id:
+                                _userAndPermissions.user.supervisorId,
+                            total_discount: 1000,
+                            is_successfully_submitted: 0,
+                            no_of_items:
+                                cartListItem.cartlist.length.toString(),
+                            salesmanager_note: '',
+                            request_level: 1,
+                            total_tax: 10,
+                            total_price_without_tax_discount: 55,
                           ))
                               .then((value) {
+                            print('00000');
                             print(value);
                           }).catchError((e) {
                             print(e.toString());
@@ -231,36 +259,44 @@ class _ProductsScrState extends State<ProductsScr> {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: GestureDetector(onTap:(){
-                              if (!c.swatch.isRunning) {
-                                getMyLoction(firesvisittlocation);
+                            child: GestureDetector(
+                              onTap: () {
+                                if (!c.swatch.isRunning) {
+                                  getMyLoction(firesvisittlocation);
 
-                                c.startjor();
-                              } else {
-                                getMyLoction(endvisittlocation );
-                                DatabaseHelper()
-                                    .insert_insert_visit(Insert_visit_DB(
-                                  customer_id: Get.find<AllChequesController>()
-                                      .customer
-                                      .customerInfo
-                                      .id,
-                                  user_id: _userAndPermissions.user.id.toString(),
-                                ))
-                                    .then((value) {
-                                  Get.find<AllChequesController>().customer = null;
-                                });
-                                c.stopjor();
-                              }
-                            } ,
+                                  c.startjor();
+                                } else {
+                                  getMyLoction(endvisittlocation);
+                                  DatabaseHelper()
+                                      .insert_insert_visit(Insert_visit_DB(
+                                    customer_id:
+                                        Get.find<AllChequesController>()
+                                            .customer
+                                            .customerInfo
+                                            .id,
+                                    user_id:
+                                        _userAndPermissions.user.id.toString(),
+                                  ))
+                                      .then((value) {
+                                    Get.find<AllChequesController>().customer =
+                                        null;
+                                  });
+                                  c.stopjor();
+                                }
+                              },
                               child: Container(
                                 height: size.height * .1,
                                 color: Color(0xff2C4B89),
                                 child: Center(
-                                    child:Obx(() => Text(
-                                       c.startswatch.value?  'End Visit':'start',
-                                      style:
-                                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
-                                    ))),
+                                    child: Obx(() => Text(
+                                          c.startswatch.value
+                                              ? 'End Visit'
+                                              : 'start',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
                               ),
                             ),
                           ),
@@ -268,9 +304,13 @@ class _ProductsScrState extends State<ProductsScr> {
                             flex: 2,
                             child: Container(
                               height: size.height * .1,
-                              child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
-                                return Text(c.stoptimedisplay.value);
-                              },)),
+                              child: Center(
+                                  child: GetX<TimeController>(
+                                init: TimeController(),
+                                builder: (c) {
+                                  return Text(c.stoptimedisplay.value);
+                                },
+                              )),
                             ),
                           )
                         ],
@@ -287,13 +327,15 @@ class _ProductsScrState extends State<ProductsScr> {
   Widget item({Size size, AllItems products, funadd, funremov}) {
     var count =
         cartListItem.cartlist.where((c) => c == products).toList().length;
-    var cat=Get.find<AllCategoriesController>().allCategories;
+    var cat = Get.find<AllCategoriesController>().allCategories;
     AllCategories categories;
- for(int i =0;i<Get.find<AllCategoriesController>().allCategories.length;i++){
-   if(cat[i].id==products.id){
-     categories=cat[i];
-   }
- }
+    for (int i = 0;
+        i < Get.find<AllCategoriesController>().allCategories.length;
+        i++) {
+      if (cat[i].id == products.id) {
+        categories = cat[i];
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -410,7 +452,7 @@ class _ProductsScrState extends State<ProductsScr> {
                     children: [
                       Padding(
                           padding: const EdgeInsets.all(8.0),
-          //categories.categoryNameEn
+                          //categories.categoryNameEn
                           child: Text('categoryNameEn')),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -506,17 +548,28 @@ class _ProductsScrState extends State<ProductsScr> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              children: [Text('Store ID'), Text('مطلوب معرفته')],
+                              children: [
+                                Text('Store ID'),
+                                Text('مطلوب معرفته')
+                              ],
                             ),
                             Column(
-                              children: [Text('Unit'), Text(products.itemDetails[0].image)],
+                              children: [
+                                Text('Unit'),
+                                Text(products.itemDetails[0].image)
+                              ],
                             ),
                             Column(
-                              children: [Text('Quantity'), Text( cartListItem.cartlist
-                                  .where((c) => c == products)
-                                  .toList()
-                                  .length
-                                  .toString(),)],
+                              children: [
+                                Text('Quantity'),
+                                Text(
+                                  cartListItem.cartlist
+                                      .where((c) => c == products)
+                                      .toList()
+                                      .length
+                                      .toString(),
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -530,22 +583,23 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('stock'),
                                 Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(child: Text(products.itemDetails[0].stockStatus))
-                                ),
+                                    width: size.width * .4,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                        child: Text(products
+                                            .itemDetails[0].stockStatus))),
                               ],
                             ),
                             Column(
@@ -566,7 +620,10 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child:Center(child: Text(products.itemDetails[0].itemCost??"")),
+                                  child: Center(
+                                      child: Text(
+                                          products.itemDetails[0].itemCost ??
+                                              "")),
                                 ),
                               ],
                             ),
@@ -596,7 +653,9 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: Center(child: Text(products.itemDetails[0].sellingPrice)),
+                                  child: Center(
+                                      child: Text(products
+                                          .itemDetails[0].sellingPrice)),
                                 ),
                               ],
                             ),
@@ -618,7 +677,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                     ],
                                   ),
-                                  child: Center(child: Text(products.itemDetails[0].tax)),
+                                  child: Center(
+                                      child: Text(products.itemDetails[0].tax)),
                                 ),
                               ],
                             ),
@@ -634,22 +694,23 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Total Tax'),
                                 Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(child: Text('هل هنضرب المنتج في الضريبه ولا نمشييها ازاي'))
-                                ),
+                                    width: size.width * .4,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                            'هل هنضرب المنتج في الضريبه ولا نمشييها ازاي'))),
                               ],
                             ),
                             Column(
@@ -862,13 +923,15 @@ class _ProductsScrState extends State<ProductsScr> {
     );
   }
 
-  biledjsonpost({UserAndPermissions userAndPermissions ,CartItemController cartListItem} ) {
-    EmployeDataController employeDataController=EmployeDataController();
+  biledjsonpost(
+      {UserAndPermissions userAndPermissions,
+      CartItemController cartListItem}) {
+    EmployeDataController employeDataController = EmployeDataController();
     OlderPost_json listOrder = OlderPost_json(listOrder: [
       ListOrderToJson(
           item: [],
           userId: userAndPermissions.user.id,
-          requestLevel:  5,
+          requestLevel: 5,
           noOfItems: cartListItem.cartlist.length,
           storeId: 44,
           requestType: 'nn',

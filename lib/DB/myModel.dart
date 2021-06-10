@@ -130,7 +130,7 @@ class Sales_Order_Requests_Model {
   int is_successfully_submitted;
 
 
-  int created_at;
+  String created_at;
   int updated_at;
 
 

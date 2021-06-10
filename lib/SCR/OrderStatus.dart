@@ -1,4 +1,5 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
@@ -21,7 +22,7 @@ class OrderStatus extends StatefulWidget {
 
 class _OrderStatusState extends State<OrderStatus> {
   String cat = 'All Categories';
-  List<ListOrder> data = [];
+  List<Sales_Order_Requests_Model> data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +165,8 @@ class _OrderStatusState extends State<OrderStatus> {
                       ),
                       Expanded(
                         flex: 1,
-                        child: FutureBuilder<List<ListOrder>>(
-                            future: DatabaseHelper().get_All_make_older_(),
+                        child: FutureBuilder<List<Sales_Order_Requests_Model>>(
+                            future: DatabaseHelper().get_All_sales_order_requests(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 for (int i = 0; i < snapshot.data.length; i++) {
@@ -175,7 +176,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                   } else if (cat == 'Rejected') {
 
                                       if (snapshot.data[i]
-                                              .requestStatus ==
+                                              .request_status ==
                                           'Rejected')
                                         data.add(snapshot.data[i]);
 
@@ -183,7 +184,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                   }else if (cat == 'Accepted') {
 
                                       if (snapshot.data[i]
-                                          .requestStatus ==
+                                          .request_status ==
                                           'Accepted') {
                                         data.add(snapshot.data[i]);
                                       }
@@ -191,7 +192,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                   }else if (cat == 'Pending') {
 
                                       if (snapshot.data[i]
-                                          .requestStatus ==
+                                          .request_status ==
                                           'Pending') {
                                         data.add(snapshot.data[i]);
                                       }
@@ -220,13 +221,13 @@ class _OrderStatusState extends State<OrderStatus> {
     ));
   }
 
-  Widget listItem({size, ListOrder data}) {
+  Widget listItem({size, Sales_Order_Requests_Model data}) {
     String name='';
     String storname='';
     List<AllCustomers> allCustomers=   Get.find<AllCustomersControllers>().allCustomers;
 
     for(int i=0;i<allCustomers.length;i++){
-   if(allCustomers[i].customerInfo.id==data.customerId){
+   if(allCustomers[i].customerInfo.id==data.customer_id){
      name=allCustomers[i].customerInfo.customerNameEn;
    }
     }
@@ -292,7 +293,7 @@ class _OrderStatusState extends State<OrderStatus> {
                   Container(
                     width: size.width * .4,
                     child: Text(
-                      data.storeId.toString(),
+                      data.store_id.toString(),
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -317,7 +318,7 @@ class _OrderStatusState extends State<OrderStatus> {
                   Container(
                     width: size.width * .4,
                     child: Text(
-                      data.storeId.toString(),
+                      data.store_id.toString(),
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -335,7 +336,7 @@ class _OrderStatusState extends State<OrderStatus> {
                   SizedBox(
                     width: 2,
                   ),
-                  Text(data.requestStatus),
+                  Text(data.request_status),
                   Expanded(
                     flex: 1,
                     child: Container(),
