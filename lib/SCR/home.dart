@@ -2,6 +2,7 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_journeys_DB.dart';
 import 'package:anjum/SCR/printer-1.dart';
 import 'package:anjum/SCR/reports.dart';
+import 'package:anjum/SCR/testscr.dart';
 import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -77,14 +78,14 @@ class _HomeState extends State<Home> {
                     width: size.width,
                     fit: BoxFit.fill,
                   ),
-                  Positioned(
-                      left: size.width * .1,
-                      top: size.height * .05,
-                      child: Image.network(
-                        _userAndPermissions.user.image,
-                        height: 75,
-                        width: 75,
-                      )),
+                  // Positioned(
+                  //     left: size.width * .1,
+                  //     top: size.height * .05,
+                  //     child: Image.network(
+                  //       _userAndPermissions.user.image,
+                  //       height: 75,
+                  //       width: 75,
+                  //     )),
                   Positioned(
                       left: (size.width * .1) + 80,
                       top: size.height * .06,
@@ -194,7 +195,8 @@ class _HomeState extends State<Home> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(TimeLine());
+                             Get.to(TimeLine());
+
                             },
                             child: item(
                                 color: Colors.red[200],

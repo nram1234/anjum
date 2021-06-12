@@ -43,6 +43,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
+
+
                     // 113  bata.allCustomers[pos].customerInfo.customerId
                    // if(c.startswatch.value){}
                     if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {

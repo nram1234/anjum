@@ -196,6 +196,11 @@ class _ProductsScrState extends State<ProductsScr> {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
+
+
+                        int customer_id =int.tryParse(
+                            Get.find<AllChequesController>().customer_id);
+                        print(customer_id);
                           double totalprice = 0;
                           for (int i = 0;
                               i < cartListItem.cartlist.length;
@@ -208,8 +213,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               .insert_sales_order_requests(
                                   Sales_Order_Requests_Model(
                             user_id: _userAndPermissions.user.id,
-                            customer_id: int.tryParse(
-                                Get.find<AllChequesController>().customer_id),
+                            customer_id: customer_id,
                             employee_id: _userAndPermissions.user.userId,
                             request_status: 'accepted',
                             salesmanager_id:

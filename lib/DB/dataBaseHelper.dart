@@ -631,24 +631,17 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
   Future<int> insert_sales_order_requests(
       Sales_Order_Requests_Model sales_order_requests_model) async {
     int data;
-     var dbClient = await db;
-    // await db.then((value) {
-    //   value.transaction((txn)   async {
-    //     await    txn
-    //         .insert(
-    //           sales_order_requests_tabelname,
-    //           sales_order_requests_model.toJson(),
-    //           conflictAlgorithm: ConflictAlgorithm.replace,
-    //         )
-    //         .then((value) {
-    //        data=value;
-    //      });
-    //   });
-    // });
+    var dbClient = await db;
 
-    await  dbClient.insert(sales_order_requests_tabelname,  sales_order_requests_model.toJson(),
-           conflictAlgorithm: ConflictAlgorithm.replace,).then((value) {
-      data=value;
+
+    await dbClient
+        .insert(
+      sales_order_requests_tabelname,
+      sales_order_requests_model.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .then((value) {
+      data = value;
     });
     return data;
   }
@@ -699,6 +692,18 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
     return await dbClient.query(sales_order_requests_tabelname,
         where: '$sales_order_requests_id=?', whereArgs: [id]);
   }
+
+  // testselect() async {
+  //   var dbClient = await db;
+  //   await dbClient.transaction((txn) {
+  //     txn
+  //         .rawQuery(
+  //             'SELECT * FROM $sales_order_requests_tabelname INNER JOIN $sales_order_invoice_request_stock_items_tabelname ON $sales_order_requests_id = 1')
+  //         .then((value) {
+  //       print(value);
+  //     });
+  //   });
+  // }
 
   Future close() async {
     await db.then((value) {
