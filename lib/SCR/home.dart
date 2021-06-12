@@ -25,6 +25,7 @@ import 'package:get/get.dart';
 import 'OrderStatus.dart';
 import 'all _customer.dart';
 import 'dashboard.dart';
+import 'new/Catalog.dart';
 import 'new/TimeLine.dart';
 
 class Home extends StatefulWidget {
@@ -204,11 +205,15 @@ class _HomeState extends State<Home> {
                                 name: 'Timeline',
                                 path: 'assets/images/g.png'),
                           ),
-                          item(
-                              color: Colors.cyan[200],
-                              size: size,
-                              name: 'Catalog',
-                              path: 'assets/images/catalog.png'),
+                          GestureDetector(onTap: (){
+Get.to(Catalog());
+                          },
+                            child: item(
+                                color: Colors.cyan[200],
+                                size: size,
+                                name: 'Catalog',
+                                path: 'assets/images/catalog.png'),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -353,30 +358,28 @@ class _HomeState extends State<Home> {
       allCategoriesController
           .updateallCategoriesData(value.result.allCategories);
 
-      Get.find<AllChequesController>().allCheques.clear();
       Get.find<AllChequesController>()
           .updateallChequesData(value.result.allCheques);
-      Get.find<AllCustomersControllers>().allCustomers.clear();
+
       Get.find<AllCustomersControllers>()
           .updateallCustomers(value.result.allCustomers);
-      Get.find<AllStockItemsController>().allStockItems.clear();
+
 
       Get.find<AllStockItemsController>()
           .updateallStockItemsData(value.result.allStockItems);
-      Get.find<AllCategoriesController>().allCategories.clear();
+    print(value.result.allCategories);
       Get.find<AllCategoriesController>()
           .updateallCategoriesData(value.result.allCategories);
-      Get.find<EmployeDataController>().employeDatas.clear();
+
       Get.find<EmployeDataController>()
           .updateemployeDatasData(value.result.employeData);
-      Get.find<EmployeePermissionsController>().employeePermissions.clear();
+
       Get.find<EmployeePermissionsController>()
           .updateemployeePermissionsData(value.result.employeePermissions);
 
       Get.find<SalesOrderController>()
           .updatesalesOrderData(value.result.salesOrder);
 
-      Get.find<AllItemsController>().allItems.clear();
       Get.find<AllItemsController>().updateallItemsData(value.result.allItems);
 
       updatethedata = true;
