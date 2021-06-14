@@ -150,23 +150,23 @@ CREATE TABLE  $sales_order_cart_promotions_tabelname (
 // )
 // ''');
 //
-//         await db.execute('''
-//
-// CREATE TABLE  $item_tabelname (
-//     $item_older_id  INTEGER ,
-//   $item_itemId  INTEGER ,
-//   $item_categoryId   INTEGER ,
-//   $item_measurementUnitId  INTEGER ,
-//   $item_basePricePerUnit  REAL ,
-//   $item_bonus  REAL ,
-//   $item_quantity  REAL ,
-//   $item_taxType  TEXT ,
-//   $item_totalTax  REAL ,
-//   $item_totalPriceBeforeTax  REAL ,
-//   $item_totalPriceWithTax  REAL ,
-//   $item_totalPrice  REAL
-// )
-//       ''');
+        await db.execute('''
+
+CREATE TABLE  $item_tabelname (
+    $item_older_id  INTEGER ,
+  $item_itemId  INTEGER ,
+  $item_categoryId   INTEGER ,
+  $item_measurementUnitId  INTEGER ,
+  $item_basePricePerUnit  REAL ,
+  $item_bonus  REAL ,
+  $item_quantity  REAL ,
+  $item_taxType  TEXT ,
+  $item_totalTax  REAL ,
+  $item_totalPriceBeforeTax  REAL ,
+  $item_totalPriceWithTax  REAL ,
+  $item_totalPrice  REAL
+)
+      ''');
         await db.execute('''
 
 CREATE TABLE  $insert_cheque_tabelname (
@@ -334,28 +334,28 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
   }
 
 //==============================================
-//   Future <int>insert_item_tabel(Item_Database item) async {
-//     int id;
-//     var dbClient = await db;
-//     await   dbClient.transaction((txn) async{
-//        await txn.insert(item_tabelname, item.toJson(),
-//           conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
-//           id=value;
-//       });
-//     });
-//     return id;  }
-//
-//   Future<List<Item_Database>> get_All_item_in_olderlist_(int id) async {
-//     var dbClient = await db;
-//     List<Item_Database> data = [];
-//     List<Map> maps = await dbClient
-//         .query(item_tabelname, where: '$item_older_id=?', whereArgs: [id]).then((value) {
-//       for (int i = 0; i < value.length; i++) {
-//               data.add(Item_Database.fromJson(value[i]));
-//             }
-//     });
-// return data;
-//   }
+  Future <int>insert_item_tabel(Item_Database item) async {
+    int id;
+    var dbClient = await db;
+    await   dbClient.transaction((txn) async{
+       await txn.insert(item_tabelname, item.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
+          id=value;
+      });
+    });
+    return id;  }
+
+  Future<List<Item_Database>> get_All_item_in_olderlist_( ) async {
+    var dbClient = await db;
+    List<Item_Database> data = [];
+    List<Map> maps = await dbClient
+        .query(item_tabelname,).then((value) {
+      for (int i = 0; i < value.length; i++) {
+              data.add(Item_Database.fromJson(value[i]));
+            }
+    });
+return data;
+  }
 
   // Future<List<Item_Order__Db_json>> get_All_item_in_olderlist_(int id) async {
   //   List<Item_Order__Db_json> data = [];
@@ -371,11 +371,11 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
   //   return data;
   // }
 
-  // Future delete_item_in_olderlist_byId(int id) async {
-  //   var dbClient = await db;
-  //   return await dbClient
-  //       .query(item_tabelname, where: '$item_itemId=?', whereArgs: [id]);
-  // }
+  Future delete_item_in_olderlist_byId(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .query(item_tabelname, where: '$item_itemId=?', whereArgs: [id]);
+  }
 
 //==============================================
 //==============================================

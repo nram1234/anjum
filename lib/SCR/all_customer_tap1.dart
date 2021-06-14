@@ -23,7 +23,7 @@ class All_customer_tap1 extends StatefulWidget {
 
 class _All_customer_tap1State extends State<All_customer_tap1> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  var bata  ;
+  AllCustomersControllers bata  ;
   PriceListsInfoController pricelistinf = Get.put(PriceListsInfoController());
   var allItemsController = Get.find<AllItemsController>();
   final TimeController c = Get.find<TimeController>();
@@ -45,8 +45,6 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                   onTap: () {
 
 
-                    // 113  bata.allCustomers[pos].customerInfo.customerId
-                   // if(c.startswatch.value){}
                     if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {
                       allItemsController.clearcustomerListItems();
                       pricelistinf.makeAListOfPriceListsInfo(
@@ -56,7 +54,10 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                           .setcustomer(bata.allCustomers[pos]);
 
                       Get.find<AllChequesController>().setcustomerID(
-                          bata.allCustomers[pos].customerInfo.customerId);
+                          bata.allCustomers[pos].customerInfo.id);
+                      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
+                      print(bata.allCustomers[pos].customerInfo.customerId);
+                      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
                       setState(() {});
                       //arguments:  [bata.allCustomers[pos]]
                       Get.to(Dashboard(),  );

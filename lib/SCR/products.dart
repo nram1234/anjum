@@ -38,8 +38,21 @@ class _ProductsScrState extends State<ProductsScr> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
   final TimeController c = Get.find<TimeController>();
+  //============================================
 
+  List<TextEditingController>listtextEditingControllerOfItem=[];
+  int totalItem=0;
+  @override
+  void initState() {
+    super.initState();
+   for(int i=0;i<bata.customerListItems.length;i++){
+     TextEditingController t=TextEditingController();
+     t.text=0.toString();
+     listtextEditingControllerOfItem.add(t );
+   }
+  } //============================================
   //int itemcount=0;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -176,19 +189,28 @@ class _ProductsScrState extends State<ProductsScr> {
                           // 100, //bata.allItems.length,
                           ,
                           itemBuilder: (context, pos) {
-                            return item(
+                            return item(textEditingController: listtextEditingControllerOfItem[pos],
                                 size: size,
                                 funadd: () {
-                                  cartListItem.addToCart(
-                                      item: bata.allItems[pos]);
-                                  setState(() {});
+                                  int i=    int.parse(listtextEditingControllerOfItem[pos].text)+1;
+                                  listtextEditingControllerOfItem[pos].text=i.toString();
+
+                                  setState(() {
+
+                                  });
                                 },
                                 products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
                                     bata.customerListItems[pos],
                                 funremov: () {
-                                  cartListItem.removefromcart(
-                                      item: bata.allItems[pos]);
-                                  setState(() {});
+                              if(int.parse(listtextEditingControllerOfItem[pos].text)>0){
+                                int i=    int.parse(listtextEditingControllerOfItem[pos].text)-1;
+                                listtextEditingControllerOfItem[pos].text=i.toString();
+
+                                setState(() {
+
+                                });
+                              }
+
                                 }); // AlirtItem( );
                           }),
                     ),
@@ -196,19 +218,30 @@ class _ProductsScrState extends State<ProductsScr> {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
+                          totalItem=0;
+                          double totalprice = 0;
+                          for(int i=0;i<listtextEditingControllerOfItem.length;i++){
+                            totalItem=totalItem+int.parse(listtextEditingControllerOfItem[i].text);
+                            totalprice=totalprice+(int.parse(listtextEditingControllerOfItem[i].text)* double.tryParse(bata.customerListItems[i].itemDetails[0].sellingPrice));
+
+                            for(int p=0;p<int.parse(listtextEditingControllerOfItem[i].text);p++){
+                              cartListItem.addToCart(item: bata.customerListItems[i]);
 
 
+                            }
+                          }
+                          print('number of item ${cartListItem.cartlist.length}');
                         int customer_id =int.tryParse(
                             Get.find<AllChequesController>().customer_id);
-                        print(customer_id);
-                          double totalprice = 0;
-                          for (int i = 0;
-                              i < cartListItem.cartlist.length;
-                              i++) {
-                            totalprice = totalprice +
-                                double.tryParse(cartListItem
-                                    .cartlist[i].itemDetails[0].sellingPrice);
-                          }
+                        print('customer_id     $customer_id');
+
+                          // for (int i = 0;
+                          //     i < cartListItem.cartlist.length;
+                          //     i++) {
+                          //   totalprice = totalprice +
+                          //       double.tryParse(cartListItem
+                          //           .cartlist[i].itemDetails[0].sellingPrice);
+                          // }
                           _databaseHelper
                               .insert_sales_order_requests(
                                   Sales_Order_Requests_Model(
@@ -228,15 +261,21 @@ class _ProductsScrState extends State<ProductsScr> {
                             total_discount: 1000,
                             is_successfully_submitted: 0,
                             no_of_items:
-                                cartListItem.cartlist.length.toString(),
+                                totalItem.toString(),
                             salesmanager_note: '',
                             request_level: 1,
                             total_tax: 10,
                             total_price_without_tax_discount: 55,
                           ))
                               .then((value) {
-                            print('00000');
-                            print(value);
+
+                            print('order number  $value');
+
+                             for(int i=0;i<cartListItem.cartlist.length;i++){
+                               // DatabaseHelper().insert_item_tabel(item)
+                             }
+
+
                           }).catchError((e) {
                             print(e.toString());
                           });
@@ -328,7 +367,7 @@ class _ProductsScrState extends State<ProductsScr> {
     ));
   }
 
-  Widget item({Size size, AllItems products, funadd, funremov}) {
+  Widget item({Size size, AllItems products, funadd, funremov,TextEditingController textEditingController}) {
     var count =
         cartListItem.cartlist.where((c) => c == products).toList().length;
     var cat = Get.find<AllCategoriesController>().allCategories;
@@ -380,7 +419,7 @@ class _ProductsScrState extends State<ProductsScr> {
                       ),
                       Text(products.itemDetails[0].minimumQuantity),
                       //products.itemDetails[0].itemCost
-                      Text(products.itemDetails[0].stockStatus),
+                      Text(products.itemDetails[0].sellingPrice),
                       //  Expanded(child: Container()),
                     ],
                   ),
@@ -391,7 +430,7 @@ class _ProductsScrState extends State<ProductsScr> {
                   children: [
                     Text('Details'),
                     SizedBox(
-                      width: size.width * .2,
+                      width: size.width * .05,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -415,14 +454,12 @@ class _ProductsScrState extends State<ProductsScr> {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          cartListItem.cartlist
-                              .where((c) => c == products)
-                              .toList()
-                              .length
-                              .toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                        Container(width: size.width*.2,
+                          child: Center(
+                            child: TextField(controller:textEditingController ,
+
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: 20,
@@ -577,6 +614,73 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                           ],
                         ),
+                      ), Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text('Bounce'),
+                                Container(
+                                  width: size.width * .4,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('Discount %'),
+                                Container(
+                                  width: size.width * .4,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -603,7 +707,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     ),
                                     child: Center(
                                         child: Text(products
-                                            .itemDetails[0].stockStatus))),
+                                            .itemDetails[0].minimumQuantity))),
                               ],
                             ),
                             Column(
@@ -714,7 +818,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     ),
                                     child: Center(
                                         child: Text(
-                                            'هل هنضرب المنتج في الضريبه ولا نمشييها ازاي'))),
+                                         (double.tryParse(products.itemDetails[0].sellingPrice)*double.tryParse(products.itemDetails[0].tax)).toString()))),
                               ],
                             ),
                             Column(
@@ -742,74 +846,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text('Bounce'),
-                                Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text('Discount %'),
-                                Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

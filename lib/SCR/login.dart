@@ -17,6 +17,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
    var box = GetStorage();
   bool _checkbox = false;
+  bool login=false;
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController url = TextEditingController();
@@ -257,13 +258,17 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: size.height * .02,
                   ),
-                  GestureDetector(
+                  login?CircularProgressIndicator():   GestureDetector(
                     onTap: () {
                       if(url.text.isNotEmpty){
                         AllNetworking.paseurl=url.text;
                       }
                       print( AllNetworking.paseurl);
                       if (name.text != null && password.text != null&& user_Id.text != null) {
+                        login=true;
+                        setState(() {
+
+                        });
                         if(_checkbox){
                           box.write('user', name.text);
                           box.write('password', password.text);
@@ -284,7 +289,10 @@ print(value.user.employeeNameEn);
                             Get.to(Home());
 
                           }
-                        });
+                          login=false;
+                          setState(() {
+
+                          });  });
                         //     .catchError((e) {
                         //   print(e.toString());
                         //   Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");

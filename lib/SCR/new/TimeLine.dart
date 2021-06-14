@@ -225,7 +225,7 @@ class _TimeLineState extends State<TimeLine> {
           print(listofallcustomer[p].customerInfo.id
           );
           //int.parse(listofallcustomer[p].customerInfo.id
-          if (value[i].customer_id ==1){
+          if (value[i].customer_id ==int.parse(listofallcustomer[p].customerInfo.id)){
 
             theData.add(DatainItem(
                 orderid: value[i].id,

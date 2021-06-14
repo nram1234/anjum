@@ -339,8 +339,12 @@ Get.to(Catalog());
             user_id: _userAndPermissions.user.id.toString())
         .then((value) {
       //insert to database
+      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
 
-      print(value);
+      print(value.result.allCustomers[0].customerInfo.id);
+      print(value.result.allCustomers[1].customerInfo.id);
+      print(value.result.allCustomers[2].customerInfo.id);
+      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
       Get.find<UserDataController>().userData.clear();
       Get.find<UserDataController>().updateserData(value.result.userData);
       Get.find<AllBanksController>().allBanks.clear();
