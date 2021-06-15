@@ -60,14 +60,14 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                       print('99999999999999999999999999999999999999999999999999999999999999999999999999');
                       setState(() {});
                       //arguments:  [bata.allCustomers[pos]]
-                      Get.to(Dashboard(),  );
+                      Get.to(()=>Dashboard(),  );
                     } else {
                       if (bata.allCustomers[pos].customerInfo.id ==
                           Get.find<AllChequesController>()
                               .customer
                               .customerInfo
                               .id) {
-                        Get.to(Dashboard());
+                        Get.to(()=>Dashboard());
                       } else {
                         Get.snackbar('', 'stop visiting first');
                       }

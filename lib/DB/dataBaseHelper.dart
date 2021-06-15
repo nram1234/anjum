@@ -4,6 +4,7 @@ import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/sales_order_cart_promotions.dart';
 import 'package:anjum/DB/tabelname/sales_order_invoice_request_stock_items.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -345,11 +346,12 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
     });
     return id;  }
 
-  Future<List<Item_Database>> get_All_item_in_olderlist_( ) async {
+  Future<List<Item_Database>> get_All_item_in_olderlist_(int id ) async {
     var dbClient = await db;
     List<Item_Database> data = [];
     List<Map> maps = await dbClient
-        .query(item_tabelname,).then((value) {
+        .query(item_tabelname,where:  '$item_older_id=?' ,whereArgs:[id] ).then((value) {
+        print(value);
       for (int i = 0; i < value.length; i++) {
               data.add(Item_Database.fromJson(value[i]));
             }
@@ -357,19 +359,20 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
 return data;
   }
 
-  // Future<List<Item_Order__Db_json>> get_All_item_in_olderlist_(int id) async {
-  //   List<Item_Order__Db_json> data = [];
-  //
-  //   var dbClient = await db;
-  //   // List<Map>maps = await
-  //   await   dbClient.query(item_tabelname).then((value) {
-  //     for (int i = 0; i < value.length; i++) {
-  //       data.add(Item_Order__Db_json.fromJson(value[i]));
-  //     }
-  //   });
-  //
-  //   return data;
-  // }
+  Future<List<Item_Database>> get_All_item_in_olderlist_text( ) async {
+    List<Item_Database> data = [];
+
+    var dbClient = await db;
+    // List<Map>maps = await
+    await   dbClient.query(item_tabelname).then((value) {
+  print(value);
+      for (int i = 0; i < value.length; i++) {
+        data.add(Item_Database.fromJson(value[i]));
+      }
+    });
+
+    return data;
+  }
 
   Future delete_item_in_olderlist_byId(int id) async {
     var dbClient = await db;

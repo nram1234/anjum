@@ -8,6 +8,7 @@ import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'all _customer.dart';
 import 'cashpayment.dart';
 import 'chequepay.dart';
 import 'new/BeforeAndAfter.dart';
@@ -406,6 +407,7 @@ class _DashboardState extends State<Dashboard> {
                                   c.startjor();
                                 } else {
                                   c.stopjor();
+                                  Get.to(All_Customer());
                                 }
                               },
                               child: Container(

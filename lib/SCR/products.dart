@@ -1,6 +1,7 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
+import 'package:anjum/DB/tabelname/item_tabel.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -17,8 +18,10 @@ import 'package:anjum/network/json/products_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
+import 'all _customer.dart';
 import 'cart.dart';
 import 'filter.dart';
 
@@ -33,348 +36,423 @@ class _ProductsScrState extends State<ProductsScr> {
   AllItemsController bata = Get.find<AllItemsController>();
 
   CartItemController cartListItem =
-      Get.put(CartItemController(), permanent: true);
+  Get.put(CartItemController(), permanent: true);
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
   final TimeController c = Get.find<TimeController>();
+
   //============================================
 
-  List<TextEditingController>listtextEditingControllerOfItem=[];
-  int totalItem=0;
+  List<TextEditingController> listtextEditingControllerOfItem = [];
+  int totalItem = 0;
+
   @override
   void initState() {
     super.initState();
-   for(int i=0;i<bata.customerListItems.length;i++){
-     TextEditingController t=TextEditingController();
-     t.text=0.toString();
-     listtextEditingControllerOfItem.add(t );
-   }
+    for (int i = 0; i < bata.customerListItems.length; i++) {
+      TextEditingController t = TextEditingController();
+      t.text = 0.toString();
+      listtextEditingControllerOfItem.add(t);
+    }
   } //============================================
   //int itemcount=0;
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
     // biledjsonpost();
     return Scaffold(
         body: Container(
-      height: size.height,
-      width: size.width,
-      child: Stack(
-        children: [
-          Container(
-              height: size.height * .3,
-              width: size.width,
-              child: Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/bk.png',
-                    width: size.width,
-                    fit: BoxFit.fill,
-                  ),
-                  Positioned(
-                      left: size.width * .1,
-                      top: size.height * .12,
-                      child: Text(
-                        'Transaction',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      )),
-                  Positioned(
-                      right: size.width * .05,
-                      top: size.height * .05,
-                      child: Container(
-                          child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(Cart());
-                              },
-                              child: Icon(
-                                Icons.add_shopping_cart,
-                                color: Colors.white,
-                                size: 30,
-                              ),
+          height: size.height,
+          width: size.width,
+          child: Stack(
+            children: [
+              Container(
+                  height: size.height * .3,
+                  width: size.width,
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        'assets/images/bk.png',
+                        width: size.width,
+                        fit: BoxFit.fill,
+                      ),
+                      Positioned(
+                          left: size.width * .1,
+                          top: size.height * .12,
+                          child: Text(
+                            'Transaction',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )),
+                      Positioned(
+                          right: size.width * .05,
+                          top: size.height * .05,
+                          child: Container(
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.to(Cart());
+                                      },
+                                      child: Icon(
+                                        Icons.add_shopping_cart,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      //cartitem.cartlist.length.toString()
+                                      Text("",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18)),
+                                    ],
+                                  ),
+                                ],
+                              ))),
+                      Positioned(
+                          left: size.width * .05,
+                          top: size.height * .05,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                              size: 30,
                             ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          ))
+                    ],
+                  )),
+              Positioned(
+                  right: 0,
+                  left: 0,
+                  top: size.height * .2,
+                  child: Container(
+                    height: size.height * .8,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(30),
+                            topLeft: Radius.circular(30))),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              //cartitem.cartlist.length.toString()
-                              Text("",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18)),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.grey[100]),
+                                width: size.width * .8,
+                                height: 50,
+                                child: TextField(
+                                  onChanged: (v) {},
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    suffixIcon: Icon(Icons.search),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(Filter());
+                                },
+                                child: Container(
+                                  width: size.width * .1,
+                                  height: size.width * .1,
+                                  child: Image.asset(
+                                      'assets/images/filter.png'),
+                                ),
+                              ),
                             ],
                           ),
-                        ],
-                      ))),
-                  Positioned(
-                      left: size.width * .05,
-                      top: size.height * .05,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 30,
                         ),
-                      ))
-                ],
-              )),
-          Positioned(
-              right: 0,
-              left: 0,
-              top: size.height * .2,
-              child: Container(
-                height: size.height * .8,
-                width: size.width,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        topLeft: Radius.circular(30))),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.grey[100]),
-                            width: size.width * .8,
-                            height: 50,
-                            child: TextField(
-                              onChanged: (v) {},
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                suffixIcon: Icon(Icons.search),
+                        Expanded(
+                          flex: 1,
+                          child: ListView.builder(
+                              itemCount: bata.customerListItems.length
+                              // 100, //bata.allItems.length,
+                              ,
+                              itemBuilder: (context, pos) {
+                                return item(
+                                    textEditingController:
+                                    listtextEditingControllerOfItem[pos],
+                                    size: size,
+                                    funadd: () {
+                                      int i = int.parse(
+                                          listtextEditingControllerOfItem[pos]
+                                              .text) +
+                                          1;
+                                      listtextEditingControllerOfItem[pos]
+                                          .text =
+                                          i.toString();
+
+                                      setState(() {});
+                                    },
+                                    products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
+                                    bata.customerListItems[pos],
+                                    funremov: () {
+                                      if (int.parse(
+                                          listtextEditingControllerOfItem[pos]
+                                              .text) >
+                                          0) {
+                                        int i = int.parse(
+                                            listtextEditingControllerOfItem[pos]
+                                                .text) -
+                                            1;
+                                        listtextEditingControllerOfItem[pos]
+                                            .text =
+                                            i.toString();
+
+                                        setState(() {});
+                                      }
+                                    }); // AlirtItem( );
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              totalItem = 0;
+                              double totalprice = 0;
+                              for (int i = 0;
+                              i < listtextEditingControllerOfItem.length;
+                              i++) {
+                                totalItem = totalItem +
+                                    int.parse(
+                                        listtextEditingControllerOfItem[i]
+                                            .text);
+                                totalprice = totalprice +
+                                    (int.parse(
+                                        listtextEditingControllerOfItem[i]
+                                            .text) *
+                                        double.tryParse(
+                                            bata.customerListItems[i]
+                                                .itemDetails[0].sellingPrice));
+
+                                for (int p = 0;
+                                p <
+                                    int.parse(listtextEditingControllerOfItem[i]
+                                        .text);
+                                p++) {
+                                  cartListItem.addToCart(
+                                      item: bata.customerListItems[i]);
+                                }
+                              }
+                              print(
+                                  'number of item ${cartListItem.cartlist
+                                      .length}');
+                              int customer_id = int.tryParse(
+                                  Get
+                                      .find<AllChequesController>()
+                                      .customer_id);
+                              print('customer_id     $customer_id');
+
+                              // for (int i = 0;
+                              //     i < cartListItem.cartlist.length;
+                              //     i++) {
+                              //   totalprice = totalprice +
+                              //       double.tryParse(cartListItem
+                              //           .cartlist[i].itemDetails[0].sellingPrice);
+                              // }
+                              _databaseHelper
+                                  .insert_sales_order_requests(
+                                  Sales_Order_Requests_Model(
+                                    user_id: _userAndPermissions.user.id,
+                                    customer_id: customer_id,
+                                    employee_id: _userAndPermissions.user
+                                        .userId,
+                                    request_status: 'accepted',
+                                    salesmanager_id:
+                                    _userAndPermissions.user.salesmanagerId,
+                                    request_type: 'salesOrder',
+                                    salesmanager_status: 'pending',
+                                    store_id: 1,
+                                    total_price: totalprice,
+                                    created_at: DateTime.now().toString(),
+                                    supervisor_id:
+                                    _userAndPermissions.user.supervisorId,
+                                    total_discount: 1000,
+                                    is_successfully_submitted: 0,
+                                    no_of_items: totalItem.toString(),
+                                    salesmanager_note: '',
+                                    request_level: 1,
+                                    total_tax: 10,
+                                    total_price_without_tax_discount: 55,
+                                  ))
+                                  .then((value) {
+
+
+ insertItemInDataBase(value);
+                              }).catchError((e) {
+                                print(e.toString());
+                              });
+                            },
+                            child: Container(
+                              height: 50,
+                              width: size.width * .9,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(
+                                child: Text('Add To Cart'),
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(Filter());
-                            },
-                            child: Container(
-                              width: size.width * .1,
-                              height: size.width * .1,
-                              child: Image.asset('assets/images/filter.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: ListView.builder(
-                          itemCount: bata.customerListItems.length
-                          // 100, //bata.allItems.length,
-                          ,
-                          itemBuilder: (context, pos) {
-                            return item(textEditingController: listtextEditingControllerOfItem[pos],
-                                size: size,
-                                funadd: () {
-                                  int i=    int.parse(listtextEditingControllerOfItem[pos].text)+1;
-                                  listtextEditingControllerOfItem[pos].text=i.toString();
-
-                                  setState(() {
-
-                                  });
-                                },
-                                products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
-                                    bata.customerListItems[pos],
-                                funremov: () {
-                              if(int.parse(listtextEditingControllerOfItem[pos].text)>0){
-                                int i=    int.parse(listtextEditingControllerOfItem[pos].text)-1;
-                                listtextEditingControllerOfItem[pos].text=i.toString();
-
-                                setState(() {
-
-                                });
-                              }
-
-                                }); // AlirtItem( );
-                          }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          totalItem=0;
-                          double totalprice = 0;
-                          for(int i=0;i<listtextEditingControllerOfItem.length;i++){
-                            totalItem=totalItem+int.parse(listtextEditingControllerOfItem[i].text);
-                            totalprice=totalprice+(int.parse(listtextEditingControllerOfItem[i].text)* double.tryParse(bata.customerListItems[i].itemDetails[0].sellingPrice));
-
-                            for(int p=0;p<int.parse(listtextEditingControllerOfItem[i].text);p++){
-                              cartListItem.addToCart(item: bata.customerListItems[i]);
-
-
-                            }
-                          }
-                          print('number of item ${cartListItem.cartlist.length}');
-                        int customer_id =int.tryParse(
-                            Get.find<AllChequesController>().customer_id);
-                        print('customer_id     $customer_id');
-
-                          // for (int i = 0;
-                          //     i < cartListItem.cartlist.length;
-                          //     i++) {
-                          //   totalprice = totalprice +
-                          //       double.tryParse(cartListItem
-                          //           .cartlist[i].itemDetails[0].sellingPrice);
-                          // }
-                          _databaseHelper
-                              .insert_sales_order_requests(
-                                  Sales_Order_Requests_Model(
-                            user_id: _userAndPermissions.user.id,
-                            customer_id: customer_id,
-                            employee_id: _userAndPermissions.user.userId,
-                            request_status: 'accepted',
-                            salesmanager_id:
-                                _userAndPermissions.user.salesmanagerId,
-                            request_type: 'salesOrder',
-                            salesmanager_status: 'pending',
-                            store_id: 1,
-                            total_price: totalprice,
-                            created_at: DateTime.now().toString(),
-                            supervisor_id:
-                                _userAndPermissions.user.supervisorId,
-                            total_discount: 1000,
-                            is_successfully_submitted: 0,
-                            no_of_items:
-                                totalItem.toString(),
-                            salesmanager_note: '',
-                            request_level: 1,
-                            total_tax: 10,
-                            total_price_without_tax_discount: 55,
-                          ))
-                              .then((value) {
-
-                            print('order number  $value');
-
-                             for(int i=0;i<cartListItem.cartlist.length;i++){
-                               // DatabaseHelper().insert_item_tabel(item)
-                             }
-
-
-                          }).catchError((e) {
-                            print(e.toString());
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          width: size.width * .9,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Text('Add To Cart'),
-                          ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      height: size.height * .1,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: GestureDetector(
-                              onTap: () {
-                                if (!c.swatch.isRunning) {
-                                  getMyLoction(firesvisittlocation);
+                        Container(
+                          height: size.height * .1,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (!c.swatch.isRunning) {
+                                      getMyLoction(firesvisittlocation);
 
-                                  c.startjor();
-                                } else {
-                                  getMyLoction(endvisittlocation);
-                                  DatabaseHelper()
-                                      .insert_insert_visit(Insert_visit_DB(
-                                    customer_id:
-                                        Get.find<AllChequesController>()
+                                      c.startjor();
+                                    } else {
+                                      getMyLoction(endvisittlocation);
+                                      DatabaseHelper()
+                                          .insert_insert_visit(Insert_visit_DB(
+                                        customer_id:
+                                        Get
+                                            .find<AllChequesController>()
                                             .customer
                                             .customerInfo
                                             .id,
-                                    user_id:
+                                        user_id:
                                         _userAndPermissions.user.id.toString(),
-                                  ))
-                                      .then((value) {
-                                    Get.find<AllChequesController>().customer =
+                                      ))
+                                          .then((value) {
+                                        Get
+                                            .find<AllChequesController>()
+                                            .customer =
                                         null;
-                                  });
-                                  c.stopjor();
-                                }
-                              },
-                              child: Container(
-                                height: size.height * .1,
-                                color: Color(0xff2C4B89),
-                                child: Center(
-                                    child: Obx(() => Text(
-                                          c.startswatch.value
-                                              ? 'End Visit'
-                                              : 'start',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        ))),
+                                      });
+                                      c.stopjor();
+                                      Get.to(All_Customer());
+                                    }
+                                  },
+                                  child: Container(
+                                    height: size.height * .1,
+                                    color: Color(0xff2C4B89),
+                                    child: Center(
+                                        child: Obx(() =>
+                                            Text(
+                                              c.startswatch.value
+                                                  ? 'End Visit'
+                                                  : 'start',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ))),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  height: size.height * .1,
+                                  child: Center(
+                                      child: GetX<TimeController>(
+                                        init: TimeController(),
+                                        builder: (c) {
+                                          return Text(c.stoptimedisplay.value);
+                                        },
+                                      )),
+                                ),
+                              )
+                            ],
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              height: size.height * .1,
-                              child: Center(
-                                  child: GetX<TimeController>(
-                                init: TimeController(),
-                                builder: (c) {
-                                  return Text(c.stoptimedisplay.value);
-                                },
-                              )),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )),
-        ],
-      ),
-    ));
+                        )
+                      ],
+                    ),
+                  )),
+            ],
+          ),
+        ));
   }
+insertItemInDataBase(int i)async{
 
-  Widget item({Size size, AllItems products, funadd, funremov,TextEditingController textEditingController}) {
+  print('order number  $i');
+
+  for (int oo= 0;
+  oo < cartListItem.cartlist.length;
+  oo++) {
+    print( '99999999999999999999999999999');
+    print(oo);
+    //////////////// لسه حجات هتضاف هنا
+    print( cartListItem.cartlist.length);
+    print(cartListItem.cartlist[oo].itemId);
+    print( '99999999999999999999999999999');
+ await   DatabaseHelper()
+        .insert_item_tabel(Item_Database(
+      olderId: i,
+      itemId: int.tryParse(
+          cartListItem.cartlist[oo].itemId),
+      categoryId: int.parse(
+          cartListItem.cartlist[oo]
+              .itemDetails[0].categoryId),     //
+
+
+      basePricePerUnit: double.parse(cartListItem.cartlist[oo]     .itemDetails[0].itemCost??"1")
+    ))
+        .then((value) {
+      print('تم اضافه');
+    }).catchError((e){print(e.toString() );});
+  }
+}
+  Widget item({Size size,
+    AllItems products,
+    funadd,
+    funremov,
+    TextEditingController textEditingController}) {
     var count =
-        cartListItem.cartlist.where((c) => c == products).toList().length;
-    var cat = Get.find<AllCategoriesController>().allCategories;
+        cartListItem.cartlist
+            .where((c) => c == products)
+            .toList()
+            .length;
+    var cat = Get
+        .find<AllCategoriesController>()
+        .allCategories;
     AllCategories categories;
     for (int i = 0;
-        i < Get.find<AllCategoriesController>().allCategories.length;
-        i++) {
+    i < Get
+        .find<AllCategoriesController>()
+        .allCategories
+        .length;
+    i++) {
       if (cat[i].id == products.id) {
         categories = cat[i];
       }
@@ -430,7 +508,7 @@ class _ProductsScrState extends State<ProductsScr> {
                   children: [
                     Text('Details'),
                     SizedBox(
-                      width: size.width * .05,
+                      width: size.width * .08,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -454,10 +532,12 @@ class _ProductsScrState extends State<ProductsScr> {
                         SizedBox(
                           width: 20,
                         ),
-                        Container(width: size.width*.2,
+                        Container(
+                          width: size.width * .2,
                           child: Center(
-                            child: TextField(controller:textEditingController ,
-
+                            child: TextField(
+                              controller: textEditingController,
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
@@ -501,10 +581,12 @@ class _ProductsScrState extends State<ProductsScr> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                'item Number: ${products.itemDetails[0].itemNumber}'),
+                                'item Number: ${products.itemDetails[0]
+                                    .itemNumber}'),
                             Container(
                                 child: Text(
-                                    'item name:  ${products.itemDetails[0].itemNameEn}'))
+                                    'item name:  ${products.itemDetails[0]
+                                        .itemNameEn}'))
                           ],
                         ),
                       ),
@@ -514,7 +596,8 @@ class _ProductsScrState extends State<ProductsScr> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                'Item Price :${products.itemDetails[0].itemCost}'),
+                                'Item Price :${products.itemDetails[0]
+                                    .itemCost}'),
                             Text('Tax:  ${products.itemDetails[0].tax}')
                           ],
                         ),
@@ -614,7 +697,8 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                           ],
                         ),
-                      ), Padding(
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -638,6 +722,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     ],
                                   ),
                                   child: TextField(
+                                    textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       focusedBorder: InputBorder.none,
@@ -668,6 +753,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     ],
                                   ),
                                   child: TextField(
+                                    textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       focusedBorder: InputBorder.none,
@@ -691,6 +777,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('stock'),
                                 Container(
+                                    height: 50,
                                     width: size.width * .4,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -714,6 +801,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Price per Item'),
                                 Container(
+                                  height: 50,
                                   width: size.width * .4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -747,6 +835,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Price'),
                                 Container(
+                                  height: 50,
                                   width: size.width * .4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -771,6 +860,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Tax %'),
                                 Container(
+                                  height: 50,
                                   width: size.width * .4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -802,6 +892,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Total Tax'),
                                 Container(
+                                    height: 50,
                                     width: size.width * .4,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -817,14 +908,19 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ],
                                     ),
                                     child: Center(
-                                        child: Text(
-                                         (double.tryParse(products.itemDetails[0].sellingPrice)*double.tryParse(products.itemDetails[0].tax)).toString()))),
+                                        child: Text((double.tryParse(products
+                                            .itemDetails[0]
+                                            .sellingPrice) *
+                                            double.tryParse(products
+                                                .itemDetails[0].tax))
+                                            .toString()))),
                               ],
                             ),
                             Column(
                               children: [
                                 Text('Total Price'),
                                 Container(
+                                  height: 50,
                                   width: size.width * .4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -846,15 +942,14 @@ class _ProductsScrState extends State<ProductsScr> {
                           ],
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: size.width * .4,
                               height: 50,
+                              width: size.width * .4,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
@@ -964,9 +1059,8 @@ class _ProductsScrState extends State<ProductsScr> {
     );
   }
 
-  biledjsonpost(
-      {UserAndPermissions userAndPermissions,
-      CartItemController cartListItem}) {
+  biledjsonpost({UserAndPermissions userAndPermissions,
+    CartItemController cartListItem}) {
     EmployeDataController employeDataController = EmployeDataController();
     OlderPost_json listOrder = OlderPost_json(listOrder: [
       ListOrderToJson(

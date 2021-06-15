@@ -6,6 +6,7 @@ import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../home.dart';
 import 'SalesOrderDetails.dart';
 
 class TimeLine extends StatefulWidget {
@@ -50,14 +51,18 @@ class _TimeLineState extends State<TimeLine> {
           Positioned(
             top: size.height * .06,
             right: size.width * .02,
-            child: Container(
-                height: 75,
-                width: 75,
-                child: Icon(
-                  Icons.home,
-                  color: Colors.white,
-                  size: 50,
-                )),
+            child: GestureDetector(onTap: (){
+              Get.offAll(Home());
+            },
+              child: Container(
+                  height: 75,
+                  width: 75,
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.white,
+                    size: 50,
+                  )),
+            ),
           ),
           Positioned(
               left: size.width * .05,
@@ -104,7 +109,7 @@ class _TimeLineState extends State<TimeLine> {
                             onTap: () {
                               print(theDatalist[index].orderid);
                               print('66666666666666666666666666666666');
-                              Get.to(SalesOrderDetails(),
+                              Get.to(() => SalesOrderDetails(),
                                   arguments:
                                   theDatalist[index].orderid);
                             },

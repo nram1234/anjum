@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
                             getMyLoction(firesjornytlocation);
                             jornystartTime = DateTime.now();
                             setState(() {});
-                            Get.to(All_Customer());
+                            Get.to(()=>All_Customer());
                           } else {
                             setState(() {});
                             jornyEndTime = DateTime.now();
@@ -186,7 +186,7 @@ class _HomeState extends State<Home> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(OrderStatus());
+                              Get.to(()=>OrderStatus());
                             },
                             child: item(
                                 color: Colors.orange[200],
@@ -196,7 +196,7 @@ class _HomeState extends State<Home> {
                           ),
                           GestureDetector(
                             onTap: () {
-                             Get.to(TimeLine());
+                             Get.to( ()=> TimeLine());
 
                             },
                             child: item(
@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
                                 path: 'assets/images/g.png'),
                           ),
                           GestureDetector(onTap: (){
-Get.to(Catalog());
+Get.to(()=> Catalog());
                           },
                             child: item(
                                 color: Colors.cyan[200],
@@ -229,7 +229,7 @@ Get.to(Catalog());
                               path: 'assets/images/promotion.png'),
                           GestureDetector(
                             onTap: () {
-                              Get.to(Reports());
+                              Get.to(()=> Reports());
                             },
                             child: item(
                                 color: Colors.cyan[200],
@@ -339,12 +339,7 @@ Get.to(Catalog());
             user_id: _userAndPermissions.user.id.toString())
         .then((value) {
       //insert to database
-      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
 
-      print(value.result.allCustomers[0].customerInfo.id);
-      print(value.result.allCustomers[1].customerInfo.id);
-      print(value.result.allCustomers[2].customerInfo.id);
-      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
       Get.find<UserDataController>().userData.clear();
       Get.find<UserDataController>().updateserData(value.result.userData);
       Get.find<AllBanksController>().allBanks.clear();
@@ -387,7 +382,7 @@ Get.to(Catalog());
       Get.find<AllItemsController>().updateallItemsData(value.result.allItems);
 
       updatethedata = true;
-      print(updatethedata);
+      print(value.result.allItems);
     });
   }
 
