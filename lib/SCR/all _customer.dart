@@ -135,63 +135,89 @@ class _All_CustomerState extends State<All_Customer> {
           ),
     GetBuilder<TimeController>(builder: (_) {
     return c.swatch.isRunning?
-            Container(
-                height: size.height * .1,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () async {
-                          if (!c.swatch.isRunning) {
-                             getMyLoction(firesvisittlocation);
+    Container(
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.7),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset:
+              Offset(0, 3), // changes position of shadow
+            ),
+          ],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          )),
+      height: size.height * .1,
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15))),
+            height: size.height * .1,
+            width: size.width * .6,
+            child: Center(
+                child: GetX<TimeController>(
+                  init: TimeController(),
+                  builder: (c) {
+                    return Text(c.stoptimedisplay.value);
+                  },
+                )),
+          ),
+          Expanded(
+            flex: 1,
+            child: GestureDetector(
+              onTap: () {
+                if (!c.swatch.isRunning) {
+                  getMyLoction(firesvisittlocation);
 
-                            c.startjor();
-                          } else {
-                              getMyLoction(endvisittlocation );
-                            DatabaseHelper()
-                                .insert_insert_visit(Insert_visit_DB(
-                              customer_id: Get.find<AllChequesController>()
-                                  .customer
-                                  .customerInfo
-                                  .id,
-                              user_id: _userAndPermissions.user.id.toString(),
-                            ))
-                                .then((value) {
-                              Get.find<AllChequesController>().customer = null;
-                            });
-                            c.stopjor();
-                              setState(() {});
-                          }
-                        },
-                        child: Container(
-                          height: size.height * .1,
-                          color: Color(0xff2C4B89),
-                          child: Center(
-                              child: Obx(() => Text(
-                                    c.startswatch.value ? 'End Visit' : 'start',
-                                    style: TextStyle(
-                                        fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
-                                  ))),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: size.height * .1,
-                        child: Center(
-                            child: GetX<TimeController>(
-                          init: TimeController(),
-                          builder: (c) {
-                            return Text(c.stoptimedisplay.value);
-                          },
-                        )),
-                      ),
-                    )
-                  ],
-                ),
-          ):SizedBox();
+                  c.startjor();
+                } else {
+                  getMyLoction(endvisittlocation);
+                  DatabaseHelper()
+                      .insert_insert_visit(Insert_visit_DB(
+                    customer_id:
+                    Get.find<AllChequesController>()
+                        .customer
+                        .customerInfo
+                        .id,
+                    user_id:
+                    _userAndPermissions.user.id.toString(),
+                  ))
+                      .then((value) {
+                    Get.find<AllChequesController>().customer =
+                    null;
+                  });
+                  c.stopjor();
+                  Get.to(() => All_Customer());
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xff2C4B89),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(15))),
+                height: size.height * .1,
+                child: Center(
+                    child: Obx(() => Text(
+                      c.startswatch.value
+                          ? 'End Visit'
+                          : 'start',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ))),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ):SizedBox();
              }
            )
         ],

@@ -58,17 +58,49 @@ class _ProductsScrState extends State<ProductsScr> {
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
     //dropdownMenuItemList.listdropdownValue.clear();
+    TextEditingController t = TextEditingController();
+    // dropdownMenuItemList.allStockItems..length =
+    //     bata.customerListItems.length;
+    // dropdownMenuItemList.listdropdownValue ..length =
+    //     bata.customerListItems.length;
     super.initState();
     for (int i = 0; i < bata.customerListItems.length; i++) {
-      TextEditingController t = TextEditingController();
-      List<AllStockItems> list = [];
-      AllStockItems dropdownValue;
-      dropdownMenuItemList.allStockItems.add(list);
-       dropdownMenuItemList.listdropdownValue.add(dropdownValue);
+      List<AllStockItems>p=[];
+      dropdownMenuItemList.allStockItems.add(p);
+      AllStockItems allStockItems;
+      dropdownMenuItemList.listdropdownValue.add(allStockItems);
+       for(int z=0;z<stocitem.length;z++){
+        print(stocitem[z].itemId==bata.customerListItems[i].itemId);
+        dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
+
+      }
+      print('${bata.customerListItems.length }       99999999');
+      // dropdownMenuItemList.listdropdownValue.add(dropdownValue);
+      // for (int i2 = 0; i2 < stocitem.length; i2++) {
+      //   for (int p = 0; p < bata.customerListItems.length; p++) {
+      //     print(stocitem[i2].itemId == bata.customerListItems[p].itemId);
+      //     print(stocitem[i2].itemId);
+      //     print(stocitem[i2].storeId);
+      //     print('i2    $i2');
+      //     print('i      $i');
+      //     print('00000000000000000000000000000000000000');
+      //     if (stocitem[i2].itemId == bata.customerListItems[p].itemId) {
+      //       dropdownMenuItemList.allStockItems[i].add(stocitem[i2]);
+      //
+      //       // list.add(stocitem[i])  ;
+      //
+      //     }
+      //   }
+      // }
+
+      // dropdownMenuItemList.allStockItems.add(list);
+      //  dropdownMenuItemList.listdropdownValue.add(dropdownValue);
 
       t.text = 0.toString();
+      dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
       dropdownMenuItemList.listtextEditingControllerOfItem.add(t);
-    }
+      print(dropdownMenuItemList.allStockItems[i]); }
+
   } //============================================
   //int itemcount=0;
 
@@ -128,8 +160,8 @@ class _ProductsScrState extends State<ProductsScr> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              //cartitem.cartlist.length.toString()
-                              Text("",
+
+                              Text(   cartListItem.cartlist.length.toString(),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18)),
                             ],
@@ -210,15 +242,15 @@ class _ProductsScrState extends State<ProductsScr> {
                           // 100, //bata.allItems.length,
                           ,
                           itemBuilder: (context, pos) {
-                            for (int i = 0; i < stocitem.length; i++) {
-                              if (stocitem[i].itemId ==
-                                  bata.customerListItems[pos].itemId) {
-                                dropdownMenuItemList.allStockItems[pos]
-                                    .add(stocitem[i]);
-                                // list.add(stocitem[i])  ;
-
-                              }
-                            }
+                            // for (int i = 0; i < stocitem.length; i++) {
+                            //   if (stocitem[i].itemId ==
+                            //       bata.customerListItems[pos].itemId) {
+                            //     dropdownMenuItemList.allStockItems[pos]
+                            //         .add(stocitem[i]);
+                            //     // list.add(stocitem[i])  ;
+                            //
+                            //   }
+                            // }
 
                             var count = cartListItem.cartlist
                                 .where((c) => c == bata.customerListItems[pos])
@@ -696,7 +728,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   'Show All Promotion',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
                                 ),
                               ),
                             ],
@@ -711,53 +743,78 @@ class _ProductsScrState extends State<ProductsScr> {
                             Column(
                               children: [
                                 Text('Store ID'),
-                                DropdownButton<AllStockItems>(
-                                  value: dropdownMenuItemList
-                                      .listdropdownValue[pos],
-                                  icon: const Icon(Icons.arrow_downward),
-                                  iconSize: 15,
-                                  elevation: 16,
-                                  style:
-                                  const TextStyle(color: Colors.deepPurple),
-                                  // underline: Container(
-                                  //   height: 2,
-                                  //   color: Colors.deepPurpleAccent,
-                                  // ),
-                                  onChanged: (AllStockItems newValue) {
-                                    // dropdownMenuItemList.setValOfdropdownValue(
-                                    //     pos: pos, dropdownValue: newValue);
-                                    print(dropdownMenuItemList
-                                        .listdropdownValue[pos]);
-                                    print(pos);
-                                  },
-                                  items: dropdownMenuItemList.allStockItems[pos]
-                                      .map<DropdownMenuItem<AllStockItems>>(
-                                          (AllStockItems value) {
-                                        return DropdownMenuItem<AllStockItems>(
-                                          value: value,
-                                          child: Text(value.storeId),
-                                        );
-                                      }).toList(),
-                                )
+                                Obx(() => Container(width: size.width*.25,
+                                  decoration: BoxDecoration(  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child: DropdownButton<AllStockItems>(
+                                          value: dropdownMenuItemList
+                                              .listdropdownValue[pos],
+                                          icon: const Icon(Icons.arrow_downward),
+                                          iconSize: 15,
+                                          elevation: 16,
+                                          style: const TextStyle(
+                                              color: Colors.deepPurple),
+                                          // underline: Container(
+                                          //   height: 2,
+                                          //   color: Colors.deepPurpleAccent,
+                                          // ),
+                                          onChanged: (AllStockItems newValue) {
+                                            dropdownMenuItemList.setValOfdropdownValue(
+                                                pos: pos, dropdownValue: newValue);
+print('Unit ${newValue.measurementUnitName}');
+                                            print('Unit ${newValue.quantity}');
+                                          },
+                                          items: dropdownMenuItemList
+                                              .allStockItems[pos]
+                                              .map<DropdownMenuItem<AllStockItems>>(
+                                                  (AllStockItems value) {
+                                            return DropdownMenuItem<AllStockItems>(
+                                              value: value,
+                                              child: Text(value.id),
+                                            );
+                                          }).toList(),
+                                        ),
+                                  ),
+                                ))
                               ],
                             ),
                             Column(
                               children: [
                                 Text('Unit'),
-                                Text(dropdowenval != null
-                                    ? dropdowenval.storeId
-                                    : "")
+                             Obx(()=>
+                                    Container(width: size.width*.25,height: 50,
+                                        decoration: BoxDecoration(  border: Border.all(
+                                          color: Colors.grey,
+                                          width: 1,
+                                        ),borderRadius: BorderRadius.circular(10)),
+                                      child: Center(
+                                        child: Text(   dropdownMenuItemList
+                                            .listdropdownValue[pos].measurementUnitName
+                                         ),
+                                      ),
+                                    )
+                              )
                               ],
                             ),
                             Column(
                               children: [
                                 Text('Quantity'),
-                                Text(
-                                  cartListItem.cartlist
-                                      .where((c) => c == products)
-                                      .toList()
-                                      .length
-                                      .toString(),
+                               Obx(()=>
+                                   Container(width: size.width*.25,height: 50,
+                                     decoration: BoxDecoration(  border: Border.all(
+                                       color: Colors.grey,
+                                       width: 1,
+                                     ),borderRadius: BorderRadius.circular(10)),
+                                     child: Center(
+                                       child: Text(
+                                           dropdownMenuItemList
+                                               .listdropdownValue[pos].quantity
+                               ),
+                                     ),
+                                   )
                                 )
                               ],
                             ),
@@ -773,20 +830,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Bounce'),
                                 Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+
+                                  width: size.width*.4,height: 50,
+                                  decoration: BoxDecoration(color: Colors.grey[200],  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -804,20 +853,11 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Discount %'),
                                 Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+                                  width: size.width*.4,height: 50,
+                                  decoration: BoxDecoration( color: Colors.grey[200], border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -843,21 +883,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('stock'),
                                 Container(
-                                    height: 50,
-                                    width: size.width * .4,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 7,
-                                          offset: Offset(0,
-                                              3), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
+
+                                    width: size.width*.4,height: 50,
+                                    decoration: BoxDecoration(  border: Border.all(
+                                      color: Colors.grey,
+                                      width: 1,
+                                    ),borderRadius: BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text(products
                                             .itemDetails[0].minimumQuantity))),
@@ -867,21 +898,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Price per Item'),
                                 Container(
-                                  height: 50,
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+
+                                  width: size.width*.4,height: 50,
+                                  decoration: BoxDecoration(  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(
                                           products.itemDetails[0].itemCost ??
@@ -901,21 +923,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Price'),
                                 Container(
-                                  height: 50,
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+
+                                  width: size.width*.4,height: 50,
+                                  decoration: BoxDecoration(  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(products
                                           .itemDetails[0].sellingPrice)),
@@ -926,21 +939,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Tax %'),
                                 Container(
-                                  height: 50,
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+
+                                  width: size.width*.4,height: 50,
+                                  decoration: BoxDecoration(  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(products.itemDetails[0].tax)),
                                 ),
@@ -958,21 +962,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Total Tax'),
                                 Container(
-                                    height: 50,
-                                    width: size.width * .4,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 7,
-                                          offset: Offset(0,
-                                              3), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
+
+                                    width: size.width*.4,height: 50,
+                                    decoration: BoxDecoration(  border: Border.all(
+                                      color: Colors.grey,
+                                      width: 1,
+                                    ),borderRadius: BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text((double.tryParse(products
                                                     .itemDetails[0]
@@ -986,21 +981,12 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Total Price'),
                                 Container(
-                                  height: 50,
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+
+                                  width: size.width*.4,height: 50,
+                                  decoration: BoxDecoration(  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
                                   child: Center(child: Text('هنشوف الحساب')),
                                 ),
                               ],
@@ -1014,21 +1000,12 @@ class _ProductsScrState extends State<ProductsScr> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: 50,
-                              width: size.width * .4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
+
+                              width: size.width*.4,height: 50,
+                              decoration: BoxDecoration(  border: Border.all(
+                                color:  Color(0xff2C4B89),
+                                width: 1,
+                              ),borderRadius: BorderRadius.circular(10)),
                               child: Center(child: Text('Cancel')),
                             ),
                             Container(

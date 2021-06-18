@@ -336,7 +336,8 @@ Get.to(()=> Catalog());
   void initState() {
     super.initState();
     _allNetworking.Get_employee_data(
-            user_id: _userAndPermissions.user.id.toString())
+            user_id: _userAndPermissions.user.id.toString()
+    )
         .then((value) {
       //insert to database
 

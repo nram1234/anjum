@@ -4,6 +4,7 @@ import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,7 @@ class _ChequePayState extends State<ChequePay> {
   TextEditingController cheqnumber = TextEditingController();
   TextEditingController addnote = TextEditingController();
   TextEditingController chechamount = TextEditingController();
-
+  AllNetworking _allNetworking=AllNetworking();
   Future<String> pickdate() async {
     var lastDate = DateTime.now().add(new Duration(
         days: int.tryParse(allCheques.customer.customerInfo.chequeDueDate)));
@@ -429,45 +430,73 @@ class _ChequePayState extends State<ChequePay> {
                               padding: const EdgeInsets.all(8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  DatabaseHelper()
-                                      .insert_insert_cheque(
-                                          item: Insert_cheque_DB(
-                                              user_id: _userAndPermissions
-                                                  .user.userId,
-                                              employee_id:
-                                                  _userAndPermissions.user.id,
-                                              customer_id: int.parse(
-                                                  Get.find<AllChequesController>()
-                                                      .customer_id),
-                                              amount: double.tryParse(
-                                                  chechamount.text),
-                                              bank_id: int.tryParse(
-                                                  dropdownValueAllBanks.id),
-                                              branch_id: int.tryParse(
-                                                  dropdownValueAllBankBranches
-                                                      .id),
-                                              cheque_no:
-                                                  int.tryParse(cheqnumber.text),
-                                              customer_name: allCheques.customer
-                                                  .customerInfo.customerNameEn,
-                                              note: addnote.text,
-                                              payment_date: Chequetime,
-                                              payment_no: chechamount.text,
-                                              payment_type: "cheque",
-                                              reference_no: allCheques.customer.customerInfo.refId,
-                                              supervisor_id: _userAndPermissions.user.supervisorId,
-                                              salesmanager_id: _userAndPermissions.user.salesmanagerId,
-                                              due_date: Chequetime,
-                                              drawer_name: drawerName))
-                                      .then((value) {
-                                    print(
-                                        '999999999999999999999999999999999999999999');
+                                  var mydata=[Insert_cheque_DB(
+                                    user_id: _userAndPermissions
+                                        .user.userId,
+                                    employee_id:
+                                    _userAndPermissions.user.id,
+                                    customer_id: int.parse(
+                                        Get.find<AllChequesController>()
+                                            .customer_id),
+                                    amount: double.tryParse(
+                                        chechamount.text),
+                                    bank_id: int.tryParse(
+                                        dropdownValueAllBanks.id),
+                                    branch_id: int.tryParse(
+                                        dropdownValueAllBankBranches
+                                            .id),
+                                    cheque_no:
+                                    int.tryParse(cheqnumber.text),
+                                    customer_name: allCheques.customer
+                                        .customerInfo.customerNameEn,
+                                    note: addnote.text,
+                                    payment_date: Chequetime,
+                                    payment_no: chechamount.text,
+                                    payment_type: "cheque",
+                                    reference_no: allCheques.customer.customerInfo.refId,
+                                    supervisor_id: _userAndPermissions.user.supervisorId,
+                                    salesmanager_id: _userAndPermissions.user.salesmanagerId,
+                                    due_date: Chequetime,
+                                    drawer_name: drawerName,).toJson()];
+                                  _allNetworking.insert_cheque_to_Web( data: mydata).then((value) {
                                     print(value);
                                   });
- // DatabaseHelper().get_All_item_in_insert_cheque( ).then((value) {
- //   print(value[0].toJson());
- //
- // });
+                                  // DatabaseHelper()
+                                  //     .insert_insert_cheque(
+                                  //         item: Insert_cheque_DB(
+                                  //             user_id: _userAndPermissions
+                                  //                 .user.userId,
+                                  //             employee_id:
+                                  //                 _userAndPermissions.user.id,
+                                  //             customer_id: int.parse(
+                                  //                 Get.find<AllChequesController>()
+                                  //                     .customer_id),
+                                  //             amount: double.tryParse(
+                                  //                 chechamount.text),
+                                  //             bank_id: int.tryParse(
+                                  //                 dropdownValueAllBanks.id),
+                                  //             branch_id: int.tryParse(
+                                  //                 dropdownValueAllBankBranches
+                                  //                     .id),
+                                  //             cheque_no:
+                                  //                 int.tryParse(cheqnumber.text),
+                                  //             customer_name: allCheques.customer
+                                  //                 .customerInfo.customerNameEn,
+                                  //             note: addnote.text,
+                                  //             payment_date: Chequetime,
+                                  //             payment_no: chechamount.text,
+                                  //             payment_type: "cheque",
+                                  //             reference_no: allCheques.customer.customerInfo.refId,
+                                  //             supervisor_id: _userAndPermissions.user.supervisorId,
+                                  //             salesmanager_id: _userAndPermissions.user.salesmanagerId,
+                                  //             due_date: Chequetime,
+                                  //             drawer_name: drawerName))
+                                  //     .then((value) {
+                                  //   print(
+                                  //       '999999999999999999999999999999999999999999');
+                                  //   print(value);
+                                  // });
+
                                 },
                                 child: Container(
                                   height: 50,

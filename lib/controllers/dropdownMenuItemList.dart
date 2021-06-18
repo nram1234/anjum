@@ -5,11 +5,13 @@ class DropdownMenuItemList extends GetxController{
 
 
   List<TextEditingController> listtextEditingControllerOfItem = [];
-  List<List<AllStockItems>> allStockItems=[];
-  var listdropdownValue=[].obs;
+  RxList<List<AllStockItems>> allStockItems=RxList<List<AllStockItems>>();
 
-  void addlistdropdownValue(  allStockItems){
+  RxList<AllStockItems> listdropdownValue=RxList<AllStockItems>();
+//RxList<AllStockItems>lisst=RxList<AllStockItems>();
+  void addlistdropdownValue(AllStockItems allStockItems){
     listdropdownValue.add(allStockItems);
+
     update();
   }
   void addallStockItems(List<AllStockItems> list){
@@ -20,8 +22,8 @@ class DropdownMenuItemList extends GetxController{
     listtextEditingControllerOfItem.add(list);
     update();
   }
-  // setValOfdropdownValue({int pos,  dropdownValue}){
-  //   listdropdownValue[pos].val=dropdownValue;
-  //   update();
-  // }
+  setValOfdropdownValue({int pos,AllStockItems dropdownValue}){
+    listdropdownValue[pos]=dropdownValue;
+    update();
+  }
 }

@@ -282,10 +282,7 @@ class _LoginState extends State<Login> {
                             _userAndPermissions.setuser(value.user);
                             _userAndPermissions
                                 .setPermissions(value.permissions);
-                            print( '00000000000000000000000000000000000');
-print(value.user.employeeNameEn);
-                            print(value.user.image);
-                            print( '00000000000000000000000000000000000');
+
                             Get.to(Home());
 
                           }

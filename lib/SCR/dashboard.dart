@@ -1,3 +1,5 @@
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -5,6 +7,7 @@ import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -396,44 +399,85 @@ class _DashboardState extends State<Dashboard> {
                     left: 0,
                     right: 0,
                     child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.7),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                              Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          )),
                       height: size.height * .1,
                       child: Row(
                         children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15))),
+                            height: size.height * .1,
+                            width: size.width * .6,
+                            child: Center(
+                                child: GetX<TimeController>(
+                                  init: TimeController(),
+                                  builder: (c) {
+                                    return Text(c.stoptimedisplay.value);
+                                  },
+                                )),
+                          ),
                           Expanded(
                             flex: 1,
                             child: GestureDetector(
                               onTap: () {
                                 if (!c.swatch.isRunning) {
+                                  getMyLoction(firesvisittlocation);
+
                                   c.startjor();
                                 } else {
+                                  getMyLoction(endvisittlocation);
+                                  DatabaseHelper()
+                                      .insert_insert_visit(Insert_visit_DB(
+                                    customer_id:
+                                    Get.find<AllChequesController>()
+                                        .customer
+                                        .customerInfo
+                                        .id,
+                                    user_id:
+                                    _userAndPermissions.user.id.toString(),
+                                  ))
+                                      .then((value) {
+                                    Get.find<AllChequesController>().customer =
+                                    null;
+                                  });
                                   c.stopjor();
-                                  Get.to(All_Customer());
+                                  Get.to(() => All_Customer());
                                 }
                               },
                               child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xff2C4B89),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(15))),
                                 height: size.height * .1,
-                                color: Color(0xff2C4B89),
                                 child: Center(
-                                    child: Obx(()=>Text(
+                                    child: Obx(() => Text(
                                       c.startswatch.value
                                           ? 'End Visit'
-                                          : 'start Visit',
+                                          : 'start',
                                       style: TextStyle(
                                           fontSize: 20,
-                                          fontWeight: FontWeight.bold,color: Colors.white),
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
                                     ))),
                               ),
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              height: size.height * .1,
-                              child: Center(
-                                  child:
-                                      Obx(() => Text(c.stoptimedisplay.value))),
-                            ),
-                          )
                         ],
                       ),
                     ))

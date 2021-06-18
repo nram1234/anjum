@@ -334,7 +334,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
 
                             LatLng loc = LatLng(double.tryParse(l[0].trim()),
                                 double.tryParse(l[1].trim()));
-                            Get.to(MyMapScr(
+                            Get.to(()=>MyMapScr(
                               loc: loc,
                               name: data.customerInfo.customerNameEn,
                             ));
