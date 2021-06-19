@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class CartItemController extends GetxController{
 
- List<AllItems>cartlist=[];
+ RxList<AllItems>cartlist=RxList<AllItems>();
  addToCart({AllItems item}){
    cartlist.add(item);
    update();
@@ -18,7 +18,16 @@ class CartItemController extends GetxController{
    update();
  }
 
+ removeAllChooseItexfromcart({AllItems item}){
 
+   for(int i=0;i<cartlist.length;i++){
+     if(cartlist[i]==item){
+       cartlist.remove(item);
+     }
+   }
+
+   update();
+ }
 
 
 }

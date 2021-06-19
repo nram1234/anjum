@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class AllNetworking {
-  static var paseurl = 'http://18.220.206.74/';
+  static var paseurl = 'http://18.220.206.74/';//http://18.220.206.74/API/api/auth/login
 
   //Response response;
   Dio dio = new Dio(
@@ -34,7 +34,7 @@ class AllNetworking {
     };
     Login_json data;
     await dio
-        .post( 'http://18.220.206.74/van/user_api/login', queryParameters: formData)
+        .post(paseurl+ 'API/api/auth/login', queryParameters: formData)
         .then((value) {
       print(value.data);
       if (value.data['error_message'] != null) {

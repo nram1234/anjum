@@ -58,7 +58,7 @@ class _ProductsScrState extends State<ProductsScr> {
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
     //dropdownMenuItemList.listdropdownValue.clear();
-    TextEditingController t = TextEditingController();
+    // TextEditingController t = TextEditingController();
     // dropdownMenuItemList.allStockItems..length =
     //     bata.customerListItems.length;
     // dropdownMenuItemList.listdropdownValue ..length =
@@ -67,14 +67,17 @@ class _ProductsScrState extends State<ProductsScr> {
     for (int i = 0; i < bata.customerListItems.length; i++) {
       List<AllStockItems>p=[];
       dropdownMenuItemList.allStockItems.add(p);
+      TextEditingController textEditingControllerOfItem  =TextEditingController();
+      textEditingControllerOfItem.text = 0.toString();
+      dropdownMenuItemList.addlisttextEditingControllerOfItem(textEditingControllerOfItem);
       AllStockItems allStockItems;
       dropdownMenuItemList.listdropdownValue.add(allStockItems);
        for(int z=0;z<stocitem.length;z++){
-        print(stocitem[z].itemId==bata.customerListItems[i].itemId);
+
         dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
 
       }
-      print('${bata.customerListItems.length }       99999999');
+
       // dropdownMenuItemList.listdropdownValue.add(dropdownValue);
       // for (int i2 = 0; i2 < stocitem.length; i2++) {
       //   for (int p = 0; p < bata.customerListItems.length; p++) {
@@ -96,10 +99,11 @@ class _ProductsScrState extends State<ProductsScr> {
       // dropdownMenuItemList.allStockItems.add(list);
       //  dropdownMenuItemList.listdropdownValue.add(dropdownValue);
 
-      t.text = 0.toString();
+
       dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
-      dropdownMenuItemList.listtextEditingControllerOfItem.add(t);
-      print(dropdownMenuItemList.allStockItems[i]); }
+      // dropdownMenuItemList.listtextEditingControllerOfItem.add(t);
+      // print(dropdownMenuItemList.allStockItems[i]);
+    }
 
   } //============================================
   //int itemcount=0;
@@ -161,9 +165,9 @@ class _ProductsScrState extends State<ProductsScr> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
 
-                              Text(   cartListItem.cartlist.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18)),
+                        Obx(()=>      Text(   cartListItem.cartlist.length.toString(),
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 18)),)
                             ],
                           ),
                         ],
@@ -310,6 +314,7 @@ class _ProductsScrState extends State<ProductsScr> {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
+                          cartListItem.cartlist.clear();
                           totalItem = 0;
                           double totalprice = 0;
                           for (int i = 0;
@@ -487,15 +492,10 @@ class _ProductsScrState extends State<ProductsScr> {
   }
 
   insertItemInDataBase(int i) async {
-    print('order number  $i');
+
 
     for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
-      print('99999999999999999999999999999');
-      print(oo);
-      //////////////// لسه حجات هتضاف هنا
-      print(cartListItem.cartlist.length);
-      print(cartListItem.cartlist[oo].itemId);
-      print('99999999999999999999999999999');
+
       await DatabaseHelper()
           .insert_item_tabel(Item_Database(
               olderId: i,
@@ -764,8 +764,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                           onChanged: (AllStockItems newValue) {
                                             dropdownMenuItemList.setValOfdropdownValue(
                                                 pos: pos, dropdownValue: newValue);
-print('Unit ${newValue.measurementUnitName}');
-                                            print('Unit ${newValue.quantity}');
+
                                           },
                                           items: dropdownMenuItemList
                                               .allStockItems[pos]

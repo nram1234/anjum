@@ -1,5 +1,8 @@
 
+import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 import 'carteditproduct.dart';
@@ -11,6 +14,9 @@ class Cart extends StatefulWidget {
 
 class _CartEditProductState extends State<Cart> {
   String Chequetime = "";
+
+  CartItemController bata = Get.find<CartItemController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +68,7 @@ class _CartEditProductState extends State<Cart> {
                       top: size.height * .1,
                       child: Container(
                           child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Cart()),
-                                );
-                              },
+
                               child: Icon(
                                 Icons.add_shopping_cart,
                                 color: Colors.white,
@@ -117,9 +117,9 @@ class _CartEditProductState extends State<Cart> {
                                   topLeft: Radius.circular(30))),
                           height: size.height * .4,
                           child: ListView.builder(
-                              itemCount: 100,
+                              itemCount: bata.cartlist.length,
                               itemBuilder: (context, pos) {
-                                return item(size: size);
+                                return item(size: size,data: bata.cartlist[pos]);
                               }),
                         ),
                         SizedBox(
@@ -575,7 +575,13 @@ class _CartEditProductState extends State<Cart> {
     );
   }
 
-  Widget item({size}) {
+  Widget item({size,AllItems data}) {
+    int numberofitem=0;
+    for(int i=0;i<bata.cartlist.length;i++){
+      if(bata.cartlist[i]==data){
+        numberofitem++;
+      }
+    }
     return Container(
         height: size.height * .145,
         width: size.width,
@@ -595,7 +601,7 @@ class _CartEditProductState extends State<Cart> {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: const AssetImage('assets/images/oil.png'),
+                    image: NetworkImage(data.itemDetails[0].image),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -609,10 +615,7 @@ class _CartEditProductState extends State<Cart> {
               child: Container(
                   child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Cart()),
-                        );
+                        bata.removeAllChooseItexfromcart(item: data);
                       },
                       child: Icon(
                         Icons.delete,
@@ -643,7 +646,7 @@ class _CartEditProductState extends State<Cart> {
               left: size.width * .35,
               top: size.height * .009,
               child: Text(
-                'Safi  - corn oil 1 liter',
+                data.itemDetails[0].itemNameEn,
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 20,
@@ -662,7 +665,7 @@ class _CartEditProductState extends State<Cart> {
               left: size.width * .35,
               top: size.height * .04,
               child: Text(
-                'Price - 20.00 JD',
+               data.itemDetails[0].sellingPrice,
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 13,
@@ -685,14 +688,17 @@ class _CartEditProductState extends State<Cart> {
                       size: 40,
                     ),
                     onPressed: () {
-                      setState(() {});
+                      bata.removefromcart(item: data);
+                      setState(() {
+
+                      });
                     },
                     color: Colors.orangeAccent,
                   ),
                   SizedBox(
                     width: 15,
                   ),
-                  Text("2"),
+                  Text(numberofitem.toString()),
                   SizedBox(
                     width: 15,
                   ),
@@ -700,7 +706,10 @@ class _CartEditProductState extends State<Cart> {
                     icon: Icon(Icons.add_circle, size: 40),
                     color: Colors.orangeAccent,
                     onPressed: () {
-                      setState(() {});
+                      bata.addToCart(item: data);
+                      setState(() {
+
+                      });
                     },
                   ),
                 ],

@@ -451,7 +451,7 @@ class _ChequePayState extends State<ChequePay> {
                                         .customerInfo.customerNameEn,
                                     note: addnote.text,
                                     payment_date: Chequetime,
-                                    payment_no: chechamount.text,
+                                    payment_no: chechamount.text, //TO DO
                                     payment_type: "cheque",
                                     reference_no: allCheques.customer.customerInfo.refId,
                                     supervisor_id: _userAndPermissions.user.supervisorId,
