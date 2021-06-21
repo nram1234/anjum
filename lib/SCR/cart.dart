@@ -22,7 +22,9 @@ List<AllItems>listtoshow=[];
   void initState() {
     super.initState();
     for(int i=0;i<bata.cartlist.length;i++){
-
+if(!listtoshow.contains(bata.cartlist[i])){
+  listtoshow.add(bata.cartlist[i]);
+}
     }
 
 
@@ -30,6 +32,7 @@ List<AllItems>listtoshow=[];
 
   @override
   Widget build(BuildContext context) {
+    print("${listtoshow.length }      pppppp");
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -127,9 +130,10 @@ List<AllItems>listtoshow=[];
                                   topLeft: Radius.circular(30))),
                           height: size.height * .4,
                           child: ListView.builder(
-                              itemCount: bata.cartlist.length,
+                              itemCount: listtoshow.length,
                               itemBuilder: (context, pos) {
-                                return item(size: size,data: bata.cartlist[pos]);
+
+                                return item(size: size,data: listtoshow [pos]);
                               }),
                         ),
                         SizedBox(
@@ -625,7 +629,11 @@ List<AllItems>listtoshow=[];
               child: Container(
                   child: InkWell(
                       onTap: () {
+                       listtoshow.remove(data);
                         bata.removeAllChooseItexfromcart(item: data);
+                        setState(() {
+
+                        });
                       },
                       child: Icon(
                         Icons.delete,
@@ -639,11 +647,17 @@ List<AllItems>listtoshow=[];
               child: Container(
                   child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CartEditProduct()),
-                        );
+
+                        Get.to(CartEditProduct(),arguments: data);
+                        //
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => CartEditProduct()),
+                        // );
+                        //
+                        //
+
                       },
                       child: Icon(
                         Icons.edit,

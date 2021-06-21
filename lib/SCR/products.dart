@@ -110,6 +110,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
   @override
   Widget build(BuildContext context) {
+    print('00000000000000000000000000000000000000000000');
     var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
@@ -274,6 +275,10 @@ class _ProductsScrState extends State<ProductsScr> {
                               }
                             }
 
+
+
+
+
                             return item(
                                 pos: pos,
                                 list: dropdownMenuItemList.allStockItems[pos],
@@ -337,7 +342,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     int.parse(dropdownMenuItemList
                                         .listtextEditingControllerOfItem[i]
                                         .text);
-                                p++) {
+                                p++) {print( bata.customerListItems[i].id);
                               cartListItem.addToCart(
                                   item: bata.customerListItems[i]);
                             }

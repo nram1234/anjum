@@ -21,7 +21,10 @@ class CartItemController extends GetxController{
  removeAllChooseItexfromcart({AllItems item}){
 
    for(int i=0;i<cartlist.length;i++){
-     if(cartlist[i]==item){
+print(i);
+print(cartlist[i].id);
+print(item.id);
+     if(cartlist[i].id==item.id){
        cartlist.remove(item);
      }
    }
