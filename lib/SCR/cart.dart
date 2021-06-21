@@ -17,6 +17,16 @@ class _CartEditProductState extends State<Cart> {
 
   CartItemController bata = Get.find<CartItemController>();
 
+List<AllItems>listtoshow=[];
+  @override
+  void initState() {
+    super.initState();
+    for(int i=0;i<bata.cartlist.length;i++){
+
+    }
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
