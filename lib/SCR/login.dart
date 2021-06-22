@@ -264,39 +264,44 @@ class _LoginState extends State<Login> {
                         AllNetworking.paseurl=url.text;
                       }
                       print( AllNetworking.paseurl);
-                      if (name.text != null && password.text != null&& user_Id.text != null) {
-                        login=true;
-                        setState(() {
-
-                        });
-                        if(_checkbox){
-                          box.write('user', name.text);
-                          box.write('password', password.text);
-                        }
-                        _allNetworking
-                            .login(
-                                user_name: name.text, password: password.text,user_id: int.tryParse(user_Id.text))
-                            .then((value) {
-                          if (value != null) {
-                            print(value.user);
-                            _userAndPermissions.setuser(value.user);
-                            _userAndPermissions
-                                .setPermissions(value.permissions);
-
-                            Get.to(Home());
-
-                          }
-                          login=false;
+                      if(user_Id.text != null&&user_Id.text.isNotEmpty){
+                        if (name.text != null && password.text != null) {
+                          login=true;
                           setState(() {
 
-                          });  });
-                        //     .catchError((e) {
-                        //   print(e.toString());
-                        //   Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");
-                        // });
-                      } else {
-                        Get.snackbar("", 'تاكد من ادخال البيانات ');
+                          });
+                          if(_checkbox){
+                            box.write('user', name.text);
+                            box.write('password', password.text);
+                          }
+                          _allNetworking
+                              .login(
+                              user_name: name.text, password: password.text,user_id: int.tryParse(user_Id.text))
+                              .then((value) {
+                            if (value != null) {
+                              print(value.user);
+                              _userAndPermissions.setuser(value.user);
+                              _userAndPermissions
+                                  .setPermissions(value.permissions);
+
+                              Get.to(Home());
+
+                            }
+                            login=false;
+                            setState(() {
+
+                            });  })
+                              .catchError((e) {
+                            print("oooooooooooooooooooooooooooooo");
+                            Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");
+                          });
+                        } else {
+                          Get.snackbar("", 'تاكد من ادخال البيانات ');
+                        }
+                      }else {
+                        Get.snackbar("", 'تاكد من ادخال رقم الشركة ');
                       }
+
 
 
                     },

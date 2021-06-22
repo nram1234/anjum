@@ -27,6 +27,7 @@ update();
   stopjor(){
     startswatch.value=false;
     swatch.stop();
+    stoptimedisplay.value='00:00:00';
     update();
   }
 }

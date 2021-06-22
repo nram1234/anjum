@@ -26,6 +26,7 @@ class AllNetworking {
     @required String password,
     @required int user_id,
   }) async {
+    dio.options.headers['Accept'] = 'application/json';
     final formData = {
       "mode": "formdata",
       "user_name": user_name,
@@ -34,7 +35,7 @@ class AllNetworking {
     };
     Login_json data;
     await dio
-        .post(paseurl+ 'API/api/auth/login', queryParameters: formData)
+        .post( "http://18.220.206.74/API/api/auth/login", queryParameters: formData)
         .then((value) {
       print(value.data);
       if (value.data['error_message'] != null) {
@@ -43,7 +44,7 @@ class AllNetworking {
       } else {
         data = Login_json.fromJson(value.data);
       }
-    });
+    }).catchError((e){print(e.toString());});
 
     return data;
   }

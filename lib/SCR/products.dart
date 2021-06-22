@@ -48,21 +48,34 @@ class _ProductsScrState extends State<ProductsScr> {
   int totalItem = 0;
 
   //=========================
-  var stocitem = Get.find<AllStockItemsController>().allStockItems;
+  var stocitem = Get.find<AllStockItemsController>().allStockItems;//ده لسته المنتجات وممكن المقارنه بايد الاستور ونضيفه في لسته
 
-  DropdownMenuItemList dropdownMenuItemList = Get.put(DropdownMenuItemList());
+  DropdownMenuItemList dropdownMenuItemList = Get.put(DropdownMenuItemList(),permanent: true);
 
   //====================
+  AllStockItems _allStockItems;
+  //getstock
+  getmeasurementUnit(int idItem){
+    List<String>dropdowen=[];
+    for(int i=0;i<stocitem.length;i++){
+
+      if(idItem==int.parse(stocitem[i].itemId)){
+        dropdownMenuItemList.allStockItems[0].add(stocitem[i]);
+      }
+    }
+
+
+
+
+     }
   @override
   void initState() {
+    super.initState();
+
+
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
-    //dropdownMenuItemList.listdropdownValue.clear();
-    // TextEditingController t = TextEditingController();
-    // dropdownMenuItemList.allStockItems..length =
-    //     bata.customerListItems.length;
-    // dropdownMenuItemList.listdropdownValue ..length =
-    //     bata.customerListItems.length;
+
     super.initState();
     for (int i = 0; i < bata.customerListItems.length; i++) {
       List<AllStockItems>p=[];
@@ -72,37 +85,16 @@ class _ProductsScrState extends State<ProductsScr> {
       dropdownMenuItemList.addlisttextEditingControllerOfItem(textEditingControllerOfItem);
       AllStockItems allStockItems;
       dropdownMenuItemList.listdropdownValue.add(allStockItems);
-       for(int z=0;z<stocitem.length;z++){
-
-        dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
-
-      }
-
-      // dropdownMenuItemList.listdropdownValue.add(dropdownValue);
-      // for (int i2 = 0; i2 < stocitem.length; i2++) {
-      //   for (int p = 0; p < bata.customerListItems.length; p++) {
-      //     print(stocitem[i2].itemId == bata.customerListItems[p].itemId);
-      //     print(stocitem[i2].itemId);
-      //     print(stocitem[i2].storeId);
-      //     print('i2    $i2');
-      //     print('i      $i');
-      //     print('00000000000000000000000000000000000000');
-      //     if (stocitem[i2].itemId == bata.customerListItems[p].itemId) {
-      //       dropdownMenuItemList.allStockItems[i].add(stocitem[i2]);
+      //  for(int z=0;z<stocitem.length;z++){
       //
-      //       // list.add(stocitem[i])  ;
+      //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
       //
-      //     }
-      //   }
       // }
 
-      // dropdownMenuItemList.allStockItems.add(list);
-      //  dropdownMenuItemList.listdropdownValue.add(dropdownValue);
 
 
-      dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
-      // dropdownMenuItemList.listtextEditingControllerOfItem.add(t);
-      // print(dropdownMenuItemList.allStockItems[i]);
+      // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
+
     }
 
   } //============================================
@@ -405,7 +397,7 @@ class _ProductsScrState extends State<ProductsScr> {
                         ),
                       ),
                     ),
-                    Container(
+                    Container (
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -420,7 +412,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20),
                           )),
-                      height: size.height * .1,
+                      height: size.height * .075,
                       child: Row(
                         children: [
                           Container(
@@ -428,7 +420,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(15))),
-                            height: size.height * .1,
+                            height: size.height * .075,
                             width: size.width * .6,
                             child: Center(
                                 child: GetX<TimeController>(
@@ -471,7 +463,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     color: Color(0xff2C4B89),
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(15))),
-                                height: size.height * .1,
+                                height: size.height * .075,
                                 child: Center(
                                     child: Obx(() => Text(
                                           c.startswatch.value
@@ -610,7 +602,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           child: Center(
                             child: TextField(
                               controller: textEditingController,
-                              textAlign: TextAlign.center,
+                              textAlign: TextAlign.center,keyboardType:TextInputType.number ,
                             ),
                           ),
                         ),
@@ -648,10 +640,10 @@ class _ProductsScrState extends State<ProductsScr> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          //categories.categoryNameEn
-                          child: Text("category Name")),
+                      // Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     //categories.categoryNameEn
+                      //     child: Text("category Name")),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -670,8 +662,8 @@ class _ProductsScrState extends State<ProductsScr> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                'Item Price :${products.itemDetails[0].itemCost}'),
+                            // Text(
+                            //     'Item Price :${products.itemDetails[0].itemCost}'),
                             Text('Tax:  ${products.itemDetails[0].tax}')
                           ],
                         ),
@@ -740,91 +732,90 @@ class _ProductsScrState extends State<ProductsScr> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text('Store ID'),
-                                Obx(() => Container(width: size.width*.25,
-                                  decoration: BoxDecoration(  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                    child: DropdownButton<AllStockItems>(
-                                          value: dropdownMenuItemList
-                                              .listdropdownValue[pos],
-                                          icon: const Icon(Icons.arrow_downward),
-                                          iconSize: 15,
-                                          elevation: 16,
-                                          style: const TextStyle(
-                                              color: Colors.deepPurple),
-                                          // underline: Container(
-                                          //   height: 2,
-                                          //   color: Colors.deepPurpleAccent,
-                                          // ),
-                                          onChanged: (AllStockItems newValue) {
-                                            dropdownMenuItemList.setValOfdropdownValue(
-                                                pos: pos, dropdownValue: newValue);
-
-                                          },
-                                          items: dropdownMenuItemList
-                                              .allStockItems[pos]
-                                              .map<DropdownMenuItem<AllStockItems>>(
-                                                  (AllStockItems value) {
-                                            return DropdownMenuItem<AllStockItems>(
-                                              value: value,
-                                              child: Text(value.id),
-                                            );
-                                          }).toList(),
-                                        ),
-                                  ),
-                                ))
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text('Unit'),
-                             Obx(()=>
-                                    Container(width: size.width*.25,height: 50,
-                                        decoration: BoxDecoration(  border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),borderRadius: BorderRadius.circular(10)),
-                                      child: Center(
-                                        child: Text(   dropdownMenuItemList
-                                            .listdropdownValue[pos].measurementUnitName
-                                         ),
-                                      ),
-                                    )
-                              )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text('Quantity'),
-                               Obx(()=>
-                                   Container(width: size.width*.25,height: 50,
-                                     decoration: BoxDecoration(  border: Border.all(
-                                       color: Colors.grey,
-                                       width: 1,
-                                     ),borderRadius: BorderRadius.circular(10)),
-                                     child: Center(
-                                       child: Text(
-                                           dropdownMenuItemList
-                                               .listdropdownValue[pos].quantity
-                               ),
-                                     ),
-                                   )
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Column(
+                      //         children: [
+                      //           Text('Store ID'),
+                      //           Obx(() => Container(width: size.width*.25,
+                      //             decoration: BoxDecoration(  border: Border.all(
+                      //               color: Colors.grey,
+                      //               width: 1,
+                      //             ),borderRadius: BorderRadius.circular(10)),
+                      //             child: Center(
+                      //               child: DropdownButton<AllStockItems>(
+                      //                     value: dropdownMenuItemList
+                      //                         .listdropdownValue[pos],
+                      //                     icon: const Icon(Icons.arrow_downward),
+                      //                     iconSize: 15,
+                      //                     elevation: 16,
+                      //                     style: const TextStyle(
+                      //                         color: Colors.deepPurple),
+                      //                     // underline: Container(
+                      //                     //   height: 2,
+                      //                     //   color: Colors.deepPurpleAccent,
+                      //                     // ),
+                      //                     onChanged: (AllStockItems newValue) {
+                      //                       dropdownMenuItemList.setValOfdropdownValue(
+                      //                           pos: pos, dropdownValue: newValue);
+                      //
+                      //                     },
+                      //                     items: dropdownMenuItemList
+                      //                         .allStockItems[pos]
+                      //                         .map<DropdownMenuItem<AllStockItems>>(
+                      //                             (AllStockItems value) {
+                      //                       return DropdownMenuItem<AllStockItems>(
+                      //                         value: value,
+                      //                         child: Text(value.id),
+                      //                       );
+                      //                     }).toList(),
+                      //                   ),
+                      //             ),
+                      //           ))
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         children: [
+                      //           Text('Unit'),
+                      //        Obx(()=>
+                      //               Container(width: size.width*.25,height: 50,
+                      //                   decoration: BoxDecoration(  border: Border.all(
+                      //                     color: Colors.grey,
+                      //                     width: 1,
+                      //                   ),borderRadius: BorderRadius.circular(10)),
+                      //                 child: Center(
+                      //                   child: Text(   dropdownMenuItemList
+                      //                       .listdropdownValue[pos].measurementUnitName
+                      //                    ),
+                      //                 ),
+                      //               )
+                      //         )
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         children: [
+                      //           Text('Quantity'),
+                      //          Obx(()=>
+                      //              Container(width: size.width*.25,height: 50,
+                      //                decoration: BoxDecoration(  border: Border.all(
+                      //                  color: Colors.grey,
+                      //                  width: 1,
+                      //                ),borderRadius: BorderRadius.circular(10)),
+                      //                child: Center(
+                      //                  child: Text(
+                      //                      textEditingController.text
+                      //          ),
+                      //                ),
+                      //              )
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -1124,6 +1115,27 @@ class _ProductsScrState extends State<ProductsScr> {
 
     String jsonUser = jsonEncode(listOrder);
     print(jsonUser);
+  }
+
+
+
+  bool isNumericUsing_tryParse(String string) {
+    // Null or empty string is not a number
+    if (string == null || string.isEmpty) {
+      return false;
+    }
+
+    // Try to parse input string to number.
+    // Both integer and double work.
+    // Use int.tryParse if you want to check integer only.
+    // Use double.tryParse if you want to check double only.
+    final number = num.tryParse(string);
+
+    if (number == null) {
+      return false;
+    }
+
+    return true;
   }
 }
 

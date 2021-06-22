@@ -150,7 +150,7 @@ class _All_CustomerState extends State<All_Customer> {
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           )),
-      height: size.height * .1,
+      height: size.height * .075,
       child: Row(
         children: [
           Container(
@@ -158,7 +158,7 @@ class _All_CustomerState extends State<All_Customer> {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15))),
-            height: size.height * .1,
+            height: size.height * .075,
             width: size.width * .6,
             child: Center(
                 child: GetX<TimeController>(
@@ -201,7 +201,7 @@ class _All_CustomerState extends State<All_Customer> {
                     color: Color(0xff2C4B89),
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(15))),
-                height: size.height * .1,
+                height: size.height * .075,
                 child: Center(
                     child: Obx(() => Text(
                       c.startswatch.value
