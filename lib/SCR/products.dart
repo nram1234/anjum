@@ -271,40 +271,52 @@ class _ProductsScrState extends State<ProductsScr> {
 
 
 
-                            return item(
-                                pos: pos,
-                                list: dropdownMenuItemList.allStockItems[pos],
-                                dropdowenval:
-                                    dropdownMenuItemList.listdropdownValue[pos],
-                                textEditingController: dropdownMenuItemList
-                                    .listtextEditingControllerOfItem[pos],
-                                size: size,
-                                funadd: () {
-                                  int i = int.parse(dropdownMenuItemList
-                                          .listtextEditingControllerOfItem[pos]
-                                          .text) +
-                                      1;
-                                  dropdownMenuItemList
-                                      .listtextEditingControllerOfItem[pos]
-                                      .text = i.toString();
-                                },
-                                products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
-                                    bata.customerListItems[pos],
-                                funremov: () {
-                                  if (int.parse(dropdownMenuItemList
-                                          .listtextEditingControllerOfItem[pos]
-                                          .text) >
-                                      0) {
+                            return Obx((){
+                              int numberofitem=0;
+                              for(int i=0;i<cartListItem.cartlist.length;i++){
+                                if(cartListItem.cartlist[i]==bata.customerListItems[pos]){
+                                  numberofitem++;
+                                }
+                              }
+
+
+                              dropdownMenuItemList
+                                  .listtextEditingControllerOfItem[pos].text=numberofitem.toString();
+                              return      item(
+                                  pos: pos,
+                                  list: dropdownMenuItemList.allStockItems[pos],
+                                  dropdowenval:
+                                  dropdownMenuItemList.listdropdownValue[pos],
+                                  textEditingController: dropdownMenuItemList
+                                      .listtextEditingControllerOfItem[pos],
+                                  size: size,
+                                  funadd: () {
                                     int i = int.parse(dropdownMenuItemList
-                                            .listtextEditingControllerOfItem[
-                                                pos]
-                                            .text) -
+                                        .listtextEditingControllerOfItem[pos]
+                                        .text) +
                                         1;
                                     dropdownMenuItemList
                                         .listtextEditingControllerOfItem[pos]
                                         .text = i.toString();
-                                  }
-                                }); // AlirtItem( );
+                                  },
+                                  products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
+                                  bata.customerListItems[pos],
+                                  funremov: () {
+                                    if (int.parse(dropdownMenuItemList
+                                        .listtextEditingControllerOfItem[pos]
+                                        .text) >
+                                        0) {
+                                      int i = int.parse(dropdownMenuItemList
+                                          .listtextEditingControllerOfItem[
+                                      pos]
+                                          .text) -
+                                          1;
+                                      dropdownMenuItemList
+                                          .listtextEditingControllerOfItem[pos]
+                                          .text = i.toString();
+                                    }
+                                  });
+                            }); // AlirtItem( );
                           }),
                     ),
                     Padding(
@@ -576,40 +588,6 @@ class _ProductsScrState extends State<ProductsScr> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: funadd,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.circular(2)),
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                              child: Text(
-                                "+",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          width: size.width * .2,
-                          child: Center(
-                            child: TextField(
-                              controller: textEditingController,
-                              textAlign: TextAlign.center,keyboardType:TextInputType.number ,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        InkWell(
                           onTap: funremov,
                           child: Container(
                             decoration: BoxDecoration(
@@ -628,6 +606,41 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Container(
+                          width: size.width * .2,
+                          child: Center(
+                            child:TextField(
+                              controller: textEditingController,
+                              textAlign: TextAlign.center,keyboardType:TextInputType.number ,
+                            )
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        InkWell(
+                          onTap: funadd,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.circular(2)),
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                              child: Text(
+                                "+",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+
                         SizedBox(
                           width: 20,
                         ),

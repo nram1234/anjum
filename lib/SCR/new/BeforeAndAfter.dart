@@ -97,15 +97,16 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                 ),
                                 GestureDetector(
                                   onTap: () async{
-                                    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-                                    setState(() {
-                                      if (pickedFile != null) {
-                                        _image1 = File(pickedFile.path);
-                                      } else {
-                                        print('No image selected.');
-                                      }
-                                    }); },
+                                    // final pickedFile = await picker.getImage(source: ImageSource.camera);
+                                    //
+                                    // setState(() {
+                                    //   if (pickedFile != null) {
+                                    //     _image1 = File(pickedFile.path);
+                                    //   } else {
+                                    //     print('No image selected.');
+                                    //   }
+                                    // });
+                                    },
                                   child: Container(
                                     height:size.width*.4,
                                     width: size.width*.4,
@@ -131,15 +132,15 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                 ),
                                 GestureDetector(
                                   onTap: () async{
-                                    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-                                    setState(() {
-                                      if (pickedFile != null) {
-                                        _image2 = File(pickedFile.path);
-                                      } else {
-                                        print('No image selected.');
-                                      }
-                                    });
+                                    // final pickedFile = await picker.getImage(source: ImageSource.camera);
+                                    //
+                                    // setState(() {
+                                    //   if (pickedFile != null) {
+                                    //     _image2 = File(pickedFile.path);
+                                    //   } else {
+                                    //     print('No image selected.');
+                                    //   }
+                                    // });
                                   },
                                   child: Container(
                                     height:size.width*.4,

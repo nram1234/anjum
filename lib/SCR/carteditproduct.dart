@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 class CartEditProduct extends StatefulWidget {
 
-  AllItems data= Get.arguments;
+  AllItems data= Get.arguments[0];
+
   @override
   _CartEditProductState createState() => _CartEditProductState();
 }
@@ -44,7 +45,7 @@ TextEditingController textEditingController =TextEditingController();
   @override
   Widget build(BuildContext context) {
 
-    print(widget.data);
+    print(widget.data.id);
 
     var size = MediaQuery.of(context).size;
 
@@ -102,526 +103,527 @@ TextEditingController textEditingController =TextEditingController();
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30))),
-                  // child:  Column(
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         Container(
-                  //           height: size.height * .15,
-                  //           width: size.height * .15,
-                  //           color: Colors.indigo,
-                  //           child: Image.network(
-                  //            widget.data.itemDetails[0].image,
-                  //             height: size.height * .1,
-                  //             width: size.height * .1,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           width: 8,
-                  //         ),
-                  //         Column(
-                  //           mainAxisSize: MainAxisSize.max,
-                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             SizedBox(
-                  //               height: 8,
-                  //             ),
-                  //             Text(widget.data.itemDetails[0].itemNameEn),
-                  //             SizedBox(
-                  //               height: 4,
-                  //             ),
-                  //             Text(widget.data.itemDetails[0].minimumQuantity),
-                  //             //products.itemDetails[0].itemCost
-                  //             Text(widget.data.itemDetails[0].sellingPrice),
-                  //             //  Expanded(child: Container()),
-                  //           ],
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     ExpansionTile(
-                  //       title: Row(
-                  //         children: [
-                  //           Text('Details'),
-                  //           SizedBox(
-                  //             width: size.width * .08,
-                  //           ),
-                  //           Row(
-                  //             crossAxisAlignment: CrossAxisAlignment.center,
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             children: [
-                  //               InkWell(
-                  //                 onTap: () {
-                  //                   int i = int.parse(textEditingController
-                  //                       .text) +
-                  //                       1;
-                  //                   textEditingController
-                  //                       .text = i.toString();
-                  //                 setState(() {
-                  //
-                  //                 });},
-                  //                 child: Container(
-                  //                   decoration: BoxDecoration(
-                  //                       color: Colors.orange,
-                  //                       borderRadius: BorderRadius.circular(2)),
-                  //                   height: 30,
-                  //                   width: 30,
-                  //                   child: Center(
-                  //                     child: Text(
-                  //                       "+",
-                  //                       style: TextStyle(
-                  //                           fontWeight: FontWeight.bold,
-                  //                           fontSize: 20,
-                  //                           color: Colors.white),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               SizedBox(
-                  //                 width: 20,
-                  //               ),
-                  //               Container(
-                  //                 width: size.width * .2,
-                  //                 child: Center(
-                  //                   child: TextField(
-                  //                     controller: textEditingController,
-                  //                     textAlign: TextAlign.center,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               SizedBox(
-                  //                 width: 20,
-                  //               ),
-                  //               InkWell(
-                  //                 onTap: () {
-                  //                   if (int.parse(textEditingController
-                  //                       .text) >
-                  //                       0) {
-                  //                     int i = int.parse(textEditingController
-                  //                         .text) -
-                  //                         1;
-                  //                     textEditingController
-                  //                         .text = i.toString();
-                  //                   }
-                  //               setState(() {
-                  //
-                  //               });  },
-                  //                 child: Container(
-                  //                   decoration: BoxDecoration(
-                  //                       color: Colors.orange,
-                  //                       borderRadius: BorderRadius.circular(2)),
-                  //                   height: 30,
-                  //                   width: 30,
-                  //                   child: Center(
-                  //                     child: Text(
-                  //                       "-",
-                  //                       style: TextStyle(
-                  //                           fontWeight: FontWeight.bold,
-                  //                           fontSize: 20,
-                  //                           color: Colors.white),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               SizedBox(
-                  //                 width: 20,
-                  //               ),
-                  //             ],
-                  //           )
-                  //         ],
-                  //       ),
-                  //       children: [
-                  //         Column(
-                  //           mainAxisAlignment: MainAxisAlignment.start,
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             Padding(
-                  //                 padding: const EdgeInsets.all(8.0),
-                  //                 //categories.categoryNameEn
-                  //                 child: Text("category Name")),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Text(
-                  //                       'item Number: ${widget.data.itemDetails[0].itemNumber}'),
-                  //                   Container(
-                  //                       child: Text(
-                  //                           'item name:  ${widget.data.itemDetails[0].itemNameEn}'))
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Text(
-                  //                       'Item Price :${widget.data.itemDetails[0].itemCost}'),
-                  //                   Text('Tax:  ${widget.data.itemDetails[0].tax}')
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Container(
-                  //               height: 1,
-                  //               color: Colors.grey,
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Text(
-                  //                 'Promotion',
-                  //                 style: TextStyle(fontWeight: FontWeight.bold),
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: GestureDetector(
-                  //                 onTap: () {
-                  //                   Widget okButton = TextButton(
-                  //                     child: Text("OK"),
-                  //                     onPressed: () {
-                  //                       Navigator.of(context).pop();
-                  //                     },
-                  //                   );
-                  //                   // AlertDialog alert = AlertDialog(
-                  //                   //   title: Center(
-                  //                   //     child: Text(
-                  //                   //       "Promotion list",
-                  //                   //       style: TextStyle(color: Colors.red),
-                  //                   //     ),
-                  //                   //   ),
-                  //                   //   content: Container(
-                  //                   //     height: size.height * .8,
-                  //                   //     width: size.width * .8,
-                  //                   //     child: ListView(
-                  //                   //       children: alert_item,
-                  //                   //     ),
-                  //                   //   ),
-                  //                   //   actions: [
-                  //                   //     okButton,
-                  //                   //   ],
-                  //                   // );
-                  //                   // showDialog(
-                  //                   //   context: context,
-                  //                   //   builder: (BuildContext context) {
-                  //                   //     return alert;
-                  //                   //   },
-                  //                   // );
-                  //                 },
-                  //                 child: Row(
-                  //                   children: [
-                  //                     Image.asset(
-                  //                       'assets/images/iso.png',
-                  //                       width: 30,
-                  //                       height: 30,
-                  //                     ),
-                  //                     Padding(
-                  //                       padding: const EdgeInsets.all(8.0),
-                  //                       child: Text(
-                  //                         'Show All Promotion',
-                  //                         style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
-                  //                       ),
-                  //                     ),
-                  //                   ],
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Store ID'),
-                  //                       Obx(() => Container(width: size.width*.25,
-                  //                         decoration: BoxDecoration(  border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: Center(
-                  //                           child: DropdownButton<AllStockItems>(
-                  //                             value: dropdownMenuItemList
-                  //                                 .listdropdownValue[pos],
-                  //                             icon: const Icon(Icons.arrow_downward),
-                  //                             iconSize: 15,
-                  //                             elevation: 16,
-                  //                             style: const TextStyle(
-                  //                                 color: Colors.deepPurple),
-                  //                             // underline: Container(
-                  //                             //   height: 2,
-                  //                             //   color: Colors.deepPurpleAccent,
-                  //                             // ),
-                  //                             onChanged: (AllStockItems newValue) {
-                  //                               dropdownMenuItemList.setValOfdropdownValue(
-                  //                                   pos: pos, dropdownValue: newValue);
-                  //
-                  //                             },
-                  //                             items: dropdownMenuItemList
-                  //                                 .allStockItems[pos]
-                  //                                 .map<DropdownMenuItem<AllStockItems>>(
-                  //                                     (AllStockItems value) {
-                  //                                   return DropdownMenuItem<AllStockItems>(
-                  //                                     value: value,
-                  //                                     child: Text(value.id),
-                  //                                   );
-                  //                                 }).toList(),
-                  //                           ),
-                  //                         ),
-                  //                       ))
-                  //                     ],
-                  //                   ),
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Unit'),
-                  //                       Obx(()=>
-                  //                           Container(width: size.width*.25,height: 50,
-                  //                             decoration: BoxDecoration(  border: Border.all(
-                  //                               color: Colors.grey,
-                  //                               width: 1,
-                  //                             ),borderRadius: BorderRadius.circular(10)),
-                  //                             child: Center(
-                  //                               child: Text(   dropdownMenuItemList
-                  //                                   .listdropdownValue[pos].measurementUnitName
-                  //                               ),
-                  //                             ),
-                  //                           )
-                  //                       )
-                  //                     ],
-                  //                   ),
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Quantity'),
-                  //                       Obx(()=>
-                  //                           Container(width: size.width*.25,height: 50,
-                  //                             decoration: BoxDecoration(  border: Border.all(
-                  //                               color: Colors.grey,
-                  //                               width: 1,
-                  //                             ),borderRadius: BorderRadius.circular(10)),
-                  //                             child: Center(
-                  //                               child: Text(
-                  //                                   dropdownMenuItemList
-                  //                                       .listdropdownValue[pos].quantity
-                  //                               ),
-                  //                             ),
-                  //                           )
-                  //                       )
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Bounce'),
-                  //                       Container(
-                  //
-                  //                         width: size.width*.4,height: 50,
-                  //                         decoration: BoxDecoration(color: Colors.grey[200],  border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: TextField(
-                  //                           textAlign: TextAlign.center,
-                  //                           decoration: InputDecoration(
-                  //                             border: InputBorder.none,
-                  //                             focusedBorder: InputBorder.none,
-                  //                             enabledBorder: InputBorder.none,
-                  //                             errorBorder: InputBorder.none,
-                  //                             disabledBorder: InputBorder.none,
-                  //                           ),
-                  //                         ),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Discount %'),
-                  //                       Container(
-                  //                         width: size.width*.4,height: 50,
-                  //                         decoration: BoxDecoration( color: Colors.grey[200], border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: TextField(
-                  //                           textAlign: TextAlign.center,
-                  //                           decoration: InputDecoration(
-                  //                             border: InputBorder.none,
-                  //                             focusedBorder: InputBorder.none,
-                  //                             enabledBorder: InputBorder.none,
-                  //                             errorBorder: InputBorder.none,
-                  //                             disabledBorder: InputBorder.none,
-                  //                           ),
-                  //                         ),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('stock'),
-                  //                       Container(
-                  //
-                  //                           width: size.width*.4,height: 50,
-                  //                           decoration: BoxDecoration(  border: Border.all(
-                  //                             color: Colors.grey,
-                  //                             width: 1,
-                  //                           ),borderRadius: BorderRadius.circular(10)),
-                  //                           child: Center(
-                  //                               child: Text(widget.data
-                  //                                   .itemDetails[0].minimumQuantity))),
-                  //                     ],
-                  //                   ),
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Price per Item'),
-                  //                       Container(
-                  //
-                  //                         width: size.width*.4,height: 50,
-                  //                         decoration: BoxDecoration(  border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: Center(
-                  //                             child: Text(
-                  //                                 widget.data.itemDetails[0].itemCost ??
-                  //                                     "")),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Price'),
-                  //                       Container(
-                  //
-                  //                         width: size.width*.4,height: 50,
-                  //                         decoration: BoxDecoration(  border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: Center(
-                  //                             child: Text(widget.data
-                  //                                 .itemDetails[0].sellingPrice)),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Tax %'),
-                  //                       Container(
-                  //
-                  //                         width: size.width*.4,height: 50,
-                  //                         decoration: BoxDecoration(  border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: Center(
-                  //                             child: Text(widget.data.itemDetails[0].tax)),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Total Tax'),
-                  //                       Container(
-                  //
-                  //                           width: size.width*.4,height: 50,
-                  //                           decoration: BoxDecoration(  border: Border.all(
-                  //                             color: Colors.grey,
-                  //                             width: 1,
-                  //                           ),borderRadius: BorderRadius.circular(10)),
-                  //                           child: Center(
-                  //                               child: Text((double.tryParse(widget.data
-                  //                                   .itemDetails[0]
-                  //                                   .sellingPrice) *
-                  //                                   double.tryParse(widget.data
-                  //                                       .itemDetails[0].tax))
-                  //                                   .toString()))),
-                  //                     ],
-                  //                   ),
-                  //                   Column(
-                  //                     children: [
-                  //                       Text('Total Price'),
-                  //                       Container(
-                  //
-                  //                         width: size.width*.4,height: 50,
-                  //                         decoration: BoxDecoration(  border: Border.all(
-                  //                           color: Colors.grey,
-                  //                           width: 1,
-                  //                         ),borderRadius: BorderRadius.circular(10)),
-                  //                         child: Center(child: Text('هنشوف الحساب')),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Container(
-                  //
-                  //                     width: size.width*.4,height: 50,
-                  //                     decoration: BoxDecoration(  border: Border.all(
-                  //                       color:  Color(0xff2C4B89),
-                  //                       width: 1,
-                  //                     ),borderRadius: BorderRadius.circular(10)),
-                  //                     child: Center(child: Text('Cancel')),
-                  //                   ),
-                  //                   Container(
-                  //                     decoration: BoxDecoration(
-                  //                       color: Color(0xff2C4B89),
-                  //                       borderRadius: BorderRadius.circular(10),
-                  //                     ),
-                  //                     height: 50,
-                  //                     width: size.width * .4,
-                  //                     child: Center(
-                  //                       child: Text(
-                  //                         'ok',
-                  //                         style: TextStyle(color: Colors.white),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             )
-                  //           ],
-                  //         )
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
+                  child:  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: size.height * .15,
+                            width: size.height * .15,
+                            color: Colors.indigo,
+                            child: Image.network(
+                             widget.data.itemDetails[0].image,
+                              height: size.height * .1,
+                              width: size.height * .1,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(widget.data.itemDetails[0].itemNameEn),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(widget.data.itemDetails[0].minimumQuantity),
+                              //products.itemDetails[0].itemCost
+                              Text(widget.data.itemDetails[0].sellingPrice),
+                              //  Expanded(child: Container()),
+                            ],
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Row(
+                          children: [
+                            Text('Details'),
+                            SizedBox(
+                              width: size.width * .08,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    int i = int.parse(textEditingController
+                                        .text) +
+                                        1;
+                                    textEditingController
+                                        .text = i.toString();
+                                  setState(() {
+
+                                  });},
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.orange,
+                                        borderRadius: BorderRadius.circular(2)),
+                                    height: 30,
+                                    width: 30,
+                                    child: Center(
+                                      child: Text(
+                                        "+",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Container(
+                                  width: size.width * .2,
+                                  child: Center(
+                                    child: TextField(
+                                      controller: textEditingController,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (int.parse(textEditingController
+                                        .text) >
+                                        0) {
+                                      int i = int.parse(textEditingController
+                                          .text) -
+                                          1;
+                                      textEditingController
+                                          .text = i.toString();
+                                    }
+                                setState(() {
+
+                                });  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.orange,
+                                        borderRadius: BorderRadius.circular(2)),
+                                    height: 30,
+                                    width: 30,
+                                    child: Center(
+                                      child: Text(
+                                        "-",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  //categories.categoryNameEn
+                                  child: Text("category Name")),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        'item Number: ${widget.data.itemDetails[0].itemNumber}'),
+                                    Container(
+                                        child: Text(
+                                            'item name:  ${widget.data.itemDetails[0].itemNameEn}'))
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        'Item Price :${widget.data.itemDetails[0].itemCost}'),
+                                    Text('Tax:  ${widget.data.itemDetails[0].tax}')
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 1,
+                                color: Colors.grey,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Promotion',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Widget okButton = TextButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
+                                    // AlertDialog alert = AlertDialog(
+                                    //   title: Center(
+                                    //     child: Text(
+                                    //       "Promotion list",
+                                    //       style: TextStyle(color: Colors.red),
+                                    //     ),
+                                    //   ),
+                                    //   content: Container(
+                                    //     height: size.height * .8,
+                                    //     width: size.width * .8,
+                                    //     child: ListView(
+                                    //       children: alert_item,
+                                    //     ),
+                                    //   ),
+                                    //   actions: [
+                                    //     okButton,
+                                    //   ],
+                                    // );
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (BuildContext context) {
+                                    //     return alert;
+                                    //   },
+                                    // );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/iso.png',
+                                        width: 30,
+                                        height: 30,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'Show All Promotion',
+                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text('Store ID'),
+                                        // Obx(() => Container(width: size.width*.25,
+                                        //   decoration: BoxDecoration(  border: Border.all(
+                                        //     color: Colors.grey,
+                                        //     width: 1,
+                                        //   ),borderRadius: BorderRadius.circular(10)),
+                                        //   child: Center(
+                                        //     child: DropdownButton<AllStockItems>(
+                                        //       value: dropdownMenuItemList
+                                        //           .listdropdownValue[pos],
+                                        //       icon: const Icon(Icons.arrow_downward),
+                                        //       iconSize: 15,
+                                        //       elevation: 16,
+                                        //       style: const TextStyle(
+                                        //           color: Colors.deepPurple),
+                                        //       // underline: Container(
+                                        //       //   height: 2,
+                                        //       //   color: Colors.deepPurpleAccent,
+                                        //       // ),
+                                        //       onChanged: (AllStockItems newValue) {
+                                        //         dropdownMenuItemList.setValOfdropdownValue(
+                                        //             pos: pos, dropdownValue: newValue);
+                                        //
+                                        //       },
+                                        //       items: dropdownMenuItemList
+                                        //           .allStockItems[pos]
+                                        //           .map<DropdownMenuItem<AllStockItems>>(
+                                        //               (AllStockItems value) {
+                                        //             return DropdownMenuItem<AllStockItems>(
+                                        //               value: value,
+                                        //               child: Text(value.id),
+                                        //             );
+                                        //           }).toList(),
+                                        //     ),
+                                        //   ),
+                                        // ))
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Unit'),
+                                        Obx(()=>
+                                            Container(width: size.width*.25,height: 50,
+                                              decoration: BoxDecoration(  border: Border.all(
+                                                color: Colors.grey,
+                                                width: 1,
+                                              ),borderRadius: BorderRadius.circular(10)),
+                                              child: Center(
+                                                child: Text(''
+                                                    // dropdownMenuItemList
+                                                    // .listdropdownValue[pos].measurementUnitName
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Quantity'),
+                                        Obx(()=>
+                                            Container(width: size.width*.25,height: 50,
+                                              decoration: BoxDecoration(  border: Border.all(
+                                                color: Colors.grey,
+                                                width: 1,
+                                              ),borderRadius: BorderRadius.circular(10)),
+                                              child: Center(
+                                                child: Text(" "
+                                                    // dropdownMenuItemList
+                                                    //     .listdropdownValue[pos].quantity
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text('Bounce'),
+                                        Container(
+
+                                          width: size.width*.4,height: 50,
+                                          decoration: BoxDecoration(color: Colors.grey[200],  border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),borderRadius: BorderRadius.circular(10)),
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
+                                              errorBorder: InputBorder.none,
+                                              disabledBorder: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Discount %'),
+                                        Container(
+                                          width: size.width*.4,height: 50,
+                                          decoration: BoxDecoration( color: Colors.grey[200], border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),borderRadius: BorderRadius.circular(10)),
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
+                                              errorBorder: InputBorder.none,
+                                              disabledBorder: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text('stock'),
+                                        Container(
+
+                                            width: size.width*.4,height: 50,
+                                            decoration: BoxDecoration(  border: Border.all(
+                                              color: Colors.grey,
+                                              width: 1,
+                                            ),borderRadius: BorderRadius.circular(10)),
+                                            child: Center(
+                                                child: Text(widget.data
+                                                    .itemDetails[0].minimumQuantity))),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Price per Item'),
+                                        Container(
+
+                                          width: size.width*.4,height: 50,
+                                          decoration: BoxDecoration(  border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),borderRadius: BorderRadius.circular(10)),
+                                          child: Center(
+                                              child: Text(
+                                                  widget.data.itemDetails[0].itemCost ??
+                                                      "")),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text('Price'),
+                                        Container(
+
+                                          width: size.width*.4,height: 50,
+                                          decoration: BoxDecoration(  border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),borderRadius: BorderRadius.circular(10)),
+                                          child: Center(
+                                              child: Text(widget.data
+                                                  .itemDetails[0].sellingPrice)),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Tax %'),
+                                        Container(
+
+                                          width: size.width*.4,height: 50,
+                                          decoration: BoxDecoration(  border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),borderRadius: BorderRadius.circular(10)),
+                                          child: Center(
+                                              child: Text(widget.data.itemDetails[0].tax)),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text('Total Tax'),
+                                        Container(
+
+                                            width: size.width*.4,height: 50,
+                                            decoration: BoxDecoration(  border: Border.all(
+                                              color: Colors.grey,
+                                              width: 1,
+                                            ),borderRadius: BorderRadius.circular(10)),
+                                            child: Center(
+                                                child: Text((double.tryParse(widget.data
+                                                    .itemDetails[0]
+                                                    .sellingPrice) *
+                                                    double.tryParse(widget.data
+                                                        .itemDetails[0].tax))
+                                                    .toString()))),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text('Total Price'),
+                                        Container(
+
+                                          width: size.width*.4,height: 50,
+                                          decoration: BoxDecoration(  border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),borderRadius: BorderRadius.circular(10)),
+                                          child: Center(child: Text('هنشوف الحساب')),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+
+                                      width: size.width*.4,height: 50,
+                                      decoration: BoxDecoration(  border: Border.all(
+                                        color:  Color(0xff2C4B89),
+                                        width: 1,
+                                      ),borderRadius: BorderRadius.circular(10)),
+                                      child: Center(child: Text('Cancel')),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xff2C4B89),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      height: 50,
+                                      width: size.width * .4,
+                                      child: Center(
+                                        child: Text(
+                                          'ok',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 )),
           ],
         ),

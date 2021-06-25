@@ -6,7 +6,7 @@ import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:http/http.dart' as http;
 import 'home.dart';
 
 class Login extends StatefulWidget {
@@ -15,44 +15,43 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-   var box = GetStorage();
+  var box = GetStorage();
   bool _checkbox = false;
-  bool login=false;
+  bool login = false;
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController url = TextEditingController();
   TextEditingController user_Id = TextEditingController();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  final NetWorkController _controller = Get.put(NetWorkController(),permanent: true);
-  final LangController _langController = Get.put(LangController(),permanent: true);
+  final NetWorkController _controller =
+      Get.put(NetWorkController(), permanent: true);
+  final LangController _langController =
+      Get.put(LangController(), permanent: true);
 
   AllNetworking _allNetworking = AllNetworking();
 
   @override
   void initState() {
     super.initState();
-  var lan=  box.read('lan');
-    var user=  box.read('user');
-    var passwor=  box.read('password');
+    var lan = box.read('lan');
+    var user = box.read('user');
+    var passwor = box.read('password');
 
+    name.text = user;
+    password.text = passwor;
 
-      name.text=user;
-      password.text=passwor;
-
-
-
-
-    if(lan!=null){
-      if(lan=='ar'){
+    if (lan != null) {
+      if (lan == 'ar') {
         var locale = Locale('ar', 'AR');
         Get.updateLocale(locale);
-      }else{
+      } else {
         var locale = Locale('en', 'En');
         Get.updateLocale(locale);
       }
     }
     print('llllllllllllllllllll');
- print(box.read('lan')); }
+    print(box.read('lan'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +138,8 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     child: TextField(
-                      controller: password,obscureText: true,
+                      controller: password,
+                      obscureText: true,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'password'.tr,
@@ -181,7 +181,8 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(
                     height: size.height * .02,
-                  ),  Container(
+                  ),
+                  Container(
                     width: size.width * .85,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -214,11 +215,12 @@ class _LoginState extends State<Login> {
                     width: size.width * .85,
                     child: Row(
                       children: [
-                        GestureDetector(onTap: (){
-                          box.write('lan', 'ar');
-                          var locale = Locale('ar', 'AR');
-                          Get.updateLocale(locale);
-                        },
+                        GestureDetector(
+                          onTap: () {
+                            box.write('lan', 'ar');
+                            var locale = Locale('ar', 'AR');
+                            Get.updateLocale(locale);
+                          },
                           child: Container(
                             color: Colors.white,
                             width: 75,
@@ -226,11 +228,12 @@ class _LoginState extends State<Login> {
                             child: Center(child: Text('AR')),
                           ),
                         ),
-                        GestureDetector(onTap: (){
-                          box.write('lan', 'en');
-                          var locale = Locale('en', 'US');
-                          Get.updateLocale(locale);
-                        },
+                        GestureDetector(
+                          onTap: () {
+                            box.write('lan', 'en');
+                            var locale = Locale('en', 'US');
+                            Get.updateLocale(locale);
+                          },
                           child: Container(
                             color: Colors.white,
                             width: 75,
@@ -258,70 +261,91 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: size.height * .02,
                   ),
-                  login?CircularProgressIndicator():   GestureDetector(
-                    onTap: () {
-                      if(url.text.isNotEmpty){
-                        AllNetworking.paseurl=url.text;
-                      }
-                      print( AllNetworking.paseurl);
-                      if(user_Id.text != null&&user_Id.text.isNotEmpty){
-                        if (name.text != null && password.text != null) {
-                          login=true;
-                          setState(() {
+                  login
+                      ? CircularProgressIndicator()
+                      : GestureDetector(
+                          onTap: () async {
+                            // http.Response response = await http.post(
+                            //     Uri.parse(
+                            //         "http://18.220.206.74/API/api/auth/login"),
+                            //     body: {
+                            //       "mode": "formdata",
+                            //       "user_name": "omar.m",
+                            //       "password": "12345678",
+                            //       "user_id": "12",
+                            //     });
+                            // print(
+                            //     '000000000000000000000000000000000000000000000000000000000000000000');
+                            // print(response.bodyBytes);
+                            // print(response.reasonPhrase);
+                            // print(response.isRedirect);
+                            // print("response.headers ${response.headers}");
+                            // print('response.statusCode  ${response.statusCode}');
+                            // print(response.persistentConnection);
+                            // print(response.body);
+                            // print('000000000000000000000000000000000000000000000000000000000000000000');
+                            //
 
-                          });
-                          if(_checkbox){
-                            box.write('user', name.text);
-                            box.write('password', password.text);
-                          }
-                          _allNetworking
-                              .login(
-                              user_name: name.text, password: password.text,user_id: int.tryParse(user_Id.text))
-                              .then((value) {
-                            if (value != null) {
-                              print(value.user);
-                              _userAndPermissions.setuser(value.user);
-                              _userAndPermissions
-                                  .setPermissions(value.permissions);
 
-                              Get.to(Home());
-
+                            if(url.text.isNotEmpty){
+                              AllNetworking.paseurl=url.text;
                             }
-                            login=false;
-                            setState(() {
+                            print( AllNetworking.paseurl);
+                            if(user_Id.text != null&&user_Id.text.isNotEmpty){
+                              if (name.text != null && password.text != null) {
+                                login=true;
+                                setState(() {
 
-                            });  })
-                              .catchError((e) {
-                            print("oooooooooooooooooooooooooooooo");
-                            Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");
-                          });
-                        } else {
-                          Get.snackbar("", 'تاكد من ادخال البيانات ');
-                        }
-                      }else {
-                        Get.snackbar("", 'تاكد من ادخال رقم الشركة ');
-                      }
+                                });
+                                if(_checkbox){
+                                  box.write('user', name.text);
+                                  box.write('password', password.text);
+                                }
+                                _allNetworking
+                                    .login(
+                                    user_name: name.text, password: password.text,user_id: int.tryParse(user_Id.text))
+                                    .then((value) {
+                                  if (value != null) {
+                                    print(value.user);
+                                    _userAndPermissions.setuser(value.user);
+                                    _userAndPermissions
+                                        .setPermissions(value.permissions);
+print(value.toString());
+                                    Get.to(Home());
 
+                                  }
+                                  login=false;
+                                  setState(() {
 
-
-                    },
-                    child: Container(
-                      height: 50,
-                      width: size.width * .85,
-                      decoration: BoxDecoration(
-                        color: Color(0xff2C4B89),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                          child: Text(
-                        'login'.tr,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
-                    ),
-                  )
+                                  });  })
+                                    .catchError((e) {
+                                  print("oooooooooooooooooooooooooooooo");
+                                  Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");
+                                });
+                              } else {
+                                Get.snackbar("", 'تاكد من ادخال البيانات ');
+                              }
+                            }else {
+                              Get.snackbar("", 'تاكد من ادخال رقم الشركة ');
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            width: size.width * .85,
+                            decoration: BoxDecoration(
+                              color: Color(0xff2C4B89),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                                child: Text(
+                              'login'.tr,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            )),
+                          ),
+                        )
                 ],
               ),
             ),

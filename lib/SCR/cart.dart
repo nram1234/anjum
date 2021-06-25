@@ -133,7 +133,9 @@ if(!listtoshow.contains(bata.cartlist[i])){
                               itemCount: listtoshow.length,
                               itemBuilder: (context, pos) {
 
-                                return item(size: size,data: listtoshow [pos]);
+                                return Obx((){
+                                  return item(size: size,data: listtoshow [pos]);
+                                });
                               }),
                         ),
                         SizedBox(
@@ -648,7 +650,7 @@ if(!listtoshow.contains(bata.cartlist[i])){
                   child: InkWell(
                       onTap: () {
 
-                        Get.to(CartEditProduct(),arguments: data);
+                        Get.to(CartEditProduct(),arguments: [data]);
                         //
                         // Navigator.push(
                         //   context,
@@ -713,9 +715,7 @@ if(!listtoshow.contains(bata.cartlist[i])){
                     ),
                     onPressed: () {
                       bata.removefromcart(item: data);
-                      setState(() {
 
-                      });
                     },
                     color: Colors.orangeAccent,
                   ),
@@ -731,9 +731,8 @@ if(!listtoshow.contains(bata.cartlist[i])){
                     color: Colors.orangeAccent,
                     onPressed: () {
                       bata.addToCart(item: data);
-                      setState(() {
+                      print('pppp');
 
-                      });
                     },
                   ),
                 ],

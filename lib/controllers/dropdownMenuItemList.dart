@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class DropdownMenuItemList extends GetxController{
 
 
-  List<TextEditingController> listtextEditingControllerOfItem = [];
+  RxList<TextEditingController> listtextEditingControllerOfItem =RxList<TextEditingController> ();
   RxList<List<AllStockItems>> allStockItems=RxList<List<AllStockItems>>();
 
   RxList<AllStockItems> listdropdownValue=RxList<AllStockItems>();

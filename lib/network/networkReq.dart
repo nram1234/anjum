@@ -26,16 +26,17 @@ class AllNetworking {
     @required String password,
     @required int user_id,
   }) async {
-    dio.options.headers['Accept'] = 'application/json';
-    final formData = {
-      "mode": "formdata",
+
+
+    Login_json data;
+    await dio
+        .post( "http://18.220.206.74/API/api/auth/login", queryParameters: {
+      //"mode": "formdata",
       "user_name": user_name,
       "password": password,
       "user_id": user_id,
-    };
-    Login_json data;
-    await dio
-        .post( "http://18.220.206.74/API/api/auth/login", queryParameters: formData)
+      "key":'1234567890'
+    },  )
         .then((value) {
       print(value.data);
       if (value.data['error_message'] != null) {
@@ -134,6 +135,7 @@ class AllNetworking {
       Uri.parse(paseurl + 'van/user_api/get_employee_data'),
       body: {"mode": "formdata", "key": "1234567890", "user_id": user_id},
     ).then((value) {
+
       var v = jsonDecode(value.body);
       // print(v ['result'] [  "employee_permissions"] );
       get_employee_data_json =
@@ -151,16 +153,16 @@ class AllNetworking {
       "lisit_cheque":data
 
     };
-    dio.options.headers['content-Type'] = 'application/json';
-    // dio.options.headers['Content-Length'] = '<calculated when request is sent>';
-    // dio.options.headers['Host'] = '<calculated when request is sent>';
-    dio.options.headers['Accept'] = '*/*';
-    dio.options.headers['Accept-Encoding'] = 'gzip, deflate, br';
-    dio.options.headers['Connection'] = 'keep-alive';
-    return await dio.post('http://18.220.206.74/van/user_api/insert_cheque', data:  formData,);
-    // .then((value) {
-    //   respons=value;
-    //
-    // }) ;
+    // dio.options.headers['content-Type'] = 'application/json';
+    // // dio.options.headers['Content-Length'] = '<calculated when request is sent>';
+    // // dio.options.headers['Host'] = '<calculated when request is sent>';
+    // dio.options.headers['Accept'] = '*/*';
+    // dio.options.headers['Accept-Encoding'] = 'gzip, deflate, br';
+    // dio.options.headers['Connection'] = 'keep-alive';
+    return await dio.post('http://18.220.206.74/van/user_api/insert_cheque', data:  formData,)
+    .then((value) {
+      respons=value;
+
+    }) ;
     }
 }

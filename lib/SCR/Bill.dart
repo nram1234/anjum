@@ -1,5 +1,8 @@
+import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Bill extends StatefulWidget {
   @override
@@ -7,85 +10,44 @@ class Bill extends StatefulWidget {
 }
 
 class _BillState extends State<Bill> {
+  CartItemController bata = Get.find<CartItemController>();
+List<AllItems>cartlisttoshow=[];
+double totalprice=0;
+
+  @override
+  void initState() {
+    super.initState();
+    for(int i=0;i<bata.cartlist.length;i++){
+      totalprice+=double.parse(bata.cartlist[i].itemDetails[0].sellingPrice);
+      if(cartlisttoshow.contains(bata.cartlist[i])){
+
+        cartlisttoshow.add(bata.cartlist[i]);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-                itemCount: 50,
+                itemCount: cartlisttoshow.length,
                 itemBuilder: (context, pos) {
-                  return Card(elevation: 8,
-                    child: Directionality(textDirection: TextDirection.ltr,
-                      child: ExpansionTile(expandedAlignment:Alignment.bottomRight ,
-                        title: Text('Safi  -Sun Flower  oil 1 liter'),
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Unit :EA'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Price :20JD'),
-                                  ),
-                                ],
-                              )
-                         ,  Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Qty: 25'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Discount: 0'),
-                                  ),
-                                ],
-                              ),
-
-
-
-
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Bounce :5.0'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Tax :16'),
-                                  ),
-                                ],
-                              )],
-                          )
-              , Row(
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Total :500 JD',style: TextStyle(color: Colors.teal),),
-                  ),
-                ],
-              )     ],
-                      ),
-                    ),
-                  );
+                  return item(data: cartlisttoshow[pos]);
                 }),
           ),
           Container(padding: EdgeInsets.all(4),
             height: size.height * .4,
             child: Column(
               children: [
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Container(),
+                Row(
+                  children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text('Cart totals'),
@@ -199,7 +161,7 @@ class _BillState extends State<Bill> {
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset:
-                                  Offset(0, 3), // changes position of shadow
+                              Offset(0, 3), // changes position of shadow
                             ),
                           ],
                         ),
@@ -212,6 +174,81 @@ class _BillState extends State<Bill> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget item({
+    AllItems data
+  }) {
+    int qty=0;
+   double tprice=0;
+    for(int i=0;i<bata.cartlist.length;i++){
+      if(data.itemId==bata.cartlist[i].itemId){
+
+
+      }
+    }
+    tprice=qty*double.parse(data.itemDetails[0].sellingPrice);
+    return Card(elevation: 8,
+      child: Directionality(textDirection: TextDirection.ltr,
+        child: ExpansionTile(expandedAlignment: Alignment.bottomRight,
+          title: Text(data.itemDetails[0].itemNameEn),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Unit :EA'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Price :${data.itemDetails[0].sellingPrice}'),
+                    ),
+                  ],
+                )
+                , Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Qty: ${qty.toString()}'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Discount: 0'),
+                    ),
+                  ],
+                ),
+
+
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Bounce :5.0'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Tax :16'),
+                    ),
+                  ],
+                )
+              ],
+            )
+            , Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Total : ${tprice.toString()}', style: TextStyle(color: Colors.teal),),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
