@@ -1,11 +1,19 @@
 
+import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/myModel.dart';
+import 'package:anjum/DB/tabelname/item_tabel.dart';
 import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
+import 'all _customer.dart';
 import 'carteditproduct.dart';
+import 'cashpayment.dart';
+import 'chequepay.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -13,10 +21,12 @@ class Cart extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<Cart> {
-  String Chequetime = "";
+  String Chequetime = "choose date";
 
   CartItemController bata = Get.find<CartItemController>();
+  DatabaseHelper _databaseHelper = DatabaseHelper();
 
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
 List<AllItems>listtoshow=[];
   @override
   void initState() {
@@ -128,8 +138,8 @@ if(!listtoshow.contains(bata.cartlist[i])){
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(30),
                                   topLeft: Radius.circular(30))),
-                          height: size.height * .4,
-                          child: ListView.builder(
+                     //     height: size.height * .4,
+                          child: ListView.builder(physics:NeverScrollableScrollPhysics() ,shrinkWrap: true,
                               itemCount: listtoshow.length,
                               itemBuilder: (context, pos) {
 
@@ -421,7 +431,9 @@ if(!listtoshow.contains(bata.cartlist[i])){
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Get.to(CashPay());
+                              },
                               child: Container(
                                 padding: EdgeInsets.all(4),
                                 width: size.width * .4,
@@ -454,7 +466,7 @@ if(!listtoshow.contains(bata.cartlist[i])){
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () { Get.to(ChequePay());},
                               child: Container(
                                 padding: EdgeInsets.all(4),
                                 width: size.width * .4,
@@ -561,21 +573,67 @@ if(!listtoshow.contains(bata.cartlist[i])){
                                 SizedBox(
                                   height: 8,
                                 ),
-                                Container(
-                                  height: 50,
-                                  width: size.width * .9,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff2C4B89),
-                                    borderRadius: BorderRadius.circular(10),
+                                GestureDetector(onTap: (){
+
+                                  double totalprice = 0;
+
+                                  for (int oo = 0; oo < bata.cartlist.length; oo++) {
+                                    totalprice = totalprice +
+                                   double.parse(   bata.cartlist[oo].itemDetails[0].sellingPrice);
+                                  }
+
+
+
+
+
+print(isinvoiceOrSalesOrderOrReturnInvoice);
+
+                                  _databaseHelper
+                                      .insert_sales_order_requests(
+                                          Sales_Order_Requests_Model(
+                                    user_id: _userAndPermissions.user.id,
+                                    customer_id:10,// int.parse(_userAndPermissions.user.customerId),
+                                    employee_id: _userAndPermissions.user.userId,
+                                    request_status: 'accepted',
+                                    salesmanager_id:
+                                        _userAndPermissions.user.salesmanagerId,
+                                    request_type:isinvoiceOrSalesOrderOrReturnInvoice,// 'salesOrder',
+                                    salesmanager_status: 'pending',
+                                    store_id: 1,
+                                    total_price: totalprice,
+                                    created_at: DateTime.now().toString(),
+                                    supervisor_id:
+                                        _userAndPermissions.user.supervisorId,
+                                    total_discount: 1000,
+                                    is_successfully_submitted: 0,
+                                    no_of_items: bata.cartlist.length.toString(),
+                                    salesmanager_note: '',
+                                    request_level: 1,
+                                    total_tax: 10,
+                                    total_price_without_tax_discount: 55,
+                                  ))
+                                      .then((value)  {
+                                   insertItemInDataBase(value);
+                                  }).catchError((e) {
+                                    print(e.toString());
+                                  });
+                                },
+                                  child: Container(
+                                    height: 50,
+                                    width: size.width * .9,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff2C4B89),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      'Complete',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )),
                                   ),
-                                  child: Center(
-                                      child: Text(
-                                    'Complete',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  )),
                                 )
                               ],
                             ),
@@ -741,4 +799,26 @@ if(!listtoshow.contains(bata.cartlist[i])){
           ],
         ));
   }
+
+
+  insertItemInDataBase(int i) async {
+    for (int oo = 0; oo < bata.cartlist.length; oo++) {
+      bata.additemInitemInCart(item: bata.cartlist[i]);
+      await DatabaseHelper()
+          .insert_item_tabel(Item_Database(
+          olderId: i,
+          itemId: int.tryParse(bata.cartlist[oo].itemId),
+          categoryId: int.parse(
+              bata.cartlist[oo].itemDetails[0].categoryId), //
+
+          basePricePerUnit: double.parse(
+              bata.cartlist[oo].itemDetails[0].itemCost ?? "1")))
+          .then((value) {
+        print('تم اضافه');
+      }).catchError((e) {
+        print(e.toString());
+      });
+    }
+ Get.off(All_Customer()); }
+
 }

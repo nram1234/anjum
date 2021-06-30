@@ -1251,7 +1251,7 @@ String  supervisor_id ;
 
 }
 class Temporary_tabel_cart_item{
- String  order_id ;
+ int  order_id ;
  String  id ;
  String  item_count ;
 
@@ -1270,7 +1270,7 @@ class Temporary_tabel_cart_item{
 
   factory Temporary_tabel_cart_item.fromMap(Map<String, dynamic> map) {
     return new Temporary_tabel_cart_item(
-      order_id: map['order_id'] as String,
+      order_id: map['order_id']  ,
       id: map['id'] as String,
       item_count: map['item_count'] as String,
     );

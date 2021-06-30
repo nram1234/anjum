@@ -22,38 +22,39 @@ List<Widget>cat=[];
   @override
   void initState() {
     super.initState();
-    for(int i=0;i<bata.allCategories.length;i++){
-      allcat.add(bata.allCategories[i]);
-     // cat.add(items(data: bata.allCategories[i]));
-      for(int o=0;o<bata.allCategories[i].subCategories.length;o++){
-        allsubcat.add( bata.allCategories[i].subCategories[o]);
-     //   subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
-      }
-    }
-    for(int i=0;i<allcat.length;i++){
-      cat.add(items(data: allcat[i]));
-    }
-    for(int i=0;i<allsubcat.length;i++){
-      subcat.add(subitems(data: allsubcat[i]));
-    }
+    // for(int i=0;i<bata.allCategories.length;i++){
+    //   allcat.add(bata.allCategories[i]);
+    //  // cat.add(items(data: bata.allCategories[i]));
+    //   for(int o=0;o<bata.allCategories[i].subCategories.length;o++){
+    //     allsubcat.add( bata.allCategories[i].subCategories[o]);
+    //  //   subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
+    //   }
+    // }
+    // for(int i=0;i<allcat.length;i++){
+    //   cat.add(items(data: allcat[i]));
+    // }
+    // for(int i=0;i<allsubcat.length;i++){
+    //   subcat.add(subitems(data: allsubcat[i]));
+    // }
   }
 removefromcat(AllCategories categories){
-  allcat.remove(categories);
-  cat.clear();
-  subcat.clear();
-  for(int i=0;i<allcat.length;i++){
-    cat.add(items(data: allcat[i]));
+//   allcat.remove(categories);
+//   cat.clear();
+//   subcat.clear();
+//   for(int i=0;i<allcat.length;i++){
+//     cat.add(items(data: allcat[i]));
+//   }
+//   for(int i=0;i<categories.subCategories.length;i++){
+//     allsubcat.remove(categories.subCategories[i]);
+//
+//   }
+//   for(int i=0;i<allsubcat.length;i++){
+//     subcat.add(subitems(data: allsubcat[i]));
+//   }
+// setState(() {
+//
+// });
   }
-  for(int i=0;i<categories.subCategories.length;i++){
-    allsubcat.remove(categories.subCategories[i]);
-
-  }
-  for(int i=0;i<allsubcat.length;i++){
-    subcat.add(subitems(data: allsubcat[i]));
-  }
-setState(() {
-
-});}
   @override
   Widget build(BuildContext context) {
 

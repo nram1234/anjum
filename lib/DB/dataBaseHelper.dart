@@ -323,7 +323,9 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     List<Map> maps = await dbClient.query(temporary_tabel_cart_item_tabelname,
         where: '$temporary_tabel_cart_item_order_id=?',
         whereArgs: [id]).then((value) {
+      print(value);
       for (int i = 0; i < value.length; i++) {
+        print(i);
         data.add(Temporary_tabel_cart_item.fromMap(value[i]));
       }
     });

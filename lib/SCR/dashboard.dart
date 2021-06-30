@@ -7,6 +7,7 @@ import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -128,7 +129,7 @@ class _DashboardState extends State<Dashboard> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: GestureDetector(
-                                                onTap: () {
+                                                onTap: () {  isinvoiceOrSalesOrderOrReturnInvoice='salesOrder';
                                                   Get.to(ProductsScr());
                                                 },
                                                 child: item(
@@ -297,6 +298,7 @@ class _DashboardState extends State<Dashboard> {
                                                   const EdgeInsets.all(8.0),
                                               child: InkWell(
                                                 onTap: () {
+                                                  isinvoiceOrSalesOrderOrReturnInvoice='return_invoice';
                                                   Get.to(ProductsScr());
                                                 },
                                                 child: item(
@@ -313,7 +315,10 @@ class _DashboardState extends State<Dashboard> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: GestureDetector(
+                                              child: GestureDetector(onTap: (){
+                                                isinvoiceOrSalesOrderOrReturnInvoice='invoice';
+                                                Get.to(ProductsScr());
+                                              },
                                                 child: item(
                                                     color: Colors
                                                         .purpleAccent[200],

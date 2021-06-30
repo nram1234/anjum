@@ -204,7 +204,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                     itemBuilder: (context, pos) {
                                       return GestureDetector(
                                           onTap: () {
-                                            Get.to(OrderStatusdetails);
+                                            Get.to(OrderStatusdetails());
                                           },
                                           child: listItem(size: size,data: snapshot.data[pos]));
                                     });
