@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/sales_order_cart_promotions.dart';
 import 'package:anjum/DB/tabelname/sales_order_invoice_request_stock_items.dart';
+import 'package:anjum/DB/tabelname/temporary_tabel_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -224,10 +225,117 @@ CREATE TABLE  $insert_journeys_DB_tabelname (
   $insert_journeys_DB_Column_visit_type  TEXT 
 )
       ''');
+
+
+//================================================================================
+        //جدول احتياطي عشان الداتا
+        await db.execute('''
+
+CREATE TABLE  $temporary_tabel_cart_tabelname (
+    $temporary_tabel_cart_id   INTEGER PRIMARY KEY AUTOINCREMENT  ,
+  $temporary_tabel_cart_user_id  TEXT ,
+  $temporary_tabel_cart_customer_id   TEXT ,
+  $temporary_tabel_cart_employee_id  TEXT ,
+  $temporary_tabel_cart_salesmanager_id  TEXT ,
+  $temporary_tabel_cart_store_id  TEXT ,
+  $temporary_tabel_cart_supervisor_id  TEXT ,
+  $temporary_tabel_cart_item_id  TEXT
+ 
+)
+      ''');
+
+
+
+
+        await db.execute('''
+
+CREATE TABLE  $temporary_tabel_cart_item_tabelname (
+    $temporary_tabel_cart_item_order_id  INTEGER   ,
+  $temporary_tabel_cart_item_id_of_item TEXT ,
+  $temporary_tabel_cart_item_item_count   TEXT 
+
+)
+      ''');
       },
     );
   }
 
+  Future<int> insert_temporary_tabel_cart(Temporary_tabel_cart temporary_tabel_cart)async{
+    int id;
+    var dbClient = await db;
+    await dbClient.transaction((txn) async {
+      await txn
+          .insert(temporary_tabel_cart_tabelname, temporary_tabel_cart.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace)
+          .then((value) {
+        id = value;
+      });
+    });
+    return id;
+  }
+
+
+  Future<Temporary_tabel_cart> get_order_by_id_temporary_tabel_cart(
+      int id) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(temporary_tabel_cart_tabelname,
+        where: '$temporary_tabel_cart_id=?', whereArgs: [id]);
+    if (maps.length > 0) {
+      return Temporary_tabel_cart.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+
+  Future delete_temporary_tabel_cart(int id) async {
+    var dbClient = await db;
+    return await dbClient.query(temporary_tabel_cart_tabelname,
+        where: '$temporary_tabel_cart_id=?', whereArgs: [id]);
+  }
+
+
+
+
+
+
+
+
+
+  Future<int> insert_temporary_tabel_cart_item_tabelname(Temporary_tabel_cart_item temporary_tabel_cart_item)async{
+    int id;
+    var dbClient = await db;
+    await dbClient.transaction((txn) async {
+      await txn
+          .insert(temporary_tabel_cart_item_tabelname, temporary_tabel_cart_item.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace)
+          .then((value) {
+        id = value;
+      });
+    });
+    return id;
+  }
+
+  Future<List<Temporary_tabel_cart_item>> get_All_temporary_tabel_cart_item_tabelname(
+      int id) async {
+    var dbClient = await db;
+    List<Temporary_tabel_cart_item> data = [];
+    List<Map> maps = await dbClient.query(temporary_tabel_cart_item_tabelname,
+        where: '$temporary_tabel_cart_item_order_id=?',
+        whereArgs: [id]).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(Temporary_tabel_cart_item.fromMap(value[i]));
+      }
+    });
+    return data;
+  }
+
+
+
+//================================================================================
+
+
+//========================================================
   //=========================================
   Future<int> insert_insert_journeys(Insert_journeys_DB item) async {
     int id;

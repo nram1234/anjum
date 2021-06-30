@@ -363,7 +363,9 @@ Get.to(()=> Catalog());
 
       Get.find<AllCustomersControllers>()
           .updateallCustomers(value.result.allCustomers);
-
+      print('00000000000000000000000000000000000');
+      print(value.result.allCustomers);
+      print('00000000000000000000000000000000000');
 
       Get.find<AllStockItemsController>()
           .updateallStockItemsData(value.result.allStockItems);

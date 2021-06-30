@@ -1,6 +1,7 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/utilitie/utilities.dart';
@@ -26,6 +27,8 @@ class _All_CustomerState extends State<All_Customer> {
   List<Widget> _list = <Widget>[All_customer_tap1()];
   final TimeController c = Get.put(TimeController(), permanent: true);
 
+
+  AllCustomersControllers bata =Get.find<AllCustomersControllers>() ;
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => TimeController());
@@ -104,7 +107,10 @@ class _All_CustomerState extends State<All_Customer> {
             width: size.width * .9,
             height: 50,
             child: TextField(
-              onChanged: (v) {},
+              onChanged: (v) {
+                bata.serchWord.value=v;
+                bata.serchFilterCustom(v);
+              },
               decoration: InputDecoration(
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,

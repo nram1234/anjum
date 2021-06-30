@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 class CartItemController extends GetxController{
 
  RxList<AllItems>cartlist=RxList<AllItems>();
+
+var itemInCart =0.obs;
  addToCart({AllItems item}){
    cartlist.add(item);
    update();
@@ -32,5 +34,19 @@ print(item.id);
    update();
  }
 
+additemInitemInCart({AllItems item}){
+  bool v= cartlist.contains(item);
+print("this isssssssssssssss      vallll  $v");
+if(!v){
+  itemInCart++;
 
+}
+}
+ removeitemInitemInCart({AllItems item}){
+   bool v= cartlist.any((e) => e.id==item.id);
+   if(!v){
+     itemInCart--;
+
+   }
+ }
 }

@@ -23,23 +23,21 @@ class All_customer_tap1 extends StatefulWidget {
 
 class _All_customer_tap1State extends State<All_customer_tap1> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  AllCustomersControllers bata  ;
+ // AllCustomersControllers bata =Get.find<AllCustomersControllers>() ;
   PriceListsInfoController pricelistinf = Get.put(PriceListsInfoController());
   var allItemsController = Get.find<AllItemsController>();
   final TimeController c = Get.find<TimeController>();
 
-  @override
-  void initState() {
-    super.initState();
-    bata = Get.find<AllCustomersControllers>();
-  }
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        body: ListView.builder(
-            itemCount: bata.allCustomers.length,
+        body: GetBuilder<AllCustomersControllers>(
+  builder: (logic) {
+    return ListView.builder(
+            itemCount: logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter.length:logic.allCustomers.length,
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
@@ -48,21 +46,19 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {
                       allItemsController.clearcustomerListItems();
                       pricelistinf.makeAListOfPriceListsInfo(
-                          bata.allCustomers[pos].customerInfo);
+                          logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter[pos].customerInfo:    logic.allCustomers[pos].customerInfo);
 
                       Get.find<AllChequesController>()
-                          .setcustomer(bata.allCustomers[pos]);
+                          .setcustomer(logic.allCustomers[pos]);
 
                       Get.find<AllChequesController>().setcustomerID(
-                          bata.allCustomers[pos].customerInfo.id);
-                      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
-                      print(bata.allCustomers[pos].customerInfo.customerId);
-                      print('99999999999999999999999999999999999999999999999999999999999999999999999999');
+                          logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter[pos].customerInfo.id:    logic.allCustomers[pos].customerInfo.id);
+
                       setState(() {});
                       //arguments:  [bata.allCustomers[pos]]
                       Get.to(()=>Dashboard(),  );
                     } else {
-                      if (bata.allCustomers[pos].customerInfo.id ==
+                      if (logic.allCustomers[pos].customerInfo.id ==
                           Get.find<AllChequesController>()
                               .customer
                               .customerInfo
@@ -73,8 +69,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                       }
                     }
                   },
-                  child: item(size: size, data: bata.allCustomers[pos]));
-            }));
+                  child: item(size: size, data:logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter[pos]: logic.allCustomers[pos]));
+            });
+  },
+)
+
+
+    );
   }
 
   bool iscust(AllCustomers data) {

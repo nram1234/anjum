@@ -48,41 +48,40 @@ class _ProductsScrState extends State<ProductsScr> {
   int totalItem = 0;
 
   //=========================
-  var stocitem = Get.find<AllStockItemsController>().allStockItems;//ده لسته المنتجات وممكن المقارنه بايد الاستور ونضيفه في لسته
+  var stocitem = Get.find<AllStockItemsController>()
+      .allStockItems; //ده لسته المنتجات وممكن المقارنه بايد الاستور ونضيفه في لسته
 
-  DropdownMenuItemList dropdownMenuItemList = Get.put(DropdownMenuItemList(),permanent: true);
+  DropdownMenuItemList dropdownMenuItemList =
+      Get.put(DropdownMenuItemList(), permanent: true);
 
   //====================
   AllStockItems _allStockItems;
-  //getstock
-  getmeasurementUnit(int idItem){
-    List<String>dropdowen=[];
-    for(int i=0;i<stocitem.length;i++){
 
-      if(idItem==int.parse(stocitem[i].itemId)){
+  //getstock
+  getmeasurementUnit(int idItem) {
+    List<String> dropdowen = [];
+    for (int i = 0; i < stocitem.length; i++) {
+      if (idItem == int.parse(stocitem[i].itemId)) {
         dropdownMenuItemList.allStockItems[0].add(stocitem[i]);
       }
     }
+  }
 
-
-
-
-     }
   @override
   void initState() {
     super.initState();
 
-
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
 
-    super.initState();
-    for (int i = 0; i < bata.customerListItems.length; i++) {
-      List<AllStockItems>p=[];
+    for (int i = 0; i < bata.allItems.length; i++) {
+      List<AllStockItems> p = [];
       dropdownMenuItemList.allStockItems.add(p);
-      TextEditingController textEditingControllerOfItem  =TextEditingController();
+      TextEditingController textEditingControllerOfItem =
+          TextEditingController();
       textEditingControllerOfItem.text = 0.toString();
-      dropdownMenuItemList.addlisttextEditingControllerOfItem(textEditingControllerOfItem);
+      dropdownMenuItemList
+          .addlisttextEditingControllerOfItem(textEditingControllerOfItem);
       AllStockItems allStockItems;
       dropdownMenuItemList.listdropdownValue.add(allStockItems);
       //  for(int z=0;z<stocitem.length;z++){
@@ -91,18 +90,14 @@ class _ProductsScrState extends State<ProductsScr> {
       //
       // }
 
-
-
       // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
 
     }
-
   } //============================================
   //int itemcount=0;
 
   @override
   Widget build(BuildContext context) {
-    print('00000000000000000000000000000000000000000000');
     var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
@@ -157,10 +152,12 @@ class _ProductsScrState extends State<ProductsScr> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-
-                        Obx(()=>      Text(   cartListItem.cartlist.length.toString(),
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 18)),)
+                              Obx(
+                                () => Text(
+                                    cartListItem.itemInCart.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18)),
+                              )
                             ],
                           ),
                         ],
@@ -206,7 +203,44 @@ class _ProductsScrState extends State<ProductsScr> {
                             width: size.width * .8,
                             height: 50,
                             child: TextField(
-                              onChanged: (v) {},
+                              onChanged: (v) {
+                                bata.search_word.value = v;
+                                bata.SerchWordListToViewInSerarch(v);
+
+                                dropdownMenuItemList.serach_allStockItems
+                                    .clear();
+                                dropdownMenuItemList
+                                    .serach_listtextEditingControllerOfItem
+                                    .clear();
+
+                                for (int i = 0;
+                                    i < bata.search_wordListItems.length;
+                                    i++) {
+                                  List<AllStockItems> p = [];
+                                  dropdownMenuItemList.serach_allStockItems
+                                      .add(p);
+                                  TextEditingController
+                                      textEditingControllerOfItem =
+                                      TextEditingController();
+                                  textEditingControllerOfItem.text =
+                                      0.toString();
+                                  dropdownMenuItemList
+                                      .serach_addlisttextEditingControllerOfItem(
+                                          textEditingControllerOfItem);
+                                  AllStockItems allStockItems;
+                                  dropdownMenuItemList.serach_listdropdownValue
+                                      .add(allStockItems);
+                                  //  for(int z=0;z<stocitem.length;z++){
+                                  //
+                                  //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
+                                  //
+                                  // }
+
+                                  // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
+
+                                }
+                                setState(() {});
+                              },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -230,125 +264,78 @@ class _ProductsScrState extends State<ProductsScr> {
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          addAutomaticKeepAlives: true,
-                          itemCount: bata.customerListItems.length
-                          // 100, //bata.allItems.length,
-                          ,
-                          itemBuilder: (context, pos) {
-                            // for (int i = 0; i < stocitem.length; i++) {
-                            //   if (stocitem[i].itemId ==
-                            //       bata.customerListItems[pos].itemId) {
-                            //     dropdownMenuItemList.allStockItems[pos]
-                            //         .add(stocitem[i]);
-                            //     // list.add(stocitem[i])  ;
-                            //
-                            //   }
-                            // }
-
-                            var count = cartListItem.cartlist
-                                .where((c) => c == bata.customerListItems[pos])
-                                .toList()
-                                .length;
-                            var cat = Get.find<AllCategoriesController>()
-                                .allCategories;
-                            AllCategories categories;
-                            for (int i = 0;
-                                i <
-                                    Get.find<AllCategoriesController>()
-                                        .allCategories
-                                        .length;
-                                i++) {
-                              if (cat[i].id == bata.customerListItems[pos].id) {
-                                categories = cat[i];
-                              }
-                            }
-
-
-
-
-
-                            return Obx((){
-                              int numberofitem=0;
-                              for(int i=0;i<cartListItem.cartlist.length;i++){
-                                if(cartListItem.cartlist[i]==bata.customerListItems[pos]){
-                                  numberofitem++;
-                                }
-                              }
-
-
-                              dropdownMenuItemList
-                                  .listtextEditingControllerOfItem[pos].text=numberofitem.toString();
-                              return      item(
-                                  pos: pos,
-                                  list: dropdownMenuItemList.allStockItems[pos],
-                                  dropdowenval:
-                                  dropdownMenuItemList.listdropdownValue[pos],
-                                  textEditingController: dropdownMenuItemList
-                                      .listtextEditingControllerOfItem[pos],
-                                  size: size,
-                                  funadd: () {
-                                    int i = int.parse(dropdownMenuItemList
-                                        .listtextEditingControllerOfItem[pos]
-                                        .text) +
-                                        1;
-                                    dropdownMenuItemList
-                                        .listtextEditingControllerOfItem[pos]
-                                        .text = i.toString();
-                                  },
-                                  products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
-                                  bata.customerListItems[pos],
-                                  funremov: () {
-                                    if (int.parse(dropdownMenuItemList
-                                        .listtextEditingControllerOfItem[pos]
-                                        .text) >
-                                        0) {
-                                      int i = int.parse(dropdownMenuItemList
-                                          .listtextEditingControllerOfItem[
-                                      pos]
-                                          .text) -
-                                          1;
-                                      dropdownMenuItemList
-                                          .listtextEditingControllerOfItem[pos]
-                                          .text = i.toString();
-                                    }
-                                  });
-                            }); // AlirtItem( );
-                          }),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
-                          cartListItem.cartlist.clear();
                           totalItem = 0;
                           double totalprice = 0;
-                          for (int i = 0;
-                              i <
-                                  dropdownMenuItemList
-                                      .listtextEditingControllerOfItem.length;
-                              i++) {
-                            totalItem = totalItem +
-                                int.parse(dropdownMenuItemList
-                                    .listtextEditingControllerOfItem[i].text);
-                            totalprice = totalprice +
-                                (int.parse(dropdownMenuItemList
-                                        .listtextEditingControllerOfItem[i]
-                                        .text) *
-                                    double.tryParse(bata.customerListItems[i]
-                                        .itemDetails[0].sellingPrice));
 
-                            for (int p = 0;
-                                p <
-                                    int.parse(dropdownMenuItemList
-                                        .listtextEditingControllerOfItem[i]
-                                        .text);
-                                p++) {print( bata.customerListItems[i].id);
-                              cartListItem.addToCart(
-                                  item: bata.customerListItems[i]);
+                          if (bata.search_word.trim().isNotEmpty) {
+                            for (int i = 0;
+                                i <
+                                    dropdownMenuItemList
+                                        .serach_listtextEditingControllerOfItem
+                                        .length;
+                                i++) {
+                              if(  int.parse(dropdownMenuItemList
+                                  .serach_listtextEditingControllerOfItem[i]
+                                  .text)>0){
+
+                              }
+
+                              totalItem = totalItem +
+                                  int.parse(dropdownMenuItemList
+                                      .serach_listtextEditingControllerOfItem[i]
+                                      .text);
+                              totalprice = totalprice +
+                                  (int.parse(dropdownMenuItemList
+                                          .serach_listtextEditingControllerOfItem[
+                                              i]
+                                          .text) *
+                                      double.tryParse(bata.allItems[i]
+                                          .itemDetails[0].sellingPrice));
+
+                              for (int p = 0;
+                                  p <
+                                      int.parse(dropdownMenuItemList
+                                          .serach_listtextEditingControllerOfItem[
+                                              i]
+                                          .text);
+                                  p++) {
+                                cartListItem.addToCart(
+                                    item: bata.search_wordListItems[i]);
+                              }
+                            }
+                          } else {
+                            for (int i = 0;
+                                i <
+                                    dropdownMenuItemList
+                                        .listtextEditingControllerOfItem.length;
+                                i++) {
+                              if(  int.parse(dropdownMenuItemList
+                                  .listtextEditingControllerOfItem[i]
+                                  .text) >0){
+
+                              }
+                              totalItem = totalItem +
+                                  int.parse(dropdownMenuItemList
+                                      .listtextEditingControllerOfItem[i].text);
+                              totalprice = totalprice +
+                                  (int.parse(dropdownMenuItemList
+                                          .listtextEditingControllerOfItem[i]
+                                          .text) *
+                                      double.tryParse(bata.allItems[i]
+                                          .itemDetails[0].sellingPrice));
+
+                              for (int p = 0;
+                                  p <
+                                      int.parse(dropdownMenuItemList
+                                          .listtextEditingControllerOfItem[i]
+                                          .text);
+                                  p++) {
+                                cartListItem.addToCart(item: bata.allItems[i]);
+                              }
                             }
                           }
 
@@ -356,42 +343,65 @@ class _ProductsScrState extends State<ProductsScr> {
                               Get.find<AllChequesController>().customer_id);
                           print('customer_id     $customer_id');
 
-                          // for (int i = 0;
-                          //     i < cartListItem.cartlist.length;
-                          //     i++) {
-                          //   totalprice = totalprice +
-                          //       double.tryParse(cartListItem
-                          //           .cartlist[i].itemDetails[0].sellingPrice);
-                          // }
+                          for (int i = 0;
+                              i < cartListItem.cartlist.length;
+                              i++) {
+                            totalprice = totalprice +
+                                double.tryParse(cartListItem
+                                    .cartlist[i].itemDetails[0].sellingPrice);
+                          }
+
                           _databaseHelper
-                              .insert_sales_order_requests(
-                                  Sales_Order_Requests_Model(
-                            user_id: _userAndPermissions.user.id,
-                            customer_id: customer_id,
-                            employee_id: _userAndPermissions.user.userId,
-                            request_status: 'accepted',
-                            salesmanager_id:
-                                _userAndPermissions.user.salesmanagerId,
-                            request_type: 'salesOrder',
-                            salesmanager_status: 'pending',
-                            store_id: 1,
-                            total_price: totalprice,
-                            created_at: DateTime.now().toString(),
-                            supervisor_id:
-                                _userAndPermissions.user.supervisorId,
-                            total_discount: 1000,
-                            is_successfully_submitted: 0,
-                            no_of_items: totalItem.toString(),
-                            salesmanager_note: '',
-                            request_level: 1,
-                            total_tax: 10,
-                            total_price_without_tax_discount: 55,
-                          ))
+                              .insert_temporary_tabel_cart(Temporary_tabel_cart(
+                                  customer_id: customer_id.toString(),
+                                  employee_id: _userAndPermissions.user.userId
+                                      .toString(),
+                                  supervisor_id: _userAndPermissions
+                                      .user.supervisorId
+                                      .toString(),
+                                  salesmanager_id: _userAndPermissions
+                                      .user.salesmanagerId
+                                      .toString(),
+                                  user_id:
+                                      _userAndPermissions.user.id.toString(),store_id: 1.toString(),  ))
                               .then((value) {
+
+
                             insertItemInDataBase(value);
-                          }).catchError((e) {
-                            print(e.toString());
+
+
+
                           });
+
+                          // _databaseHelper
+                          //     .insert_sales_order_requests(
+                          //         Sales_Order_Requests_Model(
+                          //   user_id: _userAndPermissions.user.id,
+                          //   customer_id: customer_id,
+                          //   employee_id: _userAndPermissions.user.userId,
+                          //   request_status: 'accepted',
+                          //   salesmanager_id:
+                          //       _userAndPermissions.user.salesmanagerId,
+                          //   request_type: 'salesOrder',
+                          //   salesmanager_status: 'pending',
+                          //   store_id: 1,
+                          //   total_price: totalprice,
+                          //   created_at: DateTime.now().toString(),
+                          //   supervisor_id:
+                          //       _userAndPermissions.user.supervisorId,
+                          //   total_discount: 1000,
+                          //   is_successfully_submitted: 0,
+                          //   no_of_items: totalItem.toString(),
+                          //   salesmanager_note: '',
+                          //   request_level: 1,
+                          //   total_tax: 10,
+                          //   total_price_without_tax_discount: 55,
+                          // ))
+                          //     .then((value) {
+                          //   insertItemInDataBase(value);
+                          // }).catchError((e) {
+                          //   print(e.toString());
+                          // });
                         },
                         child: Container(
                           height: 50,
@@ -409,7 +419,178 @@ class _ProductsScrState extends State<ProductsScr> {
                         ),
                       ),
                     ),
-                    Container (
+                    Expanded(
+                      flex: 1,
+                      child: ListView.builder(
+
+                          // shrinkWrap: true,
+                          // addAutomaticKeepAlives: true,
+                          itemCount: bata.search_word.trim().isNotEmpty
+                              ? bata.search_wordListItems.length
+                              : bata.allItems.length
+                          // 100, //bata.allItems.length,
+                          ,
+                          itemBuilder: (context, pos) {
+                            // for (int i = 0; i < stocitem.length; i++) {
+                            //   if (stocitem[i].itemId ==
+                            //       bata.customerListItems[pos].itemId) {
+                            //     dropdownMenuItemList.allStockItems[pos]
+                            //         .add(stocitem[i]);
+                            //     // list.add(stocitem[i])  ;
+                            //
+                            //   }
+                            // }
+
+                            // var count = cartListItem.cartlist
+                            //     .where((c) => c == bata.search_wordListItems[pos])
+                            //     .toList()
+                            //     .length;
+                            var cat = Get.find<AllCategoriesController>()
+                                .allCategories;
+                            AllCategories categories;
+
+                            for (int i = 0;
+                                i <
+                                    Get.find<AllCategoriesController>()
+                                        .allCategories
+                                        .length;
+                                i++) {
+                              if (bata.search_word.trim().isNotEmpty) {
+                                if (cat[i].id ==
+                                    bata.search_wordListItems[pos].id) {
+                                  categories = cat[i];
+                                }
+                              } else {
+                                if (cat[i].id == bata.allItems[pos].id) {
+                                  categories = cat[i];
+                                }
+                              }
+                            }
+
+                            int numberofitem = 0;
+
+                            if (bata.search_word.isNotEmpty) {
+                              for (int i = 0;
+                                  i < cartListItem.cartlist.length;
+                                  i++) {
+                                if (cartListItem.cartlist[i] ==
+                                    bata.search_wordListItems[pos]) {
+                                  numberofitem++;
+                                }
+                              }
+                            } else {
+                              for (int i = 0;
+                                  i < cartListItem.cartlist.length;
+                                  i++) {
+                                if (cartListItem.cartlist[i] ==
+                                    bata.allItems[pos]) {
+                                  numberofitem++;
+                                }
+                              }
+                            }
+
+                            dropdownMenuItemList
+                                .listtextEditingControllerOfItem[pos]
+                                .text = numberofitem.toString();
+                            if (bata.search_word.trim().isNotEmpty) {
+                              dropdownMenuItemList
+                                  .serach_listtextEditingControllerOfItem[pos]
+                                  .text = numberofitem.toString();
+                            }
+                            return item(
+                                pos: pos,
+                                list: bata.search_word.trim().isNotEmpty
+                                    ? dropdownMenuItemList
+                                        .serach_allStockItems[pos]
+                                    : dropdownMenuItemList.allStockItems[pos],
+                                dropdowenval: bata.search_word.trim().isNotEmpty
+                                    ? dropdownMenuItemList
+                                        .serach_listdropdownValue[pos]
+                                    : dropdownMenuItemList
+                                        .listdropdownValue[pos],
+                                textEditingController: bata.search_word
+                                        .trim()
+                                        .isNotEmpty
+                                    ? dropdownMenuItemList
+                                            .serach_listtextEditingControllerOfItem[
+                                        pos]
+                                    : dropdownMenuItemList
+                                        .listtextEditingControllerOfItem[pos],
+                                size: size,
+                                funadd: () {
+                                  if(!cartListItem.cartlist.contains( bata.search_word.value.trim().isNotEmpty
+                                      ? bata.search_wordListItems[pos]
+                                      : bata.allItems[pos]) ){
+
+                                    cartListItem.itemInCart++;
+
+
+                                  }
+                                  if (bata.search_word.trim().isNotEmpty) {
+                                    int i = int.parse(dropdownMenuItemList
+                                            .serach_listtextEditingControllerOfItem[
+                                                pos]
+                                            .text) +
+                                        1;
+                                    dropdownMenuItemList
+                                        .serach_listtextEditingControllerOfItem[
+                                            pos]
+                                        .text = i.toString();
+                                  } else {
+                                    int i = int.parse(dropdownMenuItemList
+                                            .listtextEditingControllerOfItem[
+                                                pos]
+                                            .text) +
+                                        1;
+                                    dropdownMenuItemList
+                                        .listtextEditingControllerOfItem[pos]
+                                        .text = i.toString();
+                                  }
+                                },
+                                products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
+                                    bata.search_word.value.trim().isNotEmpty
+                                        ? bata.search_wordListItems[pos]
+                                        : bata.allItems[pos],
+                                funremov: () {
+
+
+
+                                  if (bata.search_word.trim().isNotEmpty) {
+                                    if (int.parse(dropdownMenuItemList
+                                            .serach_listtextEditingControllerOfItem[
+                                                pos]
+                                            .text) >
+                                        0) {
+                                      int i = int.parse(dropdownMenuItemList
+                                              .serach_listtextEditingControllerOfItem[
+                                                  pos]
+                                              .text) -
+                                          1;
+                                      dropdownMenuItemList
+                                          .serach_listtextEditingControllerOfItem[
+                                              pos]
+                                          .text = i.toString();
+                                    }
+                                  } else {
+                                    if (int.parse(dropdownMenuItemList
+                                            .listtextEditingControllerOfItem[
+                                                pos]
+                                            .text) >
+                                        0) {
+                                      int i = int.parse(dropdownMenuItemList
+                                              .listtextEditingControllerOfItem[
+                                                  pos]
+                                              .text) -
+                                          1;
+                                      dropdownMenuItemList
+                                          .listtextEditingControllerOfItem[pos]
+                                          .text = i.toString();
+                                    }
+                                  }
+                                }); // AlirtItem( );
+                          }),
+                    ),
+                    Container(
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -501,10 +682,8 @@ class _ProductsScrState extends State<ProductsScr> {
   }
 
   insertItemInDataBase(int i) async {
-
-
     for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
-
+      cartListItem.additemInitemInCart(item: cartListItem.cartlist[i]);
       await DatabaseHelper()
           .insert_item_tabel(Item_Database(
               olderId: i,
@@ -521,6 +700,10 @@ class _ProductsScrState extends State<ProductsScr> {
       });
     }
   }
+
+
+
+
 
   Widget item(
       {Size size,
@@ -612,11 +795,18 @@ class _ProductsScrState extends State<ProductsScr> {
                         Container(
                           width: size.width * .2,
                           child: Center(
-                            child:TextField(
-                              controller: textEditingController,
-                              textAlign: TextAlign.center,keyboardType:TextInputType.number ,
-                            )
-                          ),
+                              child: TextField(
+                            onSubmitted: (m) {
+                              print('onSubmitted       ${m}');
+                            },
+                            onEditingComplete: () {
+                              print(
+                                  'onEditingComplete      ------------------------');
+                            },
+                            controller: textEditingController,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                          )),
                         ),
                         SizedBox(
                           width: 20,
@@ -640,7 +830,6 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                           ),
                         ),
-
                         SizedBox(
                           width: 20,
                         ),
@@ -738,7 +927,9 @@ class _ProductsScrState extends State<ProductsScr> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   'Show All Promotion',
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
                                 ),
                               ),
                             ],
@@ -838,12 +1029,15 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Bounce'),
                                 Container(
-
-                                  width: size.width*.4,height: 50,
-                                  decoration: BoxDecoration(color: Colors.grey[200],  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .4,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -861,11 +1055,15 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Discount %'),
                                 Container(
-                                  width: size.width*.4,height: 50,
-                                  decoration: BoxDecoration( color: Colors.grey[200], border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .4,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -891,12 +1089,15 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('stock'),
                                 Container(
-
-                                    width: size.width*.4,height: 50,
-                                    decoration: BoxDecoration(  border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1,
-                                    ),borderRadius: BorderRadius.circular(10)),
+                                    width: size.width * .4,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 1,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text(products
                                             .itemDetails[0].minimumQuantity))),
@@ -906,12 +1107,14 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Price per Item'),
                                 Container(
-
-                                  width: size.width*.4,height: 50,
-                                  decoration: BoxDecoration(  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .4,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(
                                           products.itemDetails[0].itemCost ??
@@ -931,12 +1134,14 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Price'),
                                 Container(
-
-                                  width: size.width*.4,height: 50,
-                                  decoration: BoxDecoration(  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .4,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(products
                                           .itemDetails[0].sellingPrice)),
@@ -947,12 +1152,14 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Tax %'),
                                 Container(
-
-                                  width: size.width*.4,height: 50,
-                                  decoration: BoxDecoration(  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .4,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(products.itemDetails[0].tax)),
                                 ),
@@ -970,12 +1177,15 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Total Tax'),
                                 Container(
-
-                                    width: size.width*.4,height: 50,
-                                    decoration: BoxDecoration(  border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1,
-                                    ),borderRadius: BorderRadius.circular(10)),
+                                    width: size.width * .4,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 1,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text((double.tryParse(products
                                                     .itemDetails[0]
@@ -989,12 +1199,14 @@ class _ProductsScrState extends State<ProductsScr> {
                               children: [
                                 Text('Total Price'),
                                 Container(
-
-                                  width: size.width*.4,height: 50,
-                                  decoration: BoxDecoration(  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .4,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(child: Text('هنشوف الحساب')),
                                 ),
                               ],
@@ -1008,12 +1220,14 @@ class _ProductsScrState extends State<ProductsScr> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-
-                              width: size.width*.4,height: 50,
-                              decoration: BoxDecoration(  border: Border.all(
-                                color:  Color(0xff2C4B89),
-                                width: 1,
-                              ),borderRadius: BorderRadius.circular(10)),
+                              width: size.width * .4,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xff2C4B89),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Center(child: Text('Cancel')),
                             ),
                             Container(
@@ -1130,8 +1344,6 @@ class _ProductsScrState extends State<ProductsScr> {
     print(jsonUser);
   }
 
-
-
   bool isNumericUsing_tryParse(String string) {
     // Null or empty string is not a number
     if (string == null || string.isEmpty) {
@@ -1151,97 +1363,32 @@ class _ProductsScrState extends State<ProductsScr> {
     return true;
   }
 }
-
 //
+// cartListItem.cartlist.clear();
+// totalItem = 0;
+// double totalprice = 0;
+// for (int i = 0;
+// i <
+// dropdownMenuItemList
+//     .listtextEditingControllerOfItem.length;
+// i++) {
+// totalItem = totalItem +
+// int.parse(dropdownMenuItemList
+//     .listtextEditingControllerOfItem[i].text);
+// totalprice = totalprice +
+// (int.parse(dropdownMenuItemList
+//     .listtextEditingControllerOfItem[i]
+//     .text) *
+// double.tryParse(bata.customerListItems[i]
+//     .itemDetails[0].sellingPrice));
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-//
-//
-//
-// Row(
-// mainAxisAlignment: MainAxisAlignment.end,
-// children: [
-// Column(
-// mainAxisSize: MainAxisSize.max,
-// crossAxisAlignment: CrossAxisAlignment.end,
-// children: [
-// SizedBox(
-// height: 8,
-// ),
-// Text('Safi  - corn oil 1 liter'),
-// SizedBox(
-// height: 4,
-// ),
-// Row(
-// children: [
-// Text('Min Order : 2   box'),
-// ],
-// ),
-// Text('Price - 20.00 JD'),
-// Expanded(child: Container()),
-// Row(
-// crossAxisAlignment: CrossAxisAlignment.center,
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// children: [
-// Container(
-// color: Colors.orange,
-// height: 30,
-// width: 30,
-// child: Center(
-// child: Text(
-// "+",
-// style: TextStyle(
-// fontWeight: FontWeight.bold, fontSize: 20),
-// ),
-// ),
-// ),
-// SizedBox(
-// width: 20,
-// ),
-// Text(
-// '5',
-// style: TextStyle(
-// fontWeight: FontWeight.bold, fontSize: 20),
-// ),
-// SizedBox(
-// width: 20,
-// ),
-// Container(
-// color: Colors.orange,
-// height: 30,
-// width: 30,
-// child: Center(
-// child: Text(
-// "-",
-// style: TextStyle(
-// fontWeight: FontWeight.bold, fontSize: 20),
-// ),
-// ),
-// ),
-// SizedBox(
-// width: 20,
-// ),
-// Text('Details'),
-// ],
-// )
-// ],
-// ),
-// SizedBox(
-// width: 8,
-// ),
-// Container(
-// width: size.width * .3,
-// color: Colors.indigo,
-// ),
-// ],
-// ),
+// for (int p = 0;
+// p <
+// int.parse(dropdownMenuItemList
+//     .listtextEditingControllerOfItem[i]
+//     .text);
+// p++) {print( bata.customerListItems[i].id);
+// cartListItem.addToCart(
+// item: bata.customerListItems[i]);
+// }
+// }

@@ -650,7 +650,7 @@ if(!listtoshow.contains(bata.cartlist[i])){
                   child: InkWell(
                       onTap: () {
 
-                        Get.to(CartEditProduct(),arguments: [data]);
+                        Get.to(CartEditProduct(data), );
                         //
                         // Navigator.push(
                         //   context,

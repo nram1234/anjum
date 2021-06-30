@@ -1201,3 +1201,92 @@ class Customer_types_Model {
     data['updated_at'] = this.updated_at;
   }
 }
+class Temporary_tabel_cart{
+String  user_id ;
+String  customer_id ;
+String  employee_id ;
+String  salesmanager_id ;
+String  store_id ;
+String  supervisor_id ;
+
+
+//<editor-fold desc="Data Methods" defaultstate="collapsed">
+
+  Temporary_tabel_cart({
+    @required this.user_id,
+    @required this.customer_id,
+    @required this.employee_id,
+    @required this.salesmanager_id,
+    @required this.store_id,
+    @required this.supervisor_id,
+
+  });
+
+  factory Temporary_tabel_cart.fromMap(Map<String, dynamic> map) {
+    return new Temporary_tabel_cart(
+      user_id: map['user_id'] as String,
+      customer_id: map['customer_id'] as String,
+      employee_id: map['employee_id'] as String,
+      salesmanager_id: map['salesmanager_id'] as String,
+      store_id: map['store_id'] as String,
+      supervisor_id: map['supervisor_id'] as String,
+
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'user_id': this.user_id,
+      'customer_id': this.customer_id,
+      'employee_id': this.employee_id,
+      'salesmanager_id': this.salesmanager_id,
+      'store_id': this.store_id,
+      'supervisor_id': this.supervisor_id,
+
+    } as Map<String, dynamic>;
+  }
+
+//</editor-fold>
+
+}
+class Temporary_tabel_cart_item{
+ String  order_id ;
+ String  id ;
+ String  item_count ;
+
+
+
+
+  Temporary_tabel_cart_item({
+    @required this.order_id,
+    @required this.id,
+    @required this.item_count,
+  });
+
+
+
+
+
+  factory Temporary_tabel_cart_item.fromMap(Map<String, dynamic> map) {
+    return new Temporary_tabel_cart_item(
+      order_id: map['order_id'] as String,
+      id: map['id'] as String,
+      item_count: map['item_count'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'order_id': this.order_id,
+      'id': this.id,
+      'item_count': this.item_count,
+    } as Map<String, dynamic>;
+  }
+
+
+
+
+
+}
