@@ -14,6 +14,7 @@ import 'all _customer.dart';
 import 'carteditproduct.dart';
 import 'cashpayment.dart';
 import 'chequepay.dart';
+import 'dashboard.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -803,7 +804,7 @@ print(isinvoiceOrSalesOrderOrReturnInvoice);
 
   insertItemInDataBase(int i) async {
     for (int oo = 0; oo < bata.cartlist.length; oo++) {
-      bata.additemInitemInCart(item: bata.cartlist[i]);
+      bata.additemInitemInCart(item: bata.cartlist[oo]);
       await DatabaseHelper()
           .insert_item_tabel(Item_Database(
           olderId: i,
@@ -819,6 +820,6 @@ print(isinvoiceOrSalesOrderOrReturnInvoice);
         print(e.toString());
       });
     }
- Get.off(All_Customer()); }
+ Get.off(Dashboard()); }
 
 }

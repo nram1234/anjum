@@ -308,7 +308,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               }
                             }
                           } else {
-                            cartListItem.clearCartList();
+                           // cartListItem.clearCartList();
 
 
                             for (int i = 0;
@@ -793,12 +793,14 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                   ),
                 ],
               ),
-              ExpansionTile(
+              ExpansionTile( trailing: SizedBox.shrink(),
                 title: Row(
                   children: [
                     Text('Details'),
-                    SizedBox(
-                      width: size.width * .08,
+                    Expanded(
+                      child: Container(
+                   height: 1,
+                      ),
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -810,8 +812,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                             decoration: BoxDecoration(
                                 color: Colors.orange,
                                 borderRadius: BorderRadius.circular(2)),
-                            height: 30,
-                            width: 30,
+                            height: 50,
+                            width: 50,
                             child: Center(
                               child: Text(
                                 "-",
@@ -843,7 +845,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                           )),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: 4,
                         ),
                         InkWell(
                           onTap: funadd,
@@ -851,8 +853,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                             decoration: BoxDecoration(
                                 color: Colors.orange,
                                 borderRadius: BorderRadius.circular(2)),
-                            height: 30,
-                            width: 30,
+                            height: 50,
+                            width: 50,
                             child: Center(
                               child: Text(
                                 "+",
@@ -869,7 +871,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                         ),
                       ],
                     )
-                  ],
+               , SizedBox(width: 8,)  ],
                 ),
                 children: [
                   Column(

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'dashboard.dart';
 
@@ -135,8 +136,8 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'No of Cash Payment :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          noOfCash.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCash)
+                                          .toString(),
                                         ),
                                       ],
                                     ),
@@ -151,8 +152,8 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'No of Cheque Payment  :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                         noOfCeq.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCeq)
+                                         .toString(),
                                         ),
                                       ],
                                     ),
@@ -167,8 +168,8 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'Amount No of Cash Payment :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                         amountofCashPayment.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(amountofCashPayment)
+                                         .toString(),
                                         ),
                                       ],
                                     ),
@@ -183,8 +184,8 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'Amount No of Cheque Payment  :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          amountofChequePayment.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(amountofChequePayment)
+                                          .toString(),
                                         ),
                                       ],
                                     ),
@@ -199,8 +200,8 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'Total Amount :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          totalamoun.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(totalamoun)
+                                          .toString(),
                                         ),
                                       ],
                                     ),

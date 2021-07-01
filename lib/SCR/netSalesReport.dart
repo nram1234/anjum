@@ -2,6 +2,7 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'dashboard.dart';
 
@@ -143,8 +144,8 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'No of Invoices:',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          noofInvoices.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
+                                          .toString(),
                                         ),
                                       ],
                                     ),
@@ -159,8 +160,8 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'No Of Return Invoices :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          noOfReturnInvoices.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                                         .toString(),
                                         ),
                                       ],
                                     ),
@@ -175,8 +176,8 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'Amount of Invoice:',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          amountofInvoice.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
+                                         .toString(),
                                         ),
                                       ],
                                     ),
@@ -191,8 +192,8 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'Amount of Return Invoice :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                          amountofReturnInvoice.toString(),
+                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
+                                         .toString(),
                                         ),
                                       ],
                                     ),
@@ -207,8 +208,8 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'Net Sales Amount :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(
-                                      (amountofInvoice-amountofReturnInvoice).toString(),
+                                        Text(    NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
+                                      .toString(),
                                         ),
                                       ],
                                     ),

@@ -21,22 +21,22 @@ var itemInCart =0.obs;
  }
 
  removeAllChooseItexfromcart({AllItems item}){
-
-   for(int i=0;i<cartlist.length;i++){
-print(i);
-print(cartlist[i].id);
-print(item.id);
-     if(cartlist[i].id==item.id){
-       cartlist.remove(item);
-     }
-   }
-
-   update();
+//
+//    for(int i=0;i<cartlist.length;i++){
+// print(i);
+// print(cartlist[i].id);
+// print(item.id);
+//      if(cartlist[i].id==item.id){
+//        cartlist.remove(item);
+//      }
+//    }
+cartlist.removeWhere((element) => element.id==item.id);
+ //  update();
  }
 
 additemInitemInCart({AllItems item}){
   bool v= cartlist.contains(item);
-print("this isssssssssssssss      vallll  $v");
+
 if(!v){
   itemInCart++;
 

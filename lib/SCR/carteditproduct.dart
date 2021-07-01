@@ -186,7 +186,14 @@ TextEditingController textEditingController =TextEditingController();
                                           }
                                           textEditingController.text=itemCountinCart.toString();
 
-                                        return  TextField(
+                                        return  TextField( onSubmitted: (v)
+                                        {
+                                          bata. removeAllChooseItexfromcart(item:widget. data);
+                                          for(int i=0;i<int.parse(v);i++){
+                                            bata.  addToCart(item: widget.data);
+                                          }
+
+                                        },keyboardType: TextInputType.number,
                                             controller: textEditingController,
                                             textAlign: TextAlign.center,
                                           );
