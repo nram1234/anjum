@@ -22,117 +22,123 @@ List<Widget>cat=[];
   @override
   void initState() {
     super.initState();
-    // for(int i=0;i<bata.allCategories.length;i++){
-    //   allcat.add(bata.allCategories[i]);
-    //  // cat.add(items(data: bata.allCategories[i]));
-    //   for(int o=0;o<bata.allCategories[i].subCategories.length;o++){
-    //     allsubcat.add( bata.allCategories[i].subCategories[o]);
-    //  //   subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
-    //   }
-    // }
-    // for(int i=0;i<allcat.length;i++){
-    //   cat.add(items(data: allcat[i]));
-    // }
-    // for(int i=0;i<allsubcat.length;i++){
-    //   subcat.add(subitems(data: allsubcat[i]));
-    // }
+    for(int i=0;i<bata.allCategories.length;i++){
+      allcat.add(bata.allCategories[i]);
+       cat.add(items(data: bata.allCategories[i]));
+      for(int o=0;o<bata.allCategories[i].subCategories.length;o++){
+        allsubcat.add( bata.allCategories[i].subCategories[o]);
+       subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
+      }
+    }
+    for(int i=0;i<allcat.length;i++){
+      cat.add(items(data: allcat[i]));
+    }
+    for(int i=0;i<allsubcat.length;i++){
+      subcat.add(subitems(data: allsubcat[i]));
+    }
   }
 removefromcat(AllCategories categories){
-//   allcat.remove(categories);
-//   cat.clear();
-//   subcat.clear();
-//   for(int i=0;i<allcat.length;i++){
-//     cat.add(items(data: allcat[i]));
-//   }
-//   for(int i=0;i<categories.subCategories.length;i++){
-//     allsubcat.remove(categories.subCategories[i]);
-//
-//   }
-//   for(int i=0;i<allsubcat.length;i++){
-//     subcat.add(subitems(data: allsubcat[i]));
-//   }
-// setState(() {
-//
-// });
+  allcat.remove(categories);
+  cat.clear();
+  subcat.clear();
+  for(int i=0;i<allcat.length;i++){
+    cat.add(items(data: allcat[i]));
+  }
+  for(int i=0;i<categories.subCategories.length;i++){
+    allsubcat.remove(categories.subCategories[i]);
+
+  }
+  for(int i=0;i<allsubcat.length;i++){
+    subcat.add(subitems(data: allsubcat[i]));
+  }
+setState(() {
+
+});
   }
   @override
   Widget build(BuildContext context) {
-
+print(bata.allCategories.length);
     return SafeArea(
       top: true,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(onTap: () {}, child: Text('X')),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Filter'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Categories'),
-                    Text('Clear All'),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(onTap: () {}, child: Text('X')),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  children: bata.allCategories.map((e) {
-                    items(data: e);
-                  }).toList(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Filter'),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Sub Categories'),
-                    Text('Clear All'),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Categories'),
+                      Text('Clear All'),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  children: subcat,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Sub Categories'),
-                    Text('Clear All'),
-                  ],
-                ),
-              ),    Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  children: cat,
-                ),
-              ),
-              RangeSlider(   onChanged: (v){
-                slide=v;
-                setState(() {
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:
 
-                });
-              },max: 100,min: 0,values: slide,  labels: RangeLabels(
-                slide.start.round().toString(),
-                slide.end.round().toString(),
-              ), divisions: 20,)
-            ],
+                  Wrap(
+                    children: cat
+
+                    // bata.allCategories.map((e) {
+                    //   items(data: e);
+                    // }).toList(),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Sub Categories'),
+                      Text('Clear All'),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    children: subcat,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Sub Categories'),
+                      Text('Clear All'),
+                    ],
+                  ),
+                ),    Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    children: cat,
+                  ),
+                ),
+                RangeSlider(   onChanged: (v){
+                  slide=v;
+                  setState(() {
+
+                  });
+                },max: 100,min: 0,values: slide,  labels: RangeLabels(
+                  slide.start.round().toString(),
+                  slide.end.round().toString(),
+                ), divisions: 20,)
+              ],
+            ),
           ),
         ),
       ),
