@@ -1,26 +1,27 @@
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:get/get.dart';
 
-class CartItemController extends GetxController{
+class CartItemController extends GetxController {
+  RxList<AllItems> cartlist = RxList<AllItems>();
 
- RxList<AllItems>cartlist=RxList<AllItems>();
+  var itemInCart = 0.obs;
+  addToCart({AllItems item}) {
+    cartlist.add(item);
+    update();
+  }
 
-var itemInCart =0.obs;
- addToCart({AllItems item}){
-   cartlist.add(item);
-   update();
- }
- removefromcart({AllItems item}){
-   cartlist.remove(item);
+  removefromcart({AllItems item}) {
+    cartlist.remove(item);
 
-   update();
- }
- clearCartList(){
-   cartlist.clear();
-   update();
- }
+    update();
+  }
 
- removeAllChooseItexfromcart({AllItems item}){
+  clearCartList() {
+    cartlist.clear();
+    update();
+  }
+
+  removeAllChooseItexfromcart({AllItems item}) {
 //
 //    for(int i=0;i<cartlist.length;i++){
 // print(i);
@@ -30,23 +31,22 @@ var itemInCart =0.obs;
 //        cartlist.remove(item);
 //      }
 //    }
-cartlist.removeWhere((element) => element.id==item.id);
- //  update();
- }
+    cartlist.removeWhere((element) => element.id == item.id);
+    //  update();
+  }
 
-additemInitemInCart({AllItems item}){
-  bool v= cartlist.contains(item);
+  additemInitemInCart({AllItems item}) {
+    bool v = cartlist.contains(item);
 
-if(!v){
-  itemInCart++;
+    if (!v) {
+      itemInCart++;
+    }
+  }
 
-}
-}
- removeitemInitemInCart({AllItems item}){
-   bool v= cartlist.any((e) => e.id==item.id);
-   if(!v){
-     itemInCart--;
-
-   }
- }
+  removeitemInitemInCart({AllItems item}) {
+    bool v = cartlist.any((e) => e.id == item.id);
+    if (!v) {
+      itemInCart--;
+    }
+  }
 }

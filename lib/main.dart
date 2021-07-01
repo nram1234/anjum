@@ -20,8 +20,8 @@ import 'SCR/printer-1.dart';
 import 'SCR/products.dart';
 import 'SCR/products_Expand.dart';
 import 'SCR/reports.dart';
-import 'SCR/test2.dart';
-import 'SCR/testscr.dart';
+// import 'SCR/test2.dart';
+// import 'SCR/testscr.dart';
 import 'Translation/Trans.dart';
 
 import 'controllers/allBanksController.dart';

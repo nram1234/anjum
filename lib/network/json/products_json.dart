@@ -5,7 +5,7 @@ class Products_json {
 
   Products_json.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
-      products = new List<Products>();
+      products = <Products>[];
       json['products'].forEach((v) {
         products.add(new Products.fromJson(v));
       });

@@ -2,23 +2,30 @@ import 'dart:ffi';
 
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Filter extends StatefulWidget {
+
+  final Function(int, int, int) onFilterDataSpecified;
+
+  Filter({@required this.onFilterDataSpecified});
+
   @override
   _FilterState createState() => _FilterState();
 }
 
 class _FilterState extends State<Filter> {
-  AllCategoriesController bata = Get.put(AllCategoriesController()) ;
+  AllCategoriesController bata = Get.put(AllCategoriesController());
 
-  var slide=RangeValues(0.5,50);
+  var slide = RangeValues(0.5, 50);
 
-List<Widget>cat=[];
-  List<Widget>subcat=[];
-  List<AllCategories>allcat=[];
-  List<SubCategories>allsubcat=[];
+  List<Widget> cat = [];
+  List<Widget> subcat = [];
+  List<AllCategories> allcat = [];
+  List<SubCategories> allsubcat = [];
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +44,8 @@ List<Widget>cat=[];
     //   subcat.add(subitems(data: allsubcat[i]));
     // }
   }
-removefromcat(AllCategories categories){
+
+  removefromcat(AllCategories categories) {
 //   allcat.remove(categories);
 //   cat.clear();
 //   subcat.clear();
@@ -55,9 +63,9 @@ removefromcat(AllCategories categories){
 //
 // });
   }
+
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -86,11 +94,112 @@ removefromcat(AllCategories categories){
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  children: bata.allCategories.map((e) {
-                    items(data: e);
-                  }).toList(),
-                ),
+                child: Wrap(children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.green,
+                      child: Center(
+                        child: Text('11'),
+                      ),
+                    ),
+                  ),
+                ]
+                    // bata.allCategories.map((e) {
+                    //   items(data: e);
+                    // }).toList(),
+
+                    ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -117,21 +226,27 @@ removefromcat(AllCategories categories){
                     Text('Clear All'),
                   ],
                 ),
-              ),    Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Wrap(
                   children: cat,
                 ),
               ),
-              RangeSlider(   onChanged: (v){
-                slide=v;
-                setState(() {
-
-                });
-              },max: 100,min: 0,values: slide,  labels: RangeLabels(
-                slide.start.round().toString(),
-                slide.end.round().toString(),
-              ), divisions: 20,)
+              RangeSlider(
+                onChanged: (v) {
+                  slide = v;
+                  setState(() {});
+                },
+                max: 100,
+                min: 0,
+                values: slide,
+                labels: RangeLabels(
+                  slide.start.round().toString(),
+                  slide.end.round().toString(),
+                ),
+                divisions: 20,
+              )
             ],
           ),
         ),
@@ -139,15 +254,16 @@ removefromcat(AllCategories categories){
     );
   }
 
-  Widget items({AllCategories  data}) {
-    return GestureDetector(onTap: (){
-      removefromcat(  data);
-    },
+  Widget items({AllCategories data}) {
+    return GestureDetector(
+      onTap: () {
+        removefromcat(data);
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           width: 80,
-          height: 50,//data.categoryNameAr
+          height: 50, //data.categoryNameAr
           child: Center(child: Text(data.categoryNameEn)),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
@@ -156,12 +272,13 @@ removefromcat(AllCategories categories){
       ),
     );
   }
-  Widget subitems({SubCategories  data}) {
+
+  Widget subitems({SubCategories data}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 80,
-        height: 50,//data.categoryNameAr
+        height: 50, //data.categoryNameAr
         child: Center(child: Text(data.subCategoryNameEn)),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7),

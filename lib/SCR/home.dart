@@ -2,7 +2,7 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_journeys_DB.dart';
 import 'package:anjum/SCR/printer-1.dart';
 import 'package:anjum/SCR/reports.dart';
-import 'package:anjum/SCR/testscr.dart';
+// import 'package:anjum/SCR/testscr.dart';
 import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
