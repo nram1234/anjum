@@ -144,8 +144,11 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'No of Invoices:',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
-                                          .toString(),
+                                        Text(
+                                            noofInvoices .toStringAsFixed(3)
+
+                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
+                                          // .toString(),
                                         ),
                                       ],
                                     ),
@@ -160,8 +163,11 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'No Of Return Invoices :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
-                                         .toString(),
+                                        Text(
+                                            noOfReturnInvoices     .toStringAsFixed(3)
+
+                                         //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                                         // .toString(),
                                         ),
                                       ],
                                     ),
@@ -176,8 +182,11 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'Amount of Invoice:',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
-                                         .toString(),
+                                        Text(
+                                        amountofInvoice            .toStringAsFixed(3)
+
+                                        // NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
+                                        //  .toString(),
                                         ),
                                       ],
                                     ),
@@ -192,8 +201,12 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'Amount of Return Invoice :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
-                                         .toString(),
+                                        Text(
+                                        amountofReturnInvoice               .toStringAsFixed(3)
+
+
+                                        // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
+                                        //  .toString(),
                                         ),
                                       ],
                                     ),
@@ -208,8 +221,11 @@ class _NetSalesReportState extends State<NetSalesReport> {
                                           'Net Sales Amount :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(    NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
-                                      .toString(),
+                                        Text(
+                            (amountofInvoice-amountofReturnInvoice)  .toStringAsFixed(3)
+
+                            // NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
+                            //           .toString(),
                                         ),
                                       ],
                                     ),

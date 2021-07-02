@@ -136,8 +136,10 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'No of Cash Payment :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCash)
-                                          .toString(),
+                                        Text(
+                                            noOfCash  .toStringAsFixed(3)
+                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCash)
+                                          // .toString(),
                                         ),
                                       ],
                                     ),
@@ -152,8 +154,10 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'No of Cheque Payment  :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCeq)
-                                         .toString(),
+                                        Text(noOfCeq.toStringAsFixed(3)
+                                         //  NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCeq)
+                                         // .toString(),
+
                                         ),
                                       ],
                                     ),
@@ -168,8 +172,9 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'Amount No of Cash Payment :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(amountofCashPayment)
-                                         .toString(),
+                                        Text(  amountofCashPayment. toStringAsFixed(3)
+                                         //  NumberFormat.currency(locale: 'eu', symbol: '').format(amountofCashPayment)
+                                         // .toString(),
                                         ),
                                       ],
                                     ),
@@ -184,8 +189,11 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'Amount No of Cheque Payment  :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(amountofChequePayment)
-                                          .toString(),
+                                        Text(
+                            amountofChequePayment.    toStringAsFixed(3)
+
+                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofChequePayment)
+                                          // .toString(),
                                         ),
                                       ],
                                     ),
@@ -200,8 +208,10 @@ class _PaymentReportState extends State<PaymentReport> {
                                           'Total Amount :',
                                           style: TextStyle(fontSize: 18),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'eu', symbol: '').format(totalamoun)
-                                          .toString(),
+                                        Text(
+                                        totalamoun.   toStringAsFixed(3)
+                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(totalamoun)
+                                          // .toString(),
                                         ),
                                       ],
                                     ),

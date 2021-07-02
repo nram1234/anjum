@@ -266,7 +266,7 @@ class _ProductsScrState extends State<ProductsScr> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
+                      child: InkWell(splashColor:   Colors.orange,
                         onTap: () {
 
 
@@ -429,7 +429,7 @@ for(int p=0;p<  dropdownMenuItemList
 
 }
 
-                        },
+                   Get.snackbar('', "item added to cart ") ;    },
                         child: Container(
                           height: 50,
                           width: size.width * .9,
@@ -458,20 +458,7 @@ for(int p=0;p<  dropdownMenuItemList
                           // 100, //bata.allItems.length,
                           ,
                           itemBuilder: (context, pos) {
-                            // for (int i = 0; i < stocitem.length; i++) {
-                            //   if (stocitem[i].itemId ==
-                            //       bata.customerListItems[pos].itemId) {
-                            //     dropdownMenuItemList.allStockItems[pos]
-                            //         .add(stocitem[i]);
-                            //     // list.add(stocitem[i])  ;
-                            //
-                            //   }
-                            // }
 
-                            var count = cartListItem.cartlist
-                                .where((c) => c == bata.search_wordListItems[pos])
-                                .toList()
-                                .length;
                             var cat = Get.find<AllCategoriesController>()
                                 .allCategories;
                             AllCategories categories;
