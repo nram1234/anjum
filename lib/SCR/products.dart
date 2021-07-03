@@ -760,23 +760,27 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                   SizedBox(
                     width: 8,
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(products.itemDetails[0].itemNameEn),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(products.itemDetails[0].minimumQuantity),
-                      //products.itemDetails[0].itemCost
-                      Text(products.itemDetails[0].sellingPrice),
-                      //  Expanded(child: Container()),
-                    ],
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(products.itemDetails[0].itemNameEn,
+                          maxLines: 2,
+                     ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(products.itemDetails[0].minimumQuantity),
+                        //products.itemDetails[0].itemCost
+                        Text(products.itemDetails[0].sellingPrice),
+                        //  Expanded(child: Container()),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -876,9 +880,9 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                           children: [
                             Text(
                                 'item Number: ${products.itemDetails[0].itemNumber}'),
-                            Container(
-                                child: Text(
-                                    'item name:  ${products.itemDetails[0].itemNameEn}'))
+                            // Container(
+                            //     child: Text(
+                            //         'item name:  ${products.itemDetails[0].itemNameEn}'))
                           ],
                         ),
                       ),
@@ -1055,7 +1059,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                   width: size.width * .4,
                                   height: 50,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey[200],
+
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1081,7 +1085,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                   width: size.width * .4,
                                   height: 50,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey[200],
+
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1110,11 +1114,11 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                           children: [
                             Column(
                               children: [
-                                Text('stock'),
+                                Text('Input Qty'),
                                 Container(
                                     width: size.width * .4,
                                     height: 50,
-                                    decoration: BoxDecoration(
+                                    decoration: BoxDecoration( color: Colors.grey[200],
                                         border: Border.all(
                                           color: Colors.grey,
                                           width: 1,
@@ -1128,11 +1132,11 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                             ),
                             Column(
                               children: [
-                                Text('Price per Item'),
+                                Text('Price before discount'),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: BoxDecoration(color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1155,11 +1159,11 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                           children: [
                             Column(
                               children: [
-                                Text('Price'),
+                                Text('Price after discount'),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: BoxDecoration(color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1177,7 +1181,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: BoxDecoration(color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1202,7 +1206,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                     width: size.width * .4,
                                     height: 50,
-                                    decoration: BoxDecoration(
+                                    decoration: BoxDecoration(color: Colors.grey[200],
                                         border: Border.all(
                                           color: Colors.grey,
                                           width: 1,
@@ -1220,11 +1224,11 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                             ),
                             Column(
                               children: [
-                                Text('Total Price'),
+                                Text('Net price'),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: BoxDecoration(color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,

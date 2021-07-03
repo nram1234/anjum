@@ -115,24 +115,26 @@ double net_sal=0;
                             SizedBox(
                               width: 8,
                             ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(widget.data.itemDetails[0].itemNameEn),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                    widget.data.itemDetails[0].minimumQuantity),
-                                //products.itemDetails[0].itemCost
-                                Text(widget.data.itemDetails[0].sellingPrice),
-                                //  Expanded(child: Container()),
-                              ],
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(widget.data.itemDetails[0].itemNameEn ,maxLines: 2,),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                      widget.data.itemDetails[0].minimumQuantity),
+                                  //products.itemDetails[0].itemCost
+                                  Text(widget.data.itemDetails[0].sellingPrice),
+                                  //  Expanded(child: Container()),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -232,11 +234,14 @@ double net_sal=0;
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                  'item Number: ${widget.data.itemDetails[0].itemNumber}'),
-                              Container(
-                                  child: Text(
-                                      'item name:  ${widget.data.itemDetails[0].itemNameEn}'))
+                              Expanded(
+                                child: Text(
+                                    'item Number: ${widget.data.itemDetails[0].itemNumber}', maxLines: 2,),
+                              ),
+                              // Expanded(
+                              //   child: Text(
+                              //       'item name:  ${widget.data.itemDetails[0].itemNameEn}', maxLines: 2,),
+                              // )
                             ],
                           ),
                         ),

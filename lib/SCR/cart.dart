@@ -6,6 +6,7 @@ import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -149,205 +150,206 @@ if(!listtoshow.contains(bata.cartlist[i])){
                                 });
                               }),
                         ),
-                        SizedBox(
-                          height: size.height * .01,
-                        ),
-                        Center(
-                          child: Container(
-                            height: size.height * .06,
-                            color: Colors.white,
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints.tightFor(
-                                  height: size.height * .06,
-                                  width: size.width * .8),
-                              child: ElevatedButton(
-                                child: Text('Apply  Promotions'),
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 20,
-                                  primary: Colors.orangeAccent,
-                                  onPrimary: Colors.white,
-                                  shape: const BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                ),
-                                onPressed: () {
-                                  return showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Container(
-                                          width: sWidth * .8,
-                                          height: 60,
-                                          child: Center(
-                                              child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text('You Get Promotion'),
-                                              Text('Bol 50+10'),
-                                            ],
-                                          )),
-                                          color: Colors.orangeAccent,
-                                        ),
-                                        content: Container(
-                                          width: sWidth * .8,
-                                          height: sHeight * .5,
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Container(
+                              height: size.height * .06,
+                              color: Colors.white,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints.tightFor(
+                                    height: size.height * .06,
+                                    width: size.width * .8),
+                                child: ElevatedButton(
+                                  child: Text('Apply  Promotions'),
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 20,
+                                    primary: Colors.orangeAccent,
+                                    onPrimary: Colors.white,
+                                    shape: const BeveledRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                  ),
+                                  onPressed: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Container(
+                                            width: sWidth * .8,
+                                            height: 60,
+                                            child: Center(
+                                                child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text('Description'),
-                                                    Text('Qty      '),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                Text('You Get Promotion'),
+                                                Text('Bol 50+10'),
+                                              ],
+                                            )),
+                                            color: Colors.orangeAccent,
+                                          ),
+                                          content: Container(
+                                            width: sWidth * .8,
+                                            height: sHeight * .5,
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Expanded(child: Text('Safi  - corn oil 1 liter')),
-                                                      Container(
-                                                        width: size.width * .2,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: Colors.white,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                              spreadRadius: 5,
-                                                              blurRadius: 7,
-                                                              offset: Offset(0,
-                                                                  3), // changes position of shadow
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        child: TextField(
-                                                          decoration:
-                                                              InputDecoration(
-                                                            border: InputBorder
-                                                                .none,
-                                                            focusedBorder:
-                                                                InputBorder
-                                                                    .none,
-                                                            enabledBorder:
-                                                                InputBorder
-                                                                    .none,
-                                                            errorBorder:
-                                                                InputBorder
-                                                                    .none,
-                                                            disabledBorder:
-                                                                InputBorder
-                                                                    .none,
-                                                          ),
-                                                        ),
-                                                      ),
+                                                      Text('Description'),
+                                                      Text('Qty      '),
                                                     ],
                                                   ),
-                                                )
-                                            ,    Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      Expanded(child: Text('Safi  - corn oil 1 liter')),
-                                                      Container(
-                                                        width: size.width * .2,
-                                                        decoration:
-                                                        BoxDecoration(
-                                                          borderRadius:
-                                                          BorderRadius
-                                                              .circular(10),
-                                                          color: Colors.white,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                  0.5),
-                                                              spreadRadius: 5,
-                                                              blurRadius: 7,
-                                                              offset: Offset(0,
-                                                                  3), // changes position of shadow
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        child: TextField(
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                      children: [
+                                                        Expanded(child: Text('Safi  - corn oil 1 liter')),
+                                                        Container(
+                                                          width: size.width * .2,
                                                           decoration:
-                                                          InputDecoration(
-                                                            border: InputBorder
-                                                                .none,
-                                                            focusedBorder:
-                                                            InputBorder
-                                                                .none,
-                                                            enabledBorder:
-                                                            InputBorder
-                                                                .none,
-                                                            errorBorder:
-                                                            InputBorder
-                                                                .none,
-                                                            disabledBorder:
-                                                            InputBorder
-                                                                .none,
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10),
+                                                            color: Colors.white,
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors.grey
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                spreadRadius: 5,
+                                                                blurRadius: 7,
+                                                                offset: Offset(0,
+                                                                    3), // changes position of shadow
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                            ),
-                                                Expanded(child: Container()),
-
-
-                                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text('Total Qty: 5'),
-                                                    Text('Due Promotion Qty: 10'),
-                                                  ],
-                                                ),   SizedBox(height: 8,),
-                                                Center(
-                                                  child: Container(
-                                                    width: size.width * .3,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      color: Colors.white,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey.withOpacity(0.5),
-                                                          spreadRadius: 5,
-                                                          blurRadius: 7,
-                                                          offset: Offset(
-                                                              0, 3), // changes position of shadow
+                                                          child: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border: InputBorder
+                                                                  .none,
+                                                              focusedBorder:
+                                                                  InputBorder
+                                                                      .none,
+                                                              enabledBorder:
+                                                                  InputBorder
+                                                                      .none,
+                                                              errorBorder:
+                                                                  InputBorder
+                                                                      .none,
+                                                              disabledBorder:
+                                                                  InputBorder
+                                                                      .none,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
-                                                    child: Container(
-                                                      height: 50,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.indigo,
-                                                        borderRadius: BorderRadius.circular(10),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text(
-                                                            'Ok',
-                                                            style: TextStyle(
-                                                                color: Colors.white,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 20),
-                                                          )),
+                                                  )
+                                              ,    Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                      children: [
+                                                        Expanded(child: Text('Safi  - corn oil 1 liter')),
+                                                        Container(
+                                                          width: size.width * .2,
+                                                          decoration:
+                                                          BoxDecoration(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                            color: Colors.white,
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors.grey
+                                                                    .withOpacity(
+                                                                    0.5),
+                                                                spreadRadius: 5,
+                                                                blurRadius: 7,
+                                                                offset: Offset(0,
+                                                                    3), // changes position of shadow
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          child: TextField(
+                                                            decoration:
+                                                            InputDecoration(
+                                                              border: InputBorder
+                                                                  .none,
+                                                              focusedBorder:
+                                                              InputBorder
+                                                                  .none,
+                                                              enabledBorder:
+                                                              InputBorder
+                                                                  .none,
+                                                              errorBorder:
+                                                              InputBorder
+                                                                  .none,
+                                                              disabledBorder:
+                                                              InputBorder
+                                                                  .none,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                )
-                                              ],
+                                              ),
+                                                  Expanded(child: Container()),
+
+
+                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text('Total Qty: 5'),
+                                                      Text('Due Promotion Qty: 10'),
+                                                    ],
+                                                  ),   SizedBox(height: 8,),
+                                                  Center(
+                                                    child: Container(
+                                                      width: size.width * .3,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.white,
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.grey.withOpacity(0.5),
+                                                            spreadRadius: 5,
+                                                            blurRadius: 7,
+                                                            offset: Offset(
+                                                                0, 3), // changes position of shadow
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      child: Container(
+                                                        height: 50,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.indigo,
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        ),
+                                                        child: Center(
+                                                            child: Text(
+                                                              'Ok',
+                                                              style: TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  fontSize: 20),
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -657,148 +659,208 @@ print(isinvoiceOrSalesOrderOrReturnInvoice);
         numberofitem++;
       }
     }
-    return Container(
-        height: size.height * .145,
-        width: size.width,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(decoration: BoxDecoration(
         color: Colors.white,
-        child: Stack(
-          children: [
-            Container(
-              height: size.height * .145,
-              color: Colors.white,
-            ),
-            //photo item
-            Positioned(
-              left: size.width * .05,
-              bottom: size.height * .05,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(data.itemDetails[0].image),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10)
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+        //  height: size.height * .145,
+          width: size.width,
+         // color: Colors.white,
+          child: Column(
+            children: [
 
-            //edit & delete
-            Positioned(
-              right: size.width * .03,
-              top: size.height * .009,
-              child: Container(
-                  child: InkWell(
-                      onTap: () {
-                       listtoshow.remove(data);
-                        bata.removeAllChooseItexfromcart(item: data);
-                        setState(() {
+              //photo item
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(color: Colors.blue,
+                          image: DecorationImage(
+                            image: NetworkImage(data.itemDetails[0].image),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [ GestureDetector( onTap: (){
 
-                        });
-                      },
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.grey,
-                        size: 30,
-                      ))),
-            ),
-            Positioned(
-              right: size.width * .09,
-              top: size.height * .009,
-              child: Container(
-                  child: InkWell(
-                      onTap: () {
+                              Get.to(CartEditProduct(data), );
+                      }
+                        ,child: Text(
+                          data.itemDetails[0].itemNameEn, // overflow: TextOverflow.fade,
+                          maxLines: 2,
 
-                        Get.to(CartEditProduct(data), );
-                        //
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => CartEditProduct()),
-                        // );
-                        //
-                        //
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 20,
+                            color: const Color(0xff1e2432),
+                            letterSpacing: -0.32,
+                            height: 1.2,
+                          ),
 
-                      },
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.grey,
-                        size: 30,
-                      ))),
-            ),
-            //item name
-            Positioned(
-              left: size.width * .35,
-              top: size.height * .009,
-              child: Text(
-                data.itemDetails[0].itemNameEn,
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 20,
-                  color: const Color(0xff1e2432),
-                  letterSpacing: -0.32,
-                  height: 1.2,
-                ),
-                textHeightBehavior:
-                    TextHeightBehavior(applyHeightToFirstAscent: false),
-                textAlign: TextAlign.left,
-              ),
-            ),
+                        ),
+                      ),
 
-            //price
-            Positioned(
-              left: size.width * .35,
-              top: size.height * .04,
-              child: Text(
-               data.itemDetails[0].sellingPrice,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 13,
-                  color: const Color(0xff191919),
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            //counter
-            Positioned(
-              left: size.width * .3,
-              bottom: size.height * .04,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.remove_circle,
-                      size: 40,
+                        //price
+                        Text(data.itemDetails[0].sellingPrice, maxLines: 2,
+
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 13,
+                            color: const Color(0xff191919),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),],),
                     ),
-                    onPressed: () {
-                      bata.removefromcart(item: data);
+                    Container(
+                        child: InkWell(
+                            onTap: () {
+                              listtoshow.remove(data);
+                              bata.removeAllChooseItexfromcart(item: data);
+                              setState(() {
 
-                    },
-                    color: Colors.orangeAccent,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(numberofitem.toString()),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add_circle, size: 40),
-                    color: Colors.orangeAccent,
-                    onPressed: () {
-                      bata.addToCart(item: data);
-                      print('pppp');
-
-                    },
-                  ),
-                ],
+                              });
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.grey,
+                              size: 30,
+                            ))),
+                    // Container(
+                    //     child: InkWell(
+                    //         onTap: () {
+                    //
+                    //           // Get.to(CartEditProduct(data), );
+                    //           // //
+                    //           // // Navigator.push(
+                    //           // //   context,
+                    //           // //   MaterialPageRoute(
+                    //           // //       builder: (context) => CartEditProduct()),
+                    //           // // );
+                    //           // //
+                    //           // //
+                    //
+                    //         },
+                    //         child: Icon(
+                    //           Icons.edit,
+                    //           color: Colors.grey,
+                    //           size: 30,
+                    //         ))),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ));
+
+              //edit & delete
+
+              //item name
+
+              //counter
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+
+                    InkWell(
+                      onTap: () {
+              bata.removefromcart(item: data);
+
+              },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(2)),
+                        height: 50,
+                        width: 50,
+                        child: Center(
+                          child: Text(
+                            "-",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.remove_circle,
+                    //     size: 60,
+                    //   ),
+                    //   onPressed: () {
+                    //     bata.removefromcart(item: data);
+                    //
+                    //   },
+                    //   color: Colors.orangeAccent,
+                    // ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text(numberofitem.toString(),style: TextStyle(fontSize: 20),),
+                    SizedBox(
+                      width: 15,
+                    ),
+
+                    InkWell(
+                      onTap: () {
+                        bata.addToCart(item: data);
+                        print('pppp');
+
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(2)),
+                        height: 50,
+                        width: 50,
+                        child: Center(
+                          child: Text(
+                            "+",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // IconButton(
+                    //   icon: Icon(Icons.add_circle, size: 60),
+                    //   color: Colors.orangeAccent,
+                    //   onPressed: () {
+                    //     bata.addToCart(item: data);
+                    //     print('pppp');
+                    //
+                    //   },
+                    // ),
+                  ],
+                ),
+              ),
+            ],
+          )),
+    );
   }
 
 
