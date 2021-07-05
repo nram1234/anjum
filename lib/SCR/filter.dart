@@ -222,6 +222,9 @@ class _FilterState extends State<Filter> {
                 padding: const EdgeInsets.all(8.0),
                 child: SubCategoriesList(
                   allsubcat: allsubcat,
+                  onSelected: (subCategoryId) {
+                    // send it to the api
+                  },
                 ),
               ),
               Padding(

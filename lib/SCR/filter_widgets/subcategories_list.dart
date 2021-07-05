@@ -5,9 +5,11 @@ import 'subcategory_item.dart';
 
 class SubCategoriesList extends StatelessWidget {
   final List<SubCategories> allsubcat;
+  final Function(String) onSelected;
   SubCategoriesList({
     Key key,
     @required this.allsubcat,
+    @required this.onSelected,
   }) : super(key: key);
 
 
@@ -33,6 +35,9 @@ class SubCategoriesList extends StatelessWidget {
       child: SubCategoryItem(
         subCategoryName: data.subCategoryNameEn,
         selected: selected,
+        onSelected: () {
+          onSelected(data.id);
+        },
       ),
     );
   }

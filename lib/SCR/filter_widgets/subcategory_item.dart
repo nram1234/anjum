@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class SubCategoryItem extends StatefulWidget {
   final String subCategoryName;
   final bool selected;
+  final Function onSelected;
   SubCategoryItem({
     Key key,
     @required this.subCategoryName,
     @required this.selected,
+    @required this.onSelected,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
         setState(() {
           _subcatSelected = _subcatSelected ? false : true;
         });
+        widget.onSelected();
       },
       child: Container(
         width: 80,
