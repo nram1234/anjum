@@ -743,23 +743,25 @@ class _ProductsScrState extends State<ProductsScr> {
                   SizedBox(
                     width: 8,
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(products.itemDetails[0].itemNameEn),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(products.itemDetails[0].minimumQuantity),
-                      //products.itemDetails[0].itemCost
-                      Text(products.itemDetails[0].sellingPrice),
-                      //  Expanded(child: Container()),
-                    ],
+                  Flexible(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(products.itemDetails[0].itemNameEn),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(products.itemDetails[0].minimumQuantity),
+                        //products.itemDetails[0].itemCost
+                        Text(products.itemDetails[0].sellingPrice),
+                        //  Expanded(child: Container()),
+                      ],
+                    ),
                   ),
                 ],
               ),

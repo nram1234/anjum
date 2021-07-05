@@ -5,9 +5,9 @@ import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'filter_widgets/subcategories_list.dart';
 
 class Filter extends StatefulWidget {
-
   final Function(int, int, int) onFilterDataSpecified;
 
   Filter({@required this.onFilterDataSpecified});
@@ -17,52 +17,58 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
+
+
   AllCategoriesController bata = Get.put(AllCategoriesController());
 
   var slide = RangeValues(0.5, 50);
 
   List<Widget> cat = [];
-  List<Widget> subcat = [];
+  // List<Widget> subcat = [];
   List<AllCategories> allcat = [];
   List<SubCategories> allsubcat = [];
+
+  List<bool> catSelected = [];
+  // List<bool> subcatSelected = [];
 
   @override
   void initState() {
     super.initState();
-    // for(int i=0;i<bata.allCategories.length;i++){
-    //   allcat.add(bata.allCategories[i]);
-    //  // cat.add(items(data: bata.allCategories[i]));
-    //   for(int o=0;o<bata.allCategories[i].subCategories.length;o++){
-    //     allsubcat.add( bata.allCategories[i].subCategories[o]);
-    //  //   subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
-    //   }
-    // }
-    // for(int i=0;i<allcat.length;i++){
-    //   cat.add(items(data: allcat[i]));
-    // }
-    // for(int i=0;i<allsubcat.length;i++){
-    //   subcat.add(subitems(data: allsubcat[i]));
+    for (int i = 0; i < bata.allCategories.length; i++) {
+      allcat.add(bata.allCategories[i]);
+      // cat.add(items(data: bata.allCategories[i]));
+      for (int o = 0; o < bata.allCategories[i].subCategories.length; o++) {
+        allsubcat.add(bata.allCategories[i].subCategories[o]);
+        //   subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
+      }
+    }
+    for (int i = 0; i < allcat.length; i++) {
+      catSelected.add(false);
+      cat.add(items(data: allcat[i]));
+    }
+    // for (int i = 0; i < allsubcat.length; i++) {
+    //   subcatSelected.add(false);
+    //   subcat.add(subitems(data: allsubcat[i], index: i));
     // }
   }
 
-  removefromcat(AllCategories categories) {
-//   allcat.remove(categories);
-//   cat.clear();
-//   subcat.clear();
-//   for(int i=0;i<allcat.length;i++){
-//     cat.add(items(data: allcat[i]));
+//   removefromcat(AllCategories categories) {
+//     allcat.remove(categories);
+//     cat.clear();
+//     subcat.clear();
+//     for (int i = 0; i < allcat.length; i++) {
+//       cat.add(items(data: allcat[i]));
+//     }
+//     for (int i = 0; i < categories.subCategories.length; i++) {
+//       allsubcat.remove(categories.subCategories[i]);
+//     }
+//     for (int i = 0; i < allsubcat.length; i++) {
+//       subcat.add(subitems(data: allsubcat[i]));
+//     }
+// // setState(() {
+// //
+// // });
 //   }
-//   for(int i=0;i<categories.subCategories.length;i++){
-//     allsubcat.remove(categories.subCategories[i]);
-//
-//   }
-//   for(int i=0;i<allsubcat.length;i++){
-//     subcat.add(subitems(data: allsubcat[i]));
-//   }
-// setState(() {
-//
-// });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +77,8 @@ class _FilterState extends State<Filter> {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -195,11 +201,12 @@ class _FilterState extends State<Filter> {
                     ),
                   ),
                 ]
-                    // bata.allCategories.map((e) {
-                    //   items(data: e);
-                    // }).toList(),
 
-                    ),
+                  // children: bata.allCategories.map((e) {
+                  //   items(data: e);
+                  // }).toList(),
+
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -213,8 +220,8 @@ class _FilterState extends State<Filter> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  children: subcat,
+                child: SubCategoriesList(
+                  allsubcat: allsubcat,
                 ),
               ),
               Padding(
@@ -257,7 +264,7 @@ class _FilterState extends State<Filter> {
   Widget items({AllCategories data}) {
     return GestureDetector(
       onTap: () {
-        removefromcat(data);
+        // removefromcat(data);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -273,17 +280,28 @@ class _FilterState extends State<Filter> {
     );
   }
 
-  Widget subitems({SubCategories data}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 80,
-        height: 50, //data.categoryNameAr
-        child: Center(child: Text(data.subCategoryNameEn)),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(7),
-            color: const Color(0xFFCBCED1)),
-      ),
-    );
-  }
+  // Widget subitems({SubCategories data, int index}) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: GestureDetector(
+  //       onTap: () {
+  //         setState(() {
+  //           subcatSelected[index] = subcatSelected[index]? false : true;
+  //         });
+  //       },
+  //       child: Container(
+  //         width: 80,
+  //         height: 50, //data.categoryNameAr
+  //         child: Center(child: Text(data.subCategoryNameEn,
+  //           style: TextStyle(
+  //             color: subcatSelected[index]? Colors.white : Colors.black,
+  //           ),
+  //         )),
+  //         decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(7),
+  //             color: subcatSelected[index]? Colors.green: Color(0xFFCBCED1)),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
