@@ -30,6 +30,8 @@ double net_sal=0;
   void initState() {
     super.initState();
 
+    textEditingController_discount.text=   bata.discount[int.parse(widget.data.itemId)].toString();
+    textEditingController_bounce.text=   bata.bounce[int.parse(widget.data.itemId)].toString();
     // for(int z=0;z<stocitem.length;z++){
     //
     //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
@@ -40,7 +42,7 @@ double net_sal=0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+print(bata.discount[int.parse(widget.data.itemId)]);
     return Scaffold(
         body: Container(
       height: size.height,
@@ -455,7 +457,9 @@ double net_sal=0;
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: TextField(controller: textEditingController_bounce,keyboardType: TextInputType.number,
+                                    child: TextField(controller: textEditingController_bounce,keyboardType: TextInputType.number,onChanged: (v){
+                                      bata.bounce[int.parse(widget.data.itemId)]=double.parse(v);
+                                    },
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -483,7 +487,8 @@ double net_sal=0;
                                             BorderRadius.circular(10)),
                                     child: TextField(
 
-                                      onSubmitted: (v){
+                                      onChanged:   (v){
+                                        bata.discount[int.parse(widget.data.itemId)]=double.parse(v);
                                         total_Tax=      (double.tryParse(widget
                                             .data
                                             .itemDetails[0]

@@ -1,8 +1,7 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
-import 'package:anjum/DB/tabelname/item_tabel.dart';
-import 'package:anjum/DB/tabelname/make_older.dart';
+
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allItemsController.dart';
@@ -10,13 +9,12 @@ import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/employeDataController.dart';
-import 'package:anjum/controllers/priceListsInfoController.dart';
+
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/olderpost_json.dart';
-import 'package:anjum/network/json/products_json.dart';
-import 'package:anjum/network/networkReq.dart';
+
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -44,7 +42,8 @@ class _ProductsScrState extends State<ProductsScr> {
   final TimeController c = Get.find<TimeController>();
 
   //============================================
-
+  List<TextEditingController> textEditingControllerDiscount = [];
+  List<TextEditingController> textEditingControllerbounce = [];
   int totalItem = 0;
 
   //=========================
@@ -75,6 +74,8 @@ class _ProductsScrState extends State<ProductsScr> {
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
 
     for (int i = 0; i < bata.allItems.length; i++) {
+      cartListItem.discount[int.parse(bata.allItems[i].itemId)] = 0;
+      cartListItem.bounce[int.parse(bata.allItems[i].itemId)] = 0;
       List<AllStockItems> p = [];
       dropdownMenuItemList.allStockItems.add(p);
       TextEditingController textEditingControllerOfItem =
@@ -82,6 +83,16 @@ class _ProductsScrState extends State<ProductsScr> {
       textEditingControllerOfItem.text = 0.toString();
       dropdownMenuItemList
           .addlisttextEditingControllerOfItem(textEditingControllerOfItem);
+      TextEditingController textEditingDiscount =
+      TextEditingController();
+      textEditingDiscount.text = 0.toString();
+      textEditingControllerDiscount.add(textEditingDiscount);
+      TextEditingController textEditingbounce =
+      TextEditingController();
+
+      textEditingbounce.text = 0.toString();
+      textEditingControllerbounce.add(textEditingbounce);
+
       AllStockItems allStockItems;
       dropdownMenuItemList.listdropdownValue.add(allStockItems);
       //  for(int z=0;z<stocitem.length;z++){
@@ -153,8 +164,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Obx(
-                                () => Text(
-                                    cartListItem.itemInCart.toString(),
+                                () => Text(cartListItem.itemInCart.toString(),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 18)),
                               )
@@ -266,11 +276,9 @@ class _ProductsScrState extends State<ProductsScr> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: InkWell(splashColor:   Colors.orange,
+                      child: InkWell(
+                        splashColor: Colors.orange,
                         onTap: () {
-
-
-
                           totalItem = 0;
                           double totalprice = 0;
 
@@ -281,9 +289,6 @@ class _ProductsScrState extends State<ProductsScr> {
                                         .serach_listtextEditingControllerOfItem
                                         .length;
                                 i++) {
-
-
-
                               totalItem = totalItem +
                                   int.parse(dropdownMenuItemList
                                       .serach_listtextEditingControllerOfItem[i]
@@ -308,18 +313,13 @@ class _ProductsScrState extends State<ProductsScr> {
                               }
                             }
                           } else {
-                           // cartListItem.clearCartList();
-
+                            // cartListItem.clearCartList();
 
                             for (int i = 0;
                                 i <
                                     dropdownMenuItemList
                                         .listtextEditingControllerOfItem.length;
                                 i++) {
-
-
-
-
                               // if(  int.parse(dropdownMenuItemList
                               //     .listtextEditingControllerOfItem[i]
                               //     .text) >0&&!cartListItem.cartlist.contains(  bata.allItems[i]) ){
@@ -331,10 +331,6 @@ class _ProductsScrState extends State<ProductsScr> {
                               //
                               //
                               // }
-
-
-
-
 
                               totalItem = totalItem +
                                   int.parse(dropdownMenuItemList
@@ -371,24 +367,19 @@ class _ProductsScrState extends State<ProductsScr> {
 
                           _databaseHelper
                               .insert_temporary_tabel_cart(Temporary_tabel_cart(
-                                  customer_id: customer_id.toString(),
-                                  employee_id: _userAndPermissions.user.userId
-                                      .toString(),
-                                  supervisor_id: _userAndPermissions
-                                      .user.supervisorId
-                                      .toString(),
-                                  salesmanager_id: _userAndPermissions
-                                      .user.salesmanagerId
-                                      .toString(),
-                                  user_id:
-                                      _userAndPermissions.user.id.toString(),store_id: 1.toString(),  ))
+                            customer_id: customer_id.toString(),
+                            employee_id:
+                                _userAndPermissions.user.userId.toString(),
+                            supervisor_id: _userAndPermissions.user.supervisorId
+                                .toString(),
+                            salesmanager_id: _userAndPermissions
+                                .user.salesmanagerId
+                                .toString(),
+                            user_id: _userAndPermissions.user.id.toString(),
+                            store_id: 1.toString(),
+                          ))
                               .then((value) {
-
-
                             insertItemInDataBase(value);
-
-
-
                           });
 
                           // _databaseHelper
@@ -421,15 +412,18 @@ class _ProductsScrState extends State<ProductsScr> {
                           //   print(e.toString());
                           // });
 
-for(int p=0;p<  dropdownMenuItemList
-    .listtextEditingControllerOfItem.length;p++){
-  dropdownMenuItemList
-      .listtextEditingControllerOfItem[p]
-      .text = 0.toString();
+                          for (int p = 0;
+                              p <
+                                  dropdownMenuItemList
+                                      .listtextEditingControllerOfItem.length;
+                              p++) {
+                            dropdownMenuItemList
+                                .listtextEditingControllerOfItem[p]
+                                .text = 0.toString();
+                          }
 
-}
-
-                   Get.snackbar('', "item added to cart ") ;    },
+                          Get.snackbar('', "item added to cart ");
+                        },
                         child: Container(
                           height: 50,
                           width: size.width * .9,
@@ -458,7 +452,6 @@ for(int p=0;p<  dropdownMenuItemList
                           // 100, //bata.allItems.length,
                           ,
                           itemBuilder: (context, pos) {
-
                             var cat = Get.find<AllCategoriesController>()
                                 .allCategories;
                             AllCategories categories;
@@ -481,7 +474,6 @@ for(int p=0;p<  dropdownMenuItemList
                                 }
                               }
                             }
-
 
                             // if (bata.search_word.isNotEmpty) {
                             //   for (int i = 0;
@@ -511,8 +503,9 @@ for(int p=0;p<  dropdownMenuItemList
                             //       .serach_listtextEditingControllerOfItem[pos]
                             //       .text = numberofitem.toString();
                             // }
-                            return item(
+                            return itemListView(bounceController:textEditingControllerbounce[pos] ,discountController: textEditingControllerDiscount[pos],
                                 pos: pos,
+
                                 list: bata.search_word.trim().isNotEmpty
                                     ? dropdownMenuItemList
                                         .serach_allStockItems[pos]
@@ -532,13 +525,10 @@ for(int p=0;p<  dropdownMenuItemList
                                         .listtextEditingControllerOfItem[pos],
                                 size: size,
                                 funadd: () {
-                                  if(!cartListItem.cartlist.contains( bata.search_word.value.trim().isNotEmpty
-                                      ? bata.search_wordListItems[pos]
-                                      : bata.allItems[pos]) ){
-
-
-
-                                  }
+                                  if (!cartListItem.cartlist.contains(
+                                      bata.search_word.value.trim().isNotEmpty
+                                          ? bata.search_wordListItems[pos]
+                                          : bata.allItems[pos])) {}
                                   if (bata.search_word.trim().isNotEmpty) {
                                     int i = int.parse(dropdownMenuItemList
                                             .serach_listtextEditingControllerOfItem[
@@ -565,9 +555,6 @@ for(int p=0;p<  dropdownMenuItemList
                                         ? bata.search_wordListItems[pos]
                                         : bata.allItems[pos],
                                 funremov: () {
-
-
-
                                   if (bata.search_word.trim().isNotEmpty) {
                                     if (int.parse(dropdownMenuItemList
                                             .serach_listtextEditingControllerOfItem[
@@ -695,46 +682,50 @@ for(int p=0;p<  dropdownMenuItemList
   }
 
   insertItemInDataBase(int i) async {
-    List<AllItems>cartitme=[];
+    List<AllItems> cartitme = [];
     for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
-      if(!cartitme.contains(cartListItem.cartlist[oo])){
+      if (!cartitme.contains(cartListItem.cartlist[oo])) {
         cartitme.add(cartListItem.cartlist[oo]);
       }
-     // cartListItem.additemInitemInCart(item: cartListItem.cartlist[i]);
+      // cartListItem.additemInitemInCart(item: cartListItem.cartlist[i]);
 
       await DatabaseHelper()
           .insert_temporary_tabel_cart_item_tabelname(Temporary_tabel_cart_item(
-          id: cartListItem.cartlist[oo].id,item_count: 5.toString(),order_id: i ))
-          .then((value) {
-
-      }).catchError((e) {
+              id: cartListItem.cartlist[oo].id,
+              item_count: 5.toString(),
+              order_id: i))
+          .then((value) {})
+          .catchError((e) {
         print(e.toString());
       });
     }
     print(i);
-    _databaseHelper.get_All_temporary_tabel_cart_item_tabelname(i).then((value) {
-print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}');
-
-
-
-
+    _databaseHelper
+        .get_All_temporary_tabel_cart_item_tabelname(i)
+        .then((value) {
+      print(
+          'this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}');
     });
-    cartListItem.itemInCart.value=cartitme.length;
+    cartListItem.itemInCart.value = cartitme.length;
   }
 
-
-
-
-
-  Widget item(
+  Widget itemListView(
       {Size size,
       int pos,
       AllItems products,
       funadd,
       funremov,
       TextEditingController textEditingController,
+    //  Function clickOk,
+      TextEditingController  discountController, TextEditingController  bounceController,
       AllStockItems dropdowenval,
       List<AllStockItems> list}) {
+ double   net_sal=0.0;
+ double total_Tax=0.0;
+    discountController.text =
+        cartListItem.discount[int.parse(products.itemId)].toString();
+    bounceController.text =
+        cartListItem.bounce[int.parse(products.itemId)].toString();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -769,9 +760,10 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                         SizedBox(
                           height: 8,
                         ),
-                        Text(products.itemDetails[0].itemNameEn,
+                        Text(
+                          products.itemDetails[0].itemNameEn,
                           maxLines: 2,
-                     ),
+                        ),
                         SizedBox(
                           height: 4,
                         ),
@@ -784,13 +776,14 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                   ),
                 ],
               ),
-              ExpansionTile( trailing: SizedBox.shrink(),
+              ExpansionTile(
+                trailing: SizedBox.shrink(),
                 title: Row(
                   children: [
                     Text('Details'),
                     Expanded(
                       child: Container(
-                   height: 1,
+                        height: 1,
                       ),
                     ),
                     Row(
@@ -861,8 +854,11 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                           width: 20,
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      width: 8,
                     )
-               , SizedBox(width: 8,)  ],
+                  ],
                 ),
                 children: [
                   Column(
@@ -1059,13 +1055,15 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                   width: size.width * .4,
                                   height: 50,
                                   decoration: BoxDecoration(
-
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: TextField(
+                                  child: TextField( keyboardType: TextInputType.number,onChanged: (v){
+                                    cartListItem.bounce[int.parse(products.itemId)]=double.parse(v);
+                                  },
+                                    controller:bounceController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -1085,13 +1083,43 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                   width: size.width * .4,
                                   height: 50,
                                   decoration: BoxDecoration(
-
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
+                                 //   onChanged: textEditingdiscount,
+                                    keyboardType: TextInputType.number,onChanged: (v){
+                                cartListItem.discount[int.parse(products.itemId)]=double.parse(v);
+
+
+                                total_Tax=      (double.tryParse(products
+                                    .itemDetails[0]
+                                    .sellingPrice) *
+                                    double.tryParse(products.itemDetails[0].tax )* (double.tryParse(products
+                                    .itemDetails[0]
+                                    .sellingPrice)*double.parse(textEditingController.text )/100)
+
+                                );
+
+
+                                net_sal=    (double.tryParse(products
+                                    .itemDetails[0]
+                                    .sellingPrice) *
+                                    double.tryParse(products.itemDetails[0].tax )*(double.tryParse(products
+                                    .itemDetails[0]
+                                    .sellingPrice)*double.parse(textEditingController.text)/100)
+
+                                )+(    (double.tryParse(products
+                                    .itemDetails[0]
+                                    .sellingPrice)* double.parse(textEditingController.text)/100));
+
+                                setState(() {
+
+                                });
+                                },
+                                    controller: discountController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -1118,7 +1146,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                     width: size.width * .4,
                                     height: 50,
-                                    decoration: BoxDecoration( color: Colors.grey[200],
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[200],
                                         border: Border.all(
                                           color: Colors.grey,
                                           width: 1,
@@ -1136,7 +1165,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(color: Colors.grey[200],
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1163,7 +1193,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(color: Colors.grey[200],
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1181,7 +1212,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(color: Colors.grey[200],
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
@@ -1206,7 +1238,8 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                     width: size.width * .4,
                                     height: 50,
-                                    decoration: BoxDecoration(color: Colors.grey[200],
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[200],
                                         border: Border.all(
                                           color: Colors.grey,
                                           width: 1,
@@ -1214,11 +1247,7 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text((double.tryParse(products
-                                                    .itemDetails[0]
-                                                    .sellingPrice) *
-                                                double.tryParse(products
-                                                    .itemDetails[0].tax))
+                                        child: Text(total_Tax
                                             .toString()))),
                               ],
                             ),
@@ -1228,13 +1257,14 @@ print('this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}'
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
-                                  decoration: BoxDecoration(color: Colors.grey[200],
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Center(child: Text('هنشوف الحساب')),
+                                  child: Center(child: Text(net_sal.toString())),
                                 ),
                               ],
                             ),

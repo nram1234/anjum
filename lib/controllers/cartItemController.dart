@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 class CartItemController extends GetxController{
 
  RxList<AllItems>cartlist=RxList<AllItems>();
-
+Map<int,double>discount={};
+ Map<int,double>bounce={};
 var itemInCart =0.obs;
  addToCart({AllItems item}){
    cartlist.add(item);
