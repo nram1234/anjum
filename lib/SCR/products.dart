@@ -1097,7 +1097,11 @@ class _ProductsScrState extends State<ProductsScr> {
                                     },
                                     controller: bounceController,
                                     textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
+                                    decoration: InputDecoration( suffixIcon: IconButton(
+                                      onPressed: () =>
+                                          bounceController.clear(),
+                                      icon: Icon(Icons.clear),
+                                    ),
                                       border: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       enabledBorder: InputBorder.none,
