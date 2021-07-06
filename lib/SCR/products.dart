@@ -83,12 +83,10 @@ class _ProductsScrState extends State<ProductsScr> {
       textEditingControllerOfItem.text = 0.toString();
       dropdownMenuItemList
           .addlisttextEditingControllerOfItem(textEditingControllerOfItem);
-      TextEditingController textEditingDiscount =
-      TextEditingController();
+      TextEditingController textEditingDiscount = TextEditingController();
       textEditingDiscount.text = 0.toString();
       textEditingControllerDiscount.add(textEditingDiscount);
-      TextEditingController textEditingbounce =
-      TextEditingController();
+      TextEditingController textEditingbounce = TextEditingController();
 
       textEditingbounce.text = 0.toString();
       textEditingControllerbounce.add(textEditingbounce);
@@ -503,9 +501,12 @@ class _ProductsScrState extends State<ProductsScr> {
                             //       .serach_listtextEditingControllerOfItem[pos]
                             //       .text = numberofitem.toString();
                             // }
-                            return itemListView(bounceController:textEditingControllerbounce[pos] ,discountController: textEditingControllerDiscount[pos],
+                            return itemListView(
+                                bounceController:
+                                    textEditingControllerbounce[pos],
+                                discountController:
+                                    textEditingControllerDiscount[pos],
                                 pos: pos,
-
                                 list: bata.search_word.trim().isNotEmpty
                                     ? dropdownMenuItemList
                                         .serach_allStockItems[pos]
@@ -716,16 +717,43 @@ class _ProductsScrState extends State<ProductsScr> {
       funadd,
       funremov,
       TextEditingController textEditingController,
-    //  Function clickOk,
-      TextEditingController  discountController, TextEditingController  bounceController,
+      //  Function clickOk,
+      TextEditingController discountController,
+      TextEditingController bounceController,
       AllStockItems dropdowenval,
       List<AllStockItems> list}) {
- double   net_sal=0.0;
- double total_Tax=0.0;
+    int itemCountinCart = 0;
+    double totalPriceafterDes = 0;
+    double net_sal = 0.0;
+    double total_Tax = 0.0;
+    double totalPriceBeforDes = 0.0;
+    for (int i = 0; i < cartListItem.cartlist.length; i++) {
+      if (cartListItem.cartlist[i].id == products.id) {
+        itemCountinCart++;
+      }
+    }
+
+
     discountController.text =
         cartListItem.discount[int.parse(products.itemId)].toString();
     bounceController.text =
         cartListItem.bounce[int.parse(products.itemId)].toString();
+
+    totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
+        double.parse(itemCountinCart.toString());
+    print('totalPriceBeforDes  $totalPriceBeforDes');
+
+    totalPriceafterDes = totalPriceBeforDes -
+        (totalPriceBeforDes *
+            (cartListItem.discount[int.parse(products.itemId)] / 100));
+    total_Tax =
+        totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
+    net_sal = totalPriceafterDes +
+        (totalPriceafterDes *
+            (double.parse(products.itemDetails[0].tax) / 100));
+    print('totalPriceBeforDes  $totalPriceBeforDes');
+    print(totalPriceBeforDes);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -1060,10 +1088,14 @@ class _ProductsScrState extends State<ProductsScr> {
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: TextField( keyboardType: TextInputType.number,onChanged: (v){
-                                    cartListItem.bounce[int.parse(products.itemId)]=double.parse(v);
-                                  },
-                                    controller:bounceController,
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (v) {
+                                      cartListItem.bounce[
+                                              int.parse(products.itemId)] =
+                                          double.parse(v);
+                                    },
+                                    controller: bounceController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -1089,39 +1121,69 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
-                                 //   onChanged: textEditingdiscount,
-                                    keyboardType: TextInputType.number,onChanged: (v){
-                                cartListItem.discount[int.parse(products.itemId)]=double.parse(v);
+                                    //   onChanged: textEditingdiscount,
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (v) {
+                                      cartListItem.discount[
+                                              int.parse(products.itemId)] =
+                                          double.parse(v);
+                                      totalPriceBeforDes = double.parse(products
+                                              .itemDetails[0].sellingPrice) *
+                                          double.parse(
+                                              itemCountinCart.toString());
+                                      print(totalPriceBeforDes);
 
+                                      print(totalPriceBeforDes);
 
-                                total_Tax=      (double.tryParse(products
-                                    .itemDetails[0]
-                                    .sellingPrice) *
-                                    double.tryParse(products.itemDetails[0].tax )* (double.tryParse(products
-                                    .itemDetails[0]
-                                    .sellingPrice)*double.parse(textEditingController.text )/100)
+                                      totalPriceafterDes = totalPriceBeforDes -
+                                          (totalPriceBeforDes *
+                                              (double.parse(v) / 100));
+                                      total_Tax = totalPriceafterDes *
+                                          (double.parse(
+                                                  products.itemDetails[0].tax) /
+                                              100);
+                                      net_sal = totalPriceafterDes +
+                                          (totalPriceafterDes *
+                                              (double.parse(products
+                                                      .itemDetails[0].tax) /
+                                                  100));
 
-                                );
-
-
-                                net_sal=    (double.tryParse(products
-                                    .itemDetails[0]
-                                    .sellingPrice) *
-                                    double.tryParse(products.itemDetails[0].tax )*(double.tryParse(products
-                                    .itemDetails[0]
-                                    .sellingPrice)*double.parse(textEditingController.text)/100)
-
-                                )+(    (double.tryParse(products
-                                    .itemDetails[0]
-                                    .sellingPrice)* double.parse(textEditingController.text)/100));
-
-                                setState(() {
-
-                                });
-                                },
+//
+// setState(() {
+//
+// });
+                                      ///=====================================================
+                                      //
+                                      //
+                                      // total_Tax=      (double.tryParse(products
+                                      //     .itemDetails[0]
+                                      //     .sellingPrice) *
+                                      //     double.tryParse(products.itemDetails[0].tax )* (double.tryParse(products
+                                      //     .itemDetails[0]
+                                      //     .sellingPrice)*double.parse(textEditingController.text )/100)
+                                      //
+                                      // );
+                                      //
+                                      //
+                                      // net_sal=    (double.tryParse(products
+                                      //     .itemDetails[0]
+                                      //     .sellingPrice) *
+                                      //     double.tryParse(products.itemDetails[0].tax )*(double.tryParse(products
+                                      //     .itemDetails[0]
+                                      //     .sellingPrice)*double.parse(textEditingController.text)/100)
+                                      //
+                                      // )+(    (double.tryParse(products
+                                      //     .itemDetails[0]
+                                      //     .sellingPrice)* double.parse(textEditingController.text)/100));
+                                    },
                                     controller: discountController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () =>
+                                            discountController.clear(),
+                                        icon: Icon(Icons.clear),
+                                      ),
                                       border: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       enabledBorder: InputBorder.none,
@@ -1173,9 +1235,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child: Text(
-                                          products.itemDetails[0].itemCost ??
-                                              "")),
+                                      child:
+                                          Text(totalPriceBeforDes.toStringAsFixed(3))),
                                 ),
                               ],
                             ),
@@ -1201,8 +1262,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child: Text(products
-                                          .itemDetails[0].sellingPrice)),
+                                      child:
+                                          Text(totalPriceafterDes.toStringAsFixed(3))),
                                 ),
                               ],
                             ),
@@ -1247,8 +1308,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(total_Tax
-                                            .toString()))),
+                                        child: Text(total_Tax.toStringAsFixed(3)))),
                               ],
                             ),
                             Column(
@@ -1264,7 +1324,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Center(child: Text(net_sal.toString())),
+                                  child: Center(
+                                      child: Text(net_sal.toStringAsFixed(3))),
                                 ),
                               ],
                             ),
@@ -1287,17 +1348,22 @@ class _ProductsScrState extends State<ProductsScr> {
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(child: Text('Cancel')),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xff2C4B89),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              height: 50,
-                              width: size.width * .4,
-                              child: Center(
-                                child: Text(
-                                  'ok',
-                                  style: TextStyle(color: Colors.white),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {});
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xff2C4B89),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                height: 50,
+                                width: size.width * .4,
+                                child: Center(
+                                  child: Text(
+                                    'ok',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),

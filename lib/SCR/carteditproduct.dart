@@ -20,29 +20,42 @@ class _CartEditProductState extends State<CartEditProduct> {
   var stocitem = Get.find<AllStockItemsController>().allStockItems;
   CartItemController bata = Get.find<CartItemController>();
   TextEditingController textEditingController = TextEditingController();
-  TextEditingController textEditingController_discount = TextEditingController();
-  TextEditingController textEditingController_bounce  = TextEditingController();
+  TextEditingController textEditingController_discount =
+      TextEditingController();
+  TextEditingController textEditingController_bounce = TextEditingController();
   List<AllStockItems> droblist = [];
-double total_Tax=0;
-double net_sal=0;
+  double total_Tax = 0;
+  double net_sal = 0;
+  double totalPriceBeforDes = 0;
+  double totalPriceafterDes=0;
 //  AllStockItems val
   @override
   void initState() {
     super.initState();
 
-    textEditingController_discount.text=   bata.discount[int.parse(widget.data.itemId)].toString();
-    textEditingController_bounce.text=   bata.bounce[int.parse(widget.data.itemId)].toString();
+    textEditingController_discount.text =
+        bata.discount[int.parse(widget.data.itemId)].toString();
+    textEditingController_bounce.text =
+        bata.bounce[int.parse(widget.data.itemId)].toString();
     // for(int z=0;z<stocitem.length;z++){
     //
     //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
     //
     // }
-  }
+
+    for (int i = 0;
+    i < bata.cartlist.length;
+    i++) {
+      if (bata.cartlist[i].id == widget.data.id) {
+        itemCountinCart++;
+      }
+    }
+    allPrice(bata.discount[int.parse(widget.data.itemId)]);}
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-print(bata.discount[int.parse(widget.data.itemId)]);
+
     return Scaffold(
         body: Container(
       height: size.height,
@@ -120,18 +133,22 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
                                     height: 8,
                                   ),
-                                  Text(widget.data.itemDetails[0].itemNameEn ,maxLines: 2,),
+                                  Text(
+                                    widget.data.itemDetails[0].itemNameEn,
+                                    maxLines: 2,
+                                  ),
                                   SizedBox(
                                     height: 4,
                                   ),
-                                  Text(
-                                      widget.data.itemDetails[0].minimumQuantity),
+                                  Text(widget
+                                      .data.itemDetails[0].minimumQuantity),
                                   //products.itemDetails[0].itemCost
                                   Text(widget.data.itemDetails[0].sellingPrice),
                                   //  Expanded(child: Container()),
@@ -179,7 +196,7 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                     if (bata.cartlist[i].id == widget.data.id) {
                                       itemCountinCart++;
                                     }
-                                 }
+                                  }
                                   textEditingController.text =
                                       itemCountinCart.toString();
 
@@ -238,7 +255,9 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                             children: [
                               Expanded(
                                 child: Text(
-                                    'item Number: ${widget.data.itemDetails[0].itemNumber}', maxLines: 2,),
+                                  'item Number: ${widget.data.itemDetails[0].itemNumber}',
+                                  maxLines: 2,
+                                ),
                               ),
                               // Expanded(
                               //   child: Text(
@@ -253,7 +272,7 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                  'Item Price :${widget.data.itemDetails[0].itemCost}'),
+                                  'Item Price :${widget.data.itemDetails[0].sellingPrice}'),
                               Text('Tax:  ${widget.data.itemDetails[0].tax}')
                             ],
                           ),
@@ -457,9 +476,14 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: TextField(controller: textEditingController_bounce,keyboardType: TextInputType.number,onChanged: (v){
-                                      bata.bounce[int.parse(widget.data.itemId)]=double.parse(v);
-                                    },
+                                    child: TextField(
+                                      controller: textEditingController_bounce,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (v) {
+                                        bata.bounce[
+                                                int.parse(widget.data.itemId)] =
+                                            double.parse(v);
+                                      },
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -486,42 +510,14 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: TextField(
-
-                                      onChanged:   (v){
-                                        bata.discount[int.parse(widget.data.itemId)]=double.parse(v);
-                                        total_Tax=      (double.tryParse(widget
-                                            .data
-                                            .itemDetails[0]
-                                            .sellingPrice) *
-                                            double.tryParse(widget
-                                                .data.itemDetails[0].tax )* (double.tryParse(widget
-                                            .data
-                                            .itemDetails[0]
-                                            .sellingPrice)*double.parse(textEditingController_discount.text )/100)
-
-                                        );
-
-
-                                        net_sal=    (double.tryParse(widget
-                                            .data
-                                            .itemDetails[0]
-                                            .sellingPrice) *
-                                            double.tryParse(widget
-                                                .data.itemDetails[0].tax )*(double.tryParse(widget
-                                            .data
-                                            .itemDetails[0]
-                                            .sellingPrice)*double.parse(textEditingController_discount.text)/100)
-
-                                        )+(    (double.tryParse(widget
-                                            .data
-                                            .itemDetails[0]
-                                            .sellingPrice)* double.parse(textEditingController_discount.text)/100));
-
-                                        setState(() {
-
-                                        });
+                                      onChanged: (v) {
+                                        double des=double.parse(v);
+                                        allPrice(des);
+                                        setState(() {});
                                       },
-                                      controller: textEditingController_discount,keyboardType: TextInputType.number,
+                                      controller:
+                                          textEditingController_discount,
+                                      keyboardType: TextInputType.number,
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -576,9 +572,8 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(widget
-                                                .data.itemDetails[0].itemCost ??
-                                            "")),
+                                        child: Text(
+                                            (totalPriceBeforDes).toString())),
                                   ),
                                 ],
                               ),
@@ -605,8 +600,8 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(widget
-                                            .data.itemDetails[0].sellingPrice)),
+                                        child: Text(totalPriceafterDes
+                                            .toString())),
                                   ),
                                 ],
                               ),
@@ -654,9 +649,7 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                               BorderRadius.circular(10)),
                                       child: Center(
                                           child: Text(
-
-                                        total_Tax
-                                            . toStringAsFixed(3)))),
+                                              total_Tax.toStringAsFixed(3)))),
                                 ],
                               ),
                               Column(
@@ -673,9 +666,11 @@ print(bata.discount[int.parse(widget.data.itemId)]);
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Center(child: Text(net_sal. toStringAsFixed(3)),
-                                  ),
-                                  ) ],
+                                    child: Center(
+                                      child: Text(net_sal.toStringAsFixed(3)),
+                                    ),
+                                  )
+                                ],
                               ),
                             ],
                           ),
@@ -721,5 +716,27 @@ print(bata.discount[int.parse(widget.data.itemId)]);
         ],
       ),
     ));
+  }
+  allPrice(double v){
+    bata.discount[
+    int.parse(widget.data.itemId)] =
+        v;
+    totalPriceBeforDes = double.parse(widget
+        .data.itemDetails[0].sellingPrice ) *
+        double.parse(
+            itemCountinCart.toString());
+
+
+
+
+
+
+
+print(totalPriceBeforDes);
+
+    totalPriceafterDes =totalPriceBeforDes-(totalPriceBeforDes*( v/100));
+    total_Tax = totalPriceafterDes*( double.parse( widget.data.itemDetails[0].tax) /100);
+    net_sal =  totalPriceafterDes+(totalPriceafterDes*(double.parse( widget.data.itemDetails[0].tax)/100));
+
   }
 }
