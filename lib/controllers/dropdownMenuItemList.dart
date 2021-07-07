@@ -17,6 +17,9 @@ class DropdownMenuItemList extends GetxController{
   RxList<List<AllStockItems>> allStockItems=RxList<List<AllStockItems>>();
 
   RxList<AllStockItems> listdropdownValue=RxList<AllStockItems>();
+
+
+
 //RxList<AllStockItems>lisst=RxList<AllStockItems>();
   void addlistdropdownValue(AllStockItems allStockItems){
     listdropdownValue.add(allStockItems);

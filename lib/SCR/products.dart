@@ -4,6 +4,7 @@ import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
@@ -11,6 +12,7 @@ import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 
 import 'package:anjum/controllers/timeController.dart';
+import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/olderpost_json.dart';
@@ -32,7 +34,12 @@ class ProductsScr extends StatefulWidget {
 class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
 
-  AllItemsController bata = Get.find<AllItemsController>();
+ final AllItemsController bata = Get.find<AllItemsController>();
+
+
+  final AllCustomersControllers _allCustomersControllers = Get.find<AllCustomersControllers>();
+
+  final UnitController _UnitController = Get.put(UnitController()) ;
 
   CartItemController cartListItem =
       Get.put(CartItemController(), permanent: true);
@@ -57,19 +64,39 @@ class _ProductsScrState extends State<ProductsScr> {
   AllStockItems _allStockItems;
 
   //getstock
-  getmeasurementUnit(int idItem) {
-    List<String> dropdowen = [];
-    for (int i = 0; i < stocitem.length; i++) {
-      if (idItem == int.parse(stocitem[i].itemId)) {
-        dropdownMenuItemList.allStockItems[0].add(stocitem[i]);
-      }
+  getmeasurementUnit( ) {
+    List<List<String>>MeasurementUnit2=[];
+for(int uu=0;uu<10;uu++){
+  MeasurementUnit2.add([]);
+}
+    AllCustomers allCustomers=  Get.find<AllChequesController>().customer;
+  //  List<String>MeasurementUnit=[];
+
+    for (int i = 0; i < allCustomers.priceListsInfo.length; i++) {
+
+  //    MeasurementUnit.clear();
+
+    for(int p=0;p<allCustomers.priceListsInfo[i].itemUnits.length;p++){
+
+
+      MeasurementUnit2[i].add(allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
+
+      //  MeasurementUnit.add( allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
+
+
+
     }
+
+      _UnitController.MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId]=MeasurementUnit2[i];
+
+    }
+
   }
 
   @override
   void initState() {
     super.initState();
-
+    getmeasurementUnit( );
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
 
@@ -102,16 +129,18 @@ class _ProductsScrState extends State<ProductsScr> {
       // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
 
     }
-  } //============================================
+     } //============================================
   //int itemcount=0;
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
     // biledjsonpost();
+
     return Scaffold(
         body: Container(
       height: size.height,
@@ -501,7 +530,19 @@ class _ProductsScrState extends State<ProductsScr> {
                             //       .serach_listtextEditingControllerOfItem[pos]
                             //       .text = numberofitem.toString();
                             // }
-                            return itemListView(
+                            var unitlist=_UnitController.MeasurementUnit_map[bata.allItems[pos].itemId
+                              // bata.search_word.value.trim().isNotEmpty
+                              //   ? bata.search_wordListItems[pos].itemId
+                              //   : bata.allItems[pos].itemId
+                            ];
+                            print("unitlist $unitlist");
+                       //     print( '00000000000000000000000000000000000000000000');
+                            print(  _UnitController.MeasurementUnit_map[bata.allItems[pos].itemId]);
+                            print(bata.allItems[pos].itemId);
+
+                          ///  print( '00000000000000000000000000000000000000000000');
+
+                            return itemListView(unitslist: unitlist,
                                 bounceController:
                                     textEditingControllerbounce[pos],
                                 discountController:
@@ -711,7 +752,7 @@ class _ProductsScrState extends State<ProductsScr> {
   }
 
   Widget itemListView(
-      {Size size,
+      {Size size,List<String>unitslist,
       int pos,
       AllItems products,
       funadd,
@@ -987,90 +1028,120 @@ class _ProductsScrState extends State<ProductsScr> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Column(
-                      //         children: [
-                      //           Text('Store ID'),
-                      //           Obx(() => Container(width: size.width*.25,
-                      //             decoration: BoxDecoration(  border: Border.all(
-                      //               color: Colors.grey,
-                      //               width: 1,
-                      //             ),borderRadius: BorderRadius.circular(10)),
-                      //             child: Center(
-                      //               child: DropdownButton<AllStockItems>(
-                      //                     value: dropdownMenuItemList
-                      //                         .listdropdownValue[pos],
-                      //                     icon: const Icon(Icons.arrow_downward),
-                      //                     iconSize: 15,
-                      //                     elevation: 16,
-                      //                     style: const TextStyle(
-                      //                         color: Colors.deepPurple),
-                      //                     // underline: Container(
-                      //                     //   height: 2,
-                      //                     //   color: Colors.deepPurpleAccent,
-                      //                     // ),
-                      //                     onChanged: (AllStockItems newValue) {
-                      //                       dropdownMenuItemList.setValOfdropdownValue(
-                      //                           pos: pos, dropdownValue: newValue);
-                      //
-                      //                     },
-                      //                     items: dropdownMenuItemList
-                      //                         .allStockItems[pos]
-                      //                         .map<DropdownMenuItem<AllStockItems>>(
-                      //                             (AllStockItems value) {
-                      //                       return DropdownMenuItem<AllStockItems>(
-                      //                         value: value,
-                      //                         child: Text(value.id),
-                      //                       );
-                      //                     }).toList(),
-                      //                   ),
-                      //             ),
-                      //           ))
-                      //         ],
-                      //       ),
-                      //       Column(
-                      //         children: [
-                      //           Text('Unit'),
-                      //        Obx(()=>
-                      //               Container(width: size.width*.25,height: 50,
-                      //                   decoration: BoxDecoration(  border: Border.all(
-                      //                     color: Colors.grey,
-                      //                     width: 1,
-                      //                   ),borderRadius: BorderRadius.circular(10)),
-                      //                 child: Center(
-                      //                   child: Text(   dropdownMenuItemList
-                      //                       .listdropdownValue[pos].measurementUnitName
-                      //                    ),
-                      //                 ),
-                      //               )
-                      //         )
-                      //         ],
-                      //       ),
-                      //       Column(
-                      //         children: [
-                      //           Text('Quantity'),
-                      //          Obx(()=>
-                      //              Container(width: size.width*.25,height: 50,
-                      //                decoration: BoxDecoration(  border: Border.all(
-                      //                  color: Colors.grey,
-                      //                  width: 1,
-                      //                ),borderRadius: BorderRadius.circular(10)),
-                      //                child: Center(
-                      //                  child: Text(
-                      //                      textEditingController.text
-                      //          ),
-                      //                ),
-                      //              )
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text('Store ID'),
+                                Container(width: size.width*.25,height: 50,
+                                  decoration: BoxDecoration(  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child: Text(stocitem[0].storeId ),
+                                  ),
+                                )
+                                // Obx(() =>
+                                //     Container(width: size.width*.25,
+                                //   decoration: BoxDecoration(  border: Border.all(
+                                //     color: Colors.grey,
+                                //     width: 1,
+                                //   ),borderRadius: BorderRadius.circular(10)),
+                                //   child: Center(
+                                //     child: DropdownButton<AllStockItems>(
+                                //           value: dropdownMenuItemList
+                                //               .listdropdownValue[pos],
+                                //           icon: const Icon(Icons.arrow_downward),
+                                //           iconSize: 15,
+                                //           elevation: 16,
+                                //           style: const TextStyle(
+                                //               color: Colors.deepPurple),
+                                //           // underline: Container(
+                                //           //   height: 2,
+                                //           //   color: Colors.deepPurpleAccent,
+                                //           // ),
+                                //           onChanged: (AllStockItems newValue) {
+                                //             dropdownMenuItemList.setValOfdropdownValue(
+                                //                 pos: pos, dropdownValue: newValue);
+                                //
+                                //           },
+                                //           items: dropdownMenuItemList
+                                //               .allStockItems[pos]
+                                //               .map<DropdownMenuItem<AllStockItems>>(
+                                //                   (AllStockItems value) {
+                                //             return DropdownMenuItem<AllStockItems>(
+                                //               value: value,
+                                //               child: Text(value.id),
+                                //             );
+                                //           }).toList(),
+                                //         ),
+                                //   ),
+                                // ))
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('Unit'),
+                           //  Obx(()=>
+                                    Container(width: size.width*.25,height: 50,
+                                        decoration: BoxDecoration(  border: Border.all(
+                                          color: Colors.grey,
+                                          width: 1,
+                                        ),borderRadius: BorderRadius.circular(10)),
+                                      child: Center(
+                                        child: DropdownButton<String>(
+
+                                          icon: const Icon(Icons.arrow_downward),
+                                          iconSize: 24,
+                                          elevation: 16,
+                                          style: const TextStyle(color: Colors.deepPurple),
+                                          underline: Container(
+                                            height: 2,
+                                            color: Colors.deepPurpleAccent,
+                                          ),
+                                          onChanged: (String  newValue) {
+                                            setState(() {
+
+                                            });
+                                          },
+                                          items: unitslist
+                                              .map<DropdownMenuItem<String>>((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ) ,
+                                      ),
+                                    )
+                           //   )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('Quantity'),
+
+                                   Container(width: size.width*.25,height: 50,
+                                     decoration: BoxDecoration(  border: Border.all(
+                                       color: Colors.grey,
+                                       width: 1,
+                                     ),borderRadius: BorderRadius.circular(10)),
+                                     child: Center(
+                                       child: Text(
+                                           textEditingController.text
+                               ),
+                                     ),
+                                   )
+
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

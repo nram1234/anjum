@@ -61,6 +61,8 @@ class _HomeState extends State<Home> {
     Get.lazyPut(() => AllItemsController());
 
     Get.lazyPut(() => CartItemController());
+    Get.lazyPut(() => PriceListsInfoController());
+
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
