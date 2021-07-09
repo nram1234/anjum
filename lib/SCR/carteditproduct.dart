@@ -1,6 +1,7 @@
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
+import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class CartEditProduct extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<CartEditProduct> {
+
+  final UnitController _UnitController = Get.find<UnitController>();
   int itemCountinCart = 0;
   var stocitem = Get.find<AllStockItemsController>().allStockItems;
   CartItemController bata = Get.find<CartItemController>();
@@ -29,10 +32,11 @@ class _CartEditProductState extends State<CartEditProduct> {
   double totalPriceBeforDes = 0;
   double totalPriceafterDes=0;
 //  AllStockItems val
+  bool showdropdowen ;
   @override
   void initState() {
     super.initState();
-
+    showdropdowen = (_UnitController.MeasurementUnit_map[widget.data.itemId].length > 1);
     textEditingController_discount.text =
         bata.discount[int.parse(widget.data.itemId)].toString();
     textEditingController_bounce.text =
@@ -50,10 +54,11 @@ class _CartEditProductState extends State<CartEditProduct> {
         itemCountinCart++;
       }
     }
-    allPrice(bata.discount[int.parse(widget.data.itemId)]);}
+    }
 
   @override
   Widget build(BuildContext context) {
+    allPrice(bata.discount[int.parse(widget.data.itemId)]);
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -147,10 +152,10 @@ class _CartEditProductState extends State<CartEditProduct> {
                                   SizedBox(
                                     height: 4,
                                   ),
-                                  Text(widget
-                                      .data.itemDetails[0].minimumQuantity),
+                                  Text("minimum Quantity: ${widget
+                                      .data.itemDetails[0].minimumQuantity}"),
                                   //products.itemDetails[0].itemCost
-                                  Text(widget.data.itemDetails[0].sellingPrice),
+                                  Text('Price: ${_UnitController. val_Of_uint_map[widget.data.itemId]!=null?_UnitController. val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice}'),
                                   //  Expanded(child: Container()),
                                 ],
                               ),
@@ -272,7 +277,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                  'Item Price :${widget.data.itemDetails[0].sellingPrice}'),
+                                  'Item Price :${_UnitController. val_Of_uint_map[widget.data.itemId]!=null?_UnitController. val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice}'),
                               Text('Tax:  ${widget.data.itemDetails[0].tax}')
                             ],
                           ),
@@ -426,10 +431,37 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                      child: Text(''
-                                          // dropdownMenuItemList
-                                          // .listdropdownValue[pos].measurementUnitName
-                                          ),
+                                      child:         showdropdowen
+                                          ? DropdownButton<ItemUnits>(value:   _UnitController. val_Of_uint_map[widget.data.itemId] ,
+                                        icon: const Icon(
+                                            Icons.arrow_downward),
+                                        iconSize: 24,
+                                        elevation: 16,
+                                        style: const TextStyle(
+                                            color: Colors.deepPurple),
+                                        underline: Container(
+                                          height: 2,
+                                          color: Colors.deepPurpleAccent,
+                                        ),
+                                        onChanged: (ItemUnits newValue) {
+                                          _UnitController. val_Of_uint_map[widget.data.itemId]=newValue;
+                                       //   print(_UnitController. val_Of_uint_map[widget.data.itemId].itemMeasurementUnits);
+                                          setState(() {});
+                                        },
+                                        items: _UnitController.MeasurementUnit_map[widget.data.itemId].map<
+                                            DropdownMenuItem<
+                                                ItemUnits>>(
+                                                (ItemUnits value) {
+                                              return DropdownMenuItem<
+                                                  ItemUnits>(
+                                                value: value,
+                                                child: Text(
+                                                    value.itemMeasurementUnits),
+                                              );
+                                            }).toList(),
+                                      )
+                                          : Text(  _UnitController.val_Of_uint_map[widget.data.itemId]!=null?
+                                         _UnitController.val_Of_uint_map[widget.data.itemId].itemMeasurementUnits:_UnitController.MeasurementUnit_map[widget.data.itemId][0].itemMeasurementUnits ),
                                     ),
                                   )
                                 ],
@@ -721,8 +753,7 @@ class _CartEditProductState extends State<CartEditProduct> {
     bata.discount[
     int.parse(widget.data.itemId)] =
         v;
-    totalPriceBeforDes = double.parse(widget
-        .data.itemDetails[0].sellingPrice ) *
+    totalPriceBeforDes = double.parse( _UnitController.val_Of_uint_map[widget.data.itemId]!=null?_UnitController.val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice ) *
         double.parse(
             itemCountinCart.toString());
 

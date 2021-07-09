@@ -55,31 +55,31 @@ class Result {
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['employe_data'] != null) {
-      employeData = <EmployeData>[];
+      employeData =    <EmployeData>[];
       json['employe_data'].forEach((v) {
         employeData.add(new EmployeData.fromJson(v));
       });
     }
     if (json['employee_permissions'] != null) {
-      employeePermissions = <EmployeePermissions>[];
+      employeePermissions =    <EmployeePermissions>[];
       json['employee_permissions'].forEach((v) {
         employeePermissions.add(new EmployeePermissions.fromJson(v));
       });
     }
     if (json['all_customers'] != null) {
-      allCustomers = <AllCustomers>[];
+      allCustomers = new List<AllCustomers>();
       json['all_customers'].forEach((v) {
         allCustomers.add(new AllCustomers.fromJson(v));
       });
     }
     if (json['all_categories'] != null) {
-      allCategories = <AllCategories>[];
+      allCategories = new List<AllCategories>();
       json['all_categories'].forEach((v) {
         allCategories.add(new AllCategories.fromJson(v));
       });
     }
     if (json['all_items'] != null) {
-      allItems = <AllItems>[];
+      allItems = new List<AllItems>();
       json['all_items'].forEach((v) {
         allItems.add(new AllItems.fromJson(v));
       });
@@ -88,31 +88,31 @@ class Result {
         ? new SalesOrder.fromJson(json['sales_order'])
         : null;
     if (json['user_data'] != null) {
-      userData = <UserData>[];
+      userData = new List<UserData>();
       json['user_data'].forEach((v) {
         userData.add(new UserData.fromJson(v));
       });
     }
     if (json['all_currencies'] != null) {
-      allCurrencies = <AllCurrencies>[];
+      allCurrencies = new List<AllCurrencies>();
       json['all_currencies'].forEach((v) {
         allCurrencies.add(new AllCurrencies.fromJson(v));
       });
     }
     if (json['all_banks'] != null) {
-      allBanks = <AllBanks>[];
+      allBanks = new List<AllBanks>();
       json['all_banks'].forEach((v) {
         allBanks.add(new AllBanks.fromJson(v));
       });
     }
     if (json['all_cheques'] != null) {
-      allCheques = <AllCheques>[];
+      allCheques = new List<AllCheques>();
       json['all_cheques'].forEach((v) {
         allCheques.add(new AllCheques.fromJson(v));
       });
     }
     if (json['all_stock_items'] != null) {
-      allStockItems = <AllStockItems>[];
+      allStockItems = new List<AllStockItems>();
       json['all_stock_items'].forEach((v) {
         allStockItems.add(new AllStockItems.fromJson(v));
       });
@@ -165,21 +165,21 @@ class Result {
 class EmployeData {
   String id;
   String userId;
-  Null refId;
+  String refId;
   String employeeNameEn;
   String employeeNameAr;
-  Null phoneNo;
+  String phoneNo;
   String username;
   String password;
   String email;
   String type;
-  Null customerId;
+  String customerId;
   String businessUnitId;
   String appDeviceId;
   String groupType;
-  Null reference;
+  String reference;
   String vehicle;
-  Null collectPercent;
+  String collectPercent;
   String salesCommission;
   String salary;
   String insurance;
@@ -480,7 +480,7 @@ class AllCustomers {
         ? new CustomerInfo.fromJson(json['customer_info'])
         : null;
     if (json['price_lists_info'] != null) {
-      priceListsInfo = new List<PriceListsInfo>();
+      priceListsInfo =    <PriceListsInfo>[];
       json['price_lists_info'].forEach((v) {
         priceListsInfo.add(new PriceListsInfo.fromJson(v));
       });
@@ -509,24 +509,24 @@ class CustomerInfo {
   String customerNameEn;
   String customerNameAr;
   String customerTypeId;
-  Null email;
+  String email;
   String phoneNo;
-  Null fax;
+  String fax;
   String taxStatus;
   String image;
   String creditLimit;
   String chequeDueDate;
   String discount;
-  Null balance;
+  String balance;
   String paymentType;
   String priceListId;
   String stateId;
   String cityId;
-  Null area1;
-  Null area2;
+  String area1;
+  String area2;
   String location;
-  Null latitude;
-  Null longitude;
+  String latitude;
+  String longitude;
   String status;
   String createdAt;
   String updatedAt;
@@ -640,8 +640,8 @@ class PriceListsInfo {
   String taxStatus;
   String useInSales;
   String useInReturn;
-  Null createdAt;
-  Null updatedAt;
+  String createdAt;
+  String updatedAt;
   List<ItemUnits> itemUnits;
 
   PriceListsInfo(
@@ -707,6 +707,7 @@ class ItemUnits {
   String itemId;
   String itemBarcodes;
   String itemMeasurementUnits;
+  String sellingPrice;
   String unitTypeId;
   String noOfPiece;
   String defaultValue;
@@ -719,6 +720,7 @@ class ItemUnits {
         this.itemId,
         this.itemBarcodes,
         this.itemMeasurementUnits,
+        this.sellingPrice,
         this.unitTypeId,
         this.noOfPiece,
         this.defaultValue,
@@ -731,6 +733,7 @@ class ItemUnits {
     itemId = json['item_id'];
     itemBarcodes = json['item_barcodes'];
     itemMeasurementUnits = json['item_measurement_units'];
+    sellingPrice = json['selling_price'];
     unitTypeId = json['unit_type_id'];
     noOfPiece = json['no_of_piece'];
     defaultValue = json['default_value'];
@@ -745,6 +748,7 @@ class ItemUnits {
     data['item_id'] = this.itemId;
     data['item_barcodes'] = this.itemBarcodes;
     data['item_measurement_units'] = this.itemMeasurementUnits;
+    data['selling_price'] = this.sellingPrice;
     data['unit_type_id'] = this.unitTypeId;
     data['no_of_piece'] = this.noOfPiece;
     data['default_value'] = this.defaultValue;
@@ -906,7 +910,7 @@ class ItemDetails {
   String minimumQuantity;
   String reference;
   String image;
-  Null itemCost;
+  String itemCost;
   String tax;
   String status;
   String stockStatus;
@@ -1033,15 +1037,15 @@ class UserData {
   String email;
   String password;
   String decodedPassword;
-  Null area1;
-  Null area2;
+  String area1;
+  String area2;
   String cityId;
   String stateId;
   String countryId;
-  Null currency;
-  Null currencyShort;
-  Null phoneNo;
-  Null faxNo;
+  String currency;
+  String currencyShort;
+  String phoneNo;
+  String faxNo;
   String vatNo;
   String taxableStatus;
   String sToken;
@@ -1189,7 +1193,7 @@ class AllBanks {
   String bankNameEn;
   String bankNameAr;
   String userId;
-  Null note;
+  String note;
   List<AllBankBranches> allBankBranches;
 
   AllBanks(
@@ -1235,15 +1239,15 @@ class AllBankBranches {
   String userId;
   String branchNameEn;
   String branchNameAr;
-  Null phoneNo;
-  Null faxNo;
+  String phoneNo;
+  String faxNo;
   String email;
-  Null area1;
-  Null area2;
+  String area1;
+  String area2;
   String stateId;
   String cityId;
   String contactPerson;
-  Null note;
+  String note;
   String status;
   String createdAt;
   String updatedAt;

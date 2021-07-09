@@ -34,12 +34,12 @@ class ProductsScr extends StatefulWidget {
 class _ProductsScrState extends State<ProductsScr> {
   List<Widget> alert_item = [];
 
- final AllItemsController bata = Get.find<AllItemsController>();
+  final AllItemsController bata = Get.find<AllItemsController>();
 
+  final AllCustomersControllers _allCustomersControllers =
+      Get.find<AllCustomersControllers>();
 
-  final AllCustomersControllers _allCustomersControllers = Get.find<AllCustomersControllers>();
-
-  final UnitController _UnitController = Get.put(UnitController()) ;
+  final UnitController _UnitController = Get.put(UnitController());
 
   CartItemController cartListItem =
       Get.put(CartItemController(), permanent: true);
@@ -64,39 +64,37 @@ class _ProductsScrState extends State<ProductsScr> {
   AllStockItems _allStockItems;
 
   //getstock
-  getmeasurementUnit( ) {
-    List<List<String>>MeasurementUnit2=[];
-for(int uu=0;uu<10;uu++){
-  MeasurementUnit2.add([]);
-}
-    AllCustomers allCustomers=  Get.find<AllChequesController>().customer;
-  //  List<String>MeasurementUnit=[];
+  getmeasurementUnit() {
+    AllCustomers allCustomers = Get.find<AllChequesController>().customer;
+    List<List<ItemUnits>> MeasurementUnit2 = [];
+    for (int uu = 0; uu < allCustomers.priceListsInfo.length; uu++) {
+      MeasurementUnit2.add([]);
+    }
+
+    //  List<String>MeasurementUnit=[];
 
     for (int i = 0; i < allCustomers.priceListsInfo.length; i++) {
+      //    MeasurementUnit.clear();
 
-  //    MeasurementUnit.clear();
+      for (int p = 0;
+          p < allCustomers.priceListsInfo[i].itemUnits.length;
+          p++) {
+        MeasurementUnit2[i].add(allCustomers.priceListsInfo[i].itemUnits[p]);
 
-    for(int p=0;p<allCustomers.priceListsInfo[i].itemUnits.length;p++){
+        //  MeasurementUnit.add( allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
 
+      }
 
-      MeasurementUnit2[i].add(allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
-
-      //  MeasurementUnit.add( allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
-
-
-
+      _UnitController
+              .MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId] =
+          MeasurementUnit2[i];
     }
-
-      _UnitController.MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId]=MeasurementUnit2[i];
-
-    }
-
   }
 
   @override
   void initState() {
     super.initState();
-    getmeasurementUnit( );
+    getmeasurementUnit();
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
 
@@ -129,12 +127,11 @@ for(int uu=0;uu<10;uu++){
       // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
 
     }
-     } //============================================
+  } //============================================
   //int itemcount=0;
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
@@ -530,19 +527,22 @@ for(int uu=0;uu<10;uu++){
                             //       .serach_listtextEditingControllerOfItem[pos]
                             //       .text = numberofitem.toString();
                             // }
-                            var unitlist=_UnitController.MeasurementUnit_map[bata.allItems[pos].itemId
-                              // bata.search_word.value.trim().isNotEmpty
-                              //   ? bata.search_wordListItems[pos].itemId
-                              //   : bata.allItems[pos].itemId
-                            ];
+                            var unitlist = _UnitController.MeasurementUnit_map[
+                                bata.allItems[pos].itemId
+                                // bata.search_word.value.trim().isNotEmpty
+                                //   ? bata.search_wordListItems[pos].itemId
+                                //   : bata.allItems[pos].itemId
+                                ];
                             print("unitlist $unitlist");
-                       //     print( '00000000000000000000000000000000000000000000');
-                            print(  _UnitController.MeasurementUnit_map[bata.allItems[pos].itemId]);
+                            //     print( '00000000000000000000000000000000000000000000');
+                            print(_UnitController.MeasurementUnit_map[
+                                bata.allItems[pos].itemId]);
                             print(bata.allItems[pos].itemId);
 
-                          ///  print( '00000000000000000000000000000000000000000000');
+                            ///  print( '00000000000000000000000000000000000000000000');
 
-                            return itemListView(unitslist: unitlist,
+                            return itemListView(
+                                unitslist: unitlist,
                                 bounceController:
                                     textEditingControllerbounce[pos],
                                 discountController:
@@ -752,7 +752,8 @@ for(int uu=0;uu<10;uu++){
   }
 
   Widget itemListView(
-      {Size size,List<String>unitslist,
+      {Size size,
+      List<ItemUnits> unitslist,
       int pos,
       AllItems products,
       funadd,
@@ -773,14 +774,15 @@ for(int uu=0;uu<10;uu++){
         itemCountinCart++;
       }
     }
-
-
+    bool showdropdowen = (unitslist.length > 1);
+if(showdropdowen){
+  if(_UnitController.val_Of_uint_map[products.itemId]!=null){
     discountController.text =
         cartListItem.discount[int.parse(products.itemId)].toString();
     bounceController.text =
         cartListItem.bounce[int.parse(products.itemId)].toString();
 
-    totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
+    totalPriceBeforDes = double.parse(_UnitController.val_Of_uint_map[products.itemId].sellingPrice) *
         double.parse(itemCountinCart.toString());
     print('totalPriceBeforDes  $totalPriceBeforDes');
 
@@ -792,6 +794,51 @@ for(int uu=0;uu<10;uu++){
     net_sal = totalPriceafterDes +
         (totalPriceafterDes *
             (double.parse(products.itemDetails[0].tax) / 100));
+
+
+    print('999999999999999999999999999999999999999999999999999999999999999999999999999');
+  }else{
+    discountController.text =
+      cartListItem.discount[int.parse(products.itemId)].toString();
+  bounceController.text =
+      cartListItem.bounce[int.parse(products.itemId)].toString();
+
+  totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
+      double.parse(itemCountinCart.toString());
+  print('totalPriceBeforDes  $totalPriceBeforDes');
+
+  totalPriceafterDes = totalPriceBeforDes -
+      (totalPriceBeforDes *
+          (cartListItem.discount[int.parse(products.itemId)] / 100));
+  total_Tax =
+      totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
+  net_sal = totalPriceafterDes +
+      (totalPriceafterDes *
+          (double.parse(products.itemDetails[0].tax) / 100));
+
+
+  }
+}
+else{
+  discountController.text =
+      cartListItem.discount[int.parse(products.itemId)].toString();
+  bounceController.text =
+      cartListItem.bounce[int.parse(products.itemId)].toString();
+
+  totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
+      double.parse(itemCountinCart.toString());
+  print('totalPriceBeforDes  $totalPriceBeforDes');
+
+  totalPriceafterDes = totalPriceBeforDes -
+      (totalPriceBeforDes *
+          (cartListItem.discount[int.parse(products.itemId)] / 100));
+  total_Tax =
+      totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
+  net_sal = totalPriceafterDes +
+      (totalPriceafterDes *
+          (double.parse(products.itemDetails[0].tax) / 100));
+}
+
     print('totalPriceBeforDes  $totalPriceBeforDes');
     print(totalPriceBeforDes);
 
@@ -836,9 +883,9 @@ for(int uu=0;uu<10;uu++){
                         SizedBox(
                           height: 4,
                         ),
-                        Text(products.itemDetails[0].minimumQuantity),
+                        Text("minimum Quantity: ${products.itemDetails[0].minimumQuantity}"),
                         //products.itemDetails[0].itemCost
-                        Text(products.itemDetails[0].sellingPrice),
+                        Text('Price: ${products.itemDetails[0].sellingPrice}'),
                         //  Expanded(child: Container()),
                       ],
                     ),
@@ -1036,13 +1083,17 @@ for(int uu=0;uu<10;uu++){
                             Column(
                               children: [
                                 Text('Store ID'),
-                                Container(width: size.width*.25,height: 50,
-                                  decoration: BoxDecoration(  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 1,
-                                  ),borderRadius: BorderRadius.circular(10)),
+                                Container(
+                                  width: size.width * .25,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                    child: Text(stocitem[0].storeId ),
+                                    child: Text(stocitem[0].storeId),
                                   ),
                                 )
                                 // Obx(() =>
@@ -1086,57 +1137,70 @@ for(int uu=0;uu<10;uu++){
                             Column(
                               children: [
                                 Text('Unit'),
-                           //  Obx(()=>
-                                    Container(width: size.width*.25,height: 50,
-                                        decoration: BoxDecoration(  border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),borderRadius: BorderRadius.circular(10)),
-                                      child: Center(
-                                        child: DropdownButton<String>(
-
-                                          icon: const Icon(Icons.arrow_downward),
-                                          iconSize: 24,
-                                          elevation: 16,
-                                          style: const TextStyle(color: Colors.deepPurple),
-                                          underline: Container(
-                                            height: 2,
-                                            color: Colors.deepPurpleAccent,
-                                          ),
-                                          onChanged: (String  newValue) {
-                                            setState(() {
-
-                                            });
-                                          },
-                                          items: unitslist
-                                              .map<DropdownMenuItem<String>>((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ) ,
+                                //  Obx(()=>
+                                Container(
+                                  width: size.width * .25,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
                                       ),
-                                    )
-                           //   )
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child:
+                                    showdropdowen
+                                        ? DropdownButton<ItemUnits>(value:   _UnitController. val_Of_uint_map[products.itemId] ,
+                                            icon: const Icon(
+                                                Icons.arrow_downward),
+                                            iconSize: 24,
+                                            elevation: 16,
+                                            style: const TextStyle(
+                                                color: Colors.deepPurple),
+                                            underline: Container(
+                                              height: 2,
+                                              color: Colors.deepPurpleAccent,
+                                            ),
+                                            onChanged: (ItemUnits newValue) {
+                                              _UnitController. val_Of_uint_map[products.itemId]=newValue;
+                                              print(_UnitController. val_Of_uint_map[products.itemId].itemMeasurementUnits);
+                                              setState(() {});
+                                            },
+                                            items: unitslist.map<
+                                                    DropdownMenuItem<
+                                                        ItemUnits>>(
+                                                (ItemUnits value) {
+                                              return DropdownMenuItem<
+                                                  ItemUnits>(
+                                                value: value,
+                                                child: Text(
+                                                    value.itemMeasurementUnits),
+                                              );
+                                            }).toList(),
+                                          )
+                                        : Text(
+                                            unitslist[0].itemMeasurementUnits),
+                                  ),
+                                )
+                                //   )
                               ],
                             ),
                             Column(
                               children: [
                                 Text('Quantity'),
-
-                                   Container(width: size.width*.25,height: 50,
-                                     decoration: BoxDecoration(  border: Border.all(
-                                       color: Colors.grey,
-                                       width: 1,
-                                     ),borderRadius: BorderRadius.circular(10)),
-                                     child: Center(
-                                       child: Text(
-                                           textEditingController.text
-                               ),
-                                     ),
-                                   )
-
+                                Container(
+                                  width: size.width * .25,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child: Text(textEditingController.text),
+                                  ),
+                                )
                               ],
                             ),
                           ],
@@ -1168,11 +1232,12 @@ for(int uu=0;uu<10;uu++){
                                     },
                                     controller: bounceController,
                                     textAlign: TextAlign.center,
-                                    decoration: InputDecoration( suffixIcon: IconButton(
-                                      onPressed: () =>
-                                          bounceController.clear(),
-                                      icon: Icon(Icons.clear),
-                                    ),
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () =>
+                                            bounceController.clear(),
+                                        icon: Icon(Icons.clear),
+                                      ),
                                       border: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       enabledBorder: InputBorder.none,
@@ -1310,8 +1375,8 @@ for(int uu=0;uu<10;uu++){
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child:
-                                          Text(totalPriceBeforDes.toStringAsFixed(3))),
+                                      child: Text(totalPriceBeforDes
+                                          .toStringAsFixed(3))),
                                 ),
                               ],
                             ),
@@ -1337,8 +1402,8 @@ for(int uu=0;uu<10;uu++){
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child:
-                                          Text(totalPriceafterDes.toStringAsFixed(3))),
+                                      child: Text(totalPriceafterDes
+                                          .toStringAsFixed(3))),
                                 ),
                               ],
                             ),
@@ -1383,7 +1448,8 @@ for(int uu=0;uu<10;uu++){
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(total_Tax.toStringAsFixed(3)))),
+                                        child: Text(
+                                            total_Tax.toStringAsFixed(3)))),
                               ],
                             ),
                             Column(
