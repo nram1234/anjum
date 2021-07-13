@@ -39,7 +39,7 @@ class _ProductsScrState extends State<ProductsScr> {
   final AllCustomersControllers _allCustomersControllers =
       Get.find<AllCustomersControllers>();
 
-  final UnitController _UnitController = Get.put(UnitController());
+  final UnitController _UnitController = Get.find<UnitController>() ;//Get.put(UnitController());
 
   CartItemController cartListItem =
       Get.put(CartItemController(), permanent: true);
@@ -63,7 +63,19 @@ class _ProductsScrState extends State<ProductsScr> {
   //====================
   AllStockItems _allStockItems;
 
-  //getstock
+  @override
+  void dispose() {
+    super.dispose();
+    cartListItem.cartlist.clear();
+    cartListItem.bounce.clear();
+    cartListItem.discount.clear();
+    cartListItem.itemInCart.value=0;
+    _UnitController.all_Uint_select.clear();
+    _UnitController.all_Uint_List.clear();
+    _UnitController.val_Of_uint_map.clear();
+    _UnitController.MeasurementUnit_map;
+    print('disposedisposedisposedisposedisposedisposedisposedisposedisposedisposedispose');
+  } //getstock
   getmeasurementUnit() {
     AllCustomers allCustomers = Get.find<AllChequesController>().customer;
     List<List<ItemUnits>> MeasurementUnit2 = [];
@@ -105,15 +117,15 @@ class _ProductsScrState extends State<ProductsScr> {
       dropdownMenuItemList.allStockItems.add(p);
       TextEditingController textEditingControllerOfItem =
           TextEditingController();
-      textEditingControllerOfItem.text = 0.toString();
+      textEditingControllerOfItem.text ="";
       dropdownMenuItemList
           .addlisttextEditingControllerOfItem(textEditingControllerOfItem);
       TextEditingController textEditingDiscount = TextEditingController();
-      textEditingDiscount.text = 0.toString();
+      textEditingDiscount.text = "";
       textEditingControllerDiscount.add(textEditingDiscount);
       TextEditingController textEditingbounce = TextEditingController();
 
-      textEditingbounce.text = 0.toString();
+      textEditingbounce.text = "";
       textEditingControllerbounce.add(textEditingbounce);
 
       AllStockItems allStockItems;
@@ -257,7 +269,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       textEditingControllerOfItem =
                                       TextEditingController();
                                   textEditingControllerOfItem.text =
-                                      0.toString();
+                                      '';
                                   dropdownMenuItemList
                                       .serach_addlisttextEditingControllerOfItem(
                                           textEditingControllerOfItem);
@@ -690,7 +702,15 @@ class _ProductsScrState extends State<ProductsScr> {
                                         null;
                                   });
                                   c.stopjor();
-                                  Get.to(() => All_Customer());
+                                  cartListItem.cartlist.clear();
+                                  cartListItem.bounce.clear();
+                                  cartListItem.discount.clear();
+                                  cartListItem.itemInCart.value=0;
+                                  _UnitController.all_Uint_select.clear();
+                                  _UnitController.all_Uint_List.clear();
+                                  _UnitController.val_Of_uint_map.clear();
+                                  _UnitController.MeasurementUnit_map;
+                                  Get.off(() => All_Customer());
                                 }
                               },
                               child: Container(
@@ -1478,17 +1498,17 @@ else{
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: size.width * .4,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xff2C4B89),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(child: Text('Cancel')),
-                            ),
+                            // Container(
+                            //   width: size.width * .4,
+                            //   height: 50,
+                            //   decoration: BoxDecoration(
+                            //       border: Border.all(
+                            //         color: Color(0xff2C4B89),
+                            //         width: 1,
+                            //       ),
+                            //       borderRadius: BorderRadius.circular(10)),
+                            //   child: Center(child: Text('Cancel')),
+                            // ),
                             GestureDetector(
                               onTap: () {
                                 setState(() {});

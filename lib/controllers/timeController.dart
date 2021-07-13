@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:anjum/controllers/unitController.dart';
 import 'package:get/state_manager.dart';
 
 class TimeController extends GetxController{
+
   var startswatch=false.obs;
   var swatch=Stopwatch();
   var stoptimedisplay='00:00:00'.obs;
@@ -25,6 +27,7 @@ update();
 update();
   }
   stopjor(){
+
     startswatch.value=false;
     swatch.stop();
     stoptimedisplay.value='00:00:00';

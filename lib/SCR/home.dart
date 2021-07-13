@@ -14,6 +14,7 @@ import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/salesOrderController.dart';
+import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/controllers/userDataController.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
@@ -45,6 +46,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    Get.lazyPut(() => UnitController());
     Get.lazyPut(() => UserDataController());
     Get.lazyPut(() => AllBanksController());
     // Get.lazyPut(() => AllCategoriesController(),fenix: true);

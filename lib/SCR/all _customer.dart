@@ -2,7 +2,9 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/timeController.dart';
+import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,9 @@ class All_Customer extends StatefulWidget {
 
 class _All_CustomerState extends State<All_Customer> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+  final CartItemController cartListItem =
+  Get.find<  CartItemController>( );
+
   PageController _pageController = PageController(
     initialPage: 0,
     keepPage: true,
@@ -27,7 +32,7 @@ class _All_CustomerState extends State<All_Customer> {
   List<Widget> _list = <Widget>[All_customer_tap1()];
   final TimeController c = Get.put(TimeController(), permanent: true);
 
-
+  final UnitController _UnitController = Get.find<UnitController>() ;
   AllCustomersControllers bata =Get.find<AllCustomersControllers>() ;
   @override
   Widget build(BuildContext context) {
@@ -183,6 +188,11 @@ class _All_CustomerState extends State<All_Customer> {
 
                   c.startjor();
                 } else {
+
+                  _UnitController.MeasurementUnit_map.clear();
+                  _UnitController.val_Of_uint_map.clear();
+                  _UnitController.all_Uint_List.clear();
+                  _UnitController.all_Uint_select.clear();
                   getMyLoction(endvisittlocation);
                   DatabaseHelper()
                       .insert_insert_visit(Insert_visit_DB(
@@ -199,7 +209,15 @@ class _All_CustomerState extends State<All_Customer> {
                     null;
                   });
                   c.stopjor();
-                  Get.to(() => All_Customer());
+                  cartListItem.cartlist.clear();
+                  cartListItem.bounce.clear();
+                  cartListItem.discount.clear();
+                  cartListItem.itemInCart.value=0;
+                  _UnitController.all_Uint_select.clear();
+                  _UnitController.all_Uint_List.clear();
+                  _UnitController.val_Of_uint_map.clear();
+                  _UnitController.MeasurementUnit_map;
+                  Get.off(() => All_Customer());
                 }
               },
               child: Container(

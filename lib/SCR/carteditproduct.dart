@@ -605,7 +605,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text(
-                                            (totalPriceBeforDes).toString())),
+                                            (totalPriceBeforDes).toStringAsFixed(3))),
                                   ),
                                 ],
                               ),
@@ -633,7 +633,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text(totalPriceafterDes
-                                            .toString())),
+                                            .toStringAsFixed(3))),
                                   ),
                                 ],
                               ),
@@ -712,31 +712,33 @@ class _CartEditProductState extends State<CartEditProduct> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: size.width * .4,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xff2C4B89),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Center(child: Text('Cancel')),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xff2C4B89),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                height: 50,
-                                width: size.width * .4,
-                                child: Center(
-                                  child: Text(
-                                    'ok',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   width: size.width * .4,
+                              //   height: 50,
+                              //   decoration: BoxDecoration(
+                              //       border: Border.all(
+                              //         color: Color(0xff2C4B89),
+                              //         width: 1,
+                              //       ),
+                              //       borderRadius: BorderRadius.circular(10)),
+                              //   child: Center(child: Text('Cancel')),
+                              // ),
+                         GestureDetector(onTap: (){
+                           Navigator.pop(context);
+                         },child:      Container(
+                           decoration: BoxDecoration(
+                             color: Color(0xff2C4B89),
+                             borderRadius: BorderRadius.circular(10),
+                           ),
+                           height: 50,
+                           width: size.width * .4,
+                           child: Center(
+                             child: Text(
+                               'ok',
+                               style: TextStyle(color: Colors.white),
+                             ),
+                           ),
+                         ),)
                             ],
                           ),
                         )
