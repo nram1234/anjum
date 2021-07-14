@@ -22,26 +22,29 @@ class Cart extends StatefulWidget {
 
 class _CartEditProductState extends State<Cart> {
   String Chequetime = "choose date";
-
+TextEditingController _textEditingController=TextEditingController();
   CartItemController bata = Get.find<CartItemController>();
   DatabaseHelper _databaseHelper = DatabaseHelper();
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   List<AllItems> listtoshow = [];
-
+Map<String,AllItems>getTaxItemMap={};
   @override
   void initState() {
     super.initState();
+    _textEditingController.text=0.toString();
+
     for (int i = 0; i < bata.cartlist.length; i++) {
+
       if (!listtoshow.contains(bata.cartlist[i])) {
         listtoshow.add(bata.cartlist[i]);
-      }
+        getTaxItemMap[bata.cartlist[i].itemId]=bata.cartlist[i] ;   }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print("${listtoshow.length}      pppppp");
+
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -53,11 +56,19 @@ class _CartEditProductState extends State<Cart> {
           firstDate: DateTime(1900),
           lastDate: DateTime(2050),
           context: context);
-      print(time);
+
 
       date2 = time.toString().substring(0, 10);
       return date2;
     }
+ double   total_sal=0;
+    double   totalTax=0;
+    bata.total_Tax.forEach((key, value) {
+      totalTax+=value;
+    });
+     bata.PriceafterDes.forEach((key, value) {
+       total_sal+=value;
+     });
 
     return Scaffold(
       body: Container(
@@ -420,7 +431,7 @@ class _CartEditProductState extends State<Cart> {
                                     ),
                                   ],
                                 ),
-                                child: TextField(
+                                child: TextField(controller: _textEditingController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '  5%  ',
@@ -431,35 +442,49 @@ class _CartEditProductState extends State<Cart> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: size.width * .3,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
+                              GestureDetector(onTap: (){
+
+getTaxItemMap.forEach((key, value) {
+
+
+                                  bata .PriceafterDes[key]=  bata .PriceafterDes[key]-(bata .PriceafterDes[key]*double.parse(_textEditingController.text)/100);
+                                 bata .total_Tax[key]=       bata .PriceafterDes[key] * (double.parse(getTaxItemMap[key].itemDetails[0].tax) / 100);;
+
+                             });
+
+                            setState(() {
+
+                            });  },
                                 child: Container(
-                                  height: 50,
+                                  width: size.width * .3,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff2C4B89),
                                     borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
                                   ),
-                                  child: Center(
-                                      child: Text(
-                                    'Apply',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  )),
+                                  child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff2C4B89),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      'Apply',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )),
+                                  ),
                                 ),
                               )
                             ],
@@ -471,7 +496,7 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total'),
-                              Text('1000'),
+                              Text(total_sal.toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -487,7 +512,7 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Discount'),
-                              Text('1000'),
+                             Text((total_sal*double.parse(_textEditingController.text??"0")/100).toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -503,7 +528,7 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total Tax'),
-                              Text('1000'),
+                              Text(totalTax.toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -519,7 +544,7 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Grand Total'),
-                              Text('1000'),
+                              Text( (totalTax+total_sal).toStringAsFixed(3) ),
                             ],
                           ),
                         ),
@@ -610,7 +635,7 @@ class _CartEditProductState extends State<Cart> {
                                 pickdate().then((value) {
                                   if (value != null) {
                                     Chequetime = value;
-                                    print(Chequetime);
+
                                     setState(() {});
                                   }
                                 });
@@ -687,7 +712,7 @@ class _CartEditProductState extends State<Cart> {
                                               .itemDetails[0].sellingPrice);
                                     }
 
-                                    print(isinvoiceOrSalesOrderOrReturnInvoice);
+
 
                                     _databaseHelper
                                         .insert_sales_order_requests(
@@ -798,10 +823,10 @@ class _CartEditProductState extends State<Cart> {
                         height: 100,
                         decoration: BoxDecoration(
                           color: Colors.blue,
-                          image: DecorationImage(
-                            image: NetworkImage(data.itemDetails[0].image),
-                            fit: BoxFit.fill,
-                          ),
+                          // image: DecorationImage(
+                          //   image: NetworkImage(data.itemDetails[0].image),
+                          //   fit: BoxFit.fill,
+                          // ),
                         ),
                       ),
                     ),
@@ -850,6 +875,7 @@ class _CartEditProductState extends State<Cart> {
                             onTap: () {
                               listtoshow.remove(data);
                               bata.removeAllChooseItexfromcart(item: data);
+
                               setState(() {});
                             },
                             child: Icon(
@@ -894,6 +920,7 @@ class _CartEditProductState extends State<Cart> {
                     InkWell(
                       onTap: () {
                         bata.removefromcart(item: data);
+
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -937,7 +964,7 @@ class _CartEditProductState extends State<Cart> {
                     InkWell(
                       onTap: () {
                         bata.addToCart(item: data);
-                        print('pppp');
+
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -974,23 +1001,38 @@ class _CartEditProductState extends State<Cart> {
   }
 
   insertItemInDataBase(int i) async {
+   
     for (int oo = 0; oo < bata.cartlist.length; oo++) {
-      bata.additemInitemInCart(item: bata.cartlist[oo]);
-      await DatabaseHelper()
-          .insert_item_tabel(Item_Database(
-              olderId: i,
-              itemId: int.tryParse(bata.cartlist[oo].itemId),
-              categoryId:
-                  int.parse(bata.cartlist[oo].itemDetails[0].categoryId), //
+      if( bata.itemcount[bata.cartlist[oo].itemId]==null){
+        bata.itemcount[bata.cartlist[oo].itemId]=1;
+      //  bata.itemInCart.value++;
+      }else{
+        bata. itemcount[bata.cartlist[oo].itemId]+=1;
+      }
+     }
+      // bata.additemInitemInCart(item: bata.cartlist[oo]);
+    bata.itemcount.forEach((key, value) async{
+  await DatabaseHelper()
+      .insert_item_tabel(Item_Database(
+          olderId: i,
+          itemId: int.tryParse(key),
+          // categoryId:
+          //     int.parse(bata.cartlist[oo].itemDetails[0].categoryId), //
 
-              basePricePerUnit: double.parse(
-                  bata.cartlist[oo].itemDetails[0].itemCost ?? "1")))
-          .then((value) {
-        print('تم اضافه');
-      }).catchError((e) {
-        print(e.toString());
-      });
-    }
-    Get.off(Dashboard());
+          // basePricePerUnit: double.parse(
+          //     bata.cartlist[oo].itemDetails[0].itemCost ?? "1")
+    quantity: value
+  )
+  )
+      .then((value) {
+    print('تم اضافه');
+  }).catchError((e) {
+    print(e.toString());
+  });
+});
+
+
+
+   // Get.off(Dashboard());
   }
 }

@@ -2,7 +2,9 @@ import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:get/get.dart';
 
 class CartItemController extends GetxController{
-
+  Map<String,double>PriceafterDes={};
+  Map<String,double>total_Tax={};
+  Map<String,int>itemcount={};
  RxList<AllItems>cartlist=RxList<AllItems>();
 Map<int,double>discount={};
  Map<int,double>bounce={};
@@ -32,7 +34,10 @@ var itemInCart =0.obs;
 //      }
 //    }
 cartlist.removeWhere((element) => element.id==item.id);
- //  update();
+print('9999999999999999999999999999999999999999999999999999999999999999999999999999');
+itemInCart.value-=1;
+  update();
+  print(itemInCart.value);
  }
 
 additemInitemInCart({AllItems item}){

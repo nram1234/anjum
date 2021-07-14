@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
@@ -200,9 +202,12 @@ class _ProductsScrState extends State<ProductsScr> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Obx(
-                                () => Text(cartListItem.itemInCart.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18)),
+                                () {
+                                  log(cartListItem.itemInCart.value.toString());
+                             return     Text(cartListItem.itemInCart.value.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18));
+                                }
                               )
                             ],
                           ),
@@ -317,7 +322,7 @@ class _ProductsScrState extends State<ProductsScr> {
                         onTap: () {
                           totalItem = 0;
                           double totalprice = 0;
-
+                          cartListItem.itemInCart.value=0;
                           if (bata.search_word.trim().isNotEmpty) {
                             for (int i = 0;
                                 i <
@@ -356,17 +361,17 @@ class _ProductsScrState extends State<ProductsScr> {
                                     dropdownMenuItemList
                                         .listtextEditingControllerOfItem.length;
                                 i++) {
-                              // if(  int.parse(dropdownMenuItemList
-                              //     .listtextEditingControllerOfItem[i]
-                              //     .text) >0&&!cartListItem.cartlist.contains(  bata.allItems[i]) ){
-                              //
-                              //   cartListItem.itemInCart++;
-                              //
-                              //
-                              //
-                              //
-                              //
-                              // }
+                              if(  int.parse(dropdownMenuItemList
+                                  .listtextEditingControllerOfItem[i]
+                                  .text) >0&&!cartListItem.cartlist.contains(  bata.allItems[i]) ){
+
+                               // cartListItem.itemInCart++;
+
+
+
+
+
+                              }
 
                               totalItem = totalItem +
                                   int.parse(dropdownMenuItemList
@@ -391,7 +396,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
                           int customer_id = int.tryParse(
                               Get.find<AllChequesController>().customer_id);
-                          print('customer_id     $customer_id');
+
 
                           for (int i = 0;
                               i < cartListItem.cartlist.length;
@@ -545,13 +550,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                 //   ? bata.search_wordListItems[pos].itemId
                                 //   : bata.allItems[pos].itemId
                                 ];
-                            print("unitlist $unitlist");
-                            //     print( '00000000000000000000000000000000000000000000');
-                            print(_UnitController.MeasurementUnit_map[
-                                bata.allItems[pos].itemId]);
-                            print(bata.allItems[pos].itemId);
 
-                            ///  print( '00000000000000000000000000000000000000000000');
 
                             return itemListView(
                                 unitslist: unitlist,
@@ -744,31 +743,43 @@ class _ProductsScrState extends State<ProductsScr> {
   }
 
   insertItemInDataBase(int i) async {
-    List<AllItems> cartitme = [];
-    for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
-      if (!cartitme.contains(cartListItem.cartlist[oo])) {
-        cartitme.add(cartListItem.cartlist[oo]);
-      }
-      // cartListItem.additemInitemInCart(item: cartListItem.cartlist[i]);
 
-      await DatabaseHelper()
-          .insert_temporary_tabel_cart_item_tabelname(Temporary_tabel_cart_item(
-              id: cartListItem.cartlist[oo].id,
-              item_count: 5.toString(),
-              order_id: i))
-          .then((value) {})
-          .catchError((e) {
-        print(e.toString());
-      });
+    Map<String,int>countofitem={};
+    for(int count=0;count<cartListItem.cartlist.length;count++){
+      if(countofitem[cartListItem.cartlist[count].itemId]==null){
+        countofitem[cartListItem.cartlist[count].itemId] =1;
+        cartListItem.itemInCart.value++;
+      }else{
+        countofitem[cartListItem.cartlist[count].itemId]+=1;
+      }
+
+
     }
-    print(i);
-    _databaseHelper
-        .get_All_temporary_tabel_cart_item_tabelname(i)
-        .then((value) {
-      print(
-          'this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}');
-    });
-    cartListItem.itemInCart.value = cartitme.length;
+    // for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
+    //   if (!cartitme.contains(cartListItem.cartlist[oo])) {
+    //     cartitme.add(cartListItem.cartlist[oo]);
+    //     print(cartitme);
+    //   }
+    //   // cartListItem.additemInitemInCart(item: cartListItem.cartlist[i]);
+    //
+    //   await DatabaseHelper()
+    //       .insert_temporary_tabel_cart_item_tabelname(Temporary_tabel_cart_item(
+    //           id: cartListItem.cartlist[oo].id,
+    //           item_count: 5.toString(),
+    //           order_id: i))
+    //       .then((value) {})
+    //       .catchError((e) {
+    //     print(e.toString());
+    //   });
+    // }
+    // print(i);
+    // _databaseHelper
+    //     .get_All_temporary_tabel_cart_item_tabelname(i)
+    //     .then((value) {
+    //   print(
+    //       'this is from get_All_temporary_tabel_cart_item_tabelname ${value.length}');
+    // });
+    // cartListItem.itemInCart.value = cartitme.length;
   }
 
   Widget itemListView(
@@ -804,7 +815,7 @@ if(showdropdowen){
 
     totalPriceBeforDes = double.parse(_UnitController.val_Of_uint_map[products.itemId].sellingPrice) *
         double.parse(itemCountinCart.toString());
-    print('totalPriceBeforDes  $totalPriceBeforDes');
+
 
     totalPriceafterDes = totalPriceBeforDes -
         (totalPriceBeforDes *
@@ -815,8 +826,6 @@ if(showdropdowen){
         (totalPriceafterDes *
             (double.parse(products.itemDetails[0].tax) / 100));
 
-
-    print('999999999999999999999999999999999999999999999999999999999999999999999999999');
   }else{
     discountController.text =
       cartListItem.discount[int.parse(products.itemId)].toString();
@@ -825,17 +834,17 @@ if(showdropdowen){
 
   totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
       double.parse(itemCountinCart.toString());
-  print('totalPriceBeforDes  $totalPriceBeforDes');
+
 
   totalPriceafterDes = totalPriceBeforDes -
       (totalPriceBeforDes *
           (cartListItem.discount[int.parse(products.itemId)] / 100));
   total_Tax =
       totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
-  net_sal = totalPriceafterDes +
-      (totalPriceafterDes *
-          (double.parse(products.itemDetails[0].tax) / 100));
-
+  // net_sal = totalPriceafterDes +
+  //     (totalPriceafterDes *
+  //         (double.parse(products.itemDetails[0].tax) / 100));
+    net_sal=totalPriceafterDes;
 
   }
 }
@@ -847,7 +856,7 @@ else{
 
   totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
       double.parse(itemCountinCart.toString());
-  print('totalPriceBeforDes  $totalPriceBeforDes');
+
 
   totalPriceafterDes = totalPriceBeforDes -
       (totalPriceBeforDes *
@@ -857,11 +866,11 @@ else{
   net_sal = totalPriceafterDes +
       (totalPriceafterDes *
           (double.parse(products.itemDetails[0].tax) / 100));
+
 }
 
-    print('totalPriceBeforDes  $totalPriceBeforDes');
-    print(totalPriceBeforDes);
-
+    cartListItem.PriceafterDes[products.itemId]=totalPriceafterDes;
+    cartListItem.total_Tax[products.itemId]=total_Tax;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -953,11 +962,10 @@ else{
                           child: Center(
                               child: TextField(
                             onSubmitted: (m) {
-                              print('onSubmitted       ${m}');
+
                             },
                             onEditingComplete: () {
-                              print(
-                                  'onEditingComplete      ------------------------');
+
                             },
                             controller: textEditingController,
                             textAlign: TextAlign.center,
@@ -1183,7 +1191,7 @@ else{
                                             ),
                                             onChanged: (ItemUnits newValue) {
                                               _UnitController. val_Of_uint_map[products.itemId]=newValue;
-                                              print(_UnitController. val_Of_uint_map[products.itemId].itemMeasurementUnits);
+
                                               setState(() {});
                                             },
                                             items: unitslist.map<
@@ -1287,13 +1295,10 @@ else{
                                       cartListItem.discount[
                                               int.parse(products.itemId)] =
                                           double.parse(v);
-                                      totalPriceBeforDes = double.parse(products
-                                              .itemDetails[0].sellingPrice) *
+                                      totalPriceBeforDes = 1 *
                                           double.parse(
                                               itemCountinCart.toString());
-                                      print(totalPriceBeforDes);
 
-                                      print(totalPriceBeforDes);
 
                                       totalPriceafterDes = totalPriceBeforDes -
                                           (totalPriceBeforDes *
@@ -1307,11 +1312,11 @@ else{
                                               (double.parse(products
                                                       .itemDetails[0].tax) /
                                                   100));
+                                 //     net_sal = totalPriceafterDes;
+                                      cartListItem.PriceafterDes[products.itemId]=totalPriceafterDes;
+                                      cartListItem.total_Tax[products.itemId]=total_Tax;
 
-//
-// setState(() {
-//
-// });
+
                                       ///=====================================================
                                       //
                                       //
@@ -1625,54 +1630,8 @@ else{
     ]);
 
     String jsonUser = jsonEncode(listOrder);
-    print(jsonUser);
+
   }
 
-  bool isNumericUsing_tryParse(String string) {
-    // Null or empty string is not a number
-    if (string == null || string.isEmpty) {
-      return false;
-    }
 
-    // Try to parse input string to number.
-    // Both integer and double work.
-    // Use int.tryParse if you want to check integer only.
-    // Use double.tryParse if you want to check double only.
-    final number = num.tryParse(string);
-
-    if (number == null) {
-      return false;
-    }
-
-    return true;
-  }
 }
-//
-// cartListItem.cartlist.clear();
-// totalItem = 0;
-// double totalprice = 0;
-// for (int i = 0;
-// i <
-// dropdownMenuItemList
-//     .listtextEditingControllerOfItem.length;
-// i++) {
-// totalItem = totalItem +
-// int.parse(dropdownMenuItemList
-//     .listtextEditingControllerOfItem[i].text);
-// totalprice = totalprice +
-// (int.parse(dropdownMenuItemList
-//     .listtextEditingControllerOfItem[i]
-//     .text) *
-// double.tryParse(bata.customerListItems[i]
-//     .itemDetails[0].sellingPrice));
-//
-// for (int p = 0;
-// p <
-// int.parse(dropdownMenuItemList
-//     .listtextEditingControllerOfItem[i]
-//     .text);
-// p++) {print( bata.customerListItems[i].id);
-// cartListItem.addToCart(
-// item: bata.customerListItems[i]);
-// }
-// }
