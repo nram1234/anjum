@@ -1,7 +1,9 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/item_tabel.dart';
+import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
@@ -27,11 +29,22 @@ TextEditingController _textEditingController=TextEditingController();
   DatabaseHelper _databaseHelper = DatabaseHelper();
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+  EmployeePermissionsController employeePermissionsController= Get.find<EmployeePermissionsController>();
+  AllChequesController customer =Get.find<AllChequesController>();
+
+  String dropdownvalue ;
+  var items =  ['Cash','Cheque' ];
+
+
   List<AllItems> listtoshow = [];
 Map<String,AllItems>getTaxItemMap={};
+bool canApply=true;
+bool requestToChangeInvoicePaymentType;
   @override
   void initState() {
+
     super.initState();
+    requestToChangeInvoicePaymentType= employeePermissionsController.employeePermissions[0].requestToChangeInvoicePaymentType=="yes";
     _textEditingController.text=0.toString();
 
     for (int i = 0; i < bata.cartlist.length; i++) {
@@ -44,7 +57,7 @@ Map<String,AllItems>getTaxItemMap={};
 
   @override
   Widget build(BuildContext context) {
-
+print( customer.customer.customerInfo.paymentType);
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -407,17 +420,17 @@ Map<String,AllItems>getTaxItemMap={};
                         SizedBox(
                           height: size.height * .01,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Text('Discount'),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 16, right: 16),
+                        //   child: Text('Discount'),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
+                            children: [Text('Discount',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                               Container(
-                                width: size.width * .6,
+                                width: size.width * .4,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
@@ -431,7 +444,7 @@ Map<String,AllItems>getTaxItemMap={};
                                     ),
                                   ],
                                 ),
-                                child: TextField(controller: _textEditingController,
+                                child: TextField(controller: _textEditingController,keyboardType: TextInputType.number,textAlign: TextAlign.center,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '  5%  ',
@@ -442,19 +455,19 @@ Map<String,AllItems>getTaxItemMap={};
                                   ),
                                 ),
                               ),
-                              GestureDetector(onTap: (){
-
+                              GestureDetector(onTap:canApply? (){
+                                canApply=false;
 getTaxItemMap.forEach((key, value) {
-
+  print('PriceafterDes befor any thing${ bata .PriceafterDes[key]}');
 
                                   bata .PriceafterDes[key]=  bata .PriceafterDes[key]-(bata .PriceafterDes[key]*double.parse(_textEditingController.text)/100);
                                  bata .total_Tax[key]=       bata .PriceafterDes[key] * (double.parse(getTaxItemMap[key].itemDetails[0].tax) / 100);;
-
+  print('PriceafterDes after   thing${ bata .PriceafterDes[key]}');
                              });
 
                             setState(() {
 
-                            });  },
+                            });  }:null,
                                 child: Container(
                                   width: size.width * .3,
                                   decoration: BoxDecoration(
@@ -473,7 +486,7 @@ getTaxItemMap.forEach((key, value) {
                                   child: Container(
                                     height: 50,
                                     decoration: BoxDecoration(
-                                      color: Color(0xff2C4B89),
+                                      color: canApply?Color(0xff2C4B89):Colors.grey,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Center(
@@ -548,85 +561,138 @@ getTaxItemMap.forEach((key, value) {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Text('Payment Method'),
-                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                Get.to(CashPay());
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(4),
-                                width: size.width * .4,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(11.0),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: const Color(0xFFEBEBEB),
-                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16, right: 16),
+                              child: Text('Payment Method'),
+                            ),  requestToChangeInvoicePaymentType?
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              width: size.width * .4,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(11.0),
+                                color: Colors.white,
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFFEBEBEB),
                                 ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        'Cash',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Image.asset(
-                                        'assets/images/dollar.png',
-                                      ),
-                                    ],
-                                  ),
+                              ),
+                              child: Center(
+                                child: DropdownButton(underline:   SizedBox(),
+
+                                  value: dropdownvalue, hint: Text('Cash OR Cheque'),
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  items:items.map((String items) {
+                                    return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items)
+                                    );
+                                  }
+                                  ).toList(),
+                                  onChanged: (String newValue){
+                                    setState(() {
+                                      dropdownvalue = newValue;
+                                    });
+                                  },
                                 ),
+                              ),
+                            ):
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              width: size.width * .4,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(11.0),
+                                color: Colors.white,
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFFEBEBEB),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(  customer.customer.customerInfo.paymentType)
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                Get.to(ChequePay());
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(4),
-                                width: size.width * .4,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(11.0),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: const Color(0xFFEBEBEB),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        'Cheque',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Image.asset(
-                                        'assets/images/ch.png',
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
                           ],
                         ),
+
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {
+                        //         Get.to(CashPay());
+                        //       },
+                        //       child: Container(
+                        //         padding: EdgeInsets.all(4),
+                        //         width: size.width * .4,
+                        //         height: 60,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(11.0),
+                        //           color: Colors.white,
+                        //           border: Border.all(
+                        //             width: 1.0,
+                        //             color: const Color(0xFFEBEBEB),
+                        //           ),
+                        //         ),
+                        //         child: Center(
+                        //           child: Row(
+                        //             mainAxisAlignment:
+                        //                 MainAxisAlignment.spaceAround,
+                        //             children: [
+                        //               Text(
+                        //                 'Cash' ,
+                        //                 style: TextStyle(
+                        //                     fontWeight: FontWeight.bold,
+                        //                     fontSize: 20),
+                        //               ),
+                        //               Image.asset(
+                        //                 'assets/images/dollar.png',
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     InkWell(
+                        //       onTap: () {
+                        //         Get.to(ChequePay());
+                        //       },
+                        //       child: Container(
+                        //         padding: EdgeInsets.all(4),
+                        //         width: size.width * .4,
+                        //         height: 60,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(11.0),
+                        //           color: Colors.white,
+                        //           border: Border.all(
+                        //             width: 1.0,
+                        //             color: const Color(0xFFEBEBEB),
+                        //           ),
+                        //         ),
+                        //         child: Center(
+                        //           child: Row(
+                        //             mainAxisAlignment:
+                        //                 MainAxisAlignment.spaceAround,
+                        //             children: [
+                        //               Text(
+                        //                 'Cheque',
+                        //                 style: TextStyle(
+                        //                     fontWeight: FontWeight.bold,
+                        //                     fontSize: 20),
+                        //               ),
+                        //               Image.asset(
+                        //                 'assets/images/ch.png',
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
