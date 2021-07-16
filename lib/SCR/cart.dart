@@ -24,40 +24,43 @@ class Cart extends StatefulWidget {
 
 class _CartEditProductState extends State<Cart> {
   String Chequetime = "choose date";
-TextEditingController _textEditingController=TextEditingController();
+  TextEditingController _textEditingController = TextEditingController();
   CartItemController bata = Get.find<CartItemController>();
   DatabaseHelper _databaseHelper = DatabaseHelper();
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  EmployeePermissionsController employeePermissionsController= Get.find<EmployeePermissionsController>();
-  AllChequesController customer =Get.find<AllChequesController>();
+  EmployeePermissionsController employeePermissionsController =
+      Get.find<EmployeePermissionsController>();
+  AllChequesController customer = Get.find<AllChequesController>();
 
-  String dropdownvalue ;
-  var items =  ['Cash','Cheque' ];
+  String dropdownvalue;
 
-
+  var items = ['Cash', 'Cheque'];
+bool isCash=true;
   List<AllItems> listtoshow = [];
-Map<String,AllItems>getTaxItemMap={};
-bool canApply=true;
-bool requestToChangeInvoicePaymentType;
+  Map<String, AllItems> getTaxItemMap = {};
+  bool canApply = true;
+  bool requestToChangeInvoicePaymentType;
+
   @override
   void initState() {
-
     super.initState();
-    requestToChangeInvoicePaymentType= employeePermissionsController.employeePermissions[0].requestToChangeInvoicePaymentType=="yes";
-    _textEditingController.text=0.toString();
+    requestToChangeInvoicePaymentType = employeePermissionsController
+            .employeePermissions[0].requestToChangeInvoicePaymentType ==
+        "yes";
+    _textEditingController.text = 0.toString();
 
     for (int i = 0; i < bata.cartlist.length; i++) {
-
       if (!listtoshow.contains(bata.cartlist[i])) {
         listtoshow.add(bata.cartlist[i]);
-        getTaxItemMap[bata.cartlist[i].itemId]=bata.cartlist[i] ;   }
+        getTaxItemMap[bata.cartlist[i].itemId] = bata.cartlist[i];
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-print( customer.customer.customerInfo.paymentType);
+    print(customer.customer.customerInfo.paymentType);
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -70,18 +73,18 @@ print( customer.customer.customerInfo.paymentType);
           lastDate: DateTime(2050),
           context: context);
 
-
       date2 = time.toString().substring(0, 10);
       return date2;
     }
- double   total_sal=0;
-    double   totalTax=0;
+
+    double total_sal = 0;
+    double totalTax = 0;
     bata.total_Tax.forEach((key, value) {
-      totalTax+=value;
+      totalTax += value;
     });
-     bata.PriceafterDes.forEach((key, value) {
-       total_sal+=value;
-     });
+    bata.PriceafterDes.forEach((key, value) {
+      total_sal += value;
+    });
 
     return Scaffold(
       body: Container(
@@ -428,7 +431,12 @@ print( customer.customer.customerInfo.paymentType);
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [Text('Discount',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                            children: [
+                              Text(
+                                'Discount',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
                               Container(
                                 width: size.width * .4,
                                 decoration: BoxDecoration(
@@ -444,7 +452,10 @@ print( customer.customer.customerInfo.paymentType);
                                     ),
                                   ],
                                 ),
-                                child: TextField(controller: _textEditingController,keyboardType: TextInputType.number,textAlign: TextAlign.center,
+                                child: TextField(
+                                  controller: _textEditingController,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '  5%  ',
@@ -455,19 +466,35 @@ print( customer.customer.customerInfo.paymentType);
                                   ),
                                 ),
                               ),
-                              GestureDetector(onTap:canApply? (){
-                                canApply=false;
-getTaxItemMap.forEach((key, value) {
-  print('PriceafterDes befor any thing${ bata .PriceafterDes[key]}');
+                              GestureDetector(
+                                onTap: canApply
+                                    ? () {
+                                        canApply = false;
+                                        getTaxItemMap.forEach((key, value) {
+                                          print(
+                                              'PriceafterDes befor any thing${bata.PriceafterDes[key]}');
 
-                                  bata .PriceafterDes[key]=  bata .PriceafterDes[key]-(bata .PriceafterDes[key]*double.parse(_textEditingController.text)/100);
-                                 bata .total_Tax[key]=       bata .PriceafterDes[key] * (double.parse(getTaxItemMap[key].itemDetails[0].tax) / 100);;
-  print('PriceafterDes after   thing${ bata .PriceafterDes[key]}');
-                             });
+                                          bata.PriceafterDes[key] =
+                                              bata.PriceafterDes[key] -
+                                                  (bata.PriceafterDes[key] *
+                                                      double.parse(
+                                                          _textEditingController
+                                                              .text) /
+                                                      100);
+                                          bata.total_Tax[key] = bata
+                                                  .PriceafterDes[key] *
+                                              (double.parse(getTaxItemMap[key]
+                                                      .itemDetails[0]
+                                                      .tax) /
+                                                  100);
+                                          ;
+                                          print(
+                                              'PriceafterDes after   thing${bata.PriceafterDes[key]}');
+                                        });
 
-                            setState(() {
-
-                            });  }:null,
+                                        setState(() {});
+                                      }
+                                    : null,
                                 child: Container(
                                   width: size.width * .3,
                                   decoration: BoxDecoration(
@@ -486,7 +513,9 @@ getTaxItemMap.forEach((key, value) {
                                   child: Container(
                                     height: 50,
                                     decoration: BoxDecoration(
-                                      color: canApply?Color(0xff2C4B89):Colors.grey,
+                                      color: canApply
+                                          ? Color(0xff2C4B89)
+                                          : Colors.grey,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Center(
@@ -504,7 +533,8 @@ getTaxItemMap.forEach((key, value) {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 8, right: 16, left: 16, bottom: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -514,29 +544,37 @@ getTaxItemMap.forEach((key, value) {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                            padding: EdgeInsets.only(
+                                top: 8, right: 16, left: 16, bottom: 8),
                             child: Divider(
                               height: 1,
                               color: Colors.teal,
                             )),
                         Padding(
-                          padding: EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 8, right: 16, left: 16, bottom: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Discount'),
-                             Text((total_sal*double.parse(_textEditingController.text??"0")/100).toStringAsFixed(3)),
+                              Text((total_sal *
+                                      double.parse(
+                                          _textEditingController.text ?? "0") /
+                                      100)
+                                  .toStringAsFixed(3)),
                             ],
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                            padding: EdgeInsets.only(
+                                top: 8, right: 16, left: 16, bottom: 8),
                             child: Divider(
                               height: 1,
                               color: Colors.teal,
                             )),
                         Padding(
-                          padding: EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 8, right: 16, left: 16, bottom: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -546,76 +584,133 @@ getTaxItemMap.forEach((key, value) {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                            padding: EdgeInsets.only(
+                                top: 8, right: 16, left: 16, bottom: 8),
                             child: Divider(
                               height: 1,
                               color: Colors.teal,
                             )),
                         Padding(
-                          padding:EdgeInsets.only(top: 8,right: 16,left: 16,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 8, right: 16, left: 16, bottom: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Grand Total'),
-                              Text( (totalTax+total_sal).toStringAsFixed(3) ),
+                              Text((totalTax + total_sal).toStringAsFixed(3)),
                             ],
                           ),
                         ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 16, right: 16),
-                              child: Text('Payment Method'),
-                            ),  requestToChangeInvoicePaymentType?
-                            Container(
-                              padding: EdgeInsets.all(4),
-                              width: size.width * .4,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(11.0),
-                                color: Colors.white,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: const Color(0xFFEBEBEB),
-                                ),
-                              ),
-                              child: Center(
-                                child: DropdownButton(underline:   SizedBox(),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Payment Method'),
 
-                                  value: dropdownvalue, hint: Text('Cash OR Cheque'),
-                                  icon: Icon(Icons.keyboard_arrow_down),
-                                  items:items.map((String items) {
-                                    return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items)
-                                    );
-                                  }
-                                  ).toList(),
-                                  onChanged: (String newValue){
-                                    setState(() {
-                                      dropdownvalue = newValue;
-                                    });
-                                  },
+                                  // Container(
+                                  //   padding: EdgeInsets.all(4),
+                                  //   width: size.width * .4,
+                                  //   height: 60,
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(11.0),
+                                  //     color: Colors.white,
+                                  //     border: Border.all(
+                                  //       width: 1.0,
+                                  //       color: const Color(0xFFEBEBEB),
+                                  //     ),
+                                  //   ),
+                                  //   child: Center(
+                                  //     child: DropdownButton(underline:   SizedBox(),
+                                  //
+                                  //       value: dropdownvalue, hint: Text('Cash OR Cheque'),
+                                  //       icon: Icon(Icons.keyboard_arrow_down),
+                                  //       items:items.map((String items) {
+                                  //         return DropdownMenuItem(
+                                  //             value: items,
+                                  //             child: Text(items)
+                                  //         );
+                                  //       }
+                                  //       ).toList(),
+                                  //       onChanged: (String newValue){
+                                  //         setState(() {
+                                  //           dropdownvalue = newValue;
+                                  //         });
+                                  //       },
+                                  //     ),
+                                  //   ),
+                                  // ):
+
+                              if(  requestToChangeInvoicePaymentType)   GestureDetector(onTap: (){
+                                isCash=true;
+                                setState(() {
+
+                                });
+                              },
+                                child: Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Center(
+                                      child: Text(
+                                        'Cash',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
+                                      )),
+                                  width: size.width * .25,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(11.0),
+                                    color:isCash ? Colors.indigoAccent: Colors.grey,
+                                    border: Border.all(
+                                      width: 1.0,
+                                      color: const Color(0xFFEBEBEB),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ):
-                            Container(
-                              padding: EdgeInsets.all(4),
-                              width: size.width * .4,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(11.0),
-                                color: Colors.white,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: const Color(0xFFEBEBEB),
+
+                              if(  requestToChangeInvoicePaymentType) GestureDetector(onTap: (){
+                                isCash=false;
+                                setState(() {
+
+                                });
+                              },
+                                child: Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Center(
+                                      child: Text(
+                                        'Credit ',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
+                                      )),
+                                  width: size.width * .25,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(11.0),
+                                    color:isCash==false? Colors.indigoAccent: Colors.grey,
+                                    border: Border.all(
+                                      width: 1.0,
+                                      color: const Color(0xFFEBEBEB),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(  customer.customer.customerInfo.paymentType)
-                              ),
-                            ),
-                          ],
+                              )
+                              , if(  !requestToChangeInvoicePaymentType) Container(
+                                padding: EdgeInsets.all(4),
+                                width: size.width * .4,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(11.0),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    width: 1.0,
+                                    color: const Color(0xFFEBEBEB),
+                                  ),
+                                ),
+                                child: Center(
+                                    child: Text(customer.customer
+                                        .customerInfo.paymentType)),
+                              )
+                            ],
+                          ),
                         ),
 
                         // Row(
@@ -777,8 +872,6 @@ getTaxItemMap.forEach((key, value) {
                                           double.parse(bata.cartlist[oo]
                                               .itemDetails[0].sellingPrice);
                                     }
-
-
 
                                     _databaseHelper
                                         .insert_sales_order_requests(
@@ -986,7 +1079,6 @@ getTaxItemMap.forEach((key, value) {
                     InkWell(
                       onTap: () {
                         bata.removefromcart(item: data);
-
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -1030,7 +1122,6 @@ getTaxItemMap.forEach((key, value) {
                     InkWell(
                       onTap: () {
                         bata.addToCart(item: data);
-
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -1067,38 +1158,33 @@ getTaxItemMap.forEach((key, value) {
   }
 
   insertItemInDataBase(int i) async {
-   
     for (int oo = 0; oo < bata.cartlist.length; oo++) {
-      if( bata.itemcount[bata.cartlist[oo].itemId]==null){
-        bata.itemcount[bata.cartlist[oo].itemId]=1;
-      //  bata.itemInCart.value++;
-      }else{
-        bata. itemcount[bata.cartlist[oo].itemId]+=1;
+      if (bata.itemcount[bata.cartlist[oo].itemId] == null) {
+        bata.itemcount[bata.cartlist[oo].itemId] = 1;
+        //  bata.itemInCart.value++;
+      } else {
+        bata.itemcount[bata.cartlist[oo].itemId] += 1;
       }
-     }
-      // bata.additemInitemInCart(item: bata.cartlist[oo]);
-    bata.itemcount.forEach((key, value) async{
-  await DatabaseHelper()
-      .insert_item_tabel(Item_Database(
-          olderId: i,
-          itemId: int.tryParse(key),
-          // categoryId:
-          //     int.parse(bata.cartlist[oo].itemDetails[0].categoryId), //
+    }
+    // bata.additemInitemInCart(item: bata.cartlist[oo]);
+    bata.itemcount.forEach((key, value) async {
+      await DatabaseHelper()
+          .insert_item_tabel(Item_Database(
+              olderId: i,
+              itemId: int.tryParse(key),
+              // categoryId:
+              //     int.parse(bata.cartlist[oo].itemDetails[0].categoryId), //
 
-          // basePricePerUnit: double.parse(
-          //     bata.cartlist[oo].itemDetails[0].itemCost ?? "1")
-    quantity: value
-  )
-  )
-      .then((value) {
-    print('تم اضافه');
-  }).catchError((e) {
-    print(e.toString());
-  });
-});
+              // basePricePerUnit: double.parse(
+              //     bata.cartlist[oo].itemDetails[0].itemCost ?? "1")
+              quantity: value))
+          .then((value) {
+        print('تم اضافه');
+      }).catchError((e) {
+        print(e.toString());
+      });
+    });
 
-
-
-   // Get.off(Dashboard());
+    // Get.off(Dashboard());
   }
 }
