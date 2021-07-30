@@ -148,15 +148,15 @@ class _All_CustomerState extends State<All_Customer> {
     return c.swatch.isRunning?
     Container(
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.7),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset:
-              Offset(0, 3), // changes position of shadow
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.withOpacity(0.7),
+          //     spreadRadius: 5,
+          //     blurRadius: 7,
+          //     offset:
+          //     Offset(0, 3), // changes position of shadow
+          //   ),
+          // ],
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),

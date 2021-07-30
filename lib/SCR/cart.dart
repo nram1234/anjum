@@ -4,6 +4,7 @@ import 'package:anjum/DB/tabelname/item_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
+import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
@@ -23,6 +24,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<Cart> {
+  var keysOfMap;
   String Chequetime = "choose date";
   TextEditingController _textEditingController = TextEditingController();
   CartItemController bata = Get.find<CartItemController>();
@@ -42,9 +44,13 @@ bool isCash=true;
   bool canApply = true;
   bool requestToChangeInvoicePaymentType;
 
+
+
+  final MyProdectListController _myProdectListController = Get.find<MyProdectListController>();
   @override
   void initState() {
     super.initState();
+    keysOfMap = _myProdectListController.item.keys.toList();
     requestToChangeInvoicePaymentType = employeePermissionsController
             .employeePermissions[0].requestToChangeInvoicePaymentType ==
         "yes";
@@ -167,11 +173,14 @@ bool isCash=true;
                           child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: listtoshow.length,
+                              itemCount: _myProdectListController.item.length,//listtoshow.length,
                               itemBuilder: (context, pos) {
-                                return Obx(() {
+
+                                _myProdectListController.item[keysOfMap[pos]];
+
+                             if(_myProdectListController.item[keysOfMap[pos]].value.count>0)   return Obx(() {
                                   return item(
-                                      size: size, data: listtoshow[pos]);
+                                      size: size, products: _myProdectListController.item[keysOfMap[pos]]);
                                 });
                               }),
                         ),
@@ -188,7 +197,7 @@ bool isCash=true;
                                 child: ElevatedButton(
                                   child: Text('Apply  Promotions'),
                                   style: ElevatedButton.styleFrom(
-                                    elevation: 20,
+                                    elevation: 0,
                                     primary: Colors.orangeAccent,
                                     onPrimary: Colors.white,
                                     shape: const BeveledRectangleBorder(
@@ -252,19 +261,19 @@ bool isCash=true;
                                                                     .circular(
                                                                         10),
                                                             color: Colors.white,
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                        0.5),
-                                                                spreadRadius: 5,
-                                                                blurRadius: 7,
-                                                                offset: Offset(
-                                                                    0,
-                                                                    3), // changes position of shadow
-                                                              ),
-                                                            ],
+                                                            // boxShadow: [
+                                                            //   BoxShadow(
+                                                            //     color: Colors
+                                                            //         .grey
+                                                            //         .withOpacity(
+                                                            //             0.5),
+                                                            //     spreadRadius: 5,
+                                                            //     blurRadius: 7,
+                                                            //     offset: Offset(
+                                                            //         0,
+                                                            //         3), // changes position of shadow
+                                                            //   ),
+                                                            // ],
                                                           ),
                                                           child: TextField(
                                                             decoration:
@@ -312,19 +321,19 @@ bool isCash=true;
                                                                     .circular(
                                                                         10),
                                                             color: Colors.white,
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                        0.5),
-                                                                spreadRadius: 5,
-                                                                blurRadius: 7,
-                                                                offset: Offset(
-                                                                    0,
-                                                                    3), // changes position of shadow
-                                                              ),
-                                                            ],
+                                                            // boxShadow: [
+                                                            //   BoxShadow(
+                                                            //     color: Colors
+                                                            //         .grey
+                                                            //         .withOpacity(
+                                                            //             0.5),
+                                                            //     spreadRadius: 5,
+                                                            //     blurRadius: 7,
+                                                            //     offset: Offset(
+                                                            //         0,
+                                                            //         3), // changes position of shadow
+                                                            //   ),
+                                                            // ],
                                                           ),
                                                           child: TextField(
                                                             decoration:
@@ -372,17 +381,17 @@ bool isCash=true;
                                                             BorderRadius
                                                                 .circular(10),
                                                         color: Colors.white,
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            spreadRadius: 5,
-                                                            blurRadius: 7,
-                                                            offset: Offset(0,
-                                                                3), // changes position of shadow
-                                                          ),
-                                                        ],
+                                                        // boxShadow: [
+                                                        //   BoxShadow(
+                                                        //     color: Colors.grey
+                                                        //         .withOpacity(
+                                                        //             0.5),
+                                                        //     spreadRadius: 5,
+                                                        //     blurRadius: 7,
+                                                        //     offset: Offset(0,
+                                                        //         3), // changes position of shadow
+                                                        //   ),
+                                                        // ],
                                                       ),
                                                       child: Container(
                                                         height: 50,
@@ -442,17 +451,22 @@ bool isCash=true;
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
-                                child: TextField(
+                                child: TextField(onChanged: (v){
+                                  if (v != null && v.isNotEmpty) {
+                                    _myProdectListController.settotalDiscountincart(
+                                      v: v);
+                                  }
+                                },
                                   controller: _textEditingController,
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
@@ -470,29 +484,33 @@ bool isCash=true;
                                 onTap: canApply
                                     ? () {
                                         canApply = false;
-                                        getTaxItemMap.forEach((key, value) {
-                                          print(
-                                              'PriceafterDes befor any thing${bata.PriceafterDes[key]}');
 
-                                          bata.PriceafterDes[key] =
-                                              bata.PriceafterDes[key] -
-                                                  (bata.PriceafterDes[key] *
-                                                      double.parse(
-                                                          _textEditingController
-                                                              .text) /
-                                                      100);
-                                          bata.total_Tax[key] = bata
-                                                  .PriceafterDes[key] *
-                                              (double.parse(getTaxItemMap[key]
-                                                      .itemDetails[0]
-                                                      .tax) /
-                                                  100);
-                                          ;
-                                          print(
-                                              'PriceafterDes after   thing${bata.PriceafterDes[key]}');
-                                        });
+                               //    _myProdectListController.settotalpriceincart(double.parse(_textEditingController.text));
 
-                                        setState(() {});
+
+                                        // getTaxItemMap.forEach((key, value) {
+                                        //   print(
+                                        //       'PriceafterDes befor any thing${bata.PriceafterDes[key]}');
+                                        //
+                                        //   bata.PriceafterDes[key] =
+                                        //       bata.PriceafterDes[key] -
+                                        //           (bata.PriceafterDes[key] *
+                                        //               double.parse(
+                                        //                   _textEditingController
+                                        //                       .text) /
+                                        //               100);
+                                        //   bata.total_Tax[key] = bata
+                                        //           .PriceafterDes[key] *
+                                        //       (double.parse(getTaxItemMap[key]
+                                        //               .itemDetails[0]
+                                        //               .tax) /
+                                        //           100);
+                                        //   ;
+                                        //   print(
+                                        //       'PriceafterDes after   thing${bata.PriceafterDes[key]}');
+                                        // });
+                                        //
+                                        // setState(() {});
                                       }
                                     : null,
                                 child: Container(
@@ -500,15 +518,15 @@ bool isCash=true;
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.withOpacity(0.5),
+                                    //     spreadRadius: 5,
+                                    //     blurRadius: 7,
+                                    //     offset: Offset(
+                                    //         0, 3), // changes position of shadow
+                                    //   ),
+                                    // ],
                                   ),
                                   child: Container(
                                     height: 50,
@@ -539,7 +557,11 @@ bool isCash=true;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total'),
-                              Text(total_sal.toStringAsFixed(3)),
+                              GetBuilder<MyProdectListController>(
+  builder: (logic) {
+    return Text(logic.totalpriceincart.toStringAsFixed(3));
+  },
+),
                             ],
                           ),
                         ),
@@ -557,11 +579,11 @@ bool isCash=true;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Discount'),
-                              Text((total_sal *
-                                      double.parse(
-                                          _textEditingController.text ?? "0") /
-                                      100)
-                                  .toStringAsFixed(3)),
+                              GetBuilder<MyProdectListController>(
+                                builder: (logic) {
+                                  return Text(logic.totalDiscountincart.toStringAsFixed(3));
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -579,7 +601,7 @@ bool isCash=true;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total Tax'),
-                              Text(totalTax.toStringAsFixed(3)),
+                              Text(_myProdectListController.totalTaxincart.value.toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -597,7 +619,7 @@ bool isCash=true;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Grand Total'),
-                              Text((totalTax + total_sal).toStringAsFixed(3)),
+                              Text((_myProdectListController.totalTaxincart.value + _myProdectListController.totalpriceincart.value).toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -807,15 +829,15 @@ bool isCash=true;
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 child: Center(child: Text(Chequetime)),
                               ),
@@ -838,15 +860,15 @@ bool isCash=true;
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.withOpacity(0.5),
+                                    //     spreadRadius: 5,
+                                    //     blurRadius: 7,
+                                    //     offset: Offset(
+                                    //         0, 3), // changes position of shadow
+                                    //   ),
+                                    // ],
                                   ),
                                   child: TextField(
                                     decoration: InputDecoration(
@@ -938,14 +960,14 @@ bool isCash=true;
       ),
     );
   }
-
-  Widget item({size, AllItems data}) {
+  Widget item({size, Rx<TheItemInList> products}) {
     int numberofitem = 0;
     for (int i = 0; i < bata.cartlist.length; i++) {
-      if (bata.cartlist[i] == data) {
+      if (bata.cartlist[i] == products) {
         numberofitem++;
       }
     }
+  TextEditingController  textEditingController=TextEditingController();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -956,14 +978,14 @@ bool isCash=true;
                 topRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.grey.withOpacity(0.5),
+            //     spreadRadius: 5,
+            //     blurRadius: 7,
+            //     offset: Offset(0, 3), // changes position of shadow
+            //   ),
+            // ],
           ),
           //  height: size.height * .145,
           width: size.width,
@@ -995,12 +1017,12 @@ bool isCash=true;
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(
-                                CartEditProduct(data),
-                              );
+                              // Get.to(
+                              //   CartEditProduct(data),
+                              // );
                             },
                             child: Text(
-                              data.itemDetails[0].itemNameEn,
+                              products.value.name,
                               // overflow: TextOverflow.fade,
                               maxLines: 2,
 
@@ -1016,7 +1038,7 @@ bool isCash=true;
 
                           //price
                           Text(
-                            data.itemDetails[0].sellingPrice,
+                            products.value.price.toString(),
                             maxLines: 2,
                             style: TextStyle(
                               fontFamily: 'Poppins',
@@ -1032,36 +1054,17 @@ bool isCash=true;
                     Container(
                         child: InkWell(
                             onTap: () {
-                              listtoshow.remove(data);
-                              bata.removeAllChooseItexfromcart(item: data);
-
-                              setState(() {});
+                              // listtoshow.remove(data);
+                              // bata.removeAllChooseItexfromcart(item: data);
+                              //
+                              // setState(() {});
                             },
                             child: Icon(
                               Icons.delete,
                               color: Colors.grey,
                               size: 30,
                             ))),
-                    // Container(
-                    //     child: InkWell(
-                    //         onTap: () {
-                    //
-                    //           // Get.to(CartEditProduct(data), );
-                    //           // //
-                    //           // // Navigator.push(
-                    //           // //   context,
-                    //           // //   MaterialPageRoute(
-                    //           // //       builder: (context) => CartEditProduct()),
-                    //           // // );
-                    //           // //
-                    //           // //
-                    //
-                    //         },
-                    //         child: Icon(
-                    //           Icons.edit,
-                    //           color: Colors.grey,
-                    //           size: 30,
-                    //         ))),
+
                   ],
                 ),
               ),
@@ -1078,7 +1081,16 @@ bool isCash=true;
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        bata.removefromcart(item: data);
+                        if(_myProdectListController
+                            .item[products.value.id].value.count>0){
+                          int v = _myProdectListController
+                              .item[products.value.id].value.count - 1;
+                          print(products.value.count);
+                          _myProdectListController.setCount(
+                              id: products.value.id,
+                              count: v);
+                        }
+
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -1111,9 +1123,28 @@ bool isCash=true;
                     SizedBox(
                       width: 15,
                     ),
-                    Text(
-                      numberofitem.toString(),
-                      style: TextStyle(fontSize: 20),
+                    Container(
+                      width: size.width * .2,
+                      child: Center(
+                          child: GetBuilder<MyProdectListController>(
+                            builder: (logic) {
+                              textEditingController.text=logic.item[products.value.id].value.count.toString();
+
+                              return TextField(
+                                onChanged: (v) {
+                                  if (v != null && v.isNotEmpty) {
+                                    _myProdectListController.setCount(
+                                        id: products.value.id,
+                                        count: int.parse(v));
+                                  }
+                                },
+
+                                controller: textEditingController,
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                              );
+                            },
+                          )),
                     ),
                     SizedBox(
                       width: 15,
@@ -1121,7 +1152,14 @@ bool isCash=true;
 
                     InkWell(
                       onTap: () {
-                        bata.addToCart(item: data);
+                      //  bata.addToCart(item: data);
+
+                        int v = _myProdectListController
+                            .item[products.value.id].value.count + 1;
+                        print(products.value.count);
+                        _myProdectListController.setCount(
+                            id: products.value.id,
+                            count: v);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -1156,6 +1194,223 @@ bool isCash=true;
           )),
     );
   }
+  // Widget item({size, AllItems data}) {
+  //   int numberofitem = 0;
+  //   for (int i = 0; i < bata.cartlist.length; i++) {
+  //     if (bata.cartlist[i] == data) {
+  //       numberofitem++;
+  //     }
+  //   }
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.only(
+  //               topLeft: Radius.circular(10),
+  //               topRight: Radius.circular(10),
+  //               bottomLeft: Radius.circular(10),
+  //               bottomRight: Radius.circular(10)),
+  //           // boxShadow: [
+  //           //   BoxShadow(
+  //           //     color: Colors.grey.withOpacity(0.5),
+  //           //     spreadRadius: 5,
+  //           //     blurRadius: 7,
+  //           //     offset: Offset(0, 3), // changes position of shadow
+  //           //   ),
+  //           // ],
+  //         ),
+  //         //  height: size.height * .145,
+  //         width: size.width,
+  //         // color: Colors.white,
+  //         child: Column(
+  //           children: [
+  //             //photo item
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: Row(
+  //                 children: [
+  //                   Padding(
+  //                     padding: const EdgeInsets.all(8.0),
+  //                     child: Container(
+  //                       width: 100,
+  //                       height: 100,
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.blue,
+  //                         // image: DecorationImage(
+  //                         //   image: NetworkImage(data.itemDetails[0].image),
+  //                         //   fit: BoxFit.fill,
+  //                         // ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Expanded(
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         GestureDetector(
+  //                           onTap: () {
+  //                             Get.to(
+  //                               CartEditProduct(data),
+  //                             );
+  //                           },
+  //                           child: Text(
+  //                             data.itemDetails[0].itemNameEn,
+  //                             // overflow: TextOverflow.fade,
+  //                             maxLines: 2,
+  //
+  //                             style: TextStyle(
+  //                               fontFamily: 'Roboto',
+  //                               fontSize: 20,
+  //                               color: const Color(0xff1e2432),
+  //                               letterSpacing: -0.32,
+  //                               height: 1.2,
+  //                             ),
+  //                           ),
+  //                         ),
+  //
+  //                         //price
+  //                         Text(
+  //                           data.itemDetails[0].sellingPrice,
+  //                           maxLines: 2,
+  //                           style: TextStyle(
+  //                             fontFamily: 'Poppins',
+  //                             fontSize: 13,
+  //                             color: const Color(0xff191919),
+  //                             fontWeight: FontWeight.w600,
+  //                           ),
+  //                           textAlign: TextAlign.left,
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   Container(
+  //                       child: InkWell(
+  //                           onTap: () {
+  //                             listtoshow.remove(data);
+  //                             bata.removeAllChooseItexfromcart(item: data);
+  //
+  //                             setState(() {});
+  //                           },
+  //                           child: Icon(
+  //                             Icons.delete,
+  //                             color: Colors.grey,
+  //                             size: 30,
+  //                           ))),
+  //                   // Container(
+  //                   //     child: InkWell(
+  //                   //         onTap: () {
+  //                   //
+  //                   //           // Get.to(CartEditProduct(data), );
+  //                   //           // //
+  //                   //           // // Navigator.push(
+  //                   //           // //   context,
+  //                   //           // //   MaterialPageRoute(
+  //                   //           // //       builder: (context) => CartEditProduct()),
+  //                   //           // // );
+  //                   //           // //
+  //                   //           // //
+  //                   //
+  //                   //         },
+  //                   //         child: Icon(
+  //                   //           Icons.edit,
+  //                   //           color: Colors.grey,
+  //                   //           size: 30,
+  //                   //         ))),
+  //                 ],
+  //               ),
+  //             ),
+  //
+  //             //edit & delete
+  //
+  //             //item name
+  //
+  //             //counter
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: Row(
+  //                 mainAxisSize: MainAxisSize.min,
+  //                 children: <Widget>[
+  //                   InkWell(
+  //                     onTap: () {
+  //                       bata.removefromcart(item: data);
+  //                     },
+  //                     child: Container(
+  //                       decoration: BoxDecoration(
+  //                           color: Colors.orange,
+  //                           borderRadius: BorderRadius.circular(2)),
+  //                       height: 50,
+  //                       width: 50,
+  //                       child: Center(
+  //                         child: Text(
+  //                           "-",
+  //                           style: TextStyle(
+  //                               fontWeight: FontWeight.bold,
+  //                               fontSize: 30,
+  //                               color: Colors.white),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   // IconButton(
+  //                   //   icon: Icon(
+  //                   //     Icons.remove_circle,
+  //                   //     size: 60,
+  //                   //   ),
+  //                   //   onPressed: () {
+  //                   //     bata.removefromcart(item: data);
+  //                   //
+  //                   //   },
+  //                   //   color: Colors.orangeAccent,
+  //                   // ),
+  //                   SizedBox(
+  //                     width: 15,
+  //                   ),
+  //                   Text(
+  //                     numberofitem.toString(),
+  //                     style: TextStyle(fontSize: 20),
+  //                   ),
+  //                   SizedBox(
+  //                     width: 15,
+  //                   ),
+  //
+  //                   InkWell(
+  //                     onTap: () {
+  //                       bata.addToCart(item: data);
+  //                     },
+  //                     child: Container(
+  //                       decoration: BoxDecoration(
+  //                           color: Colors.orange,
+  //                           borderRadius: BorderRadius.circular(2)),
+  //                       height: 50,
+  //                       width: 50,
+  //                       child: Center(
+  //                         child: Text(
+  //                           "+",
+  //                           style: TextStyle(
+  //                               fontWeight: FontWeight.bold,
+  //                               fontSize: 20,
+  //                               color: Colors.white),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   // IconButton(
+  //                   //   icon: Icon(Icons.add_circle, size: 60),
+  //                   //   color: Colors.orangeAccent,
+  //                   //   onPressed: () {
+  //                   //     bata.addToCart(item: data);
+  //                   //     print('pppp');
+  //                   //
+  //                   //   },
+  //                   // ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         )),
+  //   );
+  // }
 
   insertItemInDataBase(int i) async {
     for (int oo = 0; oo < bata.cartlist.length; oo++) {

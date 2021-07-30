@@ -95,13 +95,13 @@ class OrderStatusdetails extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFFB3B3B3).withOpacity(0.5),
-                              offset: Offset(0, 4.0),
-                              blurRadius: 20.0,
-                            ),
-                          ],
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: const Color(0xFFB3B3B3).withOpacity(0.5),
+                          //     offset: Offset(0, 4.0),
+                          //     blurRadius: 20.0,
+                          //   ),
+                          // ],
                         ),
                         child: Column(
                           children: [
@@ -221,15 +221,15 @@ class OrderStatusdetails extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Colors.grey.withOpacity(0.5),
+                          //     spreadRadius: 5,
+                          //     blurRadius: 7,
+                          //     offset:
+                          //         Offset(0, 3), // changes position of shadow
+                          //   ),
+                          // ],
                         ),
                         child: TextField(
                           decoration: InputDecoration(
@@ -260,13 +260,13 @@ class OrderStatusdetails extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFFB3B3B3).withOpacity(0.5),
-              offset: Offset(0, 4.0),
-              blurRadius: 20.0,
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: const Color(0xFFB3B3B3).withOpacity(0.5),
+          //     offset: Offset(0, 4.0),
+          //     blurRadius: 20.0,
+          //   ),
+          // ],
         ),
         child: Row(
           children: [

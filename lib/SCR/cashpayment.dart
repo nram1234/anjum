@@ -137,15 +137,15 @@ String amount='',addnote='';
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 child: Center(child: Text(date2)),
                               ),
@@ -166,15 +166,15 @@ String amount='',addnote='';
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     color: Colors.grey.withOpacity(0.5),
+                              //     spreadRadius: 5,
+                              //     blurRadius: 7,
+                              //     offset: Offset(
+                              //         0, 3), // changes position of shadow
+                              //   ),
+                              // ],
                             ),
                             child: TextField(onChanged: (v){
                               amount=v;
@@ -203,15 +203,15 @@ String amount='',addnote='';
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     color: Colors.grey.withOpacity(0.5),
+                              //     spreadRadius: 5,
+                              //     blurRadius: 7,
+                              //     offset: Offset(
+                              //         0, 3), // changes position of shadow
+                              //   ),
+                              // ],
                             ),
                             child: TextField(onChanged: (v){
                               addnote=v;

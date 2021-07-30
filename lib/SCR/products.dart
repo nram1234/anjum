@@ -12,6 +12,7 @@ import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/employeDataController.dart';
+import 'package:anjum/controllers/myProdectListController.dart';
 
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/unitController.dart';
@@ -34,6 +35,9 @@ class ProductsScr extends StatefulWidget {
 }
 
 class _ProductsScrState extends State<ProductsScr> {
+  MyProdectListController _myProdectListController =
+  Get.put(MyProdectListController());
+
   List<Widget> alert_item = [];
 
   final AllItemsController bata = Get.find<AllItemsController>();
@@ -41,7 +45,8 @@ class _ProductsScrState extends State<ProductsScr> {
   final AllCustomersControllers _allCustomersControllers =
   Get.find<AllCustomersControllers>();
 
-  final UnitController _UnitController = Get.find<UnitController>() ;//Get.put(UnitController());
+  final UnitController _UnitController =
+  Get.find<UnitController>(); //Get.put(UnitController());
 
   CartItemController cartListItem =
   Get.put(CartItemController(), permanent: true);
@@ -56,7 +61,8 @@ class _ProductsScrState extends State<ProductsScr> {
   int totalItem = 0;
 
   //=========================
-  var stocitem = Get.find<AllStockItemsController>()
+  var stocitem = Get
+      .find<AllStockItemsController>()
       .allStockItems; //ده لسته المنتجات وممكن المقارنه بايد الاستور ونضيفه في لسته
 
   DropdownMenuItemList dropdownMenuItemList =
@@ -64,6 +70,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
   //====================
   AllStockItems _allStockItems;
+  var keysOfMap;
 
   @override
   void dispose() {
@@ -71,15 +78,19 @@ class _ProductsScrState extends State<ProductsScr> {
     cartListItem.cartlist.clear();
     cartListItem.bounce.clear();
     cartListItem.discount.clear();
-    cartListItem.itemInCart.value=0;
+    cartListItem.itemInCart.value = 0;
     _UnitController.all_Uint_select.clear();
     _UnitController.all_Uint_List.clear();
     _UnitController.val_Of_uint_map.clear();
     _UnitController.MeasurementUnit_map;
-    print('disposedisposedisposedisposedisposedisposedisposedisposedisposedisposedispose');
+    print(
+        'disposedisposedisposedisposedisposedisposedisposedisposedisposedisposedispose');
   } //getstock
+
   getmeasurementUnit() {
-    AllCustomers allCustomers = Get.find<AllChequesController>().customer;
+    AllCustomers allCustomers = Get
+        .find<AllChequesController>()
+        .customer;
     List<List<ItemUnits>> MeasurementUnit2 = [];
     for (int uu = 0; uu < allCustomers.priceListsInfo.length; uu++) {
       MeasurementUnit2.add([]);
@@ -108,6 +119,7 @@ class _ProductsScrState extends State<ProductsScr> {
   @override
   void initState() {
     super.initState();
+    keysOfMap = _myProdectListController.item.keys.toList();
     getmeasurementUnit();
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
@@ -119,7 +131,7 @@ class _ProductsScrState extends State<ProductsScr> {
       dropdownMenuItemList.allStockItems.add(p);
       TextEditingController textEditingControllerOfItem =
       TextEditingController();
-      textEditingControllerOfItem.text ="0";
+      textEditingControllerOfItem.text = "0";
       dropdownMenuItemList
           .addlisttextEditingControllerOfItem(textEditingControllerOfItem);
       TextEditingController textEditingDiscount = TextEditingController();
@@ -146,7 +158,9 @@ class _ProductsScrState extends State<ProductsScr> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
@@ -201,14 +215,16 @@ class _ProductsScrState extends State<ProductsScr> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Obx(
-                                              () {
-                                            log(cartListItem.itemInCart.value.toString());
-                                            return     Text(cartListItem.itemInCart.value.toString(),
-                                                style: TextStyle(
-                                                    color: Colors.white, fontSize: 18));
-                                          }
-                                      )
+                                      Obx(() {
+                                        log(cartListItem.itemInCart.value
+                                            .toString());
+                                        return Text(
+                                            cartListItem.itemInCart.value
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18));
+                                      })
                                     ],
                                   ),
                                 ],
@@ -273,13 +289,13 @@ class _ProductsScrState extends State<ProductsScr> {
                                       TextEditingController
                                       textEditingControllerOfItem =
                                       TextEditingController();
-                                      textEditingControllerOfItem.text =
-                                      '';
+                                      textEditingControllerOfItem.text = '';
                                       dropdownMenuItemList
                                           .serach_addlisttextEditingControllerOfItem(
                                           textEditingControllerOfItem);
                                       AllStockItems allStockItems;
-                                      dropdownMenuItemList.serach_listdropdownValue
+                                      dropdownMenuItemList
+                                          .serach_listdropdownValue
                                           .add(allStockItems);
                                       //  for(int z=0;z<stocitem.length;z++){
                                       //
@@ -290,7 +306,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
 
                                     }
-                                    setState(() {});
+                                    //  setState(() {});
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -309,7 +325,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                 child: Container(
                                   width: size.width * .1,
                                   height: size.width * .1,
-                                  child: Image.asset('assets/images/filter.png'),
+                                  child: Image.asset(
+                                      'assets/images/filter.png'),
                                 ),
                               ),
                             ],
@@ -322,8 +339,10 @@ class _ProductsScrState extends State<ProductsScr> {
                             onTap: () {
                               totalItem = 0;
                               double totalprice = 0;
-                              cartListItem.itemInCart.value=0;
-                              if (bata.search_word.trim().isNotEmpty) {
+                              cartListItem.itemInCart.value = 0;
+                              if (bata.search_word
+                                  .trim()
+                                  .isNotEmpty) {
                                 for (int i = 0;
                                 i <
                                     dropdownMenuItemList
@@ -361,21 +380,20 @@ class _ProductsScrState extends State<ProductsScr> {
                                     dropdownMenuItemList
                                         .listtextEditingControllerOfItem.length;
                                 i++) {
-                                  if(  int.parse(dropdownMenuItemList
+                                  if (int.parse(dropdownMenuItemList
                                       .listtextEditingControllerOfItem[i]
-                                      .text) >0&&!cartListItem.cartlist.contains(  bata.allItems[i]) ){
-
+                                      .text) >
+                                      0 &&
+                                      !cartListItem.cartlist
+                                          .contains(bata.allItems[i])) {
                                     // cartListItem.itemInCart++;
-
-
-
-
 
                                   }
 
                                   totalItem = totalItem +
                                       int.parse(dropdownMenuItemList
-                                          .listtextEditingControllerOfItem[i].text);
+                                          .listtextEditingControllerOfItem[i]
+                                          .text);
                                   totalprice = totalprice +
                                       (int.parse(dropdownMenuItemList
                                           .listtextEditingControllerOfItem[i]
@@ -389,36 +407,42 @@ class _ProductsScrState extends State<ProductsScr> {
                                           .listtextEditingControllerOfItem[i]
                                           .text);
                                   p++) {
-                                    cartListItem.addToCart(item: bata.allItems[i]);
+                                    cartListItem.addToCart(
+                                        item: bata.allItems[i]);
                                   }
                                 }
                               }
 
                               int customer_id = int.tryParse(
-                                  Get.find<AllChequesController>().customer_id);
-
+                                  Get
+                                      .find<AllChequesController>()
+                                      .customer_id);
 
                               for (int i = 0;
                               i < cartListItem.cartlist.length;
                               i++) {
                                 totalprice = totalprice +
                                     double.tryParse(cartListItem
-                                        .cartlist[i].itemDetails[0].sellingPrice);
+                                        .cartlist[i].itemDetails[0]
+                                        .sellingPrice);
                               }
 
                               _databaseHelper
-                                  .insert_temporary_tabel_cart(Temporary_tabel_cart(
-                                customer_id: customer_id.toString(),
-                                employee_id:
-                                _userAndPermissions.user.userId.toString(),
-                                supervisor_id: _userAndPermissions.user.supervisorId
-                                    .toString(),
-                                salesmanager_id: _userAndPermissions
-                                    .user.salesmanagerId
-                                    .toString(),
-                                user_id: _userAndPermissions.user.id.toString(),
-                                store_id: 1.toString(),
-                              ))
+                                  .insert_temporary_tabel_cart(
+                                  Temporary_tabel_cart(
+                                    customer_id: customer_id.toString(),
+                                    employee_id:
+                                    _userAndPermissions.user.userId.toString(),
+                                    supervisor_id: _userAndPermissions.user
+                                        .supervisorId
+                                        .toString(),
+                                    salesmanager_id: _userAndPermissions
+                                        .user.salesmanagerId
+                                        .toString(),
+                                    user_id: _userAndPermissions.user.id
+                                        .toString(),
+                                    store_id: 1.toString(),
+                                  ))
                                   .then((value) {
                                 insertItemInDataBase(value);
                               });
@@ -487,24 +511,30 @@ class _ProductsScrState extends State<ProductsScr> {
 
                             // shrinkWrap: true,
                             // addAutomaticKeepAlives: true,
-                              itemCount: bata.search_word.trim().isNotEmpty
-                                  ? bata.search_wordListItems.length
-                                  : bata.allItems.length
+                              itemCount: _myProdectListController.item.length
+
+                              // bata.search_word.trim().isNotEmpty
+                              //     ? bata.search_wordListItems.length
+                              //     : bata.allItems.length
                               // 100, //bata.allItems.length,
                               ,
                               itemBuilder: (context, pos) {
-                                var cat = Get.find<AllCategoriesController>()
+                                var cat = Get
+                                    .find<AllCategoriesController>()
                                     .allCategories;
                                 AllCategories categories;
 
                                 int numberofitem = 0;
                                 for (int i = 0;
                                 i <
-                                    Get.find<AllCategoriesController>()
+                                    Get
+                                        .find<AllCategoriesController>()
                                         .allCategories
                                         .length;
                                 i++) {
-                                  if (bata.search_word.trim().isNotEmpty) {
+                                  if (bata.search_word
+                                      .trim()
+                                      .isNotEmpty) {
                                     if (cat[i].id ==
                                         bata.search_wordListItems[pos].id) {
                                       categories = cat[i];
@@ -536,124 +566,229 @@ class _ProductsScrState extends State<ProductsScr> {
                                 //   }
                                 // }
 
-                                dropdownMenuItemList
-                                    .listtextEditingControllerOfItem[pos]
-                                    .text = 0.toString();
+                                // dropdownMenuItemList
+                                //     .listtextEditingControllerOfItem[pos]
+                                //     .text = 0.toString();
+
                                 // if (bata.search_word.trim().isNotEmpty) {
                                 //   dropdownMenuItemList
                                 //       .serach_listtextEditingControllerOfItem[pos]
                                 //       .text = numberofitem.toString();
                                 // }
-                                var unitlist = _UnitController.MeasurementUnit_map[
-                                bata.allItems[pos].itemId
+                                var unitlist = _UnitController
+                                    .MeasurementUnit_map[
+                                _myProdectListController
+                                    .item[keysOfMap[pos]].value.id
                                 // bata.search_word.value.trim().isNotEmpty
                                 //   ? bata.search_wordListItems[pos].itemId
                                 //   : bata.allItems[pos].itemId
                                 ];
 
+                                return iteminthelist(
+                                  unitslist: unitlist,
+                                  // funAdd: () {
+                                  //   if (!cartListItem.cartlist.contains(
+                                  //       bata.search_word.value
+                                  //           .trim()
+                                  //           .isNotEmpty
+                                  //           ? bata.search_wordListItems[pos]
+                                  //           : bata.allItems[pos])) {}
+                                  //   if (bata.search_word
+                                  //       .trim()
+                                  //       .isNotEmpty) {
+                                  //     int i = int.parse(dropdownMenuItemList
+                                  //         .serach_listtextEditingControllerOfItem[
+                                  //     pos]
+                                  //         .text) +
+                                  //         1;
+                                  //
+                                  //     dropdownMenuItemList
+                                  //         .serach_listtextEditingControllerOfItem[
+                                  //     pos]
+                                  //         .text = i.toString();
+                                  //     _myProdectListController.setCount(
+                                  //         id: _myProdectListController
+                                  //             .item[keysOfMap[pos]].value.id,
+                                  //         count: i);
+                                  //   } else {
+                                  //     int i = int.parse(dropdownMenuItemList
+                                  //         .listtextEditingControllerOfItem[pos]
+                                  //         .text) +
+                                  //         1;
+                                  //     dropdownMenuItemList
+                                  //         .listtextEditingControllerOfItem[pos]
+                                  //         .text = i.toString();
+                                  //     // _myProdectListController.item[keysOfMap[pos]].value.count=i;
+                                  //     _myProdectListController.setCount(
+                                  //         id: _myProdectListController
+                                  //             .item[keysOfMap[pos]].value.id,
+                                  //         count: i);
+                                  //   }
+                                  // },
+                                  // fundies: () {
+                                  //   if (bata.search_word
+                                  //       .trim()
+                                  //       .isNotEmpty) {
+                                  //     if (int.parse(dropdownMenuItemList
+                                  //         .serach_listtextEditingControllerOfItem[
+                                  //     pos]
+                                  //         .text) >
+                                  //         0) {
+                                  //       int i = int.parse(dropdownMenuItemList
+                                  //           .serach_listtextEditingControllerOfItem[
+                                  //       pos]
+                                  //           .text) -
+                                  //           1;
+                                  //       dropdownMenuItemList
+                                  //           .serach_listtextEditingControllerOfItem[
+                                  //       pos]
+                                  //           .text = i.toString();
+                                  //       _myProdectListController.setCount(
+                                  //           id: _myProdectListController
+                                  //               .item[keysOfMap[pos]].value.id,
+                                  //           count: i);
+                                  //     }
+                                  //   } else {
+                                  //     if (int.parse(dropdownMenuItemList
+                                  //         .listtextEditingControllerOfItem[pos]
+                                  //         .text) >
+                                  //         0) {
+                                  //       int i = int.parse(dropdownMenuItemList
+                                  //           .listtextEditingControllerOfItem[
+                                  //       pos]
+                                  //           .text) -
+                                  //           1;
+                                  //       dropdownMenuItemList
+                                  //           .listtextEditingControllerOfItem[pos]
+                                  //           .text = i.toString();
+                                  //       _myProdectListController.setCount(
+                                  //           id: _myProdectListController
+                                  //               .item[keysOfMap[pos]].value.id,
+                                  //           count: i);
+                                  //     }
+                                  //   }
+                                  // },
+                                  pos: pos,
+                                  bounceController:
+                                  textEditingControllerbounce[pos],
+                                  discountController:
+                                  textEditingControllerDiscount[pos],
+                                  textEditingController: dropdownMenuItemList
+                                      .listtextEditingControllerOfItem[pos],
+                                  products:
+                                  _myProdectListController.item[keysOfMap[pos]],
+                                  size: size,
+                                );
 
-                                return itemListView(
-                                    unitslist: unitlist,
-                                    bounceController:
-                                    textEditingControllerbounce[pos],
-                                    discountController:
-                                    textEditingControllerDiscount[pos],
-                                    pos: pos,
-                                    list: bata.search_word.trim().isNotEmpty
-                                        ? dropdownMenuItemList
-                                        .serach_allStockItems[pos]
-                                        : dropdownMenuItemList.allStockItems[pos],
-                                    dropdowenval: bata.search_word.trim().isNotEmpty
-                                        ? dropdownMenuItemList
-                                        .serach_listdropdownValue[pos]
-                                        : dropdownMenuItemList
-                                        .listdropdownValue[pos],
-                                    textEditingController: bata.search_word
-                                        .trim()
-                                        .isNotEmpty
-                                        ? dropdownMenuItemList
-                                        .serach_listtextEditingControllerOfItem[
-                                    pos]
-                                        : dropdownMenuItemList
-                                        .listtextEditingControllerOfItem[pos],
-                                    size: size,
-                                    funadd: () {
-                                      if (!cartListItem.cartlist.contains(
-                                          bata.search_word.value.trim().isNotEmpty
-                                              ? bata.search_wordListItems[pos]
-                                              : bata.allItems[pos])) {}
-                                      if (bata.search_word.trim().isNotEmpty) {
-                                        int i = int.parse(dropdownMenuItemList
-                                            .serach_listtextEditingControllerOfItem[
-                                        pos]
-                                            .text) +
-                                            1;
-                                        dropdownMenuItemList
-                                            .serach_listtextEditingControllerOfItem[
-                                        pos]
-                                            .text = i.toString();
-                                      } else {
-                                        int i = int.parse(dropdownMenuItemList
-                                            .listtextEditingControllerOfItem[
-                                        pos]
-                                            .text) +
-                                            1;
-                                        dropdownMenuItemList
-                                            .listtextEditingControllerOfItem[pos]
-                                            .text = i.toString();
-                                      }
-                                    },
-                                    products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
-                                    bata.search_word.value.trim().isNotEmpty
-                                        ? bata.search_wordListItems[pos]
-                                        : bata.allItems[pos],
-                                    funremov: () {
-                                      if (bata.search_word.trim().isNotEmpty) {
-                                        if (int.parse(dropdownMenuItemList
-                                            .serach_listtextEditingControllerOfItem[
-                                        pos]
-                                            .text) >
-                                            0) {
-                                          int i = int.parse(dropdownMenuItemList
-                                              .serach_listtextEditingControllerOfItem[
-                                          pos]
-                                              .text) -
-                                              1;
-                                          dropdownMenuItemList
-                                              .serach_listtextEditingControllerOfItem[
-                                          pos]
-                                              .text = i.toString();
-                                        }
-                                      } else {
-                                        if (int.parse(dropdownMenuItemList
-                                            .listtextEditingControllerOfItem[
-                                        pos]
-                                            .text) >
-                                            0) {
-                                          int i = int.parse(dropdownMenuItemList
-                                              .listtextEditingControllerOfItem[
-                                          pos]
-                                              .text) -
-                                              1;
-                                          dropdownMenuItemList
-                                              .listtextEditingControllerOfItem[pos]
-                                              .text = i.toString();
-                                        }
-                                      }
-                                    }); // AlirtItem( );
+                                // return itemListView(
+                                //     unitslist: unitlist,
+                                //     bounceController:
+                                //     textEditingControllerbounce[pos],
+                                //     discountController:
+                                //     textEditingControllerDiscount[pos],
+                                //     pos: pos,
+                                //     list:
+                                //
+                                //     bata.search_word.trim().isNotEmpty
+                                //         ? dropdownMenuItemList
+                                //         .serach_allStockItems[pos]
+                                //         : dropdownMenuItemList.allStockItems[pos],
+                                //
+                                //
+                                //
+                                //     dropdowenval: bata.search_word.trim().isNotEmpty
+                                //         ? dropdownMenuItemList
+                                //         .serach_listdropdownValue[pos]
+                                //         : dropdownMenuItemList
+                                //         .listdropdownValue[pos],
+                                //     textEditingController: bata.search_word
+                                //         .trim()
+                                //         .isNotEmpty
+                                //         ? dropdownMenuItemList
+                                //         .serach_listtextEditingControllerOfItem[
+                                //     pos]
+                                //         : dropdownMenuItemList
+                                //         .listtextEditingControllerOfItem[pos],
+                                //     size: size,
+                                //     funadd: () {
+                                //       if (!cartListItem.cartlist.contains(
+                                //           bata.search_word.value.trim().isNotEmpty
+                                //               ? bata.search_wordListItems[pos]
+                                //               : bata.allItems[pos])) {}
+                                //       if (bata.search_word.trim().isNotEmpty) {
+                                //         int i = int.parse(dropdownMenuItemList
+                                //             .serach_listtextEditingControllerOfItem[
+                                //         pos]
+                                //             .text) +
+                                //             1;
+                                //         dropdownMenuItemList
+                                //             .serach_listtextEditingControllerOfItem[
+                                //         pos]
+                                //             .text = i.toString();
+                                //       } else {
+                                //         int i = int.parse(dropdownMenuItemList
+                                //             .listtextEditingControllerOfItem[
+                                //         pos]
+                                //             .text) +
+                                //             1;
+                                //         dropdownMenuItemList
+                                //             .listtextEditingControllerOfItem[pos]
+                                //             .text = i.toString();
+                                //       }
+                                //     },
+                                //     products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
+                                //     bata.search_word.value.trim().isNotEmpty
+                                //         ? bata.search_wordListItems[pos]
+                                //         : bata.allItems[pos],
+                                //     funremov: () {
+                                //       if (bata.search_word.trim().isNotEmpty) {
+                                //         if (int.parse(dropdownMenuItemList
+                                //             .serach_listtextEditingControllerOfItem[
+                                //         pos]
+                                //             .text) >
+                                //             0) {
+                                //           int i = int.parse(dropdownMenuItemList
+                                //               .serach_listtextEditingControllerOfItem[
+                                //           pos]
+                                //               .text) -
+                                //               1;
+                                //           dropdownMenuItemList
+                                //               .serach_listtextEditingControllerOfItem[
+                                //           pos]
+                                //               .text = i.toString();
+                                //         }
+                                //       } else {
+                                //         if (int.parse(dropdownMenuItemList
+                                //             .listtextEditingControllerOfItem[
+                                //         pos]
+                                //             .text) >
+                                //             0) {
+                                //           int i = int.parse(dropdownMenuItemList
+                                //               .listtextEditingControllerOfItem[
+                                //           pos]
+                                //               .text) -
+                                //               1;
+                                //           dropdownMenuItemList
+                                //               .listtextEditingControllerOfItem[pos]
+                                //               .text = i.toString();
+                                //         }
+                                //       }
+                                //     });
+
+                                // AlirtItem( );
                               }),
                         ),
                         Container(
                           decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset:
-                                  Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.grey.withOpacity(0.7),
+                            //     spreadRadius: 5,
+                            //     blurRadius: 7,
+                            //     offset:
+                            //     Offset(0, 3), // changes position of shadow
+                            //   ),
+                            // ],
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
@@ -689,7 +824,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       DatabaseHelper()
                                           .insert_insert_visit(Insert_visit_DB(
                                         customer_id:
-                                        Get.find<AllChequesController>()
+                                        Get
+                                            .find<AllChequesController>()
                                             .customer
                                             .customerInfo
                                             .id,
@@ -697,14 +833,16 @@ class _ProductsScrState extends State<ProductsScr> {
                                         _userAndPermissions.user.id.toString(),
                                       ))
                                           .then((value) {
-                                        Get.find<AllChequesController>().customer =
+                                        Get
+                                            .find<AllChequesController>()
+                                            .customer =
                                         null;
                                       });
                                       c.stopjor();
                                       cartListItem.cartlist.clear();
                                       cartListItem.bounce.clear();
                                       cartListItem.discount.clear();
-                                      cartListItem.itemInCart.value=0;
+                                      cartListItem.itemInCart.value = 0;
                                       _UnitController.all_Uint_select.clear();
                                       _UnitController.all_Uint_List.clear();
                                       _UnitController.val_Of_uint_map.clear();
@@ -719,15 +857,16 @@ class _ProductsScrState extends State<ProductsScr> {
                                             topRight: Radius.circular(15))),
                                     height: size.height * .075,
                                     child: Center(
-                                        child: Obx(() => Text(
-                                          c.startswatch.value
-                                              ? 'End Visit'
-                                              : 'start',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        ))),
+                                        child: Obx(() =>
+                                            Text(
+                                              c.startswatch.value
+                                                  ? 'End Visit'
+                                                  : 'start',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ))),
                                   ),
                                 ),
                               ),
@@ -743,17 +882,14 @@ class _ProductsScrState extends State<ProductsScr> {
   }
 
   insertItemInDataBase(int i) async {
-
-    Map<String,int>countofitem={};
-    for(int count=0;count<cartListItem.cartlist.length;count++){
-      if(countofitem[cartListItem.cartlist[count].itemId]==null){
-        countofitem[cartListItem.cartlist[count].itemId] =1;
+    Map<String, int> countofitem = {};
+    for (int count = 0; count < cartListItem.cartlist.length; count++) {
+      if (countofitem[cartListItem.cartlist[count].itemId] == null) {
+        countofitem[cartListItem.cartlist[count].itemId] = 1;
         cartListItem.itemInCart.value++;
-      }else{
-        countofitem[cartListItem.cartlist[count].itemId]+=1;
+      } else {
+        countofitem[cartListItem.cartlist[count].itemId] += 1;
       }
-
-
     }
     // for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
     //   if (!cartitme.contains(cartListItem.cartlist[oo])) {
@@ -782,95 +918,872 @@ class _ProductsScrState extends State<ProductsScr> {
     // cartListItem.itemInCart.value = cartitme.length;
   }
 
-  Widget itemListView(
-      {Size size,
-        List<ItemUnits> unitslist,
-        int pos,
-        AllItems products,
-        funadd,
-        funremov,
-        TextEditingController textEditingController,
-        //  Function clickOk,
-        TextEditingController discountController,
-        TextEditingController bounceController,
-        AllStockItems dropdowenval,
-        List<AllStockItems> list}) {
-    int itemCountinCart = 0;
-    double totalPriceafterDes = 0;
-    double net_sal = 0.0;
-    double total_Tax = 0.0;
-    double totalPriceBeforDes = 0.0;
-    for (int i = 0; i < cartListItem.cartlist.length; i++) {
-      if (cartListItem.cartlist[i].id == products.id) {
-        itemCountinCart++;
-      }
-    }
+  // Widget itemListView(
+  //     {Size size,
+  //     List<ItemUnits> unitslist,
+  //     int pos,
+  //     AllItems products,
+  //     funadd,
+  //     funremov,
+  //     TextEditingController textEditingController,
+  //     //  Function clickOk,
+  //     TextEditingController discountController,
+  //     TextEditingController bounceController,
+  //     AllStockItems dropdowenval,
+  //     List<AllStockItems> list}) {
+  //   int itemCountinCart = 0;
+  //   double totalPriceafterDes = 0;
+  //   double net_sal = 0.0;
+  //   double total_Tax = 0.0;
+  //   double totalPriceBeforDes = 0.0;
+  //   for (int i = 0; i < cartListItem.cartlist.length; i++) {
+  //     if (cartListItem.cartlist[i].id == products.id) {
+  //       itemCountinCart++;
+  //     }
+  //   }
+  //   bool showdropdowen = (unitslist.length > 1);
+  //   if (showdropdowen) {
+  //     if (_UnitController.val_Of_uint_map[products.itemId] != null) {
+  //       discountController.text =
+  //           cartListItem.discount[int.parse(products.itemId)].toString();
+  //       bounceController.text =
+  //           cartListItem.bounce[int.parse(products.itemId)].toString();
+  //
+  //       totalPriceBeforDes = double.parse(
+  //               _UnitController.val_Of_uint_map[products.itemId].sellingPrice) *
+  //           double.parse(itemCountinCart.toString());
+  //
+  //       totalPriceafterDes = totalPriceBeforDes -
+  //           (totalPriceBeforDes *
+  //               (cartListItem.discount[int.parse(products.itemId)] / 100));
+  //       total_Tax = totalPriceafterDes *
+  //           (double.parse(products.itemDetails[0].tax) / 100);
+  //       net_sal = totalPriceafterDes +
+  //           (totalPriceafterDes *
+  //               (double.parse(products.itemDetails[0].tax) / 100));
+  //     } else {
+  //       discountController.text =
+  //           cartListItem.discount[int.parse(products.itemId)].toString();
+  //       bounceController.text =
+  //           cartListItem.bounce[int.parse(products.itemId)].toString();
+  //
+  //       totalPriceBeforDes =
+  //           double.parse(products.itemDetails[0].sellingPrice) *
+  //               double.parse(itemCountinCart.toString());
+  //
+  //       totalPriceafterDes = totalPriceBeforDes -
+  //           (totalPriceBeforDes *
+  //               (cartListItem.discount[int.parse(products.itemId)] / 100));
+  //       total_Tax = totalPriceafterDes *
+  //           (double.parse(products.itemDetails[0].tax) / 100);
+  //       // net_sal = totalPriceafterDes +
+  //       //     (totalPriceafterDes *
+  //       //         (double.parse(products.itemDetails[0].tax) / 100));
+  //       net_sal = totalPriceafterDes;
+  //     }
+  //   } else {
+  //     discountController.text =
+  //         cartListItem.discount[int.parse(products.itemId)].toString();
+  //     bounceController.text =
+  //         cartListItem.bounce[int.parse(products.itemId)].toString();
+  //
+  //     totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
+  //         double.parse(itemCountinCart.toString());
+  //
+  //     totalPriceafterDes = totalPriceBeforDes -
+  //         (totalPriceBeforDes *
+  //             (cartListItem.discount[int.parse(products.itemId)] / 100));
+  //     total_Tax = totalPriceafterDes *
+  //         (double.parse(products.itemDetails[0].tax) / 100);
+  //     net_sal = totalPriceafterDes +
+  //         (totalPriceafterDes *
+  //             (double.parse(products.itemDetails[0].tax) / 100));
+  //   }
+
+  //   cartListItem.PriceafterDes[products.itemId] = totalPriceafterDes;
+  //   cartListItem.total_Tax[products.itemId] = total_Tax;
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Card(
+  //       elevation: 8,
+  //       child: Container(
+  //         padding: EdgeInsets.all(4),
+  //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+  //         // height: size.height * .15,
+  //         child: Column(
+  //           children: [
+  //             Row(
+  //               children: [
+  //                 Container(
+  //                   height: size.height * .15,
+  //                   width: size.height * .15,
+  //                   color: Colors.indigo,
+  //                   child: Image.network(
+  //                     products.itemDetails[0].image,
+  //                     height: size.height * .1,
+  //                     width: size.height * .1,
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: 8,
+  //                 ),
+  //                 Expanded(
+  //                   child: Column(
+  //                     mainAxisSize: MainAxisSize.max,
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       SizedBox(
+  //                         height: 8,
+  //                       ),
+  //                       Text(
+  //                         products.itemDetails[0].itemNameEn,
+  //                         maxLines: 2,
+  //                       ),
+  //                       SizedBox(
+  //                         height: 4,
+  //                       ),
+  //                       Text(
+  //                           "minimum Quantity: ${products.itemDetails[0].minimumQuantity}"),
+  //                       //products.itemDetails[0].itemCost
+  //                       Text('Price: ${products.itemDetails[0].sellingPrice}'),
+  //                       //  Expanded(child: Container()),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             ExpansionTile(
+  //               trailing: SizedBox.shrink(),
+  //               title: Row(
+  //                 children: [
+  //                   Text('Details'),
+  //                   Expanded(
+  //                     child: Container(
+  //                       height: 1,
+  //                     ),
+  //                   ),
+  //                   Row(
+  //                     crossAxisAlignment: CrossAxisAlignment.center,
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       InkWell(
+  //                         onTap: funremov,
+  //                         child: Container(
+  //                           decoration: BoxDecoration(
+  //                               color: Colors.orange,
+  //                               borderRadius: BorderRadius.circular(2)),
+  //                           height: 50,
+  //                           width: 50,
+  //                           child: Center(
+  //                             child: Text(
+  //                               "-",
+  //                               style: TextStyle(
+  //                                   fontWeight: FontWeight.bold,
+  //                                   fontSize: 20,
+  //                                   color: Colors.white),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                       SizedBox(
+  //                         width: 20,
+  //                       ),
+  //                       Container(
+  //                         width: size.width * .2,
+  //                         child: Center(
+  //                             child: TextField(
+  //                           onSubmitted: (m) {},
+  //                           onEditingComplete: () {},
+  //                           controller: textEditingController,
+  //                           textAlign: TextAlign.center,
+  //                           keyboardType: TextInputType.number,
+  //                         )),
+  //                       ),
+  //                       SizedBox(
+  //                         width: 4,
+  //                       ),
+  //                       InkWell(
+  //                         onTap: funadd,
+  //                         child: Container(
+  //                           decoration: BoxDecoration(
+  //                               color: Colors.orange,
+  //                               borderRadius: BorderRadius.circular(2)),
+  //                           height: 50,
+  //                           width: 50,
+  //                           child: Center(
+  //                             child: Text(
+  //                               "+",
+  //                               style: TextStyle(
+  //                                   fontWeight: FontWeight.bold,
+  //                                   fontSize: 20,
+  //                                   color: Colors.white),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                       SizedBox(
+  //                         width: 20,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   SizedBox(
+  //                     width: 8,
+  //                   )
+  //                 ],
+  //               ),
+  //               children: [
+  //                 Column(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     // Padding(
+  //                     //     padding: const EdgeInsets.all(8.0),
+  //                     //     //categories.categoryNameEn
+  //                     //     child: Text("category Name")),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           Text(
+  //                               'item Number: ${products.itemDetails[0].itemNumber}'),
+  //                           // Container(
+  //                           //     child: Text(
+  //                           //         'item name:  ${products.itemDetails[0].itemNameEn}'))
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           // Text(
+  //                           //     'Item Price :${products.itemDetails[0].itemCost}'),
+  //                           Text('Tax:  ${products.itemDetails[0].tax}')
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Container(
+  //                       height: 1,
+  //                       color: Colors.grey,
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Text(
+  //                         'Promotion',
+  //                         style: TextStyle(fontWeight: FontWeight.bold),
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: GestureDetector(
+  //                         onTap: () {
+  //                           Widget okButton = TextButton(
+  //                             child: Text("OK"),
+  //                             onPressed: () {
+  //                               Navigator.of(context).pop();
+  //                             },
+  //                           );
+  //                           AlertDialog alert = AlertDialog(
+  //                             title: Center(
+  //                               child: Text(
+  //                                 "Promotion list",
+  //                                 style: TextStyle(color: Colors.red),
+  //                               ),
+  //                             ),
+  //                             content: Container(
+  //                               height: size.height * .8,
+  //                               width: size.width * .8,
+  //                               child: ListView(
+  //                                 children: alert_item,
+  //                               ),
+  //                             ),
+  //                             actions: [
+  //                               okButton,
+  //                             ],
+  //                           );
+  //                           showDialog(
+  //                             context: context,
+  //                             builder: (BuildContext context) {
+  //                               return alert;
+  //                             },
+  //                           );
+  //                         },
+  //                         child: Row(
+  //                           children: [
+  //                             Image.asset(
+  //                               'assets/images/iso.png',
+  //                               width: 30,
+  //                               height: 30,
+  //                             ),
+  //                             Padding(
+  //                               padding: const EdgeInsets.all(8.0),
+  //                               child: Text(
+  //                                 'Show All Promotion',
+  //                                 style: TextStyle(
+  //                                     fontWeight: FontWeight.bold,
+  //                                     color: Colors.red),
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           Column(
+  //                             children: [
+  //                               Text('Store ID'),
+  //                               Container(
+  //                                 width: size.width * .25,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                   child: Text(stocitem[0].storeId),
+  //                                 ),
+  //                               )
+  //                               // Obx(() =>
+  //                               //     Container(width: size.width*.25,
+  //                               //   decoration: BoxDecoration(  border: Border.all(
+  //                               //     color: Colors.grey,
+  //                               //     width: 1,
+  //                               //   ),borderRadius: BorderRadius.circular(10)),
+  //                               //   child: Center(
+  //                               //     child: DropdownButton<AllStockItems>(
+  //                               //           value: dropdownMenuItemList
+  //                               //               .listdropdownValue[pos],
+  //                               //           icon: const Icon(Icons.arrow_downward),
+  //                               //           iconSize: 15,
+  //                               //           elevation: 16,
+  //                               //           style: const TextStyle(
+  //                               //               color: Colors.deepPurple),
+  //                               //           // underline: Container(
+  //                               //           //   height: 2,
+  //                               //           //   color: Colors.deepPurpleAccent,
+  //                               //           // ),
+  //                               //           onChanged: (AllStockItems newValue) {
+  //                               //             dropdownMenuItemList.setValOfdropdownValue(
+  //                               //                 pos: pos, dropdownValue: newValue);
+  //                               //
+  //                               //           },
+  //                               //           items: dropdownMenuItemList
+  //                               //               .allStockItems[pos]
+  //                               //               .map<DropdownMenuItem<AllStockItems>>(
+  //                               //                   (AllStockItems value) {
+  //                               //             return DropdownMenuItem<AllStockItems>(
+  //                               //               value: value,
+  //                               //               child: Text(value.id),
+  //                               //             );
+  //                               //           }).toList(),
+  //                               //         ),
+  //                               //   ),
+  //                               // ))
+  //                             ],
+  //                           ),
+  //                           Column(
+  //                             children: [
+  //                               Text('Unit'),
+  //                               //  Obx(()=>
+  //                               Container(
+  //                                 width: size.width * .25,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                   child: showdropdowen
+  //                                       ? DropdownButton<ItemUnits>(
+  //                                           value:
+  //                                               _UnitController.val_Of_uint_map[
+  //                                                   products.itemId],
+  //                                           icon: const Icon(
+  //                                               Icons.arrow_downward),
+  //                                           iconSize: 24,
+  //                                           elevation: 16,
+  //                                           style: const TextStyle(
+  //                                               color: Colors.deepPurple),
+  //                                           underline: Container(
+  //                                             height: 2,
+  //                                             color: Colors.deepPurpleAccent,
+  //                                           ),
+  //                                           onChanged: (ItemUnits newValue) {
+  //                                             _UnitController.val_Of_uint_map[
+  //                                                 products.itemId] = newValue;
+  //
+  //                                             // setState(() {});
+  //                                           },
+  //                                           items: unitslist.map<
+  //                                                   DropdownMenuItem<
+  //                                                       ItemUnits>>(
+  //                                               (ItemUnits value) {
+  //                                             return DropdownMenuItem<
+  //                                                 ItemUnits>(
+  //                                               value: value,
+  //                                               child: Text(
+  //                                                   value.itemMeasurementUnits),
+  //                                             );
+  //                                           }).toList(),
+  //                                         )
+  //                                       : Text(
+  //                                           unitslist[0].itemMeasurementUnits),
+  //                                 ),
+  //                               )
+  //                               //   )
+  //                             ],
+  //                           ),
+  //                           Column(
+  //                             children: [
+  //                               Text('Quantity'),
+  //                               Container(
+  //                                 width: size.width * .25,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                   child: Text(textEditingController.text),
+  //                                 ),
+  //                               )
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           Column(
+  //                             children: [
+  //                               Text('Bounce'),
+  //                               Container(
+  //                                 width: size.width * .4,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: TextField(
+  //                                   keyboardType: TextInputType.number,
+  //                                   onChanged: (v) {
+  //                                     cartListItem.bounce[
+  //                                             int.parse(products.itemId)] =
+  //                                         double.parse(v);
+  //                                   },
+  //                                   controller: bounceController,
+  //                                   textAlign: TextAlign.center,
+  //                                   decoration: InputDecoration(
+  //                                     suffixIcon: IconButton(
+  //                                       onPressed: () =>
+  //                                           bounceController.clear(),
+  //                                       icon: Icon(Icons.clear),
+  //                                     ),
+  //                                     border: InputBorder.none,
+  //                                     focusedBorder: InputBorder.none,
+  //                                     enabledBorder: InputBorder.none,
+  //                                     errorBorder: InputBorder.none,
+  //                                     disabledBorder: InputBorder.none,
+  //                                   ),
+  //                                 ),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                           Column(
+  //                             children: [
+  //                               Text('Discount %'),
+  //                               Container(
+  //                                 width: size.width * .4,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: TextField(
+  //                                   //   onChanged: textEditingdiscount,
+  //                                   keyboardType: TextInputType.number,
+  //                                   onChanged: (v) {
+  //                                     cartListItem.discount[
+  //                                             int.parse(products.itemId)] =
+  //                                         double.parse(v);
+  //                                     totalPriceBeforDes = 1 *
+  //                                         double.parse(
+  //                                             itemCountinCart.toString());
+  //
+  //                                     totalPriceafterDes = totalPriceBeforDes -
+  //                                         (totalPriceBeforDes *
+  //                                             (double.parse(v) / 100));
+  //                                     total_Tax = totalPriceafterDes *
+  //                                         (double.parse(
+  //                                                 products.itemDetails[0].tax) /
+  //                                             100);
+  //                                     net_sal = totalPriceafterDes +
+  //                                         (totalPriceafterDes *
+  //                                             (double.parse(products
+  //                                                     .itemDetails[0].tax) /
+  //                                                 100));
+  //                                     //     net_sal = totalPriceafterDes;
+  //                                     cartListItem
+  //                                             .PriceafterDes[products.itemId] =
+  //                                         totalPriceafterDes;
+  //                                     cartListItem.total_Tax[products.itemId] =
+  //                                         total_Tax;
+  //
+  //                                     ///=====================================================
+  //                                     //
+  //                                     //
+  //                                     // total_Tax=      (double.tryParse(products
+  //                                     //     .itemDetails[0]
+  //                                     //     .sellingPrice) *
+  //                                     //     double.tryParse(products.itemDetails[0].tax )* (double.tryParse(products
+  //                                     //     .itemDetails[0]
+  //                                     //     .sellingPrice)*double.parse(textEditingController.text )/100)
+  //                                     //
+  //                                     // );
+  //                                     //
+  //                                     //
+  //                                     // net_sal=    (double.tryParse(products
+  //                                     //     .itemDetails[0]
+  //                                     //     .sellingPrice) *
+  //                                     //     double.tryParse(products.itemDetails[0].tax )*(double.tryParse(products
+  //                                     //     .itemDetails[0]
+  //                                     //     .sellingPrice)*double.parse(textEditingController.text)/100)
+  //                                     //
+  //                                     // )+(    (double.tryParse(products
+  //                                     //     .itemDetails[0]
+  //                                     //     .sellingPrice)* double.parse(textEditingController.text)/100));
+  //                                   },
+  //                                   controller: discountController,
+  //                                   textAlign: TextAlign.center,
+  //                                   decoration: InputDecoration(
+  //                                     suffixIcon: IconButton(
+  //                                       onPressed: () =>
+  //                                           discountController.clear(),
+  //                                       icon: Icon(Icons.clear),
+  //                                     ),
+  //                                     border: InputBorder.none,
+  //                                     focusedBorder: InputBorder.none,
+  //                                     enabledBorder: InputBorder.none,
+  //                                     errorBorder: InputBorder.none,
+  //                                     disabledBorder: InputBorder.none,
+  //                                   ),
+  //                                 ),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           Column(
+  //                             children: [
+  //                               Text('Input Qty'),
+  //                               Container(
+  //                                   width: size.width * .4,
+  //                                   height: 50,
+  //                                   decoration: BoxDecoration(
+  //                                       color: Colors.grey[200],
+  //                                       border: Border.all(
+  //                                         color: Colors.grey,
+  //                                         width: 1,
+  //                                       ),
+  //                                       borderRadius:
+  //                                           BorderRadius.circular(10)),
+  //                                   child: Center(
+  //                                       child: Text(products
+  //                                           .itemDetails[0].minimumQuantity))),
+  //                             ],
+  //                           ),
+  //                           Column(
+  //                             children: [
+  //                               Text('Price before discount'),
+  //                               Container(
+  //                                 width: size.width * .4,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     color: Colors.grey[200],
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                     child: Text(totalPriceBeforDes
+  //                                         .toStringAsFixed(3))),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           Column(
+  //                             children: [
+  //                               Text('Price after discount'),
+  //                               Container(
+  //                                 width: size.width * .4,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     color: Colors.grey[200],
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                     child: Text(totalPriceafterDes
+  //                                         .toStringAsFixed(3))),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                           Column(
+  //                             children: [
+  //                               Text('Tax %'),
+  //                               Container(
+  //                                 width: size.width * .4,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     color: Colors.grey[200],
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                     child: Text(products.itemDetails[0].tax)),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           Column(
+  //                             children: [
+  //                               Text('Total Tax'),
+  //                               Container(
+  //                                   width: size.width * .4,
+  //                                   height: 50,
+  //                                   decoration: BoxDecoration(
+  //                                       color: Colors.grey[200],
+  //                                       border: Border.all(
+  //                                         color: Colors.grey,
+  //                                         width: 1,
+  //                                       ),
+  //                                       borderRadius:
+  //                                           BorderRadius.circular(10)),
+  //                                   child: Center(
+  //                                       child: Text(
+  //                                           total_Tax.toStringAsFixed(3)))),
+  //                             ],
+  //                           ),
+  //                           Column(
+  //                             children: [
+  //                               Text('Net price'),
+  //                               Container(
+  //                                 width: size.width * .4,
+  //                                 height: 50,
+  //                                 decoration: BoxDecoration(
+  //                                     color: Colors.grey[200],
+  //                                     border: Border.all(
+  //                                       color: Colors.grey,
+  //                                       width: 1,
+  //                                     ),
+  //                                     borderRadius: BorderRadius.circular(10)),
+  //                                 child: Center(
+  //                                     child: Text(net_sal.toStringAsFixed(3))),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           // Container(
+  //                           //   width: size.width * .4,
+  //                           //   height: 50,
+  //                           //   decoration: BoxDecoration(
+  //                           //       border: Border.all(
+  //                           //         color: Color(0xff2C4B89),
+  //                           //         width: 1,
+  //                           //       ),
+  //                           //       borderRadius: BorderRadius.circular(10)),
+  //                           //   child: Center(child: Text('Cancel')),
+  //                           // ),
+  //                           GestureDetector(
+  //                             onTap: () {
+  //                               //    setState(() {});
+  //                             },
+  //                             child: Container(
+  //                               decoration: BoxDecoration(
+  //                                 color: Color(0xff2C4B89),
+  //                                 borderRadius: BorderRadius.circular(10),
+  //                               ),
+  //                               height: 50,
+  //                               width: size.width * .4,
+  //                               child: Center(
+  //                                 child: Text(
+  //                                   'ok',
+  //                                   style: TextStyle(color: Colors.white),
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     )
+  //                   ],
+  //                 )
+  //               ],
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget AlirtItem({ItemDetails products, funadd, funremov}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[100],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey[100].withOpacity(0.5),
+          //     spreadRadius: 5,
+          //     blurRadius: 7,
+          //     offset: Offset(0, 3), // changes position of shadow
+          //   ),
+          // ],
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Promotion No'),
+                  Text('369'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: funremov, child: Text('Promotion Name')),
+                  GestureDetector(onTap: funadd, child: Text('bol 100+30')),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Promotion Details'),
+                  Text('bol 100+30'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('16-4-2021'),
+                  Text('18-4-2021'),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  biledjsonpost({UserAndPermissions userAndPermissions,
+    CartItemController cartListItem}) {
+    EmployeDataController employeDataController = EmployeDataController();
+    OlderPost_json listOrder = OlderPost_json(listOrder: [
+      ListOrderToJson(
+          item: [],
+          userId: userAndPermissions.user.id,
+          requestLevel: 5,
+          noOfItems: cartListItem.cartlist.length,
+          storeId: 44,
+          requestType: 'nn',
+          employeeId: 5,
+          customerId: 5)
+    ]);
+
+    String jsonUser = jsonEncode(listOrder);
+  }
+
+  Widget iteminthelist({List<ItemUnits> unitslist,
+    list,
+    Size size,
+    int pos,
+    Rx<TheItemInList> products,
+    TextEditingController textEditingController,
+    TextEditingController discountController,
+    TextEditingController bounceController,
+    AllStockItems dropdowenval,
+    }) {
     bool showdropdowen = (unitslist.length > 1);
-    if(showdropdowen){
-      if(_UnitController.val_Of_uint_map[products.itemId]!=null){
-        discountController.text =
-            cartListItem.discount[int.parse(products.itemId)].toString();
-        bounceController.text =
-            cartListItem.bounce[int.parse(products.itemId)].toString();
-
-        totalPriceBeforDes = double.parse(_UnitController.val_Of_uint_map[products.itemId].sellingPrice) *
-            double.parse(itemCountinCart.toString());
-
-
-        totalPriceafterDes = totalPriceBeforDes -
-            (totalPriceBeforDes *
-                (cartListItem.discount[int.parse(products.itemId)] / 100));
-        total_Tax =
-            totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
-        net_sal = totalPriceafterDes +
-            (totalPriceafterDes *
-                (double.parse(products.itemDetails[0].tax) / 100));
-
-      }else{
-        discountController.text =
-            cartListItem.discount[int.parse(products.itemId)].toString();
-        bounceController.text =
-            cartListItem.bounce[int.parse(products.itemId)].toString();
-
-        totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
-            double.parse(itemCountinCart.toString());
-
-
-        totalPriceafterDes = totalPriceBeforDes -
-            (totalPriceBeforDes *
-                (cartListItem.discount[int.parse(products.itemId)] / 100));
-        total_Tax =
-            totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
-        // net_sal = totalPriceafterDes +
-        //     (totalPriceafterDes *
-        //         (double.parse(products.itemDetails[0].tax) / 100));
-        net_sal=totalPriceafterDes;
-
+    if (showdropdowen) {
+      for (int i = 0; i < unitslist.length; i++) {
+        if (unitslist[i].defaultValue == "yes") {
+          _myProdectListController.setprice(
+              id: products.value.id, val: unitslist[i].sellingPrice);
+          _UnitController.val_Of_uint_map[
+          products.value.id] = unitslist[i];
+        }
       }
     }
-    else{
-      discountController.text =
-          cartListItem.discount[int.parse(products.itemId)].toString();
-      bounceController.text =
-          cartListItem.bounce[int.parse(products.itemId)].toString();
-
-      totalPriceBeforDes = double.parse(products.itemDetails[0].sellingPrice) *
-          double.parse(itemCountinCart.toString());
-
-
-      totalPriceafterDes = totalPriceBeforDes -
-          (totalPriceBeforDes *
-              (cartListItem.discount[int.parse(products.itemId)] / 100));
-      total_Tax =
-          totalPriceafterDes * (double.parse(products.itemDetails[0].tax) / 100);
-      net_sal = totalPriceafterDes +
-          (totalPriceafterDes *
-              (double.parse(products.itemDetails[0].tax) / 100));
-
-    }
-
-    cartListItem.PriceafterDes[products.itemId]=totalPriceafterDes;
-    cartListItem.total_Tax[products.itemId]=total_Tax;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -887,11 +1800,11 @@ class _ProductsScrState extends State<ProductsScr> {
                     height: size.height * .15,
                     width: size.height * .15,
                     color: Colors.indigo,
-                    child: Image.network(
-                      products.itemDetails[0].image,
-                      height: size.height * .1,
-                      width: size.height * .1,
-                    ),
+                    // child: Image.network(
+                    //   products.itemDetails[0].image,
+                    //   height: size.height * .1,
+                    //   width: size.height * .1,
+                    // ),
                   ),
                   SizedBox(
                     width: 8,
@@ -906,15 +1819,15 @@ class _ProductsScrState extends State<ProductsScr> {
                           height: 8,
                         ),
                         Text(
-                          products.itemDetails[0].itemNameEn,
+                          products.value.name,
                           maxLines: 2,
                         ),
                         SizedBox(
                           height: 4,
                         ),
-                        Text("minimum Quantity: ${products.itemDetails[0].minimumQuantity}"),
+                        Text("minimum Quantity: ${products.value.count}"),
                         //products.itemDetails[0].itemCost
-                        Text('Price: ${products.itemDetails[0].sellingPrice}'),
+                        Text('Price: ${products.value.price}'),
                         //  Expanded(child: Container()),
                       ],
                     ),
@@ -936,7 +1849,18 @@ class _ProductsScrState extends State<ProductsScr> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: funremov,
+                          onTap: (){
+                            if(_myProdectListController
+                                .item[products.value.id].value.count>0){
+                              int v = _myProdectListController
+                                  .item[products.value.id].value.count - 1;
+                              print(products.value.count);
+                              _myProdectListController.setCount(
+                                  id: products.value.id,
+                                  count: v);
+                            }
+
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.orange,
@@ -960,23 +1884,39 @@ class _ProductsScrState extends State<ProductsScr> {
                         Container(
                           width: size.width * .2,
                           child: Center(
-                              child: TextField(
-                                onSubmitted: (m) {
+                              child: GetBuilder<MyProdectListController>(
+                                builder: (logic) {
+                                  textEditingController.text=logic.item[products.value.id].value.count.toString();
 
+                                  return TextField(
+                                    onChanged: (v) {
+                                      if (v != null && v.isNotEmpty) {
+                                        _myProdectListController.setCount(
+                                            id: _myProdectListController
+                                                .item[keysOfMap[pos]].value.id,
+                                            count: int.parse(v));
+                                      }
+                                    },
+                                    onEditingComplete: () {},
+                                    controller: textEditingController,
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                  );
                                 },
-                                onEditingComplete: () {
-
-                                },
-                                controller: textEditingController,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
                               )),
                         ),
                         SizedBox(
                           width: 4,
                         ),
                         InkWell(
-                          onTap: funadd,
+                          onTap: () {
+                            int v = _myProdectListController
+                                .item[products.value.id].value.count + 1;
+                            print(products.value.count);
+                            _myProdectListController.setCount(
+                                id: products.value.id,
+                                count: v);
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.orange,
@@ -1018,8 +1958,7 @@ class _ProductsScrState extends State<ProductsScr> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                'item Number: ${products.itemDetails[0].itemNumber}'),
+                            Text('item Number: ${products.value.id}'),
                             // Container(
                             //     child: Text(
                             //         'item name:  ${products.itemDetails[0].itemNameEn}'))
@@ -1033,7 +1972,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             // Text(
                             //     'Item Price :${products.itemDetails[0].itemCost}'),
-                            Text('Tax:  ${products.itemDetails[0].tax}')
+                            Text('Tax:  ${products.value.tex}')
                           ],
                         ),
                       ),
@@ -1176,41 +2115,55 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                    child:
-                                    showdropdowen
-                                        ? DropdownButton<ItemUnits>(value:   _UnitController. val_Of_uint_map[products.itemId] ,
-                                      icon: const Icon(
-                                          Icons.arrow_downward),
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      style: const TextStyle(
-                                          color: Colors.deepPurple),
-                                      underline: Container(
-                                        height: 2,
-                                        color: Colors.deepPurpleAccent,
-                                      ),
-                                      onChanged: (ItemUnits newValue) {
-                                        _UnitController. val_Of_uint_map[products.itemId]=newValue;
+                                    child: showdropdowen
+                                        ? GetBuilder<MyProdectListController>(
+                                      builder: (logic) {
+                                        return DropdownButton<ItemUnits>(
+                                          value:
+                                          _UnitController.val_Of_uint_map[
+                                          products.value.id],
+                                          icon: const Icon(
+                                              Icons.arrow_downward),
+                                          iconSize: 24,
+                                          elevation: 16,
+                                          style: const TextStyle(
+                                              color: Colors.deepPurple),
+                                          underline: Container(
+                                            height: 2,
+                                            color: Colors.deepPurpleAccent,
+                                          ),
+                                          onChanged: (ItemUnits newValue) {
+                                            _UnitController.val_Of_uint_map[
+                                            products.value.id] = newValue;
 
-                                        setState(() {});
+                                            _myProdectListController.setprice(
+                                                id: products.value.id,
+                                                val: newValue.sellingPrice);
+
+                                            print(_myProdectListController.item[
+                                            products.value.id].value.price);
+                                          },
+                                          items: unitslist.map<
+                                              DropdownMenuItem<
+                                                  ItemUnits>>(
+                                                  (ItemUnits value) {
+                                                return DropdownMenuItem<
+                                                    ItemUnits>(
+                                                  value: value,
+                                                  child: Text(
+                                                      value
+                                                          .itemMeasurementUnits),
+                                                );
+                                              }).toList(),
+                                        );
                                       },
-                                      items: unitslist.map<
-                                          DropdownMenuItem<
-                                              ItemUnits>>(
-                                              (ItemUnits value) {
-                                            return DropdownMenuItem<
-                                                ItemUnits>(
-                                              value: value,
-                                              child: Text(
-                                                  value.itemMeasurementUnits),
-                                            );
-                                          }).toList(),
                                     )
+
                                         : Text(
                                         unitslist[0].itemMeasurementUnits),
                                   ),
                                 )
-                                //   )
+                                //     )
                               ],
                             ),
                             Column(
@@ -1226,7 +2179,15 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                    child: Text(textEditingController.text),
+                                    child: GetBuilder<MyProdectListController>(
+                                      builder: (logic) {
+                                        return Text(logic
+                                            .item[products.value.id]
+                                            .value
+                                            .minimumQuantity
+                                            .toString());
+                                      },
+                                    ),
                                   ),
                                 )
                               ],
@@ -1253,11 +2214,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
                                     keyboardType: TextInputType.number,
-                                    onChanged: (v) {
-                                      cartListItem.bounce[
-                                      int.parse(products.itemId)] =
-                                          double.parse(v);
-                                    },
+                                    onChanged: (v) {},
                                     controller: bounceController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -1292,54 +2249,17 @@ class _ProductsScrState extends State<ProductsScr> {
                                     //   onChanged: textEditingdiscount,
                                     keyboardType: TextInputType.number,
                                     onChanged: (v) {
-                                      cartListItem.discount[
-                                      int.parse(products.itemId)] =
-                                          double.parse(v);
-                                      totalPriceBeforDes = 1 *
-                                          double.parse(
-                                              itemCountinCart.toString());
+
+                                      if (v != null && v.isNotEmpty) {
+                                        _myProdectListController.setdiscount(
+                                            id: products.value.id, val: v);
+                                      }
 
 
-                                      totalPriceafterDes = totalPriceBeforDes -
-                                          (totalPriceBeforDes *
-                                              (double.parse(v) / 100));
-                                      total_Tax = totalPriceafterDes *
-                                          (double.parse(
-                                              products.itemDetails[0].tax) /
-                                              100);
-                                      net_sal = totalPriceafterDes +
-                                          (totalPriceafterDes *
-                                              (double.parse(products
-                                                  .itemDetails[0].tax) /
-                                                  100));
-                                      //     net_sal = totalPriceafterDes;
-                                      cartListItem.PriceafterDes[products.itemId]=totalPriceafterDes;
-                                      cartListItem.total_Tax[products.itemId]=total_Tax;
 
 
-                                      ///=====================================================
-                                      //
-                                      //
-                                      // total_Tax=      (double.tryParse(products
-                                      //     .itemDetails[0]
-                                      //     .sellingPrice) *
-                                      //     double.tryParse(products.itemDetails[0].tax )* (double.tryParse(products
-                                      //     .itemDetails[0]
-                                      //     .sellingPrice)*double.parse(textEditingController.text )/100)
-                                      //
-                                      // );
-                                      //
-                                      //
-                                      // net_sal=    (double.tryParse(products
-                                      //     .itemDetails[0]
-                                      //     .sellingPrice) *
-                                      //     double.tryParse(products.itemDetails[0].tax )*(double.tryParse(products
-                                      //     .itemDetails[0]
-                                      //     .sellingPrice)*double.parse(textEditingController.text)/100)
-                                      //
-                                      // )+(    (double.tryParse(products
-                                      //     .itemDetails[0]
-                                      //     .sellingPrice)* double.parse(textEditingController.text)/100));
+
+
                                     },
                                     controller: discountController,
                                     textAlign: TextAlign.center,
@@ -1382,8 +2302,21 @@ class _ProductsScrState extends State<ProductsScr> {
                                         borderRadius:
                                         BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(products
-                                            .itemDetails[0].minimumQuantity))),
+                                      child:
+                                      GetBuilder<MyProdectListController>(
+                                        builder: (logic) {
+                                          print(
+                                              " oooooooooooooooooooooooooooooo  ${logic
+                                                  .item[products.value.id].value
+                                                  .count}");
+                                          return Text(logic
+                                              .item[products.value.id]
+                                              .value
+                                              .count
+                                              .toString());
+                                        },
+                                      ),
+                                    )),
                               ],
                             ),
                             Column(
@@ -1400,8 +2333,16 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child: Text(totalPriceBeforDes
-                                          .toStringAsFixed(3))),
+                                    child: GetBuilder<MyProdectListController>(
+                                      builder: (logic) {
+                                        return Text(logic
+                                            .item[products.value.id]
+                                            .value
+                                            .befordes
+                                            .toStringAsFixed(3));
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -1427,8 +2368,16 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child: Text(totalPriceafterDes
-                                          .toStringAsFixed(3))),
+                                    child: GetBuilder<MyProdectListController>(
+                                      builder: (logic) {
+                                        return Text(logic
+                                            .item[products.value.id]
+                                            .value
+                                            .afterdes
+                                            .toStringAsFixed(3));
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -1446,7 +2395,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child: Text(products.itemDetails[0].tax)),
+                                      child:
+                                      Text(products.value.tex.toString())),
                                 ),
                               ],
                             ),
@@ -1473,8 +2423,17 @@ class _ProductsScrState extends State<ProductsScr> {
                                         borderRadius:
                                         BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(
-                                            total_Tax.toStringAsFixed(3)))),
+                                      child:
+                                      GetBuilder<MyProdectListController>(
+                                        builder: (logic) {
+                                          return Text(
+                                              logic.item[products.value.id].value
+                                                  .totalTaxForItem
+                                                  .toStringAsFixed(3)
+                                          );
+                                        },
+                                      ),
+                                    )),
                               ],
                             ),
                             Column(
@@ -1490,8 +2449,15 @@ class _ProductsScrState extends State<ProductsScr> {
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                      child: Text(net_sal.toStringAsFixed(3))),
+                                  child: Center(child:
+                                  GetBuilder<MyProdectListController>(
+                                    builder: (logic) {
+                                      return Text(
+                                          logic.item[products.value.id].value
+                                              .totalPriceForItem
+                                              .toStringAsFixed(3));
+                                    },
+                                  )),
                                 ),
                               ],
                             ),
@@ -1515,9 +2481,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             //   child: Center(child: Text('Cancel')),
                             // ),
                             GestureDetector(
-                              onTap: () {
-                                setState(() {});
-                              },
+                              onTap: () {},
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Color(0xff2C4B89),
@@ -1546,92 +2510,4 @@ class _ProductsScrState extends State<ProductsScr> {
       ),
     );
   }
-
-  Widget AlirtItem({ItemDetails products, funadd, funremov}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[100],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[100].withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Promotion No'),
-                  Text('369'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                      onTap: funremov, child: Text('Promotion Name')),
-                  GestureDetector(onTap: funadd, child: Text('bol 100+30')),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Promotion Details'),
-                  Text('bol 100+30'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('16-4-2021'),
-                  Text('18-4-2021'),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  biledjsonpost(
-      {UserAndPermissions userAndPermissions,
-        CartItemController cartListItem}) {
-    EmployeDataController employeDataController = EmployeDataController();
-    OlderPost_json listOrder = OlderPost_json(listOrder: [
-      ListOrderToJson(
-          item: [],
-          userId: userAndPermissions.user.id,
-          requestLevel: 5,
-          noOfItems: cartListItem.cartlist.length,
-          storeId: 44,
-          requestType: 'nn',
-          employeeId: 5,
-          customerId: 5)
-    ]);
-
-    String jsonUser = jsonEncode(listOrder);
-
-  }
-
-
 }

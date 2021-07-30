@@ -187,15 +187,15 @@ class _ChequePayState extends State<ChequePay> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 child: DropdownButtonHideUnderline(
                                     child: DropdownButton<AllBanks>(
@@ -237,15 +237,15 @@ class _ChequePayState extends State<ChequePay> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 child: DropdownButtonHideUnderline(
                                     child: DropdownButton<AllBankBranches>(
@@ -273,15 +273,15 @@ class _ChequePayState extends State<ChequePay> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 child: DropdownButtonHideUnderline(
                                     child: DropdownButton<String>(
@@ -306,15 +306,15 @@ class _ChequePayState extends State<ChequePay> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.grey.withOpacity(0.5),
+                                //     spreadRadius: 5,
+                                //     blurRadius: 7,
+                                //     offset: Offset(
+                                //         0, 3), // changes position of shadow
+                                //   ),
+                                // ],
                               ),
                               child: TextField(
                                 controller: addnote,
@@ -346,15 +346,15 @@ class _ChequePayState extends State<ChequePay> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.withOpacity(0.5),
+                                    //     spreadRadius: 5,
+                                    //     blurRadius: 7,
+                                    //     offset: Offset(
+                                    //         0, 3), // changes position of shadow
+                                    //   ),
+                                    // ],
                                   ),
                                   child: Center(child: Text(Chequetime)),
                                 ),
@@ -374,15 +374,15 @@ class _ChequePayState extends State<ChequePay> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey.withOpacity(0.5),
+                                  //     spreadRadius: 5,
+                                  //     blurRadius: 7,
+                                  //     offset: Offset(
+                                  //         0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 child: TextField(
                                   controller: chechamount,
@@ -544,14 +544,14 @@ class _ChequePayState extends State<ChequePay> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.grey.withOpacity(0.5),
+                //     spreadRadius: 5,
+                //     blurRadius: 7,
+                //     offset: Offset(0, 3), // changes position of shadow
+                //   ),
+                // ],
               ),
               child: TextField(
                 controller: textEditingController,

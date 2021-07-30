@@ -266,15 +266,15 @@ Get.to(()=> Catalog());
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.pink[200].withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.pink[200].withOpacity(0.5),
+                                //     spreadRadius: 5,
+                                //     blurRadius: 7,
+                                //     offset: Offset(
+                                //         0, 3), // changes position of shadow
+                                //   ),
+                                // ],
                               ),
                               width: size.width * .62,
                               height: size.height * .2,
@@ -402,14 +402,14 @@ Get.to(()=> Catalog());
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: color.withOpacity(0.5),
+        //     spreadRadius: 5,
+        //     blurRadius: 7,
+        //     offset: Offset(0, 3), // changes position of shadow
+        //   ),
+        // ],
       ),
       width: size.width * .3,
       height: size.height * .2,

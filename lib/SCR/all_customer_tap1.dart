@@ -96,13 +96,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 10.0,
-              offset: const Offset(0.0, 10.0),
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black26,
+          //     blurRadius: 10.0,
+          //     offset: const Offset(0.0, 10.0),
+          //   ),
+          // ],
         ),
         height: size.height * .22,
         child: Row(
@@ -197,13 +197,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                         shape: BoxShape.rectangle,
                                         borderRadius:
                                             BorderRadius.circular(Consts.padding),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black26,
-                                            blurRadius: 10.0,
-                                            offset: const Offset(0.0, 10.0),
-                                          ),
-                                        ],
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //     color: Colors.black26,
+                                        //     blurRadius: 10.0,
+                                        //     offset: const Offset(0.0, 10.0),
+                                        //   ),
+                                        // ],
                                       ),
                                       child: SingleChildScrollView(
                                         child: Column(
