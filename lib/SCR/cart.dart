@@ -581,7 +581,7 @@ bool isCash=true;
                               Text('Discount'),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
-                                  return Text(logic.totalDiscountincart.toStringAsFixed(3));
+                                  return Text(logic.sumOftotalDiscountincart.toStringAsFixed(3));
                                 },
                               ),
                             ],
@@ -1017,9 +1017,9 @@ bool isCash=true;
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // Get.to(
-                              //   CartEditProduct(data),
-                              // );
+                              Get.to(
+                                CartEditProduct(products),
+                              );
                             },
                             child: Text(
                               products.value.name,

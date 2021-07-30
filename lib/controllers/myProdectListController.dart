@@ -12,7 +12,7 @@ class MyProdectListController extends GetxController {
   RxDouble totalpriceincart=0.0.obs;
   RxDouble totalTaxincart=0.0.obs;
   RxDouble totalDiscountincart=0.0.obs;
-
+  RxDouble sumOftotalDiscountincart=0.0.obs;
 
   settotalDiscountincart({String v}){
     totalDiscountincart.value=double.parse(v)/100;
@@ -21,13 +21,16 @@ class MyProdectListController extends GetxController {
   }
  gettotalpriceincart(){
    totalpriceincart.value=0;
-
+   totalTaxincart.value=0;
+   sumOftotalDiscountincart.value=0;
    item.forEach((key, value) {
 
  if(value.value.count>0){
    //print(" totalpriceincart        ${(value.value.afterdes )-((value.value.afterdes )* totalDiscountincart.value)}");
    totalpriceincart.value+=(value.value.afterdes )-((value.value.afterdes )* totalDiscountincart.value);
-   totalTaxincart.value+=totalpriceincart.value*(totalpriceincart.value*value.value.tex/100);
+   sumOftotalDiscountincart.value=value.value.afterdes  * totalDiscountincart.value;
+
+   totalTaxincart.value+= (((value.value.afterdes )-((value.value.afterdes )* totalDiscountincart.value))*value.value.tex/100);
  }
    });
  }

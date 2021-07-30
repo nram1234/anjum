@@ -1784,6 +1784,7 @@ class _ProductsScrState extends State<ProductsScr> {
         }
       }
     }
+    discountController.text=products.value.diescount.toString();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -2179,15 +2180,9 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                    child: GetBuilder<MyProdectListController>(
-                                      builder: (logic) {
-                                        return Text(logic
-                                            .item[products.value.id]
-                                            .value
-                                            .minimumQuantity
-                                            .toString());
-                                      },
-                                    ),
+                                    child: Text(products.value
+                                        .minimumQuantity
+                                        .toString()),
                                   ),
                                 )
                               ],
@@ -2305,10 +2300,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       child:
                                       GetBuilder<MyProdectListController>(
                                         builder: (logic) {
-                                          print(
-                                              " oooooooooooooooooooooooooooooo  ${logic
-                                                  .item[products.value.id].value
-                                                  .count}");
+
                                           return Text(logic
                                               .item[products.value.id]
                                               .value

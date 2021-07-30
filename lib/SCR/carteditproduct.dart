@@ -1,6 +1,7 @@
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
+import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/foundation.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartEditProduct extends StatefulWidget {
-  AllItems data;
+  Rx<TheItemInList> data;
 
   CartEditProduct(this.data);
 
@@ -17,6 +18,22 @@ class CartEditProduct extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<CartEditProduct> {
+
+  final MyProdectListController _myProdectListController = Get.find<MyProdectListController>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   final UnitController _UnitController = Get.find<UnitController>();
   int itemCountinCart = 0;
@@ -36,21 +53,14 @@ class _CartEditProductState extends State<CartEditProduct> {
   @override
   void initState() {
     super.initState();
-    showdropdowen = (_UnitController.MeasurementUnit_map[widget.data.itemId].length > 1);
-    textEditingController_discount.text =
-        bata.discount[int.parse(widget.data.itemId)].toString();
-    textEditingController_bounce.text =
-        bata.bounce[int.parse(widget.data.itemId)].toString();
-    // for(int z=0;z<stocitem.length;z++){
-    //
-    //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
-    //
-    // }
+    showdropdowen = (_UnitController.MeasurementUnit_map[widget.data.value.id].length > 1);
+    textEditingController_discount.text =widget.data.value.diescount.toString();
+
 
     for (int i = 0;
     i < bata.cartlist.length;
     i++) {
-      if (bata.cartlist[i].id == widget.data.id) {
+      if (bata.cartlist[i].id == widget.data.value.id) {
         itemCountinCart++;
       }
     }
@@ -58,7 +68,7 @@ class _CartEditProductState extends State<CartEditProduct> {
 
   @override
   Widget build(BuildContext context) {
-    allPrice(bata.discount[int.parse(widget.data.itemId)]);
+   // allPrice(bata.discount[int.parse(widget.data.itemId)]);
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -127,7 +137,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                               width: size.height * .15,
                               color: Colors.indigo,
                               child: Image.network(
-                                widget.data.itemDetails[0].image,
+                                widget.data.value.pic,
                                 height: size.height * .1,
                                 width: size.height * .1,
                               ),
@@ -146,16 +156,16 @@ class _CartEditProductState extends State<CartEditProduct> {
                                     height: 8,
                                   ),
                                   Text(
-                                    widget.data.itemDetails[0].itemNameEn,
+                                    widget.data.value.name,
                                     maxLines: 2,
                                   ),
                                   SizedBox(
                                     height: 4,
                                   ),
                                   Text("minimum Quantity: ${widget
-                                      .data.itemDetails[0].minimumQuantity}"),
-                                  //products.itemDetails[0].itemCost
-                                  Text('Price: ${_UnitController. val_Of_uint_map[widget.data.itemId]!=null?_UnitController. val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice}'),
+                                      .data.value.minimumQuantity}"),
+                                  //products.itemDetails[0].itemCost       _UnitController. val_Of_uint_map[widget.data.itemId]!=null?_UnitController. val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice
+                                  Text('Price: ${widget.data.value.price}'),
                                   //  Expanded(child: Container()),
                                 ],
                               ),
@@ -168,7 +178,15 @@ class _CartEditProductState extends State<CartEditProduct> {
                           children: [
                             InkWell(
                               onTap: () {
-                                bata.removefromcart(item: widget.data);
+                                if(_myProdectListController
+                                    .item[widget.data.value.id].value.count>0){
+                                  int v = _myProdectListController
+                                      .item[widget.data.value.id].value.count - 1;
+                                  print(widget.data.value.count);
+                                  _myProdectListController.setCount(
+                                      id: widget.data.value.id,
+                                      count: v);
+                                }
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -193,31 +211,25 @@ class _CartEditProductState extends State<CartEditProduct> {
                             Container(
                               width: size.width * .2,
                               child: Center(
-                                child: Obx(() {
-                                  itemCountinCart = 0;
-                                  for (int i = 0;
-                                      i < bata.cartlist.length;
-                                      i++) {
-                                    if (bata.cartlist[i].id == widget.data.id) {
-                                      itemCountinCart++;
-                                    }
-                                  }
-                                  textEditingController.text =
-                                      itemCountinCart.toString();
+                                child: GetBuilder<MyProdectListController>(
+                                  builder: (logic) {
+                                    textEditingController.text=logic.item[widget.data.value.id].value.count.toString();
 
-                                  return TextField(
-                                    onSubmitted: (v) {
-                                      bata.removeAllChooseItexfromcart(
-                                          item: widget.data);
-                                      for (int i = 0; i < int.parse(v); i++) {
-                                        bata.addToCart(item: widget.data);
-                                      }
-                                    },
-                                    keyboardType: TextInputType.number,
-                                    controller: textEditingController,
-                                    textAlign: TextAlign.center,
-                                  );
-                                }),
+                                    return TextField(
+                                      onChanged: (v) {
+                                        if (v != null && v.isNotEmpty) {
+                                          _myProdectListController.setCount(
+                                              id: widget.data.value.id,
+                                              count: int.parse(v));
+                                        }
+                                      },
+                                      onEditingComplete: () {},
+                                      controller: textEditingController,
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -225,7 +237,12 @@ class _CartEditProductState extends State<CartEditProduct> {
                             ),
                             InkWell(
                               onTap: () {
-                                bata.addToCart(item: widget.data);
+                                int v = _myProdectListController
+                                    .item[widget.data.value.id].value.count + 1;
+                                print(widget.data.value.count);
+                                _myProdectListController.setCount(
+                                    id: widget.data.value.id,
+                                    count: v);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -260,7 +277,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  'item Number: ${widget.data.itemDetails[0].itemNumber}',
+                                  'item Number: ${widget.data.value.itemNumber}',
                                   maxLines: 2,
                                 ),
                               ),
@@ -277,8 +294,8 @@ class _CartEditProductState extends State<CartEditProduct> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                  'Item Price :${_UnitController. val_Of_uint_map[widget.data.itemId]!=null?_UnitController. val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice}'),
-                              Text('Tax:  ${widget.data.itemDetails[0].tax}')
+                                  'Item Price :${widget.data.value.price}'),
+                              Text('Tax:  ${widget.data.value.tex}')
                             ],
                           ),
                         ),
@@ -432,7 +449,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             BorderRadius.circular(10)),
                                     child: Center(
                                       child:         showdropdowen
-                                          ? DropdownButton<ItemUnits>(value:   _UnitController. val_Of_uint_map[widget.data.itemId] ,
+                                          ? DropdownButton<ItemUnits>(value:   _UnitController. val_Of_uint_map[widget.data.value.id] ,
                                         icon: const Icon(
                                             Icons.arrow_downward),
                                         iconSize: 24,
@@ -444,11 +461,11 @@ class _CartEditProductState extends State<CartEditProduct> {
                                           color: Colors.deepPurpleAccent,
                                         ),
                                         onChanged: (ItemUnits newValue) {
-                                          _UnitController. val_Of_uint_map[widget.data.itemId]=newValue;
+                                          _UnitController. val_Of_uint_map[widget.data.value.id]=newValue;
                                        //   print(_UnitController. val_Of_uint_map[widget.data.itemId].itemMeasurementUnits);
                                           setState(() {});
                                         },
-                                        items: _UnitController.MeasurementUnit_map[widget.data.itemId].map<
+                                        items: _UnitController.MeasurementUnit_map[widget.data.value.id].map<
                                             DropdownMenuItem<
                                                 ItemUnits>>(
                                                 (ItemUnits value) {
@@ -460,8 +477,8 @@ class _CartEditProductState extends State<CartEditProduct> {
                                               );
                                             }).toList(),
                                       )
-                                          : Text(  _UnitController.val_Of_uint_map[widget.data.itemId]!=null?
-                                         _UnitController.val_Of_uint_map[widget.data.itemId].itemMeasurementUnits:_UnitController.MeasurementUnit_map[widget.data.itemId][0].itemMeasurementUnits ),
+                                          : Text(  _UnitController.val_Of_uint_map[widget.data.value.id]!=null?
+                                         _UnitController.val_Of_uint_map[widget.data.value.id].itemMeasurementUnits:_UnitController.MeasurementUnit_map[widget.data.value.id][0].itemMeasurementUnits ),
                                     ),
                                   )
                                 ],
@@ -480,10 +497,10 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(itemCountinCart.toString()
-                                            // dropdownMenuItemList
-                                            //     .listdropdownValue[pos].quantity
-                                            )),
+                                      child: Text(widget.data.value
+                                          .minimumQuantity
+                                          .toString()),
+                                    ),
                                   )
                                 ],
                               ),
@@ -513,7 +530,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                       keyboardType: TextInputType.number,
                                       onChanged: (v) {
                                         bata.bounce[
-                                                int.parse(widget.data.itemId)] =
+                                                int.parse(widget.data.value.id)] =
                                             double.parse(v);
                                       },
                                       textAlign: TextAlign.center,
@@ -543,9 +560,13 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             BorderRadius.circular(10)),
                                     child: TextField(
                                       onChanged: (v) {
-                                        double des=double.parse(v);
-                                        allPrice(des);
-                                        setState(() {});
+
+                                        if (v != null && v.isNotEmpty) {
+                                          _myProdectListController.setdiscount(
+                                              id: widget.data.value.id, val: v);
+                                        }
+
+
                                       },
                                       controller:
                                           textEditingController_discount,
@@ -585,8 +606,18 @@ class _CartEditProductState extends State<CartEditProduct> {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       child: Center(
-                                          child: Text(widget.data.itemDetails[0]
-                                              .minimumQuantity))),
+                                        child:
+                                        GetBuilder<MyProdectListController>(
+                                          builder: (logic) {
+
+                                            return Text(logic
+                                                .item[widget.data.value.id]
+                                                .value
+                                                .count
+                                                .toString());
+                                          },
+                                        ),
+                                      )),
                                 ],
                               ),
                               Column(
@@ -603,9 +634,17 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Center(
-                                        child: Text(
-                                            (totalPriceBeforDes).toStringAsFixed(3))),
+                                    child:Center(
+                                      child: GetBuilder<MyProdectListController>(
+                                        builder: (logic) {
+                                          return Text(logic
+                                              .item[widget.data.value.id]
+                                              .value
+                                              .befordes
+                                              .toStringAsFixed(3));
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -632,8 +671,16 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                        child: Text(totalPriceafterDes
-                                            .toStringAsFixed(3))),
+                                      child: GetBuilder<MyProdectListController>(
+                                        builder: (logic) {
+                                          return Text(logic
+                                              .item[widget.data.value.id]
+                                              .value
+                                              .afterdes
+                                              .toStringAsFixed(3));
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -653,7 +700,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             BorderRadius.circular(10)),
                                     child: Center(
                                         child: Text(
-                                            widget.data.itemDetails[0].tax)),
+                                            widget.data.value.tex.toString())),
                                   ),
                                 ],
                               ),
@@ -680,8 +727,17 @@ class _CartEditProductState extends State<CartEditProduct> {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       child: Center(
-                                          child: Text(
-                                              total_Tax.toStringAsFixed(3)))),
+                                        child:
+                                        GetBuilder<MyProdectListController>(
+                                          builder: (logic) {
+                                            return Text(
+                                               widget.data.value
+                                                    .totalTaxForItem
+                                                    .toStringAsFixed(3)
+                                            );
+                                          },
+                                        ),
+                                      )),
                                 ],
                               ),
                               Column(
@@ -698,9 +754,15 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Center(
-                                      child: Text(net_sal.toStringAsFixed(3)),
-                                    ),
+                                    child:  Center(child:
+                                    GetBuilder<MyProdectListController>(
+                                      builder: (logic) {
+                                        return Text(
+                                            widget.data.value
+                                                .totalPriceForItem
+                                                .toStringAsFixed(3));
+                                      },
+                                    )),
                                   )
                                 ],
                               ),
@@ -751,25 +813,25 @@ class _CartEditProductState extends State<CartEditProduct> {
       ),
     ));
   }
-  allPrice(double v){
-    bata.discount[
-    int.parse(widget.data.itemId)] =
-        v;
-    totalPriceBeforDes = double.parse( _UnitController.val_Of_uint_map[widget.data.itemId]!=null?_UnitController.val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice ) *
-        double.parse(
-            itemCountinCart.toString());
-
-
-
-
-
-
-
-print(totalPriceBeforDes);
-
-    totalPriceafterDes =totalPriceBeforDes-(totalPriceBeforDes*( v/100));
-    total_Tax = totalPriceafterDes*( double.parse( widget.data.itemDetails[0].tax) /100);
-    net_sal =  totalPriceafterDes+(totalPriceafterDes*(double.parse( widget.data.itemDetails[0].tax)/100));
-
-  }
+//   allPrice(double v){
+//     bata.discount[
+//     int.parse(widget.data.itemId)] =
+//         v;
+//     totalPriceBeforDes = double.parse( _UnitController.val_Of_uint_map[widget.data.itemId]!=null?_UnitController.val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice ) *
+//         double.parse(
+//             itemCountinCart.toString());
+//
+//
+//
+//
+//
+//
+//
+// print(totalPriceBeforDes);
+//
+//     totalPriceafterDes =totalPriceBeforDes-(totalPriceBeforDes*( v/100));
+//     total_Tax = totalPriceafterDes*( double.parse( widget.data.itemDetails[0].tax) /100);
+//     net_sal =  totalPriceafterDes+(totalPriceafterDes*(double.parse( widget.data.itemDetails[0].tax)/100));
+//
+//   }
 }
