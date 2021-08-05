@@ -2026,7 +2026,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           child: Row(
                             children: [
                               Image.asset(
-                                'assets/images/iso.png',
+                                'assets/images/iso.PNG',
                                 width: 30,
                                 height: 30,
                               ),

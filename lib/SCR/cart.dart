@@ -7,6 +7,8 @@ import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/json/insert_invoice_salesorder_json.dart';
+import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<Cart> {
+  AllNetworking _allNetworking=AllNetworking();
   var keysOfMap;
   String Chequetime = "choose date";
   TextEditingController _textEditingController = TextEditingController();
@@ -62,6 +65,8 @@ bool isCash=true;
         getTaxItemMap[bata.cartlist[i].itemId] = bata.cartlist[i];
       }
     }
+
+
   }
 
   @override
@@ -885,50 +890,57 @@ bool isCash=true;
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    double totalprice = 0;
+                                    ListInvoice i=ListInvoice(userId:_userAndPermissions.user.id, );
+                                    Insert_invoice_salesorder_json data=Insert_invoice_salesorder_json();
+                                    data.key='1234567890';
+                                    data.listInvoice.add(i);
 
-                                    for (int oo = 0;
-                                        oo < bata.cartlist.length;
-                                        oo++) {
-                                      totalprice = totalprice +
-                                          double.parse(bata.cartlist[oo]
-                                              .itemDetails[0].sellingPrice);
-                                    }
 
-                                    _databaseHelper
-                                        .insert_sales_order_requests(
-                                            Sales_Order_Requests_Model(
-                                      user_id: _userAndPermissions.user.id,
-                                      customer_id: 10,
-                                      // int.parse(_userAndPermissions.user.customerId),
-                                      employee_id:
-                                          _userAndPermissions.user.userId,
-                                      request_status: 'accepted',
-                                      salesmanager_id: _userAndPermissions
-                                          .user.salesmanagerId,
-                                      request_type:
-                                          isinvoiceOrSalesOrderOrReturnInvoice,
-                                      // 'salesOrder',
-                                      salesmanager_status: 'pending',
-                                      store_id: 1,
-                                      total_price: totalprice,
-                                      created_at: DateTime.now().toString(),
-                                      supervisor_id:
-                                          _userAndPermissions.user.supervisorId,
-                                      total_discount: 1000,
-                                      is_successfully_submitted: 0,
-                                      no_of_items:
-                                          bata.cartlist.length.toString(),
-                                      salesmanager_note: '',
-                                      request_level: 1,
-                                      total_tax: 10,
-                                      total_price_without_tax_discount: 55,
-                                    ))
-                                        .then((value) {
-                                      insertItemInDataBase(value);
-                                    }).catchError((e) {
-                                      print(e.toString());
-                                    });
+                                    _allNetworking.insert_invoice_salesorder(data:data.toJson() );
+
+                                    // double totalprice = 0;
+                                    //
+                                    // for (int oo = 0;
+                                    //     oo < bata.cartlist.length;
+                                    //     oo++) {
+                                    //   totalprice = totalprice +
+                                    //       double.parse(bata.cartlist[oo]
+                                    //           .itemDetails[0].sellingPrice);
+                                    // }
+                                    //
+                                    // _databaseHelper
+                                    //     .insert_sales_order_requests(
+                                    //         Sales_Order_Requests_Model(
+                                    //   user_id: _userAndPermissions.user.id,
+                                    //   customer_id:   int.parse(_userAndPermissions.user.customerId),
+                                    //   employee_id:
+                                    //       _userAndPermissions.user.userId,
+                                    //   request_status: 'accepted',
+                                    //   salesmanager_id: _userAndPermissions
+                                    //       .user.salesmanagerId,
+                                    //   request_type:
+                                    //       isinvoiceOrSalesOrderOrReturnInvoice,
+                                    //   // 'salesOrder',
+                                    //   salesmanager_status: 'pending',
+                                    //   store_id: 1,
+                                    //   total_price: totalprice,
+                                    //   created_at: DateTime.now().toString(),
+                                    //   supervisor_id:
+                                    //       _userAndPermissions.user.supervisorId,
+                                    //   total_discount: 1000,
+                                    //   is_successfully_submitted: 0,
+                                    //   no_of_items:
+                                    //       bata.cartlist.length.toString(),
+                                    //   salesmanager_note: '',
+                                    //   request_level: 1,
+                                    //   total_tax: 10,
+                                    //   total_price_without_tax_discount: 55,
+                                    // ))
+                                    //     .then((value) {
+                                    //   insertItemInDataBase(value);
+                                    // }).catchError((e) {
+                                    //   print(e.toString());
+                                    // });
                                   },
                                   child: Container(
                                     height: 50,

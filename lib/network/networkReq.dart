@@ -29,7 +29,7 @@ class AllNetworking {
 
 
     Login_json data;
-    await dio
+    await dio//http://18.220.206.74/van/user_api/login//http://18.220.206.74/API/api/auth/login
         .post( "http://18.220.206.74/API/api/auth/login", queryParameters: {
       //"mode": "formdata",
       "user_name": user_name,
@@ -165,4 +165,26 @@ class AllNetworking {
 
     }) ;
     }
+
+
+Future insert_invoice_salesorder({data})async{
+  var respons;
+  final formData = {
+
+    "key": '1234567890',
+    "list_invoice":data
+
+  };
+
+  return await dio.post('http://18.220.206.74/van/user_api/insert_invoice_salesorder', data:  data,)
+      .then((value) {
+    respons=value;
+
+  }) ;
+}
+
+
+
+
+
 }
