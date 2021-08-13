@@ -7,7 +7,7 @@ class Insert_invoice_salesorder_json {
   Insert_invoice_salesorder_json.fromJson(Map<String, dynamic> json) {
     key = json['key'];
     if (json['list_invoice'] != null) {
-      listInvoice = <ListInvoice>[];
+      listInvoice = new List<ListInvoice>();
       json['list_invoice'].forEach((v) {
         listInvoice.add(new ListInvoice.fromJson(v));
       });
@@ -38,18 +38,18 @@ class ListInvoice {
   String salesmanagerNote;
   String totalPriceWithoutTaxDiscount;
   double totalTax;
-  int totalDiscount;
-  int totalPrice;
+  String totalDiscount;
+  String totalPrice;
   String requestStatus;
   int itemId;
   int categoryId;
   int measurementUnitId;
-  int basePricePerUnit;
+  String basePricePerUnit;
   int bonus;
   String quantity;
   String taxType;
-  int totalPriceBeforeTax;
-  int totalPriceWithTax;
+  String totalPriceBeforeTax;
+  String totalPriceWithTax;
 
   ListInvoice(
       {this.userId,

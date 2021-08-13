@@ -26,7 +26,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<Cart> {
-  AllNetworking _allNetworking=AllNetworking();
+  AllNetworking _allNetworking = AllNetworking();
   var keysOfMap;
   String Chequetime = "choose date";
   TextEditingController _textEditingController = TextEditingController();
@@ -41,15 +41,15 @@ class _CartEditProductState extends State<Cart> {
   String dropdownvalue;
 
   var items = ['Cash', 'Cheque'];
-bool isCash=true;
+  bool isCash = true;
   List<AllItems> listtoshow = [];
   Map<String, AllItems> getTaxItemMap = {};
   bool canApply = true;
   bool requestToChangeInvoicePaymentType;
 
+  final MyProdectListController _myProdectListController =
+      Get.find<MyProdectListController>();
 
-
-  final MyProdectListController _myProdectListController = Get.find<MyProdectListController>();
   @override
   void initState() {
     super.initState();
@@ -65,8 +65,6 @@ bool isCash=true;
         getTaxItemMap[bata.cartlist[i].itemId] = bata.cartlist[i];
       }
     }
-
-
   }
 
   @override
@@ -178,15 +176,20 @@ bool isCash=true;
                           child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: _myProdectListController.item.length,//listtoshow.length,
+                              itemCount: _myProdectListController.item.length,
+                              //listtoshow.length,
                               itemBuilder: (context, pos) {
-
                                 _myProdectListController.item[keysOfMap[pos]];
 
-                             if(_myProdectListController.item[keysOfMap[pos]].value.count>0)   return Obx(() {
-                                  return item(
-                                      size: size, products: _myProdectListController.item[keysOfMap[pos]]);
-                                });
+                                if (_myProdectListController
+                                        .item[keysOfMap[pos]].value.count >
+                                    0)
+                                  return Obx(() {
+                                    return item(
+                                        size: size,
+                                        products: _myProdectListController
+                                            .item[keysOfMap[pos]]);
+                                  });
                               }),
                         ),
                         Padding(
@@ -466,12 +469,13 @@ bool isCash=true;
                                   //   ),
                                   // ],
                                 ),
-                                child: TextField(onChanged: (v){
-                                  if (v != null && v.isNotEmpty) {
-                                    _myProdectListController.settotalDiscountincart(
-                                      v: v);
-                                  }
-                                },
+                                child: TextField(
+                                  onChanged: (v) {
+                                    if (v != null && v.isNotEmpty) {
+                                      _myProdectListController
+                                          .settotalDiscountincart(v: v);
+                                    }
+                                  },
                                   controller: _textEditingController,
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
@@ -490,8 +494,7 @@ bool isCash=true;
                                     ? () {
                                         canApply = false;
 
-                               //    _myProdectListController.settotalpriceincart(double.parse(_textEditingController.text));
-
+                                        //    _myProdectListController.settotalpriceincart(double.parse(_textEditingController.text));
 
                                         // getTaxItemMap.forEach((key, value) {
                                         //   print(
@@ -563,10 +566,11 @@ bool isCash=true;
                             children: [
                               Text('Total'),
                               GetBuilder<MyProdectListController>(
-  builder: (logic) {
-    return Text(logic.totalpriceincart.toStringAsFixed(3));
-  },
-),
+                                builder: (logic) {
+                                  return Text(logic.totalpriceincart
+                                      .toStringAsFixed(3));
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -586,7 +590,8 @@ bool isCash=true;
                               Text('Discount'),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
-                                  return Text(logic.sumOftotalDiscountincart.toStringAsFixed(3));
+                                  return Text(logic.sumOftotalDiscountincart
+                                      .toStringAsFixed(3));
                                 },
                               ),
                             ],
@@ -606,7 +611,8 @@ bool isCash=true;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Total Tax'),
-                              Text(_myProdectListController.totalTaxincart.value.toStringAsFixed(3)),
+                              Text(_myProdectListController.totalTaxincart.value
+                                  .toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -624,118 +630,132 @@ bool isCash=true;
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Grand Total'),
-                              Text((_myProdectListController.totalTaxincart.value + _myProdectListController.totalpriceincart.value).toStringAsFixed(3)),
+                              Text((_myProdectListController
+                                          .totalTaxincart.value +
+                                      _myProdectListController
+                                          .totalpriceincart.value)
+                                  .toStringAsFixed(3)),
                             ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Payment Method'),
 
-                                  // Container(
-                                  //   padding: EdgeInsets.all(4),
-                                  //   width: size.width * .4,
-                                  //   height: 60,
-                                  //   decoration: BoxDecoration(
-                                  //     borderRadius: BorderRadius.circular(11.0),
-                                  //     color: Colors.white,
-                                  //     border: Border.all(
-                                  //       width: 1.0,
-                                  //       color: const Color(0xFFEBEBEB),
-                                  //     ),
-                                  //   ),
-                                  //   child: Center(
-                                  //     child: DropdownButton(underline:   SizedBox(),
-                                  //
-                                  //       value: dropdownvalue, hint: Text('Cash OR Cheque'),
-                                  //       icon: Icon(Icons.keyboard_arrow_down),
-                                  //       items:items.map((String items) {
-                                  //         return DropdownMenuItem(
-                                  //             value: items,
-                                  //             child: Text(items)
-                                  //         );
-                                  //       }
-                                  //       ).toList(),
-                                  //       onChanged: (String newValue){
-                                  //         setState(() {
-                                  //           dropdownvalue = newValue;
-                                  //         });
-                                  //       },
-                                  //     ),
-                                  //   ),
-                                  // ):
+                              // Container(
+                              //   padding: EdgeInsets.all(4),
+                              //   width: size.width * .4,
+                              //   height: 60,
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(11.0),
+                              //     color: Colors.white,
+                              //     border: Border.all(
+                              //       width: 1.0,
+                              //       color: const Color(0xFFEBEBEB),
+                              //     ),
+                              //   ),
+                              //   child: Center(
+                              //     child: DropdownButton(underline:   SizedBox(),
+                              //
+                              //       value: dropdownvalue, hint: Text('Cash OR Cheque'),
+                              //       icon: Icon(Icons.keyboard_arrow_down),
+                              //       items:items.map((String items) {
+                              //         return DropdownMenuItem(
+                              //             value: items,
+                              //             child: Text(items)
+                              //         );
+                              //       }
+                              //       ).toList(),
+                              //       onChanged: (String newValue){
+                              //         setState(() {
+                              //           dropdownvalue = newValue;
+                              //         });
+                              //       },
+                              //     ),
+                              //   ),
+                              // ):
 
-                              if(  requestToChangeInvoicePaymentType)   GestureDetector(onTap: (){
-                                isCash=true;
-                                setState(() {
+                              if (requestToChangeInvoicePaymentType)
+                                GestureDetector(
+                                  onTap: () {
+                                    isCash = true;
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(4),
+                                    child: Center(
+                                        child: Text(
+                                      'Cash',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.white),
+                                    )),
+                                    width: size.width * .25,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(11.0),
+                                      color: isCash
+                                          ? Colors.indigoAccent
+                                          : Colors.grey,
+                                      border: Border.all(
+                                        width: 1.0,
+                                        color: const Color(0xFFEBEBEB),
+                                      ),
+                                    ),
+                                  ),
+                                ),
 
-                                });
-                              },
-                                child: Container(
+                              if (requestToChangeInvoicePaymentType)
+                                GestureDetector(
+                                  onTap: () {
+                                    isCash = false;
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(4),
+                                    child: Center(
+                                        child: Text(
+                                      'Credit ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.white),
+                                    )),
+                                    width: size.width * .25,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(11.0),
+                                      color: isCash == false
+                                          ? Colors.indigoAccent
+                                          : Colors.grey,
+                                      border: Border.all(
+                                        width: 1.0,
+                                        color: const Color(0xFFEBEBEB),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              if (!requestToChangeInvoicePaymentType)
+                                Container(
                                   padding: EdgeInsets.all(4),
-                                  child: Center(
-                                      child: Text(
-                                        'Cash',
-                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
-                                      )),
-                                  width: size.width * .25,
+                                  width: size.width * .4,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(11.0),
-                                    color:isCash ? Colors.indigoAccent: Colors.grey,
+                                    borderRadius: BorderRadius.circular(11.0),
+                                    color: Colors.white,
                                     border: Border.all(
                                       width: 1.0,
                                       color: const Color(0xFFEBEBEB),
                                     ),
                                   ),
-                                ),
-                              ),
-
-                              if(  requestToChangeInvoicePaymentType) GestureDetector(onTap: (){
-                                isCash=false;
-                                setState(() {
-
-                                });
-                              },
-                                child: Container(
-                                  padding: EdgeInsets.all(4),
                                   child: Center(
-                                      child: Text(
-                                        'Credit ',
-                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
-                                      )),
-                                  width: size.width * .25,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(11.0),
-                                    color:isCash==false? Colors.indigoAccent: Colors.grey,
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: const Color(0xFFEBEBEB),
-                                    ),
-                                  ),
-                                ),
-                              )
-                              , if(  !requestToChangeInvoicePaymentType) Container(
-                                padding: EdgeInsets.all(4),
-                                width: size.width * .4,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(11.0),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: const Color(0xFFEBEBEB),
-                                  ),
-                                ),
-                                child: Center(
-                                    child: Text(customer.customer
-                                        .customerInfo.paymentType)),
-                              )
+                                      child: Text(customer
+                                          .customer.customerInfo.paymentType)),
+                                )
                             ],
                           ),
                         ),
@@ -890,13 +910,93 @@ bool isCash=true;
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    ListInvoice i=ListInvoice(userId:_userAndPermissions.user.id, );
-                                    Insert_invoice_salesorder_json data=Insert_invoice_salesorder_json();
-                                    data.key='1234567890';
-                                    data.listInvoice.add(i);
+
+                                    var data = Insert_invoice_salesorder_json()
+                                        .toJson();
+                                    List<ListInvoice> list = [];
+                                    int noOfItems = 0;
+                                    _myProdectListController.item
+                                        .forEach((key, value) {
+                                      if (value.value.count > 0) {
+                                        noOfItems++;
+                                      }
+                                    });
+                                    for (int itmeinlast = 0;
+                                        itmeinlast <
+                                            _myProdectListController
+                                                .item.length;
+                                        itmeinlast++) {
+                                      if (_myProdectListController
+                                              .item[keysOfMap[itmeinlast]]
+                                              .value
+                                              .count >
+                                          0) {
+
+                                        double onleyprice=(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*_myProdectListController.item[keysOfMap[itmeinlast]].value.count)-(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*(_myProdectListController.totalDiscountincart/100)*_myProdectListController.item[keysOfMap[itmeinlast]].value.count);
+                                        double onleypricewithtax=onleyprice+(onleyprice*(_myProdectListController.item[keysOfMap[itmeinlast]].value.tex/100));
 
 
-                                    _allNetworking.insert_invoice_salesorder(data:data.toJson() );
+                                        ListInvoice i = ListInvoice(
+                                            userId:
+                                                _userAndPermissions.user.userId,
+                                            requestLevel: 2,
+                                            salesmanagerNote: " ",
+                                            supervisorNote: " ",
+                                            totalTax: ((_myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value.afterdes-(_myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value.afterdes*(_myProdectListController
+                                                .totalDiscountincart /100) ))*(_myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value.tex/100)
+
+
+
+
+                                            ),
+                                            quantity: _myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value
+                                                .count
+                                                .toString(),
+                                            itemId: int.parse(_myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value
+                                                .id),
+                                            noOfItems: noOfItems,
+                                            employeeId:
+                                                _userAndPermissions.user.userId,
+                                            requestStatus: "pending",
+                                            customerId:
+                                                int.parse(Get.find<AllChequesController>().customer.customerInfo.customerId),
+                                            supervisorId: _userAndPermissions.user.supervisorId,
+                                            salesmanagerId: _userAndPermissions.user.salesmanagerId,
+                                            basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]].value.price.toString(),
+                                            storeId: _userAndPermissions.user.storeId,
+                                            measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
+                                            totalPrice: _myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes.toString(),
+                            totalPriceWithTax:  onleypricewithtax .toString(),
+                                            totalPriceBeforeTax: _myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes.toString(),
+                                            totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count).toString(),
+                                            totalDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))).toString(),
+                                            categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
+                                            requestType: "invoice",
+                                            taxType: "percentage");
+
+                                        data['key'] = '1234567890';
+                                        list.add(i);
+                                      }
+                                    }
+                                    data['list_invoice'] =
+                                        list; //list.map((e) => e.toJson()).toList();
+                                    print(data);
+                                    _allNetworking
+                                        .insert_invoice_salesorder(data: data)
+                                        .then((value) {
+                                      print('value      $value');
+                                      Get.snackbar("message", value.toString());
+                                    });
 
                                     // double totalprice = 0;
                                     //
@@ -972,6 +1072,7 @@ bool isCash=true;
       ),
     );
   }
+
   Widget item({size, Rx<TheItemInList> products}) {
     int numberofitem = 0;
     for (int i = 0; i < bata.cartlist.length; i++) {
@@ -979,7 +1080,7 @@ bool isCash=true;
         numberofitem++;
       }
     }
-  TextEditingController  textEditingController=TextEditingController();
+    TextEditingController textEditingController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -1076,7 +1177,6 @@ bool isCash=true;
                               color: Colors.grey,
                               size: 30,
                             ))),
-
                   ],
                 ),
               ),
@@ -1093,16 +1193,16 @@ bool isCash=true;
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        if(_myProdectListController
-                            .item[products.value.id].value.count>0){
+                        if (_myProdectListController
+                                .item[products.value.id].value.count >
+                            0) {
                           int v = _myProdectListController
-                              .item[products.value.id].value.count - 1;
+                                  .item[products.value.id].value.count -
+                              1;
                           print(products.value.count);
                           _myProdectListController.setCount(
-                              id: products.value.id,
-                              count: v);
+                              id: products.value.id, count: v);
                         }
-
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -1137,26 +1237,25 @@ bool isCash=true;
                     ),
                     Container(
                       width: size.width * .2,
-                      child: Center(
-                          child: GetBuilder<MyProdectListController>(
-                            builder: (logic) {
-                              textEditingController.text=logic.item[products.value.id].value.count.toString();
+                      child: Center(child: GetBuilder<MyProdectListController>(
+                        builder: (logic) {
+                          textEditingController.text = logic
+                              .item[products.value.id].value.count
+                              .toString();
 
-                              return TextField(
-                                onChanged: (v) {
-                                  if (v != null && v.isNotEmpty) {
-                                    _myProdectListController.setCount(
-                                        id: products.value.id,
-                                        count: int.parse(v));
-                                  }
-                                },
-
-                                controller: textEditingController,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                              );
+                          return TextField(
+                            onChanged: (v) {
+                              if (v != null && v.isNotEmpty) {
+                                _myProdectListController.setCount(
+                                    id: products.value.id, count: int.parse(v));
+                              }
                             },
-                          )),
+                            controller: textEditingController,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                          );
+                        },
+                      )),
                     ),
                     SizedBox(
                       width: 15,
@@ -1164,14 +1263,14 @@ bool isCash=true;
 
                     InkWell(
                       onTap: () {
-                      //  bata.addToCart(item: data);
+                        //  bata.addToCart(item: data);
 
                         int v = _myProdectListController
-                            .item[products.value.id].value.count + 1;
+                                .item[products.value.id].value.count +
+                            1;
                         print(products.value.count);
                         _myProdectListController.setCount(
-                            id: products.value.id,
-                            count: v);
+                            id: products.value.id, count: v);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -1206,6 +1305,7 @@ bool isCash=true;
           )),
     );
   }
+
   // Widget item({size, AllItems data}) {
   //   int numberofitem = 0;
   //   for (int i = 0; i < bata.cartlist.length; i++) {

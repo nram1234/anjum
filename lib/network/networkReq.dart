@@ -167,7 +167,7 @@ class AllNetworking {
     }
 
 
-Future insert_invoice_salesorder({data})async{
+Future  insert_invoice_salesorder({data})async{
   var respons;
   final formData = {
 
@@ -175,9 +175,10 @@ Future insert_invoice_salesorder({data})async{
     "list_invoice":data
 
   };
-
-  return await dio.post('http://18.220.206.74/van/user_api/insert_invoice_salesorder', data:  data,)
+print(jsonEncode(data));
+  return await dio.post('http://18.220.206.74/van/user_api/insert_invoice_salesorder', data: jsonEncode(data)  )
       .then((value) {
+        print(value);
     respons=value;
 
   }) ;

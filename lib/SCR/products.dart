@@ -36,20 +36,20 @@ class ProductsScr extends StatefulWidget {
 
 class _ProductsScrState extends State<ProductsScr> {
   MyProdectListController _myProdectListController =
-  Get.put(MyProdectListController());
+      Get.put(MyProdectListController());
 
   List<Widget> alert_item = [];
 
   final AllItemsController bata = Get.find<AllItemsController>();
 
   final AllCustomersControllers _allCustomersControllers =
-  Get.find<AllCustomersControllers>();
+      Get.find<AllCustomersControllers>();
 
   final UnitController _UnitController =
-  Get.find<UnitController>(); //Get.put(UnitController());
+      Get.find<UnitController>(); //Get.put(UnitController());
 
   CartItemController cartListItem =
-  Get.put(CartItemController(), permanent: true);
+      Get.put(CartItemController(), permanent: true);
 
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
   DatabaseHelper _databaseHelper = DatabaseHelper();
@@ -61,12 +61,11 @@ class _ProductsScrState extends State<ProductsScr> {
   int totalItem = 0;
 
   //=========================
-  var stocitem = Get
-      .find<AllStockItemsController>()
+  var stocitem = Get.find<AllStockItemsController>()
       .allStockItems; //ده لسته المنتجات وممكن المقارنه بايد الاستور ونضيفه في لسته
 
   DropdownMenuItemList dropdownMenuItemList =
-  Get.put(DropdownMenuItemList(), permanent: true);
+      Get.put(DropdownMenuItemList(), permanent: true);
 
   //====================
   AllStockItems _allStockItems;
@@ -88,9 +87,7 @@ class _ProductsScrState extends State<ProductsScr> {
   } //getstock
 
   getmeasurementUnit() {
-    AllCustomers allCustomers = Get
-        .find<AllChequesController>()
-        .customer;
+    AllCustomers allCustomers = Get.find<AllChequesController>().customer;
     List<List<ItemUnits>> MeasurementUnit2 = [];
     for (int uu = 0; uu < allCustomers.priceListsInfo.length; uu++) {
       MeasurementUnit2.add([]);
@@ -102,8 +99,8 @@ class _ProductsScrState extends State<ProductsScr> {
       //    MeasurementUnit.clear();
 
       for (int p = 0;
-      p < allCustomers.priceListsInfo[i].itemUnits.length;
-      p++) {
+          p < allCustomers.priceListsInfo[i].itemUnits.length;
+          p++) {
         MeasurementUnit2[i].add(allCustomers.priceListsInfo[i].itemUnits[p]);
 
         //  MeasurementUnit.add( allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
@@ -111,8 +108,8 @@ class _ProductsScrState extends State<ProductsScr> {
       }
 
       _UnitController
-          .MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId] =
-      MeasurementUnit2[i];
+              .MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId] =
+          MeasurementUnit2[i];
     }
   }
 
@@ -130,7 +127,7 @@ class _ProductsScrState extends State<ProductsScr> {
       List<AllStockItems> p = [];
       dropdownMenuItemList.allStockItems.add(p);
       TextEditingController textEditingControllerOfItem =
-      TextEditingController();
+          TextEditingController();
       textEditingControllerOfItem.text = "0";
       dropdownMenuItemList
           .addlisttextEditingControllerOfItem(textEditingControllerOfItem);
@@ -158,9 +155,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     for (int i = 0; i < 10; i++) {
       alert_item.add(AlirtItem());
     }
@@ -168,415 +163,395 @@ class _ProductsScrState extends State<ProductsScr> {
 
     return Scaffold(
         body: Container(
-          height: size.height,
-          width: size.width,
-          child: Stack(
-            children: [
-              Container(
-                  height: size.height * .3,
-                  width: size.width,
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        'assets/images/bk.png',
-                        width: size.width,
-                        fit: BoxFit.fill,
-                      ),
-                      Positioned(
-                          left: size.width * .1,
-                          top: size.height * .12,
-                          child: Text(
-                            'Transaction',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )),
-                      Positioned(
-                          right: size.width * .05,
-                          top: size.height * .05,
-                          child: Container(
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.to(() => Cart());
-                                      },
-                                      child: Icon(
-                                        Icons.add_shopping_cart,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Obx(() {
-                                        log(cartListItem.itemInCart.value
-                                            .toString());
-                                        return Text(
-                                            cartListItem.itemInCart.value
-                                                .toString(),
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18));
-                                      })
-                                    ],
-                                  ),
-                                ],
-                              ))),
-                      Positioned(
-                          left: size.width * .05,
-                          top: size.height * .05,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ))
-                    ],
-                  )),
-              Positioned(
-                  right: 0,
-                  left: 0,
-                  top: size.height * .2,
-                  child: Container(
-                    height: size.height * .8,
+      height: size.height,
+      width: size.width,
+      child: Stack(
+        children: [
+          Container(
+              height: size.height * .3,
+              width: size.width,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/bk.png',
                     width: size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            topLeft: Radius.circular(30))),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                    fit: BoxFit.fill,
+                  ),
+                  Positioned(
+                      left: size.width * .1,
+                      top: size.height * .12,
+                      child: Text(
+                        'Transaction',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      )),
+                  Positioned(
+                      right: size.width * .05,
+                      top: size.height * .05,
+                      child: Container(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(() => Cart());
+                              },
+                              child: Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.grey[100]),
-                                width: size.width * .8,
-                                height: 50,
-                                child: TextField(
-                                  onChanged: (v) {
-                                    bata.search_word.value = v;
-                                    bata.SerchWordListToViewInSerarch(v);
-
-                                    dropdownMenuItemList.serach_allStockItems
-                                        .clear();
-                                    dropdownMenuItemList
-                                        .serach_listtextEditingControllerOfItem
-                                        .clear();
-
-                                    for (int i = 0;
-                                    i < bata.search_wordListItems.length;
-                                    i++) {
-                                      List<AllStockItems> p = [];
-                                      dropdownMenuItemList.serach_allStockItems
-                                          .add(p);
-                                      TextEditingController
-                                      textEditingControllerOfItem =
-                                      TextEditingController();
-                                      textEditingControllerOfItem.text = '';
-                                      dropdownMenuItemList
-                                          .serach_addlisttextEditingControllerOfItem(
-                                          textEditingControllerOfItem);
-                                      AllStockItems allStockItems;
-                                      dropdownMenuItemList
-                                          .serach_listdropdownValue
-                                          .add(allStockItems);
-                                      //  for(int z=0;z<stocitem.length;z++){
-                                      //
-                                      //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
-                                      //
-                                      // }
-
-                                      // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
-
-                                    }
-                                    //  setState(() {});
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    suffixIcon: Icon(Icons.search),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => Filter());
-                                },
-                                child: Container(
-                                  width: size.width * .1,
-                                  height: size.width * .1,
-                                  child: Image.asset(
-                                      'assets/images/filter.png'),
-                                ),
-                              ),
+                              Obx(() {
+                                log(cartListItem.itemInCart.value.toString());
+                                return Text(
+                                    cartListItem.itemInCart.value.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18));
+                              })
                             ],
                           ),
+                        ],
+                      ))),
+                  Positioned(
+                      left: size.width * .05,
+                      top: size.height * .05,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 30,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            splashColor: Colors.orange,
-                            onTap: () {
-                              totalItem = 0;
-                              double totalprice = 0;
-                              cartListItem.itemInCart.value = 0;
-                              if (bata.search_word
-                                  .trim()
-                                  .isNotEmpty) {
+                      ))
+                ],
+              )),
+          Positioned(
+              right: 0,
+              left: 0,
+              top: size.height * .2,
+              child: Container(
+                height: size.height * .8,
+                width: size.width,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30),
+                        topLeft: Radius.circular(30))),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.grey[100]),
+                            width: size.width * .8,
+                            height: 50,
+                            child: TextField(
+                              onChanged: (v) {
+                                bata.search_word.value = v;
+                                bata.SerchWordListToViewInSerarch(v);
+
+                                dropdownMenuItemList.serach_allStockItems
+                                    .clear();
+                                dropdownMenuItemList
+                                    .serach_listtextEditingControllerOfItem
+                                    .clear();
+
                                 for (int i = 0;
+                                    i < bata.search_wordListItems.length;
+                                    i++) {
+                                  List<AllStockItems> p = [];
+                                  dropdownMenuItemList.serach_allStockItems
+                                      .add(p);
+                                  TextEditingController
+                                      textEditingControllerOfItem =
+                                      TextEditingController();
+                                  textEditingControllerOfItem.text = '';
+                                  dropdownMenuItemList
+                                      .serach_addlisttextEditingControllerOfItem(
+                                          textEditingControllerOfItem);
+                                  AllStockItems allStockItems;
+                                  dropdownMenuItemList.serach_listdropdownValue
+                                      .add(allStockItems);
+                                  //  for(int z=0;z<stocitem.length;z++){
+                                  //
+                                  //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
+                                  //
+                                  // }
+
+                                  // dropdownMenuItemList.listdropdownValue[i]=dropdownMenuItemList.allStockItems[i][0];
+
+                                }
+                                //  setState(() {});
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                suffixIcon: Icon(Icons.search),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => Filter());
+                            },
+                            child: Container(
+                              width: size.width * .1,
+                              height: size.width * .1,
+                              child: Image.asset('assets/images/filter.png'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        splashColor: Colors.orange,
+                        onTap: () {
+                          totalItem = 0;
+                          double totalprice = 0;
+                          cartListItem.itemInCart.value = 0;
+                          if (bata.search_word.trim().isNotEmpty) {
+                            for (int i = 0;
                                 i <
                                     dropdownMenuItemList
                                         .serach_listtextEditingControllerOfItem
                                         .length;
                                 i++) {
-                                  totalItem = totalItem +
-                                      int.parse(dropdownMenuItemList
-                                          .serach_listtextEditingControllerOfItem[i]
-                                          .text);
-                                  totalprice = totalprice +
-                                      (int.parse(dropdownMenuItemList
+                              totalItem = totalItem +
+                                  int.parse(dropdownMenuItemList
+                                      .serach_listtextEditingControllerOfItem[i]
+                                      .text);
+                              totalprice = totalprice +
+                                  (int.parse(dropdownMenuItemList
                                           .serach_listtextEditingControllerOfItem[
-                                      i]
+                                              i]
                                           .text) *
-                                          double.tryParse(bata.allItems[i]
-                                              .itemDetails[0].sellingPrice));
+                                      double.tryParse(bata.allItems[i]
+                                          .itemDetails[0].sellingPrice));
 
-                                  for (int p = 0;
+                              for (int p = 0;
                                   p <
                                       int.parse(dropdownMenuItemList
                                           .serach_listtextEditingControllerOfItem[
-                                      i]
+                                              i]
                                           .text);
                                   p++) {
-                                    cartListItem.addToCart(
-                                        item: bata.search_wordListItems[i]);
-                                  }
-                                }
-                              } else {
-                                // cartListItem.clearCartList();
+                                cartListItem.addToCart(
+                                    item: bata.search_wordListItems[i]);
+                              }
+                            }
+                          } else {
+                            // cartListItem.clearCartList();
 
-                                for (int i = 0;
+                            for (int i = 0;
                                 i <
                                     dropdownMenuItemList
                                         .listtextEditingControllerOfItem.length;
                                 i++) {
-                                  if (int.parse(dropdownMenuItemList
-                                      .listtextEditingControllerOfItem[i]
-                                      .text) >
-                                      0 &&
-                                      !cartListItem.cartlist
-                                          .contains(bata.allItems[i])) {
-                                    // cartListItem.itemInCart++;
-
-                                  }
-
-                                  totalItem = totalItem +
-                                      int.parse(dropdownMenuItemList
+                              if (int.parse(dropdownMenuItemList
                                           .listtextEditingControllerOfItem[i]
-                                          .text);
-                                  totalprice = totalprice +
-                                      (int.parse(dropdownMenuItemList
+                                          .text) >
+                                      0 &&
+                                  !cartListItem.cartlist
+                                      .contains(bata.allItems[i])) {
+                                // cartListItem.itemInCart++;
+
+                              }
+
+                              totalItem = totalItem +
+                                  int.parse(dropdownMenuItemList
+                                      .listtextEditingControllerOfItem[i].text);
+                              totalprice = totalprice +
+                                  (int.parse(dropdownMenuItemList
                                           .listtextEditingControllerOfItem[i]
                                           .text) *
-                                          double.tryParse(bata.allItems[i]
-                                              .itemDetails[0].sellingPrice));
+                                      double.tryParse(bata.allItems[i]
+                                          .itemDetails[0].sellingPrice));
 
-                                  for (int p = 0;
+                              for (int p = 0;
                                   p <
                                       int.parse(dropdownMenuItemList
                                           .listtextEditingControllerOfItem[i]
                                           .text);
                                   p++) {
-                                    cartListItem.addToCart(
-                                        item: bata.allItems[i]);
-                                  }
-                                }
+                                cartListItem.addToCart(item: bata.allItems[i]);
                               }
+                            }
+                          }
 
-                              int customer_id = int.tryParse(
-                                  Get
-                                      .find<AllChequesController>()
-                                      .customer_id);
+                          int customer_id = int.tryParse(
+                              Get.find<AllChequesController>().customer_id);
 
-                              for (int i = 0;
+                          for (int i = 0;
                               i < cartListItem.cartlist.length;
                               i++) {
-                                totalprice = totalprice +
-                                    double.tryParse(cartListItem
-                                        .cartlist[i].itemDetails[0]
-                                        .sellingPrice);
-                              }
+                            totalprice = totalprice +
+                                double.tryParse(cartListItem
+                                    .cartlist[i].itemDetails[0].sellingPrice);
+                          }
 
-                              _databaseHelper
-                                  .insert_temporary_tabel_cart(
-                                  Temporary_tabel_cart(
-                                    customer_id: customer_id.toString(),
-                                    employee_id:
-                                    _userAndPermissions.user.userId.toString(),
-                                    supervisor_id: _userAndPermissions.user
-                                        .supervisorId
-                                        .toString(),
-                                    salesmanager_id: _userAndPermissions
-                                        .user.salesmanagerId
-                                        .toString(),
-                                    user_id: _userAndPermissions.user.id
-                                        .toString(),
-                                    store_id: 1.toString(),
-                                  ))
-                                  .then((value) {
-                                insertItemInDataBase(value);
-                              });
+                          _databaseHelper
+                              .insert_temporary_tabel_cart(Temporary_tabel_cart(
+                            customer_id: customer_id.toString(),
+                            employee_id:
+                                _userAndPermissions.user.userId.toString(),
+                            supervisor_id: _userAndPermissions.user.supervisorId
+                                .toString(),
+                            salesmanager_id: _userAndPermissions
+                                .user.salesmanagerId
+                                .toString(),
+                            user_id: _userAndPermissions.user.id.toString(),
+                            store_id: 1.toString(),
+                          ))
+                              .then((value) {
+                            insertItemInDataBase(value);
+                          });
 
-                              // _databaseHelper
-                              //     .insert_sales_order_requests(
-                              //         Sales_Order_Requests_Model(
-                              //   user_id: _userAndPermissions.user.id,
-                              //   customer_id: customer_id,
-                              //   employee_id: _userAndPermissions.user.userId,
-                              //   request_status: 'accepted',
-                              //   salesmanager_id:
-                              //       _userAndPermissions.user.salesmanagerId,
-                              //   request_type: 'salesOrder',
-                              //   salesmanager_status: 'pending',
-                              //   store_id: 1,
-                              //   total_price: totalprice,
-                              //   created_at: DateTime.now().toString(),
-                              //   supervisor_id:
-                              //       _userAndPermissions.user.supervisorId,
-                              //   total_discount: 1000,
-                              //   is_successfully_submitted: 0,
-                              //   no_of_items: totalItem.toString(),
-                              //   salesmanager_note: '',
-                              //   request_level: 1,
-                              //   total_tax: 10,
-                              //   total_price_without_tax_discount: 55,
-                              // ))
-                              //     .then((value) {
-                              //   insertItemInDataBase(value);
-                              // }).catchError((e) {
-                              //   print(e.toString());
-                              // });
+                          // _databaseHelper
+                          //     .insert_sales_order_requests(
+                          //         Sales_Order_Requests_Model(
+                          //   user_id: _userAndPermissions.user.id,
+                          //   customer_id: customer_id,
+                          //   employee_id: _userAndPermissions.user.userId,
+                          //   request_status: 'accepted',
+                          //   salesmanager_id:
+                          //       _userAndPermissions.user.salesmanagerId,
+                          //   request_type: 'salesOrder',
+                          //   salesmanager_status: 'pending',
+                          //   store_id: 1,
+                          //   total_price: totalprice,
+                          //   created_at: DateTime.now().toString(),
+                          //   supervisor_id:
+                          //       _userAndPermissions.user.supervisorId,
+                          //   total_discount: 1000,
+                          //   is_successfully_submitted: 0,
+                          //   no_of_items: totalItem.toString(),
+                          //   salesmanager_note: '',
+                          //   request_level: 1,
+                          //   total_tax: 10,
+                          //   total_price_without_tax_discount: 55,
+                          // ))
+                          //     .then((value) {
+                          //   insertItemInDataBase(value);
+                          // }).catchError((e) {
+                          //   print(e.toString());
+                          // });
 
-                              for (int p = 0;
+                          for (int p = 0;
                               p <
                                   dropdownMenuItemList
                                       .listtextEditingControllerOfItem.length;
                               p++) {
-                                dropdownMenuItemList
-                                    .listtextEditingControllerOfItem[p]
-                                    .text = 0.toString();
-                              }
+                            dropdownMenuItemList
+                                .listtextEditingControllerOfItem[p]
+                                .text = 0.toString();
+                          }
 
-                              Get.snackbar('', "item added to cart ");
-                            },
-                            child: Container(
-                              height: 50,
-                              width: size.width * .9,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                child: Text('Add To Cart'),
-                              ),
+                          Get.snackbar('', "item added to cart ");
+                        },
+                        child: Container(
+                          height: 50,
+                          width: size.width * .9,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
                             ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text('Add To Cart'),
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: ListView.builder(
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: ListView.builder(
 
-                            // shrinkWrap: true,
-                            // addAutomaticKeepAlives: true,
-                              itemCount: _myProdectListController.item.length
+                          // shrinkWrap: true,
+                          // addAutomaticKeepAlives: true,
+                          itemCount: _myProdectListController.item.length
 
-                              // bata.search_word.trim().isNotEmpty
-                              //     ? bata.search_wordListItems.length
-                              //     : bata.allItems.length
-                              // 100, //bata.allItems.length,
-                              ,
-                              itemBuilder: (context, pos) {
-                                var cat = Get
-                                    .find<AllCategoriesController>()
-                                    .allCategories;
-                                AllCategories categories;
+                          // bata.search_word.trim().isNotEmpty
+                          //     ? bata.search_wordListItems.length
+                          //     : bata.allItems.length
+                          // 100, //bata.allItems.length,
+                          ,
+                          itemBuilder: (context, pos) {
+                            var cat = Get.find<AllCategoriesController>()
+                                .allCategories;
+                            AllCategories categories;
 
-                                int numberofitem = 0;
-                                for (int i = 0;
+                            int numberofitem = 0;
+                            for (int i = 0;
                                 i <
-                                    Get
-                                        .find<AllCategoriesController>()
+                                    Get.find<AllCategoriesController>()
                                         .allCategories
                                         .length;
                                 i++) {
-                                  if (bata.search_word
-                                      .trim()
-                                      .isNotEmpty) {
-                                    if (cat[i].id ==
-                                        bata.search_wordListItems[pos].id) {
-                                      categories = cat[i];
-                                    }
-                                  } else {
-                                    if (cat[i].id == bata.allItems[pos].id) {
-                                      categories = cat[i];
-                                    }
-                                  }
+                              if (bata.search_word.trim().isNotEmpty) {
+                                if (cat[i].id ==
+                                    bata.search_wordListItems[pos].id) {
+                                  categories = cat[i];
                                 }
+                              } else {
+                                if (cat[i].id == bata.allItems[pos].id) {
+                                  categories = cat[i];
+                                }
+                              }
+                            }
 
-                                // if (bata.search_word.isNotEmpty) {
-                                //   for (int i = 0;
-                                //       i < cartListItem.cartlist.length;
-                                //       i++) {
-                                //     if (cartListItem.cartlist[i] ==
-                                //         bata.search_wordListItems[pos]) {
-                                //       numberofitem++;
-                                //     }
-                                //   }
-                                // } else {
-                                //   for (int i = 0;
-                                //       i < cartListItem.cartlist.length;
-                                //       i++) {
-                                //     if (cartListItem.cartlist[i] ==
-                                //         bata.allItems[pos]) {
-                                //       numberofitem++;
-                                //     }
-                                //   }
-                                // }
+                            // if (bata.search_word.isNotEmpty) {
+                            //   for (int i = 0;
+                            //       i < cartListItem.cartlist.length;
+                            //       i++) {
+                            //     if (cartListItem.cartlist[i] ==
+                            //         bata.search_wordListItems[pos]) {
+                            //       numberofitem++;
+                            //     }
+                            //   }
+                            // } else {
+                            //   for (int i = 0;
+                            //       i < cartListItem.cartlist.length;
+                            //       i++) {
+                            //     if (cartListItem.cartlist[i] ==
+                            //         bata.allItems[pos]) {
+                            //       numberofitem++;
+                            //     }
+                            //   }
+                            // }
 
-                                // dropdownMenuItemList
-                                //     .listtextEditingControllerOfItem[pos]
-                                //     .text = 0.toString();
+                            // dropdownMenuItemList
+                            //     .listtextEditingControllerOfItem[pos]
+                            //     .text = 0.toString();
 
-                                // if (bata.search_word.trim().isNotEmpty) {
-                                //   dropdownMenuItemList
-                                //       .serach_listtextEditingControllerOfItem[pos]
-                                //       .text = numberofitem.toString();
-                                // }
-                                var unitlist = _UnitController
-                                    .MeasurementUnit_map[
+                            // if (bata.search_word.trim().isNotEmpty) {
+                            //   dropdownMenuItemList
+                            //       .serach_listtextEditingControllerOfItem[pos]
+                            //       .text = numberofitem.toString();
+                            // }
+                            var unitlist = _UnitController.MeasurementUnit_map[
                                 _myProdectListController
                                     .item[keysOfMap[pos]].value.id
                                 // bata.search_word.value.trim().isNotEmpty
@@ -584,301 +559,297 @@ class _ProductsScrState extends State<ProductsScr> {
                                 //   : bata.allItems[pos].itemId
                                 ];
 
-                                return iteminthelist(
-                                  unitslist: unitlist,
-                                  // funAdd: () {
-                                  //   if (!cartListItem.cartlist.contains(
-                                  //       bata.search_word.value
-                                  //           .trim()
-                                  //           .isNotEmpty
-                                  //           ? bata.search_wordListItems[pos]
-                                  //           : bata.allItems[pos])) {}
-                                  //   if (bata.search_word
-                                  //       .trim()
-                                  //       .isNotEmpty) {
-                                  //     int i = int.parse(dropdownMenuItemList
-                                  //         .serach_listtextEditingControllerOfItem[
-                                  //     pos]
-                                  //         .text) +
-                                  //         1;
-                                  //
-                                  //     dropdownMenuItemList
-                                  //         .serach_listtextEditingControllerOfItem[
-                                  //     pos]
-                                  //         .text = i.toString();
-                                  //     _myProdectListController.setCount(
-                                  //         id: _myProdectListController
-                                  //             .item[keysOfMap[pos]].value.id,
-                                  //         count: i);
-                                  //   } else {
-                                  //     int i = int.parse(dropdownMenuItemList
-                                  //         .listtextEditingControllerOfItem[pos]
-                                  //         .text) +
-                                  //         1;
-                                  //     dropdownMenuItemList
-                                  //         .listtextEditingControllerOfItem[pos]
-                                  //         .text = i.toString();
-                                  //     // _myProdectListController.item[keysOfMap[pos]].value.count=i;
-                                  //     _myProdectListController.setCount(
-                                  //         id: _myProdectListController
-                                  //             .item[keysOfMap[pos]].value.id,
-                                  //         count: i);
-                                  //   }
-                                  // },
-                                  // fundies: () {
-                                  //   if (bata.search_word
-                                  //       .trim()
-                                  //       .isNotEmpty) {
-                                  //     if (int.parse(dropdownMenuItemList
-                                  //         .serach_listtextEditingControllerOfItem[
-                                  //     pos]
-                                  //         .text) >
-                                  //         0) {
-                                  //       int i = int.parse(dropdownMenuItemList
-                                  //           .serach_listtextEditingControllerOfItem[
-                                  //       pos]
-                                  //           .text) -
-                                  //           1;
-                                  //       dropdownMenuItemList
-                                  //           .serach_listtextEditingControllerOfItem[
-                                  //       pos]
-                                  //           .text = i.toString();
-                                  //       _myProdectListController.setCount(
-                                  //           id: _myProdectListController
-                                  //               .item[keysOfMap[pos]].value.id,
-                                  //           count: i);
-                                  //     }
-                                  //   } else {
-                                  //     if (int.parse(dropdownMenuItemList
-                                  //         .listtextEditingControllerOfItem[pos]
-                                  //         .text) >
-                                  //         0) {
-                                  //       int i = int.parse(dropdownMenuItemList
-                                  //           .listtextEditingControllerOfItem[
-                                  //       pos]
-                                  //           .text) -
-                                  //           1;
-                                  //       dropdownMenuItemList
-                                  //           .listtextEditingControllerOfItem[pos]
-                                  //           .text = i.toString();
-                                  //       _myProdectListController.setCount(
-                                  //           id: _myProdectListController
-                                  //               .item[keysOfMap[pos]].value.id,
-                                  //           count: i);
-                                  //     }
-                                  //   }
-                                  // },
-                                  pos: pos,
-                                  bounceController:
+                            return iteminthelist(
+                              unitslist: unitlist,
+                              // funAdd: () {
+                              //   if (!cartListItem.cartlist.contains(
+                              //       bata.search_word.value
+                              //           .trim()
+                              //           .isNotEmpty
+                              //           ? bata.search_wordListItems[pos]
+                              //           : bata.allItems[pos])) {}
+                              //   if (bata.search_word
+                              //       .trim()
+                              //       .isNotEmpty) {
+                              //     int i = int.parse(dropdownMenuItemList
+                              //         .serach_listtextEditingControllerOfItem[
+                              //     pos]
+                              //         .text) +
+                              //         1;
+                              //
+                              //     dropdownMenuItemList
+                              //         .serach_listtextEditingControllerOfItem[
+                              //     pos]
+                              //         .text = i.toString();
+                              //     _myProdectListController.setCount(
+                              //         id: _myProdectListController
+                              //             .item[keysOfMap[pos]].value.id,
+                              //         count: i);
+                              //   } else {
+                              //     int i = int.parse(dropdownMenuItemList
+                              //         .listtextEditingControllerOfItem[pos]
+                              //         .text) +
+                              //         1;
+                              //     dropdownMenuItemList
+                              //         .listtextEditingControllerOfItem[pos]
+                              //         .text = i.toString();
+                              //     // _myProdectListController.item[keysOfMap[pos]].value.count=i;
+                              //     _myProdectListController.setCount(
+                              //         id: _myProdectListController
+                              //             .item[keysOfMap[pos]].value.id,
+                              //         count: i);
+                              //   }
+                              // },
+                              // fundies: () {
+                              //   if (bata.search_word
+                              //       .trim()
+                              //       .isNotEmpty) {
+                              //     if (int.parse(dropdownMenuItemList
+                              //         .serach_listtextEditingControllerOfItem[
+                              //     pos]
+                              //         .text) >
+                              //         0) {
+                              //       int i = int.parse(dropdownMenuItemList
+                              //           .serach_listtextEditingControllerOfItem[
+                              //       pos]
+                              //           .text) -
+                              //           1;
+                              //       dropdownMenuItemList
+                              //           .serach_listtextEditingControllerOfItem[
+                              //       pos]
+                              //           .text = i.toString();
+                              //       _myProdectListController.setCount(
+                              //           id: _myProdectListController
+                              //               .item[keysOfMap[pos]].value.id,
+                              //           count: i);
+                              //     }
+                              //   } else {
+                              //     if (int.parse(dropdownMenuItemList
+                              //         .listtextEditingControllerOfItem[pos]
+                              //         .text) >
+                              //         0) {
+                              //       int i = int.parse(dropdownMenuItemList
+                              //           .listtextEditingControllerOfItem[
+                              //       pos]
+                              //           .text) -
+                              //           1;
+                              //       dropdownMenuItemList
+                              //           .listtextEditingControllerOfItem[pos]
+                              //           .text = i.toString();
+                              //       _myProdectListController.setCount(
+                              //           id: _myProdectListController
+                              //               .item[keysOfMap[pos]].value.id,
+                              //           count: i);
+                              //     }
+                              //   }
+                              // },
+                              pos: pos,
+                              bounceController:
                                   textEditingControllerbounce[pos],
-                                  discountController:
+                              discountController:
                                   textEditingControllerDiscount[pos],
-                                  textEditingController: dropdownMenuItemList
-                                      .listtextEditingControllerOfItem[pos],
-                                  products:
+                              textEditingController: dropdownMenuItemList
+                                  .listtextEditingControllerOfItem[pos],
+                              products:
                                   _myProdectListController.item[keysOfMap[pos]],
-                                  size: size,
-                                );
+                              size: size,
+                            );
 
-                                // return itemListView(
-                                //     unitslist: unitlist,
-                                //     bounceController:
-                                //     textEditingControllerbounce[pos],
-                                //     discountController:
-                                //     textEditingControllerDiscount[pos],
-                                //     pos: pos,
-                                //     list:
-                                //
-                                //     bata.search_word.trim().isNotEmpty
-                                //         ? dropdownMenuItemList
-                                //         .serach_allStockItems[pos]
-                                //         : dropdownMenuItemList.allStockItems[pos],
-                                //
-                                //
-                                //
-                                //     dropdowenval: bata.search_word.trim().isNotEmpty
-                                //         ? dropdownMenuItemList
-                                //         .serach_listdropdownValue[pos]
-                                //         : dropdownMenuItemList
-                                //         .listdropdownValue[pos],
-                                //     textEditingController: bata.search_word
-                                //         .trim()
-                                //         .isNotEmpty
-                                //         ? dropdownMenuItemList
-                                //         .serach_listtextEditingControllerOfItem[
-                                //     pos]
-                                //         : dropdownMenuItemList
-                                //         .listtextEditingControllerOfItem[pos],
-                                //     size: size,
-                                //     funadd: () {
-                                //       if (!cartListItem.cartlist.contains(
-                                //           bata.search_word.value.trim().isNotEmpty
-                                //               ? bata.search_wordListItems[pos]
-                                //               : bata.allItems[pos])) {}
-                                //       if (bata.search_word.trim().isNotEmpty) {
-                                //         int i = int.parse(dropdownMenuItemList
-                                //             .serach_listtextEditingControllerOfItem[
-                                //         pos]
-                                //             .text) +
-                                //             1;
-                                //         dropdownMenuItemList
-                                //             .serach_listtextEditingControllerOfItem[
-                                //         pos]
-                                //             .text = i.toString();
-                                //       } else {
-                                //         int i = int.parse(dropdownMenuItemList
-                                //             .listtextEditingControllerOfItem[
-                                //         pos]
-                                //             .text) +
-                                //             1;
-                                //         dropdownMenuItemList
-                                //             .listtextEditingControllerOfItem[pos]
-                                //             .text = i.toString();
-                                //       }
-                                //     },
-                                //     products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
-                                //     bata.search_word.value.trim().isNotEmpty
-                                //         ? bata.search_wordListItems[pos]
-                                //         : bata.allItems[pos],
-                                //     funremov: () {
-                                //       if (bata.search_word.trim().isNotEmpty) {
-                                //         if (int.parse(dropdownMenuItemList
-                                //             .serach_listtextEditingControllerOfItem[
-                                //         pos]
-                                //             .text) >
-                                //             0) {
-                                //           int i = int.parse(dropdownMenuItemList
-                                //               .serach_listtextEditingControllerOfItem[
-                                //           pos]
-                                //               .text) -
-                                //               1;
-                                //           dropdownMenuItemList
-                                //               .serach_listtextEditingControllerOfItem[
-                                //           pos]
-                                //               .text = i.toString();
-                                //         }
-                                //       } else {
-                                //         if (int.parse(dropdownMenuItemList
-                                //             .listtextEditingControllerOfItem[
-                                //         pos]
-                                //             .text) >
-                                //             0) {
-                                //           int i = int.parse(dropdownMenuItemList
-                                //               .listtextEditingControllerOfItem[
-                                //           pos]
-                                //               .text) -
-                                //               1;
-                                //           dropdownMenuItemList
-                                //               .listtextEditingControllerOfItem[pos]
-                                //               .text = i.toString();
-                                //         }
-                                //       }
-                                //     });
+                            // return itemListView(
+                            //     unitslist: unitlist,
+                            //     bounceController:
+                            //     textEditingControllerbounce[pos],
+                            //     discountController:
+                            //     textEditingControllerDiscount[pos],
+                            //     pos: pos,
+                            //     list:
+                            //
+                            //     bata.search_word.trim().isNotEmpty
+                            //         ? dropdownMenuItemList
+                            //         .serach_allStockItems[pos]
+                            //         : dropdownMenuItemList.allStockItems[pos],
+                            //
+                            //
+                            //
+                            //     dropdowenval: bata.search_word.trim().isNotEmpty
+                            //         ? dropdownMenuItemList
+                            //         .serach_listdropdownValue[pos]
+                            //         : dropdownMenuItemList
+                            //         .listdropdownValue[pos],
+                            //     textEditingController: bata.search_word
+                            //         .trim()
+                            //         .isNotEmpty
+                            //         ? dropdownMenuItemList
+                            //         .serach_listtextEditingControllerOfItem[
+                            //     pos]
+                            //         : dropdownMenuItemList
+                            //         .listtextEditingControllerOfItem[pos],
+                            //     size: size,
+                            //     funadd: () {
+                            //       if (!cartListItem.cartlist.contains(
+                            //           bata.search_word.value.trim().isNotEmpty
+                            //               ? bata.search_wordListItems[pos]
+                            //               : bata.allItems[pos])) {}
+                            //       if (bata.search_word.trim().isNotEmpty) {
+                            //         int i = int.parse(dropdownMenuItemList
+                            //             .serach_listtextEditingControllerOfItem[
+                            //         pos]
+                            //             .text) +
+                            //             1;
+                            //         dropdownMenuItemList
+                            //             .serach_listtextEditingControllerOfItem[
+                            //         pos]
+                            //             .text = i.toString();
+                            //       } else {
+                            //         int i = int.parse(dropdownMenuItemList
+                            //             .listtextEditingControllerOfItem[
+                            //         pos]
+                            //             .text) +
+                            //             1;
+                            //         dropdownMenuItemList
+                            //             .listtextEditingControllerOfItem[pos]
+                            //             .text = i.toString();
+                            //       }
+                            //     },
+                            //     products: //cartitem.showItemDataWithPrice[pos].itemDetails[pos]
+                            //     bata.search_word.value.trim().isNotEmpty
+                            //         ? bata.search_wordListItems[pos]
+                            //         : bata.allItems[pos],
+                            //     funremov: () {
+                            //       if (bata.search_word.trim().isNotEmpty) {
+                            //         if (int.parse(dropdownMenuItemList
+                            //             .serach_listtextEditingControllerOfItem[
+                            //         pos]
+                            //             .text) >
+                            //             0) {
+                            //           int i = int.parse(dropdownMenuItemList
+                            //               .serach_listtextEditingControllerOfItem[
+                            //           pos]
+                            //               .text) -
+                            //               1;
+                            //           dropdownMenuItemList
+                            //               .serach_listtextEditingControllerOfItem[
+                            //           pos]
+                            //               .text = i.toString();
+                            //         }
+                            //       } else {
+                            //         if (int.parse(dropdownMenuItemList
+                            //             .listtextEditingControllerOfItem[
+                            //         pos]
+                            //             .text) >
+                            //             0) {
+                            //           int i = int.parse(dropdownMenuItemList
+                            //               .listtextEditingControllerOfItem[
+                            //           pos]
+                            //               .text) -
+                            //               1;
+                            //           dropdownMenuItemList
+                            //               .listtextEditingControllerOfItem[pos]
+                            //               .text = i.toString();
+                            //         }
+                            //       }
+                            //     });
 
-                                // AlirtItem( );
-                              }),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: Colors.grey.withOpacity(0.7),
-                            //     spreadRadius: 5,
-                            //     blurRadius: 7,
-                            //     offset:
-                            //     Offset(0, 3), // changes position of shadow
-                            //   ),
-                            // ],
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              )),
-                          height: size.height * .075,
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15))),
-                                height: size.height * .075,
-                                width: size.width * .6,
-                                child: Center(
-                                    child: GetX<TimeController>(
-                                      init: TimeController(),
-                                      builder: (c) {
-                                        return Text(c.stoptimedisplay.value);
-                                      },
-                                    )),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (!c.swatch.isRunning) {
-                                      getMyLoction(firesvisittlocation);
+                            // AlirtItem( );
+                          }),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Colors.grey.withOpacity(0.7),
+                          //     spreadRadius: 5,
+                          //     blurRadius: 7,
+                          //     offset:
+                          //     Offset(0, 3), // changes position of shadow
+                          //   ),
+                          // ],
+                          borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      )),
+                      height: size.height * .075,
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15))),
+                            height: size.height * .075,
+                            width: size.width * .6,
+                            child: Center(
+                                child: GetX<TimeController>(
+                              init: TimeController(),
+                              builder: (c) {
+                                return Text(c.stoptimedisplay.value);
+                              },
+                            )),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                if (!c.swatch.isRunning) {
+                                  getMyLoction(firesvisittlocation);
 
-                                      c.startjor();
-                                    } else {
-                                      getMyLoction(endvisittlocation);
-                                      DatabaseHelper()
-                                          .insert_insert_visit(Insert_visit_DB(
-                                        customer_id:
-                                        Get
-                                            .find<AllChequesController>()
+                                  c.startjor();
+                                } else {
+                                  getMyLoction(endvisittlocation);
+                                  DatabaseHelper()
+                                      .insert_insert_visit(Insert_visit_DB(
+                                    customer_id:
+                                        Get.find<AllChequesController>()
                                             .customer
                                             .customerInfo
                                             .id,
-                                        user_id:
+                                    user_id:
                                         _userAndPermissions.user.id.toString(),
-                                      ))
-                                          .then((value) {
-                                        Get
-                                            .find<AllChequesController>()
-                                            .customer =
+                                  ))
+                                      .then((value) {
+                                    Get.find<AllChequesController>().customer =
                                         null;
-                                      });
-                                      c.stopjor();
-                                      cartListItem.cartlist.clear();
-                                      cartListItem.bounce.clear();
-                                      cartListItem.discount.clear();
-                                      cartListItem.itemInCart.value = 0;
-                                      _UnitController.all_Uint_select.clear();
-                                      _UnitController.all_Uint_List.clear();
-                                      _UnitController.val_Of_uint_map.clear();
-                                      _UnitController.MeasurementUnit_map;
-                                      Get.off(() => All_Customer());
-                                    }
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff2C4B89),
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(15))),
-                                    height: size.height * .075,
-                                    child: Center(
-                                        child: Obx(() =>
-                                            Text(
-                                              c.startswatch.value
-                                                  ? 'End Visit'
-                                                  : 'start',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
-                                            ))),
-                                  ),
-                                ),
+                                  });
+                                  c.stopjor();
+                                  cartListItem.cartlist.clear();
+                                  cartListItem.bounce.clear();
+                                  cartListItem.discount.clear();
+                                  cartListItem.itemInCart.value = 0;
+                                  _UnitController.all_Uint_select.clear();
+                                  _UnitController.all_Uint_List.clear();
+                                  _UnitController.val_Of_uint_map.clear();
+                                  _UnitController.MeasurementUnit_map;
+                                  Get.off(() => All_Customer());
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xff2C4B89),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(15))),
+                                height: size.height * .075,
+                                child: Center(
+                                    child: Obx(() => Text(
+                                          c.startswatch.value
+                                              ? 'End Visit'
+                                              : 'start',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
                               ),
-                            ],
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  )),
-            ],
-          ),
-        ));
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ],
+      ),
+    ));
   }
 
   insertItemInDataBase(int i) async {
@@ -1745,8 +1716,9 @@ class _ProductsScrState extends State<ProductsScr> {
     );
   }
 
-  biledjsonpost({UserAndPermissions userAndPermissions,
-    CartItemController cartListItem}) {
+  biledjsonpost(
+      {UserAndPermissions userAndPermissions,
+      CartItemController cartListItem}) {
     EmployeDataController employeDataController = EmployeDataController();
     OlderPost_json listOrder = OlderPost_json(listOrder: [
       ListOrderToJson(
@@ -1763,7 +1735,8 @@ class _ProductsScrState extends State<ProductsScr> {
     String jsonUser = jsonEncode(listOrder);
   }
 
-  Widget iteminthelist({List<ItemUnits> unitslist,
+  Widget iteminthelist({
+    List<ItemUnits> unitslist,
     list,
     Size size,
     int pos,
@@ -1772,19 +1745,18 @@ class _ProductsScrState extends State<ProductsScr> {
     TextEditingController discountController,
     TextEditingController bounceController,
     AllStockItems dropdowenval,
-    }) {
+  }) {
     bool showdropdowen = (unitslist.length > 1);
     if (showdropdowen) {
       for (int i = 0; i < unitslist.length; i++) {
         if (unitslist[i].defaultValue == "yes") {
           _myProdectListController.setprice(
               id: products.value.id, val: unitslist[i].sellingPrice);
-          _UnitController.val_Of_uint_map[
-          products.value.id] = unitslist[i];
+          _UnitController.val_Of_uint_map[products.value.id] = unitslist[i];
         }
       }
     }
-    discountController.text=products.value.diescount.toString();
+    discountController.text = products.value.diescount.toString();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -1850,17 +1822,17 @@ class _ProductsScrState extends State<ProductsScr> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: (){
-                            if(_myProdectListController
-                                .item[products.value.id].value.count>0){
+                          onTap: () {
+                            if (_myProdectListController
+                                    .item[products.value.id].value.count >
+                                0) {
                               int v = _myProdectListController
-                                  .item[products.value.id].value.count - 1;
+                                      .item[products.value.id].value.count -
+                                  1;
                               print(products.value.count);
                               _myProdectListController.setCount(
-                                  id: products.value.id,
-                                  count: v);
+                                  id: products.value.id, count: v);
                             }
-
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -1884,27 +1856,29 @@ class _ProductsScrState extends State<ProductsScr> {
                         ),
                         Container(
                           width: size.width * .2,
-                          child: Center(
-                              child: GetBuilder<MyProdectListController>(
-                                builder: (logic) {
-                                  textEditingController.text=logic.item[products.value.id].value.count.toString();
+                          child:
+                              Center(child: GetBuilder<MyProdectListController>(
+                            builder: (logic) {
+                              textEditingController.text = logic
+                                  .item[products.value.id].value.count
+                                  .toString();
 
-                                  return TextField(
-                                    onChanged: (v) {
-                                      if (v != null && v.isNotEmpty) {
-                                        _myProdectListController.setCount(
-                                            id: _myProdectListController
-                                                .item[keysOfMap[pos]].value.id,
-                                            count: int.parse(v));
-                                      }
-                                    },
-                                    onEditingComplete: () {},
-                                    controller: textEditingController,
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.number,
-                                  );
+                              return TextField(
+                                onChanged: (v) {
+                                  if (v != null && v.isNotEmpty) {
+                                    _myProdectListController.setCount(
+                                        id: _myProdectListController
+                                            .item[keysOfMap[pos]].value.id,
+                                        count: int.parse(v));
+                                  }
                                 },
-                              )),
+                                onEditingComplete: () {},
+                                controller: textEditingController,
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                              );
+                            },
+                          )),
                         ),
                         SizedBox(
                           width: 4,
@@ -1912,11 +1886,11 @@ class _ProductsScrState extends State<ProductsScr> {
                         InkWell(
                           onTap: () {
                             int v = _myProdectListController
-                                .item[products.value.id].value.count + 1;
+                                    .item[products.value.id].value.count +
+                                1;
                             print(products.value.count);
                             _myProdectListController.setCount(
-                                id: products.value.id,
-                                count: v);
+                                id: products.value.id, count: v);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -2118,50 +2092,56 @@ class _ProductsScrState extends State<ProductsScr> {
                                   child: Center(
                                     child: showdropdowen
                                         ? GetBuilder<MyProdectListController>(
-                                      builder: (logic) {
-                                        return DropdownButton<ItemUnits>(
-                                          value:
-                                          _UnitController.val_Of_uint_map[
-                                          products.value.id],
-                                          icon: const Icon(
-                                              Icons.arrow_downward),
-                                          iconSize: 24,
-                                          elevation: 16,
-                                          style: const TextStyle(
-                                              color: Colors.deepPurple),
-                                          underline: Container(
-                                            height: 2,
-                                            color: Colors.deepPurpleAccent,
-                                          ),
-                                          onChanged: (ItemUnits newValue) {
-                                            _UnitController.val_Of_uint_map[
-                                            products.value.id] = newValue;
+                                            builder: (logic) {
+                                              return DropdownButton<ItemUnits>(
+                                                value: _UnitController
+                                                        .val_Of_uint_map[
+                                                    products.value.id],
+                                                icon: const Icon(
+                                                    Icons.arrow_downward),
+                                                iconSize: 24,
+                                                elevation: 16,
+                                                style: const TextStyle(
+                                                    color: Colors.deepPurple),
+                                                underline: Container(
+                                                  height: 2,
+                                                  color:
+                                                      Colors.deepPurpleAccent,
+                                                ),
+                                                onChanged:
+                                                    (ItemUnits newValue) {
+                                                  _UnitController
+                                                              .val_Of_uint_map[
+                                                          products.value.id] =
+                                                      newValue;
 
-                                            _myProdectListController.setprice(
-                                                id: products.value.id,
-                                                val: newValue.sellingPrice);
+                                                  _myProdectListController
+                                                      .setprice(
+                                                          id: products.value.id,
+                                                          val: newValue
+                                                              .sellingPrice);
 
-                                            print(_myProdectListController.item[
-                                            products.value.id].value.price);
-                                          },
-                                          items: unitslist.map<
-                                              DropdownMenuItem<
-                                                  ItemUnits>>(
-                                                  (ItemUnits value) {
-                                                return DropdownMenuItem<
-                                                    ItemUnits>(
-                                                  value: value,
-                                                  child: Text(
-                                                      value
-                                                          .itemMeasurementUnits),
-                                                );
-                                              }).toList(),
-                                        );
-                                      },
-                                    )
-
+                                                  print(_myProdectListController
+                                                      .item[products.value.id]
+                                                      .value
+                                                      .price);
+                                                },
+                                                items: unitslist.map<
+                                                        DropdownMenuItem<
+                                                            ItemUnits>>(
+                                                    (ItemUnits value) {
+                                                  return DropdownMenuItem<
+                                                      ItemUnits>(
+                                                    value: value,
+                                                    child: Text(value
+                                                        .itemMeasurementUnits),
+                                                  );
+                                                }).toList(),
+                                              );
+                                            },
+                                          )
                                         : Text(
-                                        unitslist[0].itemMeasurementUnits),
+                                            unitslist[0].itemMeasurementUnits),
                                   ),
                                 )
                                 //     )
@@ -2180,8 +2160,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                    child: Text(products.value
-                                        .minimumQuantity
+                                    child: Text(products.value.minimumQuantity
                                         .toString()),
                                   ),
                                 )
@@ -2244,17 +2223,10 @@ class _ProductsScrState extends State<ProductsScr> {
                                     //   onChanged: textEditingdiscount,
                                     keyboardType: TextInputType.number,
                                     onChanged: (v) {
-
                                       if (v != null && v.isNotEmpty) {
                                         _myProdectListController.setdiscount(
                                             id: products.value.id, val: v);
                                       }
-
-
-
-
-
-
                                     },
                                     controller: discountController,
                                     textAlign: TextAlign.center,
@@ -2295,12 +2267,11 @@ class _ProductsScrState extends State<ProductsScr> {
                                           width: 1,
                                         ),
                                         borderRadius:
-                                        BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
                                     child: Center(
                                       child:
-                                      GetBuilder<MyProdectListController>(
+                                          GetBuilder<MyProdectListController>(
                                         builder: (logic) {
-
                                           return Text(logic
                                               .item[products.value.id]
                                               .value
@@ -2388,7 +2359,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child:
-                                      Text(products.value.tex.toString())),
+                                          Text(products.value.tex.toString())),
                                 ),
                               ],
                             ),
@@ -2413,16 +2384,16 @@ class _ProductsScrState extends State<ProductsScr> {
                                           width: 1,
                                         ),
                                         borderRadius:
-                                        BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
                                     child: Center(
                                       child:
-                                      GetBuilder<MyProdectListController>(
+                                          GetBuilder<MyProdectListController>(
                                         builder: (logic) {
-                                          return Text(
-                                              logic.item[products.value.id].value
-                                                  .totalTaxForItem
-                                                  .toStringAsFixed(3)
-                                          );
+                                          return Text(logic
+                                              .item[products.value.id]
+                                              .value
+                                              .totalTaxForItem
+                                              .toStringAsFixed(3));
                                         },
                                       ),
                                     )),
@@ -2442,12 +2413,11 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(child:
-                                  GetBuilder<MyProdectListController>(
+                                      GetBuilder<MyProdectListController>(
                                     builder: (logic) {
-                                      return Text(
-                                          logic.item[products.value.id].value
-                                              .totalPriceForItem
-                                              .toStringAsFixed(3));
+                                      return Text(logic.item[products.value.id]
+                                          .value.totalPriceForItem
+                                          .toStringAsFixed(3));
                                     },
                                   )),
                                 ),
