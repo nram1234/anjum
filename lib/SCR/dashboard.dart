@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard> {
                             left: size.width * .1,
                             top: size.height * .1,
                             child: Text(
-                              'Transaction',
+                              'transaction'.tr,
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _DashboardState extends State<Dashboard> {
                                                 child: item(
                                                     color: Colors.orange[200],
                                                     size: size,
-                                                    name: 'Sales Order',
+                                                    name: 'salesorder'.tr,
                                                     path:
                                                         'assets/images/order.png'),
                                               ),
@@ -152,7 +152,7 @@ class _DashboardState extends State<Dashboard> {
                                                     child: Column(
                                                       children: [
                                                         Text(
-                                                            'Select Payment Method'),
+                                                            'selectpaymentmethod'.tr),
                                                         SizedBox(
                                                           height: 8,
                                                         ),
@@ -196,7 +196,7 @@ class _DashboardState extends State<Dashboard> {
                                                                             .spaceAround,
                                                                     children: [
                                                                       Text(
-                                                                        'Cash',
+                                                                        'cash'.tr,
                                                                         style: TextStyle(
                                                                             fontWeight:
                                                                                 FontWeight.bold,
@@ -285,7 +285,7 @@ class _DashboardState extends State<Dashboard> {
                                                 child: item(
                                                     color: Colors.pink[200],
                                                     size: size,
-                                                    name: 'Payment',
+                                                    name: 'payment'.tr,
                                                     path:
                                                         'assets/images/payment.png'),
                                               ),
@@ -304,7 +304,7 @@ class _DashboardState extends State<Dashboard> {
                                                 child: item(
                                                     color: Colors.pink[200],
                                                     size: size,
-                                                    name: 'Return Invoice',
+                                                    name: 'returninvoice'.tr,
                                                     path:
                                                         'assets/images/returninvoice.png'),
                                               ),
@@ -323,7 +323,7 @@ class _DashboardState extends State<Dashboard> {
                                                     color: Colors
                                                         .purpleAccent[200],
                                                     size: size,
-                                                    name: 'Invoice',
+                                                    name:'invoice'.tr,
                                                     path:
                                                         'assets/images/invoice.png'),
                                               ),
@@ -333,7 +333,7 @@ class _DashboardState extends State<Dashboard> {
                                             child: item(
                                                 color: Colors.purple[200],
                                                 size: size,
-                                                name: 'History',
+                                                name:  'history'.tr,
                                                 path:
                                                     'assets/images/history.png'),
                                           ),
@@ -357,7 +357,7 @@ class _DashboardState extends State<Dashboard> {
                                                 child: item(
                                                     color: Colors.green[200],
                                                     size: size,
-                                                    name: 'Before/After',
+                                                    name: 'beforeafter'.tr,
                                                     path:
                                                         'assets/images/befor.png'),
                                               ),
@@ -371,7 +371,7 @@ class _DashboardState extends State<Dashboard> {
                                               child: item(
                                                   color: Colors.orange[200],
                                                   size: size,
-                                                  name: 'Photo',
+                                                  name:  'photo'.tr,
                                                   path:
                                                       'assets/images/pic.png'),
                                             ),
@@ -390,7 +390,7 @@ class _DashboardState extends State<Dashboard> {
                                       color: Color(0xff2C4B89),
                                       child: Center(
                                           child: Text(
-                                        'start Visit',
+                                            'startvisit'.tr,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,color: Colors.white),
@@ -473,8 +473,8 @@ class _DashboardState extends State<Dashboard> {
                                 child: Center(
                                     child: Obx(() => Text(
                                       c.startswatch.value
-                                          ? 'End Visit'
-                                          : 'start',
+                                          ? 'endvisit'.tr
+                                          : 'startvisit'.tr,
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,

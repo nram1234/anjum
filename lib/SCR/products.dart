@@ -19,6 +19,7 @@ import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/olderpost_json.dart';
+import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
@@ -181,7 +182,7 @@ class _ProductsScrState extends State<ProductsScr> {
                       left: size.width * .1,
                       top: size.height * .12,
                       child: Text(
-                        'Transaction',
+                        'transaction'.tr,
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -480,7 +481,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Center(
-                            child: Text('Add To Cart'),
+                            child: Text('addtocart'.tr),
                           ),
                         ),
                       ),
@@ -1798,9 +1799,11 @@ class _ProductsScrState extends State<ProductsScr> {
                         SizedBox(
                           height: 4,
                         ),
-                        Text("minimum Quantity: ${products.value.count}"),
+                        Text('minimumquantity'.tr +
+                            ': ' +
+                            '${products.value.minimumQuantity}'),
                         //products.itemDetails[0].itemCost
-                        Text('Price: ${products.value.price}'),
+                        Text('price'.tr + ': ' + '${products.value.price}'),
                         //  Expanded(child: Container()),
                       ],
                     ),
@@ -1811,7 +1814,7 @@ class _ProductsScrState extends State<ProductsScr> {
                 trailing: SizedBox.shrink(),
                 title: Row(
                   children: [
-                    Text('Details'),
+                    Text('details'.tr),
                     Expanded(
                       child: Container(
                         height: 1,
@@ -1865,7 +1868,23 @@ class _ProductsScrState extends State<ProductsScr> {
 
                               return TextField(
                                 onChanged: (v) {
+                                  print(isinvoiceOrSalesOrderOrReturnInvoice ==
+                                      'invoice');
                                   if (v != null && v.isNotEmpty) {
+                                    if(isinvoiceOrSalesOrderOrReturnInvoice=='invoice'){
+                                      if(int.parse(v)<=_myProdectListController
+                                          .item[keysOfMap[pos]].value.quantity_in_store){
+                                        _myProdectListController.setCount(
+                                            id: _myProdectListController
+                                                .item[keysOfMap[pos]].value.id,
+                                            count: int.parse(v));
+
+                                      }else{
+                                        Get.snackbar('', 'لا يمكنك ادخال كمية اكبر من الموجودة في المخزن');
+                                      }
+
+                                     }
+
                                     _myProdectListController.setCount(
                                         id: _myProdectListController
                                             .item[keysOfMap[pos]].value.id,
@@ -1885,12 +1904,33 @@ class _ProductsScrState extends State<ProductsScr> {
                         ),
                         InkWell(
                           onTap: () {
-                            int v = _myProdectListController
-                                    .item[products.value.id].value.count +
-                                1;
-                            print(products.value.count);
-                            _myProdectListController.setCount(
-                                id: products.value.id, count: v);
+                            if (isinvoiceOrSalesOrderOrReturnInvoice ==
+                                'invoice') {
+                              if (_myProdectListController
+                                          .item[products.value.id].value.count +
+                                      1 <=
+                                  _myProdectListController
+                                      .item[products.value.id]
+                                      .value
+                                      .quantity_in_store) {
+                                int v = _myProdectListController
+                                        .item[products.value.id].value.count +
+                                    1;
+
+                                _myProdectListController.setCount(
+                                    id: products.value.id, count: v);
+                              } else {
+                                Get.snackbar('',
+                                    'لا يمكن ادخال رقم اكبر من الموجود في المخزن');
+                              }
+                            } else {
+                              int v = _myProdectListController
+                                      .item[products.value.id].value.count +
+                                  1;
+
+                              _myProdectListController.setCount(
+                                  id: products.value.id, count: v);
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -1933,7 +1973,9 @@ class _ProductsScrState extends State<ProductsScr> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('item Number: ${products.value.id}'),
+                            Text('itemnumber'.tr +
+                                ': ' +
+                                '${products.value.id}'),
                             // Container(
                             //     child: Text(
                             //         'item name:  ${products.itemDetails[0].itemNameEn}'))
@@ -1947,7 +1989,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             // Text(
                             //     'Item Price :${products.itemDetails[0].itemCost}'),
-                            Text('Tax:  ${products.value.tex}')
+                            Text('tax'.tr + ':  ' + '${products.value.tex}')
                           ],
                         ),
                       ),
@@ -1958,7 +2000,7 @@ class _ProductsScrState extends State<ProductsScr> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Promotion',
+                          'promotion'.tr,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -1975,7 +2017,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             AlertDialog alert = AlertDialog(
                               title: Center(
                                 child: Text(
-                                  "Promotion list",
+                                  'promotionlist'.tr,
                                   style: TextStyle(color: Colors.red),
                                 ),
                               ),
@@ -2007,7 +2049,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Show All Promotion',
+                                  'showallpromotion'.tr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.red),
@@ -2024,7 +2066,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             Column(
                               children: [
-                                Text('Store ID'),
+                                Text('storeid'.tr),
                                 Container(
                                   width: size.width * .25,
                                   height: 50,
@@ -2078,7 +2120,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                             Column(
                               children: [
-                                Text('Unit'),
+                                Text('unit'.tr),
                                 //  Obx(()=>
                                 Container(
                                   width: size.width * .25,
@@ -2149,7 +2191,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                             Column(
                               children: [
-                                Text('Quantity'),
+                                Text('quantity'.tr),
                                 Container(
                                   width: size.width * .25,
                                   height: 50,
@@ -2160,7 +2202,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                    child: Text(products.value.minimumQuantity
+                                    child: Text(products.value.quantity_in_store
                                         .toString()),
                                   ),
                                 )
@@ -2176,7 +2218,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             Column(
                               children: [
-                                Text('Bounce'),
+                                Text('bounce'.tr),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
@@ -2209,7 +2251,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                             Column(
                               children: [
-                                Text('Discount %'),
+                                Text('discount'.tr),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
@@ -2256,7 +2298,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             Column(
                               children: [
-                                Text('Input Qty'),
+                                Text('inputqty'.tr),
                                 Container(
                                     width: size.width * .4,
                                     height: 50,
@@ -2284,7 +2326,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                             Column(
                               children: [
-                                Text('Price before discount'),
+                                Text('pricebeforediscount'.tr),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
@@ -2319,7 +2361,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             Column(
                               children: [
-                                Text('Price after discount'),
+                                Text('priceafterdiscount'.tr),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
@@ -2346,7 +2388,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                             Column(
                               children: [
-                                Text('Tax %'),
+                                Text('tax'.tr + ' %'),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,
@@ -2373,7 +2415,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             Column(
                               children: [
-                                Text('Total Tax'),
+                                Text('totaltax'.tr),
                                 Container(
                                     width: size.width * .4,
                                     height: 50,
@@ -2401,7 +2443,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ),
                             Column(
                               children: [
-                                Text('Net price'),
+                                Text('netprice'.tr),
                                 Container(
                                   width: size.width * .4,
                                   height: 50,

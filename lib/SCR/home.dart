@@ -165,8 +165,8 @@ class _HomeState extends State<Home> {
                               children: [
                                 Text(
                                   startJourney
-                                      ? 'End of Journey'
-                                      : 'Start of Journey',
+                                      ? 'endofJourney'.tr
+                                      : 'startofJourney'.tr,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -196,7 +196,7 @@ class _HomeState extends State<Home> {
                             child: item(
                                 color: Colors.orange[200],
                                 size: size,
-                                name: 'Orders Status',
+                                name: 'OrdersStatus'.tr,
                                 path: 'assets/images/box.png'),
                           ),
                           GestureDetector(
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
                             child: item(
                                 color: Colors.red[200],
                                 size: size,
-                                name: 'Timeline',
+                                name: 'timeline'.tr,
                                 path: 'assets/images/g.png'),
                           ),
                           GestureDetector(onTap: (){
@@ -216,7 +216,7 @@ Get.to(()=> Catalog());
                             child: item(
                                 color: Colors.cyan[200],
                                 size: size,
-                                name: 'Catalog',
+                                name: 'catalog'.tr,
                                 path: 'assets/images/catalog.png'),
                           ),
                         ],
@@ -239,7 +239,7 @@ Get.to(()=> Catalog());
                             child: item(
                                 color: Colors.cyan[200],
                                 size: size,
-                                name: 'Report',
+                                name: 'report'.tr,
                                 path: 'assets/images/report.png'),
                           ),
                           GestureDetector(
@@ -249,7 +249,7 @@ Get.to(()=> Catalog());
                             child: item(
                                 color: Colors.orange[200],
                                 size: size,
-                                name: 'printers',
+                                name: 'printers'.tr,
                                 path: 'assets/images/printer1.png'),
                           ),
                         ],
@@ -299,7 +299,7 @@ Get.to(()=> Catalog());
                               child: item(
                                   color: Colors.grey[500],
                                   size: size,
-                                  name: 'Reprint',
+                                  name: 'reprint'.tr,
                                   path: 'assets/images/reprint.png'),
                             ),
 

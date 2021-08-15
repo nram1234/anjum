@@ -4,6 +4,7 @@ import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/DB/tabelname/sales_order_cart_promotions.dart';
 import 'package:anjum/DB/tabelname/sales_order_invoice_request_stock_items.dart';
 import 'package:anjum/DB/tabelname/temporary_tabel_cart.dart';
+import 'package:anjum/network/json/insert_invoice_salesorder_json.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -46,26 +47,37 @@ class DatabaseHelper {
         await db.execute('''
 
 CREATE TABLE  $sales_order_request_details_tabelname  (
-   $sales_order_request_details_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-   $sales_order_request_details_user_id INTEGER   NOT NULL,
-   $sales_order_request_details_sales_order_request_id INTEGER   NOT NULL,
-   $sales_order_request_details_employee_id  INTEGER  NOT NULL,
-   $sales_order_request_details_store_id  INTEGER  NOT NULL,
-   $sales_order_request_details_item_id  INTEGER  NOT NULL,
-   $sales_order_request_details_category_id  INTEGER  NOT NULL,
-   $sales_order_request_details_measurement_unit_id INTEGER  NOT NULL,
-   $sales_order_request_details_base_price_per_unit REAL  NOT NULL  ,
-   $sales_order_request_details_bonus  INTEGER   ,
-   $sales_order_request_details_quantity INTEGER   ,
-   $sales_order_request_details_total_price  REAL  ,
-   $sales_order_request_details_total_tax  REAL  ,
-   $sales_order_request_details_total_price_before_tax  REAL   ,
-   $sales_order_request_details_total_price_with_tax REAL   ,
-  $sales_order_request_details_request_status TEXT  NOT NULL ,
-     $sales_order_request_details_tax_type  TEXT  NOT NULL  ,
-   $sales_order_request_details_created_at TEXT   NOT NULL  ,
-   $sales_order_request_details_updated_at  TEXT  NOT NULL    ,
-   $sales_order_request_details_Item_Discount  REAL
+   $sales_order_request_details_id   INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL  ,
+   $sales_order_request_details_user_id INTEGER   NOT NULL ,
+   $sales_order_request_details_employee_id  INTEGER  NOT NULL ,
+   $sales_order_request_details_store_id  INTEGER  NOT NULL ,
+   $sales_order_request_details_item_id  INTEGER  NOT NULL ,
+   $sales_order_request_details_category_id  INTEGER    ,
+   $sales_order_request_details_measurement_unit_id INTEGER   ,
+   $sales_order_request_details_base_price_per_unit REAL    ,
+   $sales_order_request_details_bonus  INTEGER ,
+   $sales_order_request_details_quantity INTEGER ,
+   $sales_order_request_details_total_price  REAL ,
+   $sales_order_request_details_total_tax  REAL ,
+   $sales_order_request_details_total_price_before_tax  REAL ,
+   $sales_order_request_details_total_price_with_tax REAL ,
+   $sales_order_request_details_request_status TEXT   ,
+   $sales_order_request_details_tax_type  TEXT   ,
+   $sales_order_request_details_created_at TEXT     ,
+   $sales_order_request_details_updated_at  TEXT   ,
+   $sales_order_request_details_Item_Discount  REAL ,
+   $sales_order_request_details_request_level TEXT ,
+   $sales_order_request_details_request_type TEXT ,
+    $sales_order_request_details_customer_id INTEGER , 
+     $sales_order_request_details_sales_order_id INTEGER ,
+    $sales_order_request_details_supervisor_id INTEGER ,
+    $sales_order_request_details_salesmanager_id INTEGER ,
+   $sales_order_request_details_no_of_items INTEGER ,
+    $sales_order_request_details_supervisor_note TEXT ,
+    $sales_order_request_details_salesmanager_note TEXT ,
+    $sales_order_request_details_total_price_without_tax_discount REAL ,
+    $sales_order_request_details_total_discount REAL 
+    
 )
       ''');
 //
@@ -245,8 +257,6 @@ CREATE TABLE  $temporary_tabel_cart_tabelname (
       ''');
 
 
-
-
         await db.execute('''
 
 CREATE TABLE  $temporary_tabel_cart_item_tabelname (
@@ -256,11 +266,17 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 
 )
       ''');
+
+
+
+
+
       },
     );
   }
 
-  Future<int> insert_temporary_tabel_cart(Temporary_tabel_cart temporary_tabel_cart)async{
+  Future<int> insert_temporary_tabel_cart(
+      Temporary_tabel_cart temporary_tabel_cart) async {
     int id;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
@@ -295,19 +311,14 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   }
 
 
-
-
-
-
-
-
-
-  Future<int> insert_temporary_tabel_cart_item_tabelname(Temporary_tabel_cart_item temporary_tabel_cart_item)async{
+  Future<int> insert_temporary_tabel_cart_item_tabelname(
+      Temporary_tabel_cart_item temporary_tabel_cart_item) async {
     int id;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn
-          .insert(temporary_tabel_cart_item_tabelname, temporary_tabel_cart_item.toMap(),
+          .insert(temporary_tabel_cart_item_tabelname,
+          temporary_tabel_cart_item.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace)
           .then((value) {
         id = value;
@@ -316,7 +327,8 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     return id;
   }
 
-  Future<List<Temporary_tabel_cart_item>> get_All_temporary_tabel_cart_item_tabelname(
+  Future<List<
+      Temporary_tabel_cart_item>> get_All_temporary_tabel_cart_item_tabelname(
       int id) async {
     var dbClient = await db;
     List<Temporary_tabel_cart_item> data = [];
@@ -333,7 +345,6 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   }
 
 
-
 //================================================================================
 
 
@@ -345,7 +356,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     await dbClient.transaction((txn) async {
       await txn
           .insert(insert_journeys_DB_tabelname, item.toJson(),
-              conflictAlgorithm: ConflictAlgorithm.replace)
+          conflictAlgorithm: ConflictAlgorithm.replace)
           .then((value) {
         id = value;
       });
@@ -382,7 +393,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     await dbClient.transaction((txn) async {
       await txn
           .insert(insert_visit_DB_tabelname, item.toJson(),
-              conflictAlgorithm: ConflictAlgorithm.replace)
+          conflictAlgorithm: ConflictAlgorithm.replace)
           .then((value) {
         id = value;
       });
@@ -418,7 +429,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     await dbClient.transaction((txn) async {
       await txn
           .insert(insert_cheque_tabelname, item.toJson(),
-              conflictAlgorithm: ConflictAlgorithm.replace)
+          conflictAlgorithm: ConflictAlgorithm.replace)
           .then((value) {
         id = value;
       });
@@ -430,7 +441,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     var dbClient = await db;
     List<Insert_cheque_DB> data = [];
     List<Map> maps =
-        await dbClient.query(insert_cheque_tabelname).then((value) {
+    await dbClient.query(insert_cheque_tabelname).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Insert_cheque_DB.fromJson(value[i]));
       }
@@ -445,37 +456,39 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   }
 
 //==============================================
-  Future <int>insert_item_tabel(Item_Database item) async {
+  Future <int> insert_item_tabel(Item_Database item) async {
     int id;
     var dbClient = await db;
-    await   dbClient.transaction((txn) async{
-       await txn.insert(item_tabelname, item.toJson(),
+    await dbClient.transaction((txn) async {
+      await txn.insert(item_tabelname, item.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace).then((value) {
-          id=value;
+        id = value;
       });
     });
-    return id;  }
+    return id;
+  }
 
-  Future<List<Item_Database>> get_All_item_in_olderlist_(int id ) async {
+  Future<List<Item_Database>> get_All_item_in_olderlist_(int id) async {
     var dbClient = await db;
     List<Item_Database> data = [];
     List<Map> maps = await dbClient
-        .query(item_tabelname,where:  '$item_older_id=?' ,whereArgs:[id] ).then((value) {
-        print(value);
+        .query(item_tabelname, where: '$item_older_id=?', whereArgs: [id])
+        .then((value) {
+      print(value);
       for (int i = 0; i < value.length; i++) {
-              data.add(Item_Database.fromJson(value[i]));
-            }
+        data.add(Item_Database.fromJson(value[i]));
+      }
     });
-return data;
+    return data;
   }
 
-  Future<List<Item_Database>> get_All_item_in_olderlist_text( ) async {
+  Future<List<Item_Database>> get_All_item_in_olderlist_text() async {
     List<Item_Database> data = [];
 
     var dbClient = await db;
     // List<Map>maps = await
-    await   dbClient.query(item_tabelname).then((value) {
-  print(value);
+    await dbClient.query(item_tabelname).then((value) {
+      print(value);
       for (int i = 0; i < value.length; i++) {
         data.add(Item_Database.fromJson(value[i]));
       }
@@ -544,9 +557,8 @@ return data;
   //==============================================
 
 //ادخل داتا في تيبول  sales_order_invoice_request_stock_items
-  Future insert_sales_order_cart_promotions(
-      Sales_Order_Cart_Promotions_Model
-          sales_order_cart_promotions_model) async {
+  Future insert_sales_order_cart_promotions(Sales_Order_Cart_Promotions_Model
+  sales_order_cart_promotions_model) async {
     var dbClient = await db;
     dbClient.transaction((txn) async {
       return await txn.insert(sales_order_cart_promotions_tabelname,
@@ -555,9 +567,8 @@ return data;
     });
   }
 
-  Future update_sales_order_cart_promotions(
-      Sales_Order_Cart_Promotions_Model
-          sales_order_cart_promotions_model) async {
+  Future update_sales_order_cart_promotions(Sales_Order_Cart_Promotions_Model
+  sales_order_cart_promotions_model) async {
     var dbClient = await db;
     return await dbClient.update(sales_order_cart_promotions_tabelname,
         sales_order_cart_promotions_model.toJson(),
@@ -578,7 +589,7 @@ return data;
   }
 
   Future<List<Sales_Order_Cart_Promotions_Model>>
-      get_All_sales_order_cart_promotions() async {
+  get_All_sales_order_cart_promotions() async {
     List<Sales_Order_Cart_Promotions_Model> data = [];
 
     var dbClient = await db;
@@ -609,7 +620,7 @@ return data;
 //ادخل داتا في تيبول  sales_order_invoice_request_stock_items
   Future insert_sales_order_invoice_request_stock_items(
       Sales_Order_Invoice_Request_Stock_Items_Model
-          sales_order_invoice_request_stock_items_model) async {
+      sales_order_invoice_request_stock_items_model) async {
     var dbClient = await db;
     dbClient.transaction((txn) async {
       return await txn.insert(sales_order_invoice_request_stock_items_tabelname,
@@ -620,7 +631,7 @@ return data;
 
   Future update_sales_order_invoice_request_stock_items(
       Sales_Order_Invoice_Request_Stock_Items_Model
-          sales_order_invoice_request_stock_items_model) async {
+      sales_order_invoice_request_stock_items_model) async {
     var dbClient = await db;
     return await dbClient.update(
         sales_order_invoice_request_stock_items_tabelname,
@@ -630,7 +641,7 @@ return data;
   }
 
   Future<Sales_Order_Invoice_Request_Stock_Items_Model>
-      get_sales_order_invoice_request_stock_items(int id) async {
+  get_sales_order_invoice_request_stock_items(int id) async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
         sales_order_invoice_request_stock_items_tabelname,
@@ -644,7 +655,7 @@ return data;
   }
 
   Future<List<Sales_Order_Invoice_Request_Stock_Items_Model>>
-      get_All_sales_order_invoice_request_stock_items() async {
+  get_All_sales_order_invoice_request_stock_items() async {
     List<Sales_Order_Invoice_Request_Stock_Items_Model> data = [];
 
     var dbClient = await db;
@@ -677,22 +688,28 @@ return data;
 
 //==========================================================================================
 //ادخل داتا في تيبول  Sales_Order_Request_Details
-  Future insert_Sales_Order_Request_Details(
-      Sales_Order_Request_Details_Model
-          sales_order_request_details_model) async {
+
+  Future insert_Sales_Order_Request_Details(ListInvoice
+  insert_invoice_salesorder_json) async {
     var data;
     await db.then((value) {
       value.transaction((txn) {
         data = txn.insert(sales_order_request_details_tabelname,
-            sales_order_request_details_model.toJson());
+            insert_invoice_salesorder_json.toJson());
       });
     });
     return data;
   }
+  Future delete_Sales_Order_Request_Details(int id) async {
+    var dbClient = await db;
+    return await dbClient.delete(sales_order_request_details_tabelname,
+        where: '$sales_order_request_details_id=?', whereArgs: [id]);
+  }
 
-  Future update_Sales_Order_Request_Details(
-      Sales_Order_Request_Details_Model
-          sales_order_request_details_model) async {
+
+
+  Future update_Sales_Order_Request_Details(Sales_Order_Request_Details_Model
+  sales_order_request_details_model) async {
     var dbClient = await db;
     return await dbClient.update(sales_order_request_details_tabelname,
         sales_order_request_details_model.toJson(),
@@ -713,7 +730,7 @@ return data;
   }
 
   Future<List<Sales_Order_Request_Details_Model>>
-      get_All_Sales_Order_Request_Details() async {
+  get_All_Sales_Order_Request_Details() async {
     List<Sales_Order_Request_Details_Model> data = [];
 
     var dbClient = await db;
@@ -733,11 +750,7 @@ return data;
     //
   }
 
-  Future delete_Sales_Order_Request_Details(int id) async {
-    var dbClient = await db;
-    return await dbClient.query(sales_order_request_details_tabelname,
-        where: '$sales_order_request_details_id=?', whereArgs: [id]);
-  }
+
 
 //==========================================================================================
 //ادخل داتا في تيبول  insert_sales_order_requests
@@ -780,7 +793,7 @@ return data;
   }
 
   Future<List<Sales_Order_Requests_Model>>
-      get_All_sales_order_requests() async {
+  get_All_sales_order_requests() async {
     List<Sales_Order_Requests_Model> data = [];
 
     var dbClient = await db;

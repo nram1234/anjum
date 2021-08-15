@@ -1,7 +1,7 @@
 final String sales_order_request_details_tabelname="sales_order_request_details";
 final String sales_order_request_details_id='id';
 final String sales_order_request_details_user_id='user_id';
-final String sales_order_request_details_sales_order_request_id='sales_order_request_id';
+ final String sales_order_request_details_sales_order_id='order_id';
 final String sales_order_request_details_employee_id='employee_id';
 final String sales_order_request_details_store_id='store_id';
 final String sales_order_request_details_item_id='item_id';
@@ -19,3 +19,17 @@ final String sales_order_request_details_request_status='request_status';
 final String sales_order_request_details_created_at='created_at';
 final String sales_order_request_details_updated_at='updated_at';
 final String sales_order_request_details_Item_Discount='Item_Discount';
+
+final String sales_order_request_details_request_level='request_level';
+final String sales_order_request_details_request_type='request_type';
+final String sales_order_request_details_customer_id='customer_id';
+final String sales_order_request_details_supervisor_id='supervisor_id';
+final String sales_order_request_details_salesmanager_id='salesmanager_id';
+final String sales_order_request_details_no_of_items='no_of_items';
+final String sales_order_request_details_supervisor_note='supervisor_note';
+final String sales_order_request_details_salesmanager_note='salesmanager_note';
+final String sales_order_request_details_total_price_without_tax_discount='total_price_without_tax_discount';
+final String sales_order_request_details_total_discount='total_discount';
+
+
+

@@ -56,7 +56,7 @@ class _All_CustomerState extends State<All_Customer> {
                       left: size.width * .1,
                       top: size.height * .1,
                       child: Text(
-                        'Start Journey',
+                        'startofJourney'.tr,
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _All_CustomerState extends State<All_Customer> {
               SizedBox(
                 width: size.width * .1,
               ),
-              Text('All Customers'),
+              Text('customers'.tr),
               Expanded(child: Container()),
               Text('Route Name'),
               SizedBox(
@@ -229,8 +229,8 @@ class _All_CustomerState extends State<All_Customer> {
                 child: Center(
                     child: Obx(() => Text(
                       c.startswatch.value
-                          ? 'End Visit'
-                          : 'start',
+                          ? 'endvisit'.tr
+                          : 'startvisit'.tr,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

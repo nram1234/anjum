@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
                     height: size.height * .02,
                   ),
                   Text(
-                    'Login',
+                    'login'.tr,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(

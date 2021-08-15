@@ -65,7 +65,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                               .id) {
                         Get.to(()=>Dashboard());
                       } else {
-                        Get.snackbar('', 'stop visiting first');
+                        Get.snackbar('','stopvisitingfirst'.tr);
                       }
                     }
                   },
@@ -215,25 +215,25 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                           // To make the card compact
                                           children: <Widget>[
                                             Text(
-                                              'Customer Name : ${data.customerInfo.customerNameEn}',
+                                              'customername'.tr+' : ' +'${data.customerInfo.customerNameEn}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Email : ${data.customerInfo.email}',
+                                              'Email'+' : '+'${data.customerInfo.email}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Customer Type : ${data.customerInfo.customerTypeId}',
+                                              'customertype'.tr+' :  '+'${data.customerInfo.customerTypeId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Phone Number : ${data.customerInfo.phoneNo}',
+                                              'phone'.tr+' : '+'${data.customerInfo.phoneNo}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -245,19 +245,19 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                               ),
                                             ),
                                             Text(
-                                              'State : ${data.customerInfo.status}',
+                                              'state'.tr+' : '+'${data.customerInfo.status}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'City : ${data.customerInfo.cityId}',
+                                              'city'.tr+' : '+'${data.customerInfo.cityId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Credit Limit : ${data.customerInfo.creditLimit}',
+                                              'creditlimit'.tr+' : '+'${data.customerInfo.creditLimit}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -269,19 +269,19 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                               ),
                                             ),
                                             Text(
-                                              'Payment Type : ${data.customerInfo.paymentType}',
+                                              'paymenttype'.tr+' : '+'${data.customerInfo.paymentType}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Location : ${data.customerInfo.area1}',
+                                              'location'.tr+' : '+'${data.customerInfo.area1}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Price List : ${data.priceListsInfo[0].id}',
+                                              'pricelist'.tr+' : '+'${data.priceListsInfo[0].id}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),

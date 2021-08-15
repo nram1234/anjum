@@ -7,7 +7,7 @@ class Insert_invoice_salesorder_json {
   Insert_invoice_salesorder_json.fromJson(Map<String, dynamic> json) {
     key = json['key'];
     if (json['list_invoice'] != null) {
-      listInvoice = new List<ListInvoice>();
+      listInvoice = <ListInvoice>[];
       json['list_invoice'].forEach((v) {
         listInvoice.add(new ListInvoice.fromJson(v));
       });
@@ -25,11 +25,12 @@ class Insert_invoice_salesorder_json {
 }
 
 class ListInvoice {
-  int userId;
-  int requestLevel;
-  String requestType;
-  int employeeId;
-  int customerId;
+  int user_id;
+  int order_id;
+  int request_level;
+  String request_type;
+  int employee_id;
+  int customer_id;
   String storeId;
   int supervisorId;
   int salesmanagerId;
@@ -52,11 +53,11 @@ class ListInvoice {
   String totalPriceWithTax;
 
   ListInvoice(
-      {this.userId,
-        this.requestLevel,
-        this.requestType,
-        this.employeeId,
-        this.customerId,
+      {this.user_id,this.order_id,
+        this.request_level,
+        this.request_type,
+        this.employee_id,
+        this.customer_id,
         this.storeId,
         this.supervisorId,
         this.salesmanagerId,
@@ -79,11 +80,12 @@ class ListInvoice {
         this.totalPriceWithTax});
 
   ListInvoice.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
-    requestLevel = json['request_level'];
-    requestType = json['request_type'];
-    employeeId = json['employee_id'];
-    customerId = json['customer_id'];
+    user_id = json['user_id'];
+    order_id = json['order_id'];
+    request_level = json['request_level'];
+    request_type = json['request_type'];
+    employee_id = json['employee_id'];
+    customer_id = json['customer_id'];
     storeId = json['store_id'];
     supervisorId = json['supervisor_id'];
     salesmanagerId = json['salesmanager_id'];
@@ -108,11 +110,13 @@ class ListInvoice {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['request_level'] = this.requestLevel;
-    data['request_type'] = this.requestType;
-    data['employee_id'] = this.employeeId;
-    data['customer_id'] = this.customerId;
+    data['user_id'] = this.user_id;
+    data['order_id'] = this.order_id;
+
+    data['request_level'] = this.request_level;
+    data['request_type'] = this.request_type;
+    data['employee_id'] = this.employee_id;
+    data['customer_id'] = this.customer_id;
     data['store_id'] = this.storeId;
     data['supervisor_id'] = this.supervisorId;
     data['salesmanager_id'] = this.salesmanagerId;

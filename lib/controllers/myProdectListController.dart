@@ -61,7 +61,7 @@ class MyProdectListController extends GetxController {
           if (bata.allItems[i].itemId ==
               _allStockItemsController.allStockItems[p].itemId) {
             item[bata.allItems[i].itemId] = TheItemInList(totalPriceForItem: 0,
-                totalTaxForItem: 0,
+                totalTaxForItem: 0, quantity_in_store:int.parse(_allStockItemsController.allStockItems[p].quantity) ,
                 count: 0,
                 measurementUnitId
                 :int.parse(_allStockItemsController.allStockItems[p].measurementUnitId),
@@ -171,6 +171,7 @@ class TheItemInList {
   String name;
   double price;
   double tex;
+  int  quantity_in_store;
   int count;
   double afterdes;
   double befordes;
@@ -183,7 +184,7 @@ class TheItemInList {
   int measurementUnitId;
 
   TheItemInList({this.id,
-    this.diescount,
+    this.diescount,this.quantity_in_store,
     this.bonce,
     this.name,
     this.price,

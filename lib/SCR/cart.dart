@@ -6,6 +6,7 @@ import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/json/insert_invoice_salesorder_json.dart';
 import 'package:anjum/network/networkReq.dart';
@@ -13,6 +14,7 @@ import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'all _customer.dart';
 import 'carteditproduct.dart';
@@ -26,6 +28,8 @@ class Cart extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<Cart> {
+  var box = GetStorage();
+  int orderid;
   AllNetworking _allNetworking = AllNetworking();
   var keysOfMap;
   String Chequetime = "choose date";
@@ -53,6 +57,11 @@ class _CartEditProductState extends State<Cart> {
   @override
   void initState() {
     super.initState();
+    orderid = box.read('orderid');
+    if (orderid == null) {
+      orderid = 1;
+      box.write('orderid', 1);
+    }
     keysOfMap = _myProdectListController.item.keys.toList();
     requestToChangeInvoicePaymentType = employeePermissionsController
             .employeePermissions[0].requestToChangeInvoicePaymentType ==
@@ -115,7 +124,7 @@ class _CartEditProductState extends State<Cart> {
                         left: size.width * .1,
                         top: size.height * .1,
                         child: Text(
-                          'Cart',
+                          'cart'.tr,
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -450,7 +459,7 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                'Discount',
+                                'discount'.tr,
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -564,7 +573,7 @@ class _CartEditProductState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Total'),
+                              Text('total'.tr),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
                                   return Text(logic.totalpriceincart
@@ -587,7 +596,7 @@ class _CartEditProductState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Discount'),
+                              Text('discount'.tr),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
                                   return Text(logic.sumOftotalDiscountincart
@@ -610,7 +619,7 @@ class _CartEditProductState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Total Tax'),
+                              Text('totaltax'.tr),
                               Text(_myProdectListController.totalTaxincart.value
                                   .toStringAsFixed(3)),
                             ],
@@ -629,7 +638,7 @@ class _CartEditProductState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Grand Total'),
+                              Text('total'.tr),
                               Text((_myProdectListController
                                           .totalTaxincart.value +
                                       _myProdectListController
@@ -643,7 +652,7 @@ class _CartEditProductState extends State<Cart> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Payment Method'),
+                              Text('paymentmethod'.tr),
 
                               // Container(
                               //   padding: EdgeInsets.all(4),
@@ -688,7 +697,7 @@ class _CartEditProductState extends State<Cart> {
                                     padding: EdgeInsets.all(4),
                                     child: Center(
                                         child: Text(
-                                      'Cash',
+                                          'cash'.tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -878,7 +887,7 @@ class _CartEditProductState extends State<Cart> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 8.0, bottom: 8),
-                                  child: Text('Add note'),
+                                  child: Text('addnote'.tr),
                                 ),
                                 Container(
                                   width: size.width * .9,
@@ -909,8 +918,7 @@ class _CartEditProductState extends State<Cart> {
                                   height: 8,
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-
+                                  onTap: () async{
                                     var data = Insert_invoice_salesorder_json()
                                         .toJson();
                                     List<ListInvoice> list = [];
@@ -931,30 +939,43 @@ class _CartEditProductState extends State<Cart> {
                                               .value
                                               .count >
                                           0) {
+                                        double onleyprice =
+                                            (_myProdectListController
+                                                    .item[keysOfMap[itmeinlast]]
+                                                    .value
+                                                    .afterdes -
+                                                (_myProdectListController
+                                                        .item[keysOfMap[
+                                                            itmeinlast]]
+                                                        .value
+                                                        .afterdes *
+                                                    _myProdectListController
+                                                        .totalDiscountincart
+                                                        .value));
+                                        //  double onleyprice=(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*_myProdectListController.item[keysOfMap[itmeinlast]].value.count)-(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*(_myProdectListController.totalDiscountincart/100)*_myProdectListController.item[keysOfMap[itmeinlast]].value.count);
+                                        double onleypricewithtax = onleyprice +
+                                            (onleyprice *
+                                                (_myProdectListController
+                                                        .item[keysOfMap[
+                                                            itmeinlast]]
+                                                        .value
+                                                        .tex /
+                                                    100));
 
-                                        double onleyprice=(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*_myProdectListController.item[keysOfMap[itmeinlast]].value.count)-(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*(_myProdectListController.totalDiscountincart/100)*_myProdectListController.item[keysOfMap[itmeinlast]].value.count);
-                                        double onleypricewithtax=onleyprice+(onleyprice*(_myProdectListController.item[keysOfMap[itmeinlast]].value.tex/100));
-
-
+                                        print(_myProdectListController
+                                            .item[keysOfMap[itmeinlast]]
+                                            .value
+                                            .afterdes);
                                         ListInvoice i = ListInvoice(
-                                            userId:
+                                            order_id: orderid,
+                                            user_id:
                                                 _userAndPermissions.user.userId,
-                                            requestLevel: 2,
+                                            request_level: 2,
                                             salesmanagerNote: " ",
                                             supervisorNote: " ",
-                                            totalTax: ((_myProdectListController
-                                                .item[keysOfMap[itmeinlast]]
-                                                .value.afterdes-(_myProdectListController
-                                                .item[keysOfMap[itmeinlast]]
-                                                .value.afterdes*(_myProdectListController
-                                                .totalDiscountincart /100) ))*(_myProdectListController
-                                                .item[keysOfMap[itmeinlast]]
-                                                .value.tex/100)
-
-
-
-
-                                            ),
+                                            totalTax: onleyprice *
+                                                (_myProdectListController.item[keysOfMap[itmeinlast]].value.tex /
+                                                    100),
                                             quantity: _myProdectListController
                                                 .item[keysOfMap[itmeinlast]]
                                                 .value
@@ -965,23 +986,28 @@ class _CartEditProductState extends State<Cart> {
                                                 .value
                                                 .id),
                                             noOfItems: noOfItems,
-                                            employeeId:
+                                            employee_id:
                                                 _userAndPermissions.user.userId,
                                             requestStatus: "pending",
-                                            customerId:
-                                                int.parse(Get.find<AllChequesController>().customer.customerInfo.customerId),
-                                            supervisorId: _userAndPermissions.user.supervisorId,
-                                            salesmanagerId: _userAndPermissions.user.salesmanagerId,
+                                            customer_id: int.parse(
+                                                Get.find<AllChequesController>()
+                                                    .customer
+                                                    .customerInfo
+                                                    .customerId),
+                                            supervisorId: _userAndPermissions
+                                                .user.supervisorId,
+                                            salesmanagerId:
+                                                _userAndPermissions.user.salesmanagerId,
                                             basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]].value.price.toString(),
                                             storeId: _userAndPermissions.user.storeId,
                                             measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
-                                            totalPrice: _myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes.toString(),
-                            totalPriceWithTax:  onleypricewithtax .toString(),
-                                            totalPriceBeforeTax: _myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes.toString(),
+                                            totalPrice: onleyprice.toString(),
+                                            totalPriceWithTax: onleypricewithtax.toString(),
+                                            totalPriceBeforeTax: onleyprice.toString(),
                                             totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count).toString(),
                                             totalDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))).toString(),
                                             categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
-                                            requestType: "invoice",
+                                            request_type: isinvoiceOrSalesOrderOrReturnInvoice,
                                             taxType: "percentage");
 
                                         data['key'] = '1234567890';
@@ -991,12 +1017,29 @@ class _CartEditProductState extends State<Cart> {
                                     data['list_invoice'] =
                                         list; //list.map((e) => e.toJson()).toList();
                                     print(data);
-                                    _allNetworking
-                                        .insert_invoice_salesorder(data: data)
-                                        .then((value) {
-                                      print('value      $value');
-                                      Get.snackbar("message", value.toString());
-                                    });
+                                 await   Get.find<NetWorkController>().initConnctivity();
+                                 print(Get.find<NetWorkController>()
+                                     .connectionStatus
+                                     .value);
+                                    if (Get.find<NetWorkController>()
+                                        .connectionStatus
+                                        .value) {
+                                      _allNetworking
+                                          .insert_invoice_salesorder(data: data)
+                                          .then((value) {
+                                        print('value      $value');
+                                        Get.snackbar(
+                                            "message", value.toString());
+                                      });
+                                   } else {
+                                     list.forEach((element) { _databaseHelper
+                                         .insert_Sales_Order_Request_Details(element).then((value) {
+                                           print( "ppppppppppppppppppppppppp $value");
+                                     }); });
+
+                                   }
+                                    orderid++;
+                                    box.write('orderid', orderid);
 
                                     // double totalprice = 0;
                                     //
@@ -1051,7 +1094,7 @@ class _CartEditProductState extends State<Cart> {
                                     ),
                                     child: Center(
                                         child: Text(
-                                      'Complete',
+                                          'complete'.tr,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
