@@ -30,6 +30,7 @@ class Get_employee_data_json {
 class Result {
   List<EmployeData> employeData;
   List<EmployeePermissions> employeePermissions;
+  List<AllRoutes> allRoutes;
   List<AllCustomers> allCustomers;
   List<AllCategories> allCategories;
   List<AllItems> allItems;
@@ -43,6 +44,7 @@ class Result {
   Result(
       {this.employeData,
         this.employeePermissions,
+        this.allRoutes,
         this.allCustomers,
         this.allCategories,
         this.allItems,
@@ -55,15 +57,21 @@ class Result {
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['employe_data'] != null) {
-      employeData =    <EmployeData>[];
+      employeData = new List<EmployeData>();
       json['employe_data'].forEach((v) {
         employeData.add(new EmployeData.fromJson(v));
       });
     }
     if (json['employee_permissions'] != null) {
-      employeePermissions =    <EmployeePermissions>[];
+      employeePermissions = new List<EmployeePermissions>();
       json['employee_permissions'].forEach((v) {
         employeePermissions.add(new EmployeePermissions.fromJson(v));
+      });
+    }
+    if (json['all_routes'] != null) {
+      allRoutes = new List<AllRoutes>();
+      json['all_routes'].forEach((v) {
+        allRoutes.add(new AllRoutes.fromJson(v));
       });
     }
     if (json['all_customers'] != null) {
@@ -128,6 +136,9 @@ class Result {
       data['employee_permissions'] =
           this.employeePermissions.map((v) => v.toJson()).toList();
     }
+    if (this.allRoutes != null) {
+      data['all_routes'] = this.allRoutes.map((v) => v.toJson()).toList();
+    }
     if (this.allCustomers != null) {
       data['all_customers'] = this.allCustomers.map((v) => v.toJson()).toList();
     }
@@ -165,21 +176,21 @@ class Result {
 class EmployeData {
   String id;
   String userId;
-  String refId;
+  Null refId;
   String employeeNameEn;
   String employeeNameAr;
-  String phoneNo;
+  Null phoneNo;
   String username;
   String password;
   String email;
   String type;
-  String customerId;
+  Null customerId;
   String businessUnitId;
   String appDeviceId;
   String groupType;
-  String reference;
+  Null reference;
   String vehicle;
-  String collectPercent;
+  Null collectPercent;
   String salesCommission;
   String salary;
   String insurance;
@@ -469,6 +480,92 @@ class EmployeePermissions {
   }
 }
 
+class AllRoutes {
+  String userId;
+  String salesmanId;
+  String name;
+  String minCustomers;
+  String maxCustomers;
+  String routeId;
+  List<ListRoutesInfo> listRoutesInfo;
+
+  AllRoutes(
+      {this.userId,
+        this.salesmanId,
+        this.name,
+        this.minCustomers,
+        this.maxCustomers,
+        this.routeId,
+        this.listRoutesInfo});
+
+  AllRoutes.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    salesmanId = json['salesman_id'];
+    name = json['name'];
+    minCustomers = json['min_customers'];
+    maxCustomers = json['max_customers'];
+    routeId = json['route_id'];
+    if (json['list_routes_info'] != null) {
+      listRoutesInfo = new List<ListRoutesInfo>();
+      json['list_routes_info'].forEach((v) {
+        listRoutesInfo.add(new ListRoutesInfo.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_id'] = this.userId;
+    data['salesman_id'] = this.salesmanId;
+    data['name'] = this.name;
+    data['min_customers'] = this.minCustomers;
+    data['max_customers'] = this.maxCustomers;
+    data['route_id'] = this.routeId;
+    if (this.listRoutesInfo != null) {
+      data['list_routes_info'] =
+          this.listRoutesInfo.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ListRoutesInfo {
+  String userId;
+  String routeId;
+  String customerId;
+  Null timeIn;
+  Null timeOut;
+  Null note;
+
+  ListRoutesInfo(
+      {this.userId,
+        this.routeId,
+        this.customerId,
+        this.timeIn,
+        this.timeOut,
+        this.note});
+
+  ListRoutesInfo.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    routeId = json['route_id'];
+    customerId = json['customer_id'];
+    timeIn = json['time_in'];
+    timeOut = json['time_out'];
+    note = json['note'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_id'] = this.userId;
+    data['route_id'] = this.routeId;
+    data['customer_id'] = this.customerId;
+    data['time_in'] = this.timeIn;
+    data['time_out'] = this.timeOut;
+    data['note'] = this.note;
+    return data;
+  }
+}
+
 class AllCustomers {
   CustomerInfo customerInfo;
   List<PriceListsInfo> priceListsInfo;
@@ -480,7 +577,7 @@ class AllCustomers {
         ? new CustomerInfo.fromJson(json['customer_info'])
         : null;
     if (json['price_lists_info'] != null) {
-      priceListsInfo =    <PriceListsInfo>[];
+      priceListsInfo = new List<PriceListsInfo>();
       json['price_lists_info'].forEach((v) {
         priceListsInfo.add(new PriceListsInfo.fromJson(v));
       });
@@ -509,24 +606,24 @@ class CustomerInfo {
   String customerNameEn;
   String customerNameAr;
   String customerTypeId;
-  String email;
+  Null email;
   String phoneNo;
-  String fax;
+  Null fax;
   String taxStatus;
   String image;
   String creditLimit;
   String chequeDueDate;
   String discount;
-  String balance;
+  Null balance;
   String paymentType;
   String priceListId;
   String stateId;
   String cityId;
-  String area1;
-  String area2;
+  Null area1;
+  Null area2;
   String location;
-  String latitude;
-  String longitude;
+  Null latitude;
+  Null longitude;
   String status;
   String createdAt;
   String updatedAt;
@@ -640,8 +737,8 @@ class PriceListsInfo {
   String taxStatus;
   String useInSales;
   String useInReturn;
-  String createdAt;
-  String updatedAt;
+  Null createdAt;
+  Null updatedAt;
   List<ItemUnits> itemUnits;
 
   PriceListsInfo(
@@ -910,7 +1007,7 @@ class ItemDetails {
   String minimumQuantity;
   String reference;
   String image;
-  String itemCost;
+  Null itemCost;
   String tax;
   String status;
   String stockStatus;
@@ -1037,15 +1134,15 @@ class UserData {
   String email;
   String password;
   String decodedPassword;
-  String area1;
-  String area2;
+  Null area1;
+  Null area2;
   String cityId;
   String stateId;
   String countryId;
-  String currency;
-  String currencyShort;
-  String phoneNo;
-  String faxNo;
+  Null currency;
+  Null currencyShort;
+  Null phoneNo;
+  Null faxNo;
   String vatNo;
   String taxableStatus;
   String sToken;
@@ -1193,7 +1290,7 @@ class AllBanks {
   String bankNameEn;
   String bankNameAr;
   String userId;
-  String note;
+  Null note;
   List<AllBankBranches> allBankBranches;
 
   AllBanks(
@@ -1239,15 +1336,15 @@ class AllBankBranches {
   String userId;
   String branchNameEn;
   String branchNameAr;
-  String phoneNo;
-  String faxNo;
+  Null phoneNo;
+  Null faxNo;
   String email;
-  String area1;
-  String area2;
+  Null area1;
+  Null area2;
   String stateId;
   String cityId;
   String contactPerson;
-  String note;
+  Null note;
   String status;
   String createdAt;
   String updatedAt;

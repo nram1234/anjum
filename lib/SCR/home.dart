@@ -9,6 +9,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
+import 'package:anjum/controllers/all_routes.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
@@ -47,24 +48,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    Get.lazyPut(() => UnitController());
-    Get.lazyPut(() => UserDataController());
-    Get.lazyPut(() => AllBanksController());
-    // Get.lazyPut(() => AllCategoriesController(),fenix: true);
-    Get.lazyPut(() => AllChequesController());
-    Get.lazyPut(() => AllCustomersControllers());
-
-    Get.lazyPut(() => AllStockItemsController());
-
-    Get.lazyPut(() => EmployeDataController());
-    Get.lazyPut(() => EmployeePermissionsController());
-
-    Get.lazyPut(() => SalesOrderController());
-    Get.lazyPut(() => UserDataController());
-    Get.lazyPut(() => AllItemsController());
-
-    Get.lazyPut(() => CartItemController());
-    Get.lazyPut(() => PriceListsInfoController());
 
 
     var size = MediaQuery.of(context).size;
@@ -376,10 +359,11 @@ Get.to(()=> Catalog());
 
       Get.find<AllStockItemsController>()
           .updateallStockItemsData(value.result.allStockItems);
-    print(value.result.allCategories);
+
       Get.find<AllCategoriesController>()
           .updateallCategoriesData(value.result.allCategories);
-
+      Get.find<All_routesController>()
+          .updateAllRoutes(value.result.allRoutes);
       Get.find<EmployeDataController>()
           .updateemployeDatasData(value.result.employeData);
 
