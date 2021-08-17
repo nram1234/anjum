@@ -57,37 +57,37 @@ class Result {
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['employe_data'] != null) {
-      employeData = new List<EmployeData>();
+      employeData = <EmployeData>[];
       json['employe_data'].forEach((v) {
         employeData.add(new EmployeData.fromJson(v));
       });
     }
     if (json['employee_permissions'] != null) {
-      employeePermissions = new List<EmployeePermissions>();
+      employeePermissions = <EmployeePermissions>[];
       json['employee_permissions'].forEach((v) {
         employeePermissions.add(new EmployeePermissions.fromJson(v));
       });
     }
     if (json['all_routes'] != null) {
-      allRoutes = new List<AllRoutes>();
+      allRoutes = <AllRoutes>[];
       json['all_routes'].forEach((v) {
         allRoutes.add(new AllRoutes.fromJson(v));
       });
     }
     if (json['all_customers'] != null) {
-      allCustomers = new List<AllCustomers>();
+      allCustomers = <AllCustomers>[];
       json['all_customers'].forEach((v) {
         allCustomers.add(new AllCustomers.fromJson(v));
       });
     }
     if (json['all_categories'] != null) {
-      allCategories = new List<AllCategories>();
+      allCategories = <AllCategories>[];
       json['all_categories'].forEach((v) {
         allCategories.add(new AllCategories.fromJson(v));
       });
     }
     if (json['all_items'] != null) {
-      allItems = new List<AllItems>();
+      allItems = <AllItems>[];
       json['all_items'].forEach((v) {
         allItems.add(new AllItems.fromJson(v));
       });
@@ -96,31 +96,31 @@ class Result {
         ? new SalesOrder.fromJson(json['sales_order'])
         : null;
     if (json['user_data'] != null) {
-      userData = new List<UserData>();
+      userData = <UserData>[];
       json['user_data'].forEach((v) {
         userData.add(new UserData.fromJson(v));
       });
     }
     if (json['all_currencies'] != null) {
-      allCurrencies = new List<AllCurrencies>();
+      allCurrencies = <AllCurrencies>[];
       json['all_currencies'].forEach((v) {
         allCurrencies.add(new AllCurrencies.fromJson(v));
       });
     }
     if (json['all_banks'] != null) {
-      allBanks = new List<AllBanks>();
+      allBanks = <AllBanks>[];
       json['all_banks'].forEach((v) {
         allBanks.add(new AllBanks.fromJson(v));
       });
     }
     if (json['all_cheques'] != null) {
-      allCheques = new List<AllCheques>();
+      allCheques = <AllCheques>[];
       json['all_cheques'].forEach((v) {
         allCheques.add(new AllCheques.fromJson(v));
       });
     }
     if (json['all_stock_items'] != null) {
-      allStockItems = new List<AllStockItems>();
+      allStockItems = <AllStockItems>[];
       json['all_stock_items'].forEach((v) {
         allStockItems.add(new AllStockItems.fromJson(v));
       });
@@ -536,6 +536,21 @@ class ListRoutesInfo {
   Null timeIn;
   Null timeOut;
   Null note;
+  String schedule;
+  String s1st;
+  String s2nd;
+  String s3rd;
+  String s4th;
+  String s5th;
+  String sunday;
+  String monday;
+  String tuesday;
+  String wednesday;
+  String thursday;
+  String friday;
+  String saturday;
+  String startDate;
+  String endDate;
 
   ListRoutesInfo(
       {this.userId,
@@ -543,7 +558,22 @@ class ListRoutesInfo {
         this.customerId,
         this.timeIn,
         this.timeOut,
-        this.note});
+        this.note,
+        this.schedule,
+        this.s1st,
+        this.s2nd,
+        this.s3rd,
+        this.s4th,
+        this.s5th,
+        this.sunday,
+        this.monday,
+        this.tuesday,
+        this.wednesday,
+        this.thursday,
+        this.friday,
+        this.saturday,
+        this.startDate,
+        this.endDate});
 
   ListRoutesInfo.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -552,6 +582,21 @@ class ListRoutesInfo {
     timeIn = json['time_in'];
     timeOut = json['time_out'];
     note = json['note'];
+    schedule = json['schedule'];
+    s1st = json['1st'];
+    s2nd = json['2nd'];
+    s3rd = json['3rd'];
+    s4th = json['4th'];
+    s5th = json['5th'];
+    sunday = json['sunday'];
+    monday = json['monday'];
+    tuesday = json['tuesday'];
+    wednesday = json['wednesday'];
+    thursday = json['thursday'];
+    friday = json['friday'];
+    saturday = json['saturday'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -562,6 +607,21 @@ class ListRoutesInfo {
     data['time_in'] = this.timeIn;
     data['time_out'] = this.timeOut;
     data['note'] = this.note;
+    data['schedule'] = this.schedule;
+    data['1st'] = this.s1st;
+    data['2nd'] = this.s2nd;
+    data['3rd'] = this.s3rd;
+    data['4th'] = this.s4th;
+    data['5th'] = this.s5th;
+    data['sunday'] = this.sunday;
+    data['monday'] = this.monday;
+    data['tuesday'] = this.tuesday;
+    data['wednesday'] = this.wednesday;
+    data['thursday'] = this.thursday;
+    data['friday'] = this.friday;
+    data['saturday'] = this.saturday;
+    data['start_date'] = this.startDate;
+    data['end_date'] = this.endDate;
     return data;
   }
 }
