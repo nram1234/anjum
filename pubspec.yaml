@@ -42,7 +42,7 @@ dependencies:
   location:
   image_picker:
   intl: ^0.17.0
-  in_date_utils: ^1.0.2
+
 
 
 
