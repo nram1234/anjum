@@ -1027,14 +1027,97 @@ class _CartEditProductState extends State<Cart> {
                                       _allNetworking
                                           .insert_invoice_salesorder(data: data)
                                           .then((value) {
-                                        print('value      $value');
-                                        Get.snackbar(
-                                            "message", value.toString());
+
+
+                                        return showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Container(
+                                                width: size.width * .8,
+                                                height: 60,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Anjum',
+                                                        style: TextStyle(
+                                                            fontSize: 25,
+                                                            color: Colors.indigoAccent,
+                                                            fontWeight:
+                                                            FontWeight.bold)),
+                                                  ],
+                                                ),
+                                              ),
+                                              content: Container(
+                                                width: size.width * .8,
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    children: [
+                                                      Text('Order done sucessfully'),
+                                                      Row(
+                                                        children: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                               // Navigator.pop(context);
+
+                                                                int  count = 0;
+                                                                Navigator.popUntil(context, (route) {
+                                                                  return count++ == 3;
+                                                                });   },
+                                                              child: Row(
+                                                                children: [
+                                                                  Icon(
+                                                                      Icons.arrow_back),
+                                                                  SizedBox(
+                                                                    width: 8,
+                                                                  ),
+                                                                  Text('Back'),
+                                                                  SizedBox(
+                                                                    width: 50,
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      TextButton(
+                                                                          onPressed:
+                                                                              () {},
+                                                                          child: Row(
+                                                                            children: [
+                                                                              Icon(Icons
+                                                                                  .print),
+                                                                              SizedBox(
+                                                                                width:
+                                                                                8,
+                                                                              ),
+                                                                              Text(
+                                                                                  'Print')
+                                                                            ],
+                                                                          ))
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              ))
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+
+
+
+
                                       });
                                    } else {
                                      list.forEach((element) { _databaseHelper
                                          .insert_Sales_Order_Request_Details(element).then((value) {
-                                           print( "ppppppppppppppppppppppppp $value");
+
                                      }); });
 
                                    }

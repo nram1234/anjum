@@ -506,7 +506,7 @@ class AllRoutes {
     maxCustomers = json['max_customers'];
     routeId = json['route_id'];
     if (json['list_routes_info'] != null) {
-      listRoutesInfo = new List<ListRoutesInfo>();
+      listRoutesInfo = <ListRoutesInfo>[];
       json['list_routes_info'].forEach((v) {
         listRoutesInfo.add(new ListRoutesInfo.fromJson(v));
       });

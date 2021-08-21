@@ -1,11 +1,13 @@
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/all_routes.dart';
+import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'dashboard.dart';
 import 'myMapScr.dart';
 
 class All_customer_tap2 extends StatefulWidget {
@@ -16,32 +18,63 @@ class All_customer_tap2 extends StatefulWidget {
 }
 
 class _All_customer_tap2State extends State<All_customer_tap2> {
-
-
+  final TimeController c = Get.find<TimeController>();
   @override
   Widget build(BuildContext context) {
-    Size _size=MediaQuery.of(context).size;
-    return Scaffold(body: GetBuilder<All_routesController>(builder: (logic) {
-      return ListView.builder(itemCount: logic
-          .allCustomarInRouts()
-          .length, itemBuilder: (context, pos) {
+    Size _size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: GetBuilder<All_routesController>(
+        builder: (logic) {
+          return ListView.builder(
+              itemCount: logic.routMaptoshwkeys.length,
+              itemBuilder: (context, pos) {
+                return ExpansionTile(
+                  title: Text(" Route Name : ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]].name}"),
+                  children: logic.routMaptoshw[logic.routMaptoshwkeys[pos]].listRoutesInfo.map((e) {
+                    return InkWell(onTap: (){
+                if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {
+                      Get.find<AllChequesController>()
+                          .setcustomer(logic.mapOfCustomar[e.customerId]);
 
-return item(data:logic
-    .allCustomarInRouts()[pos]  ,size: _size);
-      });
-    },),);
+                      Get.find<AllChequesController>().setcustomerID(
+       e.customerId);
+
+                      setState(() {});
+                      //arguments:  [bata.allCustomers[pos]]
+                      Get.to(()=>Dashboard(),  );
+                    }
+                else {
+                  if (e.customerId ==
+                      Get.find<AllChequesController>()
+                          .customer
+                          .customerInfo
+                          .id) {
+                    Get.to(()=>Dashboard());
+                  } else {
+                    Get.snackbar('','stopvisitingfirst'.tr);
+                  }
+                }      },
+                      child: item(
+                          data: logic.mapOfCustomar[e.customerId], size: _size),
+                    );
+                  }).toList(),
+                ); //item(data: logic.allCustomarInRouts()[pos], size: _size);
+              });
+        },
+      ),
+    );
   }
+
   bool iscust(AllCustomers data) {
     if (Get.find<AllChequesController>().customer != null) {
       return Get.find<AllChequesController>().customer.customerInfo.id ==
           data.customerInfo.id;
-    }else{
+    } else {
       return false;
     }
   }
+
   Widget item({size, AllCustomers data}) {
-
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -101,7 +134,7 @@ return item(data:logic
                       //+"\n"+data.customerInfo.area2??
                       children: [
                         Icon(Icons.add_location),
-                        Text(data.customerInfo.phoneNo??""),
+                        Text(data.customerInfo.phoneNo ?? ""),
                         Expanded(child: Container()),
                         //if(iscust(data))     Image.asset('assets/images/fast.png')
                       ],
@@ -137,7 +170,8 @@ return item(data:logic
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       padding: EdgeInsets.only(
-                                        top: Consts.avatarRadius + Consts.padding,
+                                        top: Consts.avatarRadius +
+                                            Consts.padding,
                                         bottom: Consts.padding,
                                         left: Consts.padding,
                                         right: Consts.padding,
@@ -147,8 +181,8 @@ return item(data:logic
                                       decoration: new BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        BorderRadius.circular(Consts.padding),
+                                        borderRadius: BorderRadius.circular(
+                                            Consts.padding),
                                         // boxShadow: [
                                         //   BoxShadow(
                                         //     color: Colors.black26,
@@ -160,32 +194,40 @@ return item(data:logic
                                       child: SingleChildScrollView(
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                              MainAxisAlignment.spaceAround,
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           //  mainAxisSize: MainAxisSize.min,
                                           // To make the card compact
                                           children: <Widget>[
                                             Text(
-                                              'customername'.tr+' : ' +'${data.customerInfo.customerNameEn}',
+                                              'customername'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.customerNameEn}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Email'+' : '+'${data.customerInfo.email}',
+                                              'Email' +
+                                                  ' : ' +
+                                                  '${data.customerInfo.email}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'customertype'.tr+' :  '+'${data.customerInfo.customerTypeId}',
+                                              'customertype'.tr +
+                                                  ' :  ' +
+                                                  '${data.customerInfo.customerTypeId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'phone'.tr+' : '+'${data.customerInfo.phoneNo}',
+                                              'phone'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.phoneNo}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -197,19 +239,25 @@ return item(data:logic
                                               ),
                                             ),
                                             Text(
-                                              'state'.tr+' : '+'${data.customerInfo.status}',
+                                              'state'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.status}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'city'.tr+' : '+'${data.customerInfo.cityId}',
+                                              'city'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.cityId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'creditlimit'.tr+' : '+'${data.customerInfo.creditLimit}',
+                                              'creditlimit'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.creditLimit}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -221,19 +269,25 @@ return item(data:logic
                                               ),
                                             ),
                                             Text(
-                                              'paymenttype'.tr+' : '+'${data.customerInfo.paymentType}',
+                                              'paymenttype'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.paymentType}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'location'.tr+' : '+'${data.customerInfo.area1}',
+                                              'location'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.area1}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'pricelist'.tr+' : '+'${data.priceListsInfo[0].id}',
+                                              'pricelist'.tr +
+                                                  ' : ' +
+                                                  '${data.priceListsInfo[0].id}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -282,16 +336,16 @@ return item(data:logic
                             onTap: () {
                               //   location
                               List<String> l =
-                              data.customerInfo.location.split(',');
+                                  data.customerInfo.location.split(',');
                               // var lat=double.tryParse(l[0].trim());
                               // var Lng=double.tryParse(l[1].trim());
 
                               LatLng loc = LatLng(double.tryParse(l[0].trim()),
                                   double.tryParse(l[1].trim()));
-                              Get.to(()=>MyMapScr(
-                                loc: loc,
-                                name: data.customerInfo.customerNameEn,
-                              ));
+                              Get.to(() => MyMapScr(
+                                    loc: loc,
+                                    name: data.customerInfo.customerNameEn,
+                                  ));
                             },
                             child: Text('view map')),
                       ],
@@ -306,6 +360,7 @@ return item(data:logic
     );
   }
 }
+
 class Consts {
   Consts._();
 

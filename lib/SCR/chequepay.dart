@@ -184,7 +184,7 @@ class _ChequePayState extends State<ChequePay> {
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),
                                 width: size.width * .85,
-                                decoration: BoxDecoration(
+                                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 1),
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
                                   // boxShadow: [
@@ -234,7 +234,7 @@ class _ChequePayState extends State<ChequePay> {
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),
                                 width: size.width,
-                                decoration: BoxDecoration(
+                                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 1),
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
                                   // boxShadow: [
@@ -270,7 +270,7 @@ class _ChequePayState extends State<ChequePay> {
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),
                                 width: size.width * .85,
-                                decoration: BoxDecoration(
+                                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 1),
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
                                   // boxShadow: [
@@ -303,7 +303,7 @@ class _ChequePayState extends State<ChequePay> {
                           Center(
                             child: Container(
                               width: size.width * .85,
-                              decoration: BoxDecoration(
+                              decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 1),
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 // boxShadow: [
@@ -344,7 +344,7 @@ class _ChequePayState extends State<ChequePay> {
                                   height: 50,
                                   width: size.width * .85,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black, width: 1),
                                     color: Colors.white,
                                     // boxShadow: [
                                     //   BoxShadow(
@@ -371,7 +371,7 @@ class _ChequePayState extends State<ChequePay> {
                               child: Container(
                                 padding: const EdgeInsets.all(4.0),
                                 width: size.width * .85,
-                                decoration: BoxDecoration(
+                                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 1),
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
                                   // boxShadow: [
@@ -459,7 +459,86 @@ class _ChequePayState extends State<ChequePay> {
                                     due_date: Chequetime,
                                     drawer_name: drawerName,).toJson()];
                                   _allNetworking.insert_cheque_to_Web( data: mydata).then((value) {
-                                    print(value);
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Container(
+                                            width: size.width * .8,
+                                            height: 60,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Anjum',
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: Colors.indigoAccent,
+                                                        fontWeight:
+                                                        FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ),
+                                          content: Container(
+                                            width: size.width * .8,
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text('Payment done sucessfully'),
+                                                  Row(
+                                                    children: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            // Navigator.pop(context);
+                                                            int  count = 0;
+                                                            Navigator.popUntil(context, (route) {
+                                                              return count++ == 3;
+                                                            });
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                  Icons.arrow_back),
+                                                              SizedBox(
+                                                                width: 8,
+                                                              ),
+                                                              Text('Back'),
+                                                              SizedBox(
+                                                                width: 50,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  TextButton(
+                                                                      onPressed:
+                                                                          () {},
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Icon(Icons
+                                                                              .print),
+                                                                          SizedBox(
+                                                                            width:
+                                                                            8,
+                                                                          ),
+                                                                          Text(
+                                                                              'Print')
+                                                                        ],
+                                                                      ))
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ))
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
                                   });
                                   // DatabaseHelper()
                                   //     .insert_insert_cheque(

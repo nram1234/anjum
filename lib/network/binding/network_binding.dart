@@ -1,4 +1,5 @@
 import 'package:anjum/controllers/allBanksController.dart';
+import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
@@ -22,23 +23,23 @@ class NetWorkBinding extends Bindings{
 
 
 
-     Get.lazyPut(() => UnitController());
-     Get.lazyPut(() => UserDataController());
-     Get.lazyPut(() => AllBanksController());
-     // Get.lazyPut(() => AllCategoriesController(),fenix: true);
-     Get.lazyPut(() => AllChequesController());
-     Get.lazyPut(() => AllCustomersControllers());
+     Get.lazyPut(() => UnitController(),fenix: true);
+     Get.lazyPut(() => UserDataController(),fenix: true);
+     Get.lazyPut(() => AllBanksController(),fenix: true);
+   Get.lazyPut(() => AllCategoriesController(),fenix: true);
+     Get.lazyPut(() => AllChequesController(),fenix: true);
+     Get.lazyPut(() => AllCustomersControllers(),fenix: true);
 
-     Get.lazyPut(() => AllStockItemsController());
+     Get.lazyPut(() => AllStockItemsController(),fenix: true);
 
-     Get.lazyPut(() => EmployeDataController());
-     Get.lazyPut(() => EmployeePermissionsController());
+     Get.lazyPut(() => EmployeDataController(),fenix: true);
+     Get.lazyPut(() => EmployeePermissionsController(),fenix: true);
 
      Get.lazyPut(() => SalesOrderController());
      Get.lazyPut(() => UserDataController());
      Get.lazyPut(() => AllItemsController());
 
-     Get.lazyPut(() => CartItemController());
+     Get.lazyPut(() => CartItemController(),fenix: true);
      Get.lazyPut(() => PriceListsInfoController());
      Get.lazyPut(() => All_routesController());
   }

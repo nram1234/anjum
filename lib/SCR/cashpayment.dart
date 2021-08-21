@@ -16,7 +16,9 @@ class _CashPayState extends State<CashPay> {
   String date2 = 'Select Date';
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   var allCheques = Get.find<AllChequesController>();
-String amount='',addnote='';
+  String amount = '',
+      addnote = '';
+
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
@@ -135,7 +137,7 @@ String amount='',addnote='';
                                 height: 50,
                                 width: size.width * .85,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black, width: 1),
                                   color: Colors.white,
                                   // boxShadow: [
                                   //   BoxShadow(
@@ -165,6 +167,8 @@ String amount='',addnote='';
                             width: size.width * .85,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.black, width: 1)
+                              ,
                               color: Colors.white,
                               // boxShadow: [
                               //   BoxShadow(
@@ -176,8 +180,8 @@ String amount='',addnote='';
                               //   ),
                               // ],
                             ),
-                            child: TextField(onChanged: (v){
-                              amount=v;
+                            child: TextField(onChanged: (v) {
+                              amount = v;
                             },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -201,7 +205,7 @@ String amount='',addnote='';
                           child: Container(
                             width: size.width * .85,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),   border: Border.all(color: Colors.black, width: 1),
                               color: Colors.white,
                               // boxShadow: [
                               //   BoxShadow(
@@ -213,9 +217,9 @@ String amount='',addnote='';
                               //   ),
                               // ],
                             ),
-                            child: TextField(onChanged: (v){
-                              addnote=v;
-                            },
+                            child: TextField(onChanged: (v) {
+                              addnote = v;
+                            },maxLines: 6,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -234,39 +238,39 @@ String amount='',addnote='';
                               onTap: () {
                                 DatabaseHelper()
                                     .insert_insert_cheque(
-                                  item: Insert_cheque_DB(
-                                    user_id:
-                                    _userAndPermissions.user.userId,
-                                    employee_id:
-                                    _userAndPermissions.user.id,
-                                    customer_id: int.parse(
-                                        Get
-                                            .find<AllChequesController>()
-                                            .customer_id),
-                                    amount:
-                                    double.tryParse(amount),
-                                    due_date: date2,
+                                    item: Insert_cheque_DB(
+                                      user_id:
+                                      _userAndPermissions.user.userId,
+                                      employee_id:
+                                      _userAndPermissions.user.id,
+                                      customer_id: int.parse(
+                                          Get
+                                              .find<AllChequesController>()
+                                              .customer_id),
+                                      amount:
+                                      double.tryParse(amount),
+                                      due_date: date2,
 
 
-                                    customer_name: allCheques.customer
-                                        .customerInfo.customerNameEn,
-                                    note: addnote ,
+                                      customer_name: allCheques.customer
+                                          .customerInfo.customerNameEn,
+                                      note: addnote,
 
-                                    payment_type: "cash",
-                                    reference_no: allCheques
-                                        .customer.customerInfo.refId,
-                                    supervisor_id: _userAndPermissions.user
-                                        .supervisorId,
-                                    salesmanager_id: _userAndPermissions.user
-                                        .salesmanagerId,
-                                  ))
-                                      .then((value) {
-                                    print(
-                                        '999999999999999999999999999999999999999999');
-                                    print(value);
-                                  });
+                                      payment_type: "cash",
+                                      reference_no: allCheques
+                                          .customer.customerInfo.refId,
+                                      supervisor_id: _userAndPermissions.user
+                                          .supervisorId,
+                                      salesmanager_id: _userAndPermissions.user
+                                          .salesmanagerId,
+                                    ))
+                                    .then((value) {
+                                  print(
+                                      '999999999999999999999999999999999999999999');
+                                  print(value);
+                                });
 
-                                  return showDialog(
+                                return showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
@@ -299,7 +303,11 @@ String amount='',addnote='';
                                                 children: [
                                                   TextButton(
                                                       onPressed: () {
-                                                        Navigator.pop(context);
+                                                       // Navigator.pop(context);
+                                                        int  count = 0;
+                                                        Navigator.popUntil(context, (route) {
+                                                          return count++ == 3;
+                                                        });
                                                       },
                                                       child: Row(
                                                         children: [

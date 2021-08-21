@@ -129,7 +129,7 @@ class _DashboardState extends State<Dashboard> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: GestureDetector(
-                                                onTap: () {  isinvoiceOrSalesOrderOrReturnInvoice='salesOrder';
+                                                onTap: () {  isinvoiceOrSalesOrderOrReturnInvoice='sales';
                                                   Get.to(ProductsScr());
                                                 },
                                                 child: item(
