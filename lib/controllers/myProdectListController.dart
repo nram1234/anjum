@@ -1,37 +1,46 @@
+import 'package:anjum/SCR/products.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/unitController.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 import 'allChequesController.dart';
 import 'allStockItemsController.dart';
 
 class MyProdectListController extends GetxController {
+
   Map<String, Rx<TheItemInList>> item = Map<String, Rx<TheItemInList>>();
   final AllItemsController bata = Get.find<AllItemsController>();
   RxDouble grandTotal = 0.0.obs;
   RxDouble totalTax = 0.0.obs;
-  final AllStockItemsController _allStockItemsController = Get.find<
-      AllStockItemsController>();
+  final AllStockItemsController _allStockItemsController =
+      Get.find<AllStockItemsController>();
 
   RxDouble totalpriceincart = 0.0.obs;
   RxDouble totalTaxincart = 0.0.obs;
   RxDouble totalDiscountincart = 0.0.obs;
   RxDouble sumOftotalDiscountincart = 0.0.obs;
 
+
   settotalDiscountincart({String v}) {
     totalDiscountincart.value = double.parse(v) / 100;
     gettotalpriceincart();
     update();
   }
-   String totalDiscount(){
-    double totoal=0;
-    item.forEach((key, value) {
-      if(value.value.count>0){
-        totoal+=(value.value.price*(value.value.diescount/100))+  (value.value.price*(totalDiscountincart/100));
 
+  String totalDiscount() {
+    double totoal = 0;
+    item.forEach((key, value) {
+      if (value.value.count > 0) {
+        totoal += (value.value.price * (value.value.diescount / 100)) +
+            (value.value.price * (totalDiscountincart / 100));
       }
     });
   }
+
   gettotalpriceincart() {
     totalpriceincart.value = 0;
     totalTaxincart.value = 0;
@@ -45,8 +54,9 @@ class MyProdectListController extends GetxController {
             value.value.afterdes * totalDiscountincart.value;
 
         totalTaxincart.value += (((value.value.afterdes) -
-            ((value.value.afterdes) * totalDiscountincart.value)) *
-            value.value.tex / 100);
+                ((value.value.afterdes) * totalDiscountincart.value)) *
+            value.value.tex /
+            100);
       }
     });
   }
@@ -55,40 +65,42 @@ class MyProdectListController extends GetxController {
   void onInit() {
     if (item.length == 0) {
       for (int i = 0; i < bata.allItems.length; i++) {
-        for (int p = 0; p <
-            _allStockItemsController.allStockItems.length; p++)
-        {
+        for (int p = 0;
+            p < _allStockItemsController.allStockItems.length;
+            p++) {
           if (bata.allItems[i].itemId ==
               _allStockItemsController.allStockItems[p].itemId) {
-            item[bata.allItems[i].itemId] = TheItemInList(totalPriceForItem: 0,
-                totalTaxForItem: 0, quantity_in_store:int.parse(_allStockItemsController.allStockItems[p].quantity) ,
-                count: 0,
-                measurementUnitId
-                :int.parse(_allStockItemsController.allStockItems[p].measurementUnitId),
-                id: bata.allItems[i].itemId,
-                tex: double.parse(bata.allItems[i].itemDetails[0].tax),
-                befordes:
-                double.parse(bata.allItems[i].itemDetails[0].sellingPrice),
-                price:
-                double.parse(bata.allItems[i].itemDetails[0].sellingPrice),
-                name: bata.allItems[i].itemDetails[0].itemNameEn,
-                afterdes:
-                double.parse(bata.allItems[i].itemDetails[0].sellingPrice),
-
-                itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
-                minimumQuantity:
-                bata.allItems[i].itemDetails[0].minimumQuantity,
-                pic: bata.allItems[i].itemDetails[0].image,
-
-                bonce: 0,
-                categoryId: int.parse(bata.allItems[i].itemDetails[0].categoryId),
-                diescount: 0)
+            item[bata.allItems[i].itemId] = TheItemInList(
+                    totalPriceForItem: 0,
+                    totalTaxForItem: 0,
+                    quantity_in_store: int.parse(
+                        _allStockItemsController.allStockItems[p].quantity),
+                    count: 0,
+                    measurementUnitId: int.parse(_allStockItemsController
+                        .allStockItems[p].measurementUnitId),
+                    id: bata.allItems[i].itemId,
+                    tex: double.parse(bata.allItems[i].itemDetails[0].tax) ,
+                    befordes: double.parse(
+                        bata.allItems[i].itemDetails[0].sellingPrice),
+                    price: double.parse(
+                        bata.allItems[i].itemDetails[0].sellingPrice),
+                    name: bata.allItems[i].itemDetails[0].itemNameEn,
+                    afterdes: double.parse(
+                        bata.allItems[i].itemDetails[0].sellingPrice),
+                    itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
+                    minimumQuantity:
+                        bata.allItems[i].itemDetails[0].minimumQuantity,
+                    pic: bata.allItems[i].itemDetails[0].image,
+                    bonce: 0,
+                    categoryId:
+                        int.parse(bata.allItems[i].itemDetails[0].categoryId),
+                    diescount: 0)
                 .obs;
           }
         }
-
       }
     }
+
   }
 
   setCount({String id, int count}) {
@@ -105,7 +117,7 @@ class MyProdectListController extends GetxController {
     update();
   }
 
-  setTotalPriceAndTotalTex({String id }) {
+  setTotalPriceAndTotalTex({String id}) {
     item[id].value.totalTaxForItem =
         item[id].value.afterdes * (item[id].value.tex / 100);
     item[id].value.totalPriceForItem =
@@ -125,7 +137,10 @@ class MyProdectListController extends GetxController {
     //   gettotalpriceincart();
     update();
   }
-
+  setbonce({String id, String val}){
+    item[id].value.bonce = double.parse(val);
+    update();
+  }
   setdiscount({String id, String val}) {
     item[id].value.diescount = double.parse(val);
     item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
@@ -139,7 +154,6 @@ class MyProdectListController extends GetxController {
     //  gettotalpriceincart();
     update();
   }
-
 
   netprice() {
     grandTotal.value = 0;
@@ -161,7 +175,6 @@ class MyProdectListController extends GetxController {
 
     update();
   }
-
 }
 
 class TheItemInList {
@@ -171,7 +184,7 @@ class TheItemInList {
   String name;
   double price;
   double tex;
-  int  quantity_in_store;
+  int quantity_in_store;
   int count;
   double afterdes;
   double befordes;
@@ -183,22 +196,24 @@ class TheItemInList {
   int categoryId;
   int measurementUnitId;
 
-  TheItemInList({this.id,
-    this.diescount,this.quantity_in_store,
-    this.bonce,
-    this.name,
-    this.price,
-    this.tex,
-    this.count,
-    this.afterdes,
-    this.befordes,
-    this.totalPriceForItem,
-    this.totalTaxForItem,
-    this.pic,
-    this.itemNumber,
-    this.minimumQuantity,
-    this.categoryId,
-    this.measurementUnitId});
+  TheItemInList(
+      {this.id,
+      this.diescount,
+      this.quantity_in_store,
+      this.bonce,
+      this.name,
+      this.price,
+      this.tex,
+      this.count,
+      this.afterdes,
+      this.befordes,
+      this.totalPriceForItem,
+      this.totalTaxForItem,
+      this.pic,
+      this.itemNumber,
+      this.minimumQuantity,
+      this.categoryId,
+      this.measurementUnitId});
 }
 
 // TheItemInList(

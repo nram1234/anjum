@@ -23,73 +23,79 @@ class All_customer_tap1 extends StatefulWidget {
 
 class _All_customer_tap1State extends State<All_customer_tap1> {
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
- // AllCustomersControllers bata =Get.find<AllCustomersControllers>() ;
+
+  // AllCustomersControllers bata =Get.find<AllCustomersControllers>() ;
   PriceListsInfoController pricelistinf = Get.put(PriceListsInfoController());
   var allItemsController = Get.find<AllItemsController>();
   final TimeController c = Get.find<TimeController>();
 
-
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: GetBuilder<AllCustomersControllers>(
-  builder: (logic) {
-    return ListView.builder(
-            itemCount: logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter.length:logic.allCustomers.length,
+    return Scaffold(body: GetBuilder<AllCustomersControllers>(
+      builder: (logic) {
+        return logic.loading.value?Center(child: CircularProgressIndicator(),): ListView.builder(
+            itemCount: logic.serchWord.trim().isNotEmpty
+                ? logic.allCustomersSerchFilter.length
+                : logic.allCustomers.length,
             itemBuilder: (context, pos) {
               return InkWell(
                   onTap: () {
-
-
-                    if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {
+                    if (Get.find<AllChequesController>().customer == null ||
+                        !c.startswatch.value) {
                       allItemsController.clearcustomerListItems();
                       pricelistinf.makeAListOfPriceListsInfo(
-                          logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter[pos].customerInfo:    logic.allCustomers[pos].customerInfo);
+                          logic.serchWord.trim().isNotEmpty
+                              ? logic.allCustomersSerchFilter[pos].customerInfo
+                              : logic.allCustomers[pos].customerInfo);
 
                       Get.find<AllChequesController>()
                           .setcustomer(logic.allCustomers[pos]);
 
-                      Get.find<AllChequesController>().setcustomerID(
-                          logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter[pos].customerInfo.id:    logic.allCustomers[pos].customerInfo.id);
+                      Get.find<AllChequesController>().setcustomerID(logic
+                              .serchWord
+                              .trim()
+                              .isNotEmpty
+                          ? logic.allCustomersSerchFilter[pos].customerInfo.id
+                          : logic.allCustomers[pos].customerInfo.id);
 
                       setState(() {});
                       //arguments:  [bata.allCustomers[pos]]
-                      Get.to(()=>Dashboard(),  );
+                      Get.to(
+                        () => Dashboard(),
+                      );
                     } else {
                       if (logic.allCustomers[pos].customerInfo.id ==
                           Get.find<AllChequesController>()
                               .customer
                               .customerInfo
                               .id) {
-                        Get.to(()=>Dashboard());
+                        Get.to(() => Dashboard());
                       } else {
-                        Get.snackbar('','stopvisitingfirst'.tr);
+                        Get.snackbar('', 'stopvisitingfirst'.tr);
                       }
                     }
                   },
-                  child: item(size: size, data:logic.serchWord.trim().isNotEmpty?logic.allCustomersSerchFilter[pos]: logic.allCustomers[pos]));
+                  child: item(
+                      size: size,
+                      data: logic.serchWord.trim().isNotEmpty
+                          ? logic.allCustomersSerchFilter[pos]
+                          : logic.allCustomers[pos]));
             });
-  },
-)
-
-
-    );
+      },
+    ));
   }
 
   bool iscust(AllCustomers data) {
     if (Get.find<AllChequesController>().customer != null) {
       return Get.find<AllChequesController>().customer.customerInfo.id ==
           data.customerInfo.id;
-    }else{
+    } else {
       return false;
     }
   }
 
   Widget item({size, AllCustomers data}) {
-
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -149,9 +155,9 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                       //+"\n"+data.customerInfo.area2??
                       children: [
                         Icon(Icons.add_location),
-                        Text(data.customerInfo.phoneNo??""),
+                        Text(data.customerInfo.phoneNo ?? ""),
                         Expanded(child: Container()),
-                    if(iscust(data))     Image.asset('assets/images/fast.png')
+                        if (iscust(data)) Image.asset('assets/images/fast.png')
                       ],
                     ),
                   ),
@@ -185,7 +191,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       padding: EdgeInsets.only(
-                                        top: Consts.avatarRadius + Consts.padding,
+                                        top: Consts.avatarRadius +
+                                            Consts.padding,
                                         bottom: Consts.padding,
                                         left: Consts.padding,
                                         right: Consts.padding,
@@ -195,8 +202,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                       decoration: new BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(Consts.padding),
+                                        borderRadius: BorderRadius.circular(
+                                            Consts.padding),
                                         // boxShadow: [
                                         //   BoxShadow(
                                         //     color: Colors.black26,
@@ -215,25 +222,33 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                           // To make the card compact
                                           children: <Widget>[
                                             Text(
-                                              'customername'.tr+' : ' +'${data.customerInfo.customerNameEn}',
+                                              'customername'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.customerNameEn}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Email'+' : '+'${data.customerInfo.email}',
+                                              'Email' +
+                                                  ' : ' +
+                                                  '${data.customerInfo.email}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'customertype'.tr+' :  '+'${data.customerInfo.customerTypeId}',
+                                              'customertype'.tr +
+                                                  ' :  ' +
+                                                  '${data.customerInfo.customerTypeId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'phone'.tr+' : '+'${data.customerInfo.phoneNo}',
+                                              'phone'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.phoneNo}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -245,19 +260,25 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                               ),
                                             ),
                                             Text(
-                                              'state'.tr+' : '+'${data.customerInfo.status}',
+                                              'state'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.stateId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'city'.tr+' : '+'${data.customerInfo.cityId}',
+                                              'city'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.cityId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'creditlimit'.tr+' : '+'${data.customerInfo.creditLimit}',
+                                              'creditlimit'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.creditLimit}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -269,19 +290,25 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                               ),
                                             ),
                                             Text(
-                                              'paymenttype'.tr+' : '+'${data.customerInfo.paymentType}',
+                                              'paymenttype'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.paymentType}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'location'.tr+' : '+'${data.customerInfo.area1}',
+                                              'location'.tr +
+                                                  ' : ' +
+                                                  '${data.customerInfo.area1}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'pricelist'.tr+' : '+'${data.priceListsInfo[0].id}',
+                                              'pricelist'.tr +
+                                                  ' : ' +
+                                                  '${data.priceListsInfo[0].id}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -321,7 +348,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                 //         width: 2)),
                               );
                             },
-                            child: Text('Customer info')),
+                            child: Text('info'.tr)),
                         SizedBox(
                           width: 16,
                         ),
@@ -336,12 +363,12 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
 
                               LatLng loc = LatLng(double.tryParse(l[0].trim()),
                                   double.tryParse(l[1].trim()));
-                              Get.to(()=>MyMapScr(
-                                loc: loc,
-                                name: data.customerInfo.customerNameEn,
-                              ));
+                              Get.to(() => MyMapScr(
+                                    loc: loc,
+                                    name: data.customerInfo.customerNameEn,
+                                  ));
                             },
-                            child: Text('view map')),
+                            child: Text('map'.tr)),
                       ],
                     ),
                   ),

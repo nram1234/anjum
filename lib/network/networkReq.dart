@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'dart:developer'as developer;
 import 'json/customer_json.dart';
 import 'json/get_employee_data_json.dart';
 import 'json/invoice_json.dart';
@@ -135,9 +135,10 @@ class AllNetworking {
       Uri.parse(paseurl + 'van/user_api/get_employee_data'),
       body: {"mode": "formdata", "key": "1234567890", "user_id": user_id},
     ).then((value) {
-
+      developer.log(value.toString());
       var v = jsonDecode(value.body);
-      // print(v ['result'] [  "employee_permissions"] );
+
+    ///    print(v ['result']  );
       get_employee_data_json =
           Get_employee_data_json.fromJson(jsonDecode(value.body));
     });

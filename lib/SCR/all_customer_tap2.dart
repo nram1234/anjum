@@ -241,7 +241,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'state'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.status}',
+                                                  '${data.customerInfo.stateId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),

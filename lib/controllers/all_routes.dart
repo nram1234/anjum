@@ -53,8 +53,8 @@ List<int>routMaptoshwkeys=[];
         mapOfDay["thursday"] = element.thursday;
         mapOfDay["saturday"] = element.saturday;
         mapOfDay["friday"] = element.friday;
-        DateTime from = DateTime.parse(element.startDate);
-        DateTime todate = DateTime.parse(element.endDate);
+        DateTime from =DateTime.now();// DateTime.parse(element.startDate);
+        DateTime todate =DateTime.now();//  DateTime.parse(element.endDate);
 
         if (time.isAfter(from) && time.isBefore(todate)) {
           // if (element.schedule.toLowerCase() == "weekly") {

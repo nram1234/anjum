@@ -28,14 +28,14 @@ class Get_employee_data_json {
 }
 
 class Result {
-  List<EmployeData> employeData;
+  EmployeData employeData;
   List<EmployeePermissions> employeePermissions;
   List<AllRoutes> allRoutes;
   List<AllCustomers> allCustomers;
   List<AllCategories> allCategories;
   List<AllItems> allItems;
   SalesOrder salesOrder;
-  List<UserData> userData;
+  UserData userData;
   List<AllCurrencies> allCurrencies;
   List<AllBanks> allBanks;
   List<AllCheques> allCheques;
@@ -56,38 +56,35 @@ class Result {
         this.allStockItems});
 
   Result.fromJson(Map<String, dynamic> json) {
-    if (json['employe_data'] != null) {
-      employeData = <EmployeData>[];
-      json['employe_data'].forEach((v) {
-        employeData.add(new EmployeData.fromJson(v));
-      });
-    }
+    employeData = json['employe_data'] != null
+        ? new EmployeData.fromJson(json['employe_data'])
+        : null;
     if (json['employee_permissions'] != null) {
-      employeePermissions = <EmployeePermissions>[];
+      employeePermissions = new List<EmployeePermissions>();
       json['employee_permissions'].forEach((v) {
         employeePermissions.add(new EmployeePermissions.fromJson(v));
       });
     }
     if (json['all_routes'] != null) {
-      allRoutes = <AllRoutes>[];
+      allRoutes = new List<AllRoutes>();
       json['all_routes'].forEach((v) {
         allRoutes.add(new AllRoutes.fromJson(v));
       });
     }
     if (json['all_customers'] != null) {
-      allCustomers = <AllCustomers>[];
+      allCustomers = new List<AllCustomers>();
       json['all_customers'].forEach((v) {
         allCustomers.add(new AllCustomers.fromJson(v));
       });
     }
     if (json['all_categories'] != null) {
-      allCategories = <AllCategories>[];
+      allCategories = new List<AllCategories>();
       json['all_categories'].forEach((v) {
         allCategories.add(new AllCategories.fromJson(v));
       });
     }
     if (json['all_items'] != null) {
-      allItems = <AllItems>[];
+      allItems = new List<AllItems>();
       json['all_items'].forEach((v) {
         allItems.add(new AllItems.fromJson(v));
       });
@@ -95,32 +92,29 @@ class Result {
     salesOrder = json['sales_order'] != null
         ? new SalesOrder.fromJson(json['sales_order'])
         : null;
-    if (json['user_data'] != null) {
-      userData = <UserData>[];
-      json['user_data'].forEach((v) {
-        userData.add(new UserData.fromJson(v));
-      });
-    }
+    userData = json['user_data'] != null
+        ? new UserData.fromJson(json['user_data'])
+        : null;
     if (json['all_currencies'] != null) {
-      allCurrencies = <AllCurrencies>[];
+      allCurrencies = new List<AllCurrencies>();
       json['all_currencies'].forEach((v) {
         allCurrencies.add(new AllCurrencies.fromJson(v));
       });
     }
     if (json['all_banks'] != null) {
-      allBanks = <AllBanks>[];
+      allBanks = new List<AllBanks>();
       json['all_banks'].forEach((v) {
         allBanks.add(new AllBanks.fromJson(v));
       });
     }
     if (json['all_cheques'] != null) {
-      allCheques = <AllCheques>[];
+      allCheques = new List<AllCheques>();
       json['all_cheques'].forEach((v) {
         allCheques.add(new AllCheques.fromJson(v));
       });
     }
     if (json['all_stock_items'] != null) {
-      allStockItems = <AllStockItems>[];
+      allStockItems = new List<AllStockItems>();
       json['all_stock_items'].forEach((v) {
         allStockItems.add(new AllStockItems.fromJson(v));
       });
@@ -130,7 +124,7 @@ class Result {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.employeData != null) {
-      data['employe_data'] = this.employeData.map((v) => v.toJson()).toList();
+      data['employe_data'] = this.employeData.toJson();
     }
     if (this.employeePermissions != null) {
       data['employee_permissions'] =
@@ -153,7 +147,7 @@ class Result {
       data['sales_order'] = this.salesOrder.toJson();
     }
     if (this.userData != null) {
-      data['user_data'] = this.userData.map((v) => v.toJson()).toList();
+      data['user_data'] = this.userData.toJson();
     }
     if (this.allCurrencies != null) {
       data['all_currencies'] =
@@ -176,21 +170,18 @@ class Result {
 class EmployeData {
   String id;
   String userId;
-  Null refId;
+  String refId;
   String employeeNameEn;
   String employeeNameAr;
-  Null phoneNo;
+  String phoneNo;
   String username;
-  String password;
-  String email;
-  String type;
-  Null customerId;
+  String userid;
+  String customerId;
   String businessUnitId;
   String appDeviceId;
   String groupType;
-  Null reference;
+  String reference;
   String vehicle;
-  Null collectPercent;
   String salesCommission;
   String salary;
   String insurance;
@@ -201,11 +192,8 @@ class EmployeData {
   String supervisorId;
   String salesmanagerId;
   String address;
-  String image;
+  String img;
   String status;
-  String onlineStatus;
-  String createdAt;
-  String updatedAt;
 
   EmployeData(
       {this.id,
@@ -215,16 +203,13 @@ class EmployeData {
         this.employeeNameAr,
         this.phoneNo,
         this.username,
-        this.password,
-        this.email,
-        this.type,
+        this.userid,
         this.customerId,
         this.businessUnitId,
         this.appDeviceId,
         this.groupType,
         this.reference,
         this.vehicle,
-        this.collectPercent,
         this.salesCommission,
         this.salary,
         this.insurance,
@@ -235,11 +220,8 @@ class EmployeData {
         this.supervisorId,
         this.salesmanagerId,
         this.address,
-        this.image,
-        this.status,
-        this.onlineStatus,
-        this.createdAt,
-        this.updatedAt});
+        this.img,
+        this.status});
 
   EmployeData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -249,16 +231,13 @@ class EmployeData {
     employeeNameAr = json['employee_name_ar'];
     phoneNo = json['phone_no'];
     username = json['username'];
-    password = json['password'];
-    email = json['email'];
-    type = json['type'];
+    userid = json['userid'];
     customerId = json['customer_id'];
     businessUnitId = json['business_unit_id'];
     appDeviceId = json['app_device_id'];
     groupType = json['group_type'];
     reference = json['reference'];
     vehicle = json['vehicle'];
-    collectPercent = json['collect_percent'];
     salesCommission = json['sales_commission'];
     salary = json['salary'];
     insurance = json['insurance'];
@@ -269,11 +248,8 @@ class EmployeData {
     supervisorId = json['supervisor_id'];
     salesmanagerId = json['salesmanager_id'];
     address = json['address'];
-    image = json['image'];
+    img = json['img'];
     status = json['status'];
-    onlineStatus = json['online_status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -285,16 +261,13 @@ class EmployeData {
     data['employee_name_ar'] = this.employeeNameAr;
     data['phone_no'] = this.phoneNo;
     data['username'] = this.username;
-    data['password'] = this.password;
-    data['email'] = this.email;
-    data['type'] = this.type;
+    data['userid'] = this.userid;
     data['customer_id'] = this.customerId;
     data['business_unit_id'] = this.businessUnitId;
     data['app_device_id'] = this.appDeviceId;
     data['group_type'] = this.groupType;
     data['reference'] = this.reference;
     data['vehicle'] = this.vehicle;
-    data['collect_percent'] = this.collectPercent;
     data['sales_commission'] = this.salesCommission;
     data['salary'] = this.salary;
     data['insurance'] = this.insurance;
@@ -305,11 +278,8 @@ class EmployeData {
     data['supervisor_id'] = this.supervisorId;
     data['salesmanager_id'] = this.salesmanagerId;
     data['address'] = this.address;
-    data['image'] = this.image;
+    data['img'] = this.img;
     data['status'] = this.status;
-    data['online_status'] = this.onlineStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
@@ -506,7 +476,7 @@ class AllRoutes {
     maxCustomers = json['max_customers'];
     routeId = json['route_id'];
     if (json['list_routes_info'] != null) {
-      listRoutesInfo = <ListRoutesInfo>[];
+      listRoutesInfo = new List<ListRoutesInfo>();
       json['list_routes_info'].forEach((v) {
         listRoutesInfo.add(new ListRoutesInfo.fromJson(v));
       });
@@ -533,9 +503,9 @@ class ListRoutesInfo {
   String userId;
   String routeId;
   String customerId;
-  Null timeIn;
-  Null timeOut;
-  Null note;
+  String timeIn;
+  String timeOut;
+  String note;
   String schedule;
   String s1st;
   String s2nd;
@@ -666,25 +636,24 @@ class CustomerInfo {
   String customerNameEn;
   String customerNameAr;
   String customerTypeId;
-  Null email;
+  String email;
   String phoneNo;
-  Null fax;
+  String fax;
   String taxStatus;
   String image;
   String creditLimit;
   String chequeDueDate;
   String discount;
-  Null balance;
+  String balance;
   String paymentType;
   String priceListId;
   String stateId;
   String cityId;
-  Null area1;
-  Null area2;
+  String area1;
+  String area2;
   String location;
-  Null latitude;
-  Null longitude;
-  String status;
+  String latitude;
+  String longitude;
   String createdAt;
   String updatedAt;
 
@@ -715,7 +684,6 @@ class CustomerInfo {
         this.location,
         this.latitude,
         this.longitude,
-        this.status,
         this.createdAt,
         this.updatedAt});
 
@@ -746,7 +714,6 @@ class CustomerInfo {
     location = json['location'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -779,7 +746,6 @@ class CustomerInfo {
     data['location'] = this.location;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
-    data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;
@@ -797,8 +763,8 @@ class PriceListsInfo {
   String taxStatus;
   String useInSales;
   String useInReturn;
-  Null createdAt;
-  Null updatedAt;
+  String createdAt;
+  String updatedAt;
   List<ItemUnits> itemUnits;
 
   PriceListsInfo(
@@ -967,9 +933,7 @@ class SubCategories {
   String subCategoryNameEn;
   String subCategoryNameAr;
   String image;
-  String status;
-  String createdAt;
-  String updatedAt;
+  String categoryNameEn;
 
   SubCategories(
       {this.id,
@@ -978,9 +942,7 @@ class SubCategories {
         this.subCategoryNameEn,
         this.subCategoryNameAr,
         this.image,
-        this.status,
-        this.createdAt,
-        this.updatedAt});
+        this.categoryNameEn});
 
   SubCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -989,9 +951,7 @@ class SubCategories {
     subCategoryNameEn = json['sub_category_name_en'];
     subCategoryNameAr = json['sub_category_name_ar'];
     image = json['image'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    categoryNameEn = json['category_name_en'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1002,9 +962,7 @@ class SubCategories {
     data['sub_category_name_en'] = this.subCategoryNameEn;
     data['sub_category_name_ar'] = this.subCategoryNameAr;
     data['image'] = this.image;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['category_name_en'] = this.categoryNameEn;
     return data;
   }
 }
@@ -1067,7 +1025,7 @@ class ItemDetails {
   String minimumQuantity;
   String reference;
   String image;
-  Null itemCost;
+  String itemCost;
   String tax;
   String status;
   String stockStatus;
@@ -1184,118 +1142,86 @@ class SalesOrder {
 }
 
 class UserData {
-  String id;
   String branchNameEn;
   String branchNameAr;
   String branchLocation;
   String companyId;
+  String area1;
   String locationLat;
   String locationLng;
   String email;
-  String password;
-  String decodedPassword;
-  Null area1;
-  Null area2;
+  String area2;
   String cityId;
   String stateId;
   String countryId;
-  Null currency;
-  Null currencyShort;
-  Null phoneNo;
-  Null faxNo;
+  String currency;
+  String phoneNo;
+  String faxNo;
   String vatNo;
   String taxableStatus;
-  String sToken;
-  String status;
   String rememberToken;
-  String createdAt;
-  String updatedAt;
 
   UserData(
-      {this.id,
-        this.branchNameEn,
+      {this.branchNameEn,
         this.branchNameAr,
         this.branchLocation,
         this.companyId,
+        this.area1,
         this.locationLat,
         this.locationLng,
         this.email,
-        this.password,
-        this.decodedPassword,
-        this.area1,
         this.area2,
         this.cityId,
         this.stateId,
         this.countryId,
         this.currency,
-        this.currencyShort,
         this.phoneNo,
         this.faxNo,
         this.vatNo,
         this.taxableStatus,
-        this.sToken,
-        this.status,
-        this.rememberToken,
-        this.createdAt,
-        this.updatedAt});
+        this.rememberToken});
 
   UserData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     branchNameEn = json['branch_name_en'];
     branchNameAr = json['branch_name_ar'];
     branchLocation = json['branch_location'];
     companyId = json['company_id'];
+    area1 = json['area_1'];
     locationLat = json['location_lat'];
     locationLng = json['location_lng'];
     email = json['email'];
-    password = json['password'];
-    decodedPassword = json['decoded_password'];
-    area1 = json['area_1'];
     area2 = json['area_2'];
     cityId = json['city_id'];
     stateId = json['state_id'];
     countryId = json['country_id'];
     currency = json['currency'];
-    currencyShort = json['currency_short'];
     phoneNo = json['phone_no'];
     faxNo = json['fax_no'];
     vatNo = json['vat_no'];
     taxableStatus = json['taxable_status'];
-    sToken = json['_token'];
-    status = json['status'];
     rememberToken = json['remember_token'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['branch_name_en'] = this.branchNameEn;
     data['branch_name_ar'] = this.branchNameAr;
     data['branch_location'] = this.branchLocation;
     data['company_id'] = this.companyId;
+    data['area_1'] = this.area1;
     data['location_lat'] = this.locationLat;
     data['location_lng'] = this.locationLng;
     data['email'] = this.email;
-    data['password'] = this.password;
-    data['decoded_password'] = this.decodedPassword;
-    data['area_1'] = this.area1;
     data['area_2'] = this.area2;
     data['city_id'] = this.cityId;
     data['state_id'] = this.stateId;
     data['country_id'] = this.countryId;
     data['currency'] = this.currency;
-    data['currency_short'] = this.currencyShort;
     data['phone_no'] = this.phoneNo;
     data['fax_no'] = this.faxNo;
     data['vat_no'] = this.vatNo;
     data['taxable_status'] = this.taxableStatus;
-    data['_token'] = this.sToken;
-    data['status'] = this.status;
     data['remember_token'] = this.rememberToken;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
@@ -1350,7 +1276,7 @@ class AllBanks {
   String bankNameEn;
   String bankNameAr;
   String userId;
-  Null note;
+  String note;
   List<AllBankBranches> allBankBranches;
 
   AllBanks(
@@ -1396,18 +1322,15 @@ class AllBankBranches {
   String userId;
   String branchNameEn;
   String branchNameAr;
-  Null phoneNo;
-  Null faxNo;
+  String phoneNo;
+  String faxNo;
   String email;
-  Null area1;
-  Null area2;
+  String area1;
+  String area2;
   String stateId;
   String cityId;
   String contactPerson;
-  Null note;
-  String status;
-  String createdAt;
-  String updatedAt;
+  String note;
 
   AllBankBranches(
       {this.id,
@@ -1423,10 +1346,7 @@ class AllBankBranches {
         this.stateId,
         this.cityId,
         this.contactPerson,
-        this.note,
-        this.status,
-        this.createdAt,
-        this.updatedAt});
+        this.note});
 
   AllBankBranches.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1443,9 +1363,6 @@ class AllBankBranches {
     cityId = json['city_id'];
     contactPerson = json['contact_person'];
     note = json['note'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1464,9 +1381,6 @@ class AllBankBranches {
     data['city_id'] = this.cityId;
     data['contact_person'] = this.contactPerson;
     data['note'] = this.note;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
@@ -1513,7 +1427,6 @@ class ListCheques {
   String chequeDueDate;
   String drawerName;
   String bankId;
-  String branchId;
   String bankNameEn;
   String bankNameAr;
   String branchNameEn;
@@ -1525,7 +1438,6 @@ class ListCheques {
         this.chequeDueDate,
         this.drawerName,
         this.bankId,
-        this.branchId,
         this.bankNameEn,
         this.bankNameAr,
         this.branchNameEn,
@@ -1537,7 +1449,6 @@ class ListCheques {
     chequeDueDate = json['cheque_due_date'];
     drawerName = json['drawer_name'];
     bankId = json['bank_id'];
-    branchId = json['branch_id'];
     bankNameEn = json['bank_name_en'];
     bankNameAr = json['bank_name_ar'];
     branchNameEn = json['branch_name_en'];
@@ -1551,7 +1462,6 @@ class ListCheques {
     data['cheque_due_date'] = this.chequeDueDate;
     data['drawer_name'] = this.drawerName;
     data['bank_id'] = this.bankId;
-    data['branch_id'] = this.branchId;
     data['bank_name_en'] = this.bankNameEn;
     data['bank_name_ar'] = this.bankNameAr;
     data['branch_name_en'] = this.branchNameEn;

@@ -1,9 +1,12 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'dashboard.dart';
 
@@ -13,11 +16,11 @@ class CashPay extends StatefulWidget {
 }
 
 class _CashPayState extends State<CashPay> {
+ // CurenceController _curenceController = Get.find<CurenceController>();
   String date2 = 'Select Date';
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   var allCheques = Get.find<AllChequesController>();
-  String amount = '',
-      addnote = '';
+  String amount = '', addnote = '';
 
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
@@ -31,11 +34,20 @@ class _CashPayState extends State<CashPay> {
     return date2;
   }
 
+  List<Widget> drop = [];
+
+  @override
+  void initState() {
+    super.initState();
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    date2 = formatter.format(now);
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Container(
@@ -88,7 +100,7 @@ class _CashPayState extends State<CashPay> {
                         left: size.width * .1,
                         top: size.height * .12,
                         child: Text(
-                          'Cash Payment',
+                          'Cashpayment'.tr,
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -115,7 +127,7 @@ class _CashPayState extends State<CashPay> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("Date",
+                          child: Text("date".tr,
                               style: TextStyle(
                                   fontSize: 25,
                                   color: Colors.black,
@@ -125,19 +137,21 @@ class _CashPayState extends State<CashPay> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
-                              onTap: () {
-                                pickdate().then((value) {
-                                  if (value != null) {
-                                    date2 = value;
-                                    setState(() {});
-                                  }
-                                });
-                              },
+                              // onTap: () {
+                              //   pickdate().then((value) {
+                              //     if (value != null) {
+                              //       date2 = value;
+                              //       setState(() {});
+                              //     }
+                              //   });
+                              // },
                               child: Container(
                                 height: 50,
                                 width: size.width * .85,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border:
+                                      Border.all(color: Colors.black, width: 1),
                                   color: Colors.white,
                                   // boxShadow: [
                                   //   BoxShadow(
@@ -149,14 +163,20 @@ class _CashPayState extends State<CashPay> {
                                   //   ),
                                   // ],
                                 ),
-                                child: Center(child: Text(date2)),
+                                child: Center(
+                                    child: Text(
+                                  date2,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                )),
                               ),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Amount of Cash',
+                          child: Text("Amount".tr,
                               style: TextStyle(
                                   fontSize: 25,
                                   color: Colors.black,
@@ -167,8 +187,7 @@ class _CashPayState extends State<CashPay> {
                             width: size.width * .85,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.black, width: 1)
-                              ,
+                              border: Border.all(color: Colors.black, width: 1),
                               color: Colors.white,
                               // boxShadow: [
                               //   BoxShadow(
@@ -180,22 +199,59 @@ class _CashPayState extends State<CashPay> {
                               //   ),
                               // ],
                             ),
-                            child: TextField(onChanged: (v) {
-                              amount = v;
-                            },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                              ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: TextField(
+                                    onChanged: (v) {
+                                      amount = v;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                GetBuilder<CurenceController>(
+                                  builder: (logic) {
+                                    return DropdownButton(
+                                        elevation: 8,
+                                        value:
+                                        logic.defultCurrencies,
+                                        hint: Text("اختار العملة"),
+                                        onChanged: (v) {
+                                          logic.setCurrenciedropdowen(allCurrencies: v);
+
+                                        },
+                                        items: logic
+                                            .allCurrencie.entries
+                                            .map<
+                                                DropdownMenuItem<
+                                                    AllCurrencies>>((e) {
+                                          return DropdownMenuItem<
+                                              AllCurrencies>(
+                                            value:
+                                            logic.allCurrencie[
+                                                    e.value.currencyName],
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text('${e.value.currencyName  } ${e.value.currencySymbol}'),
+                                            ),
+                                          );
+                                        }).toList());
+                                  },
+                                )
+                              ],
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Add note',
+                          child: Text('addnote'.tr,
                               style: TextStyle(
                                   fontSize: 25,
                                   color: Colors.black,
@@ -205,7 +261,8 @@ class _CashPayState extends State<CashPay> {
                           child: Container(
                             width: size.width * .85,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),   border: Border.all(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.black, width: 1),
                               color: Colors.white,
                               // boxShadow: [
                               //   BoxShadow(
@@ -217,9 +274,11 @@ class _CashPayState extends State<CashPay> {
                               //   ),
                               // ],
                             ),
-                            child: TextField(onChanged: (v) {
-                              addnote = v;
-                            },maxLines: 6,
+                            child: TextField(
+                              onChanged: (v) {
+                                addnote = v;
+                              },
+                              maxLines: 6,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -238,32 +297,25 @@ class _CashPayState extends State<CashPay> {
                               onTap: () {
                                 DatabaseHelper()
                                     .insert_insert_cheque(
-                                    item: Insert_cheque_DB(
-                                      user_id:
-                                      _userAndPermissions.user.userId,
-                                      employee_id:
-                                      _userAndPermissions.user.id,
-                                      customer_id: int.parse(
-                                          Get
-                                              .find<AllChequesController>()
-                                              .customer_id),
-                                      amount:
-                                      double.tryParse(amount),
-                                      due_date: date2,
-
-
-                                      customer_name: allCheques.customer
-                                          .customerInfo.customerNameEn,
-                                      note: addnote,
-
-                                      payment_type: "cash",
-                                      reference_no: allCheques
-                                          .customer.customerInfo.refId,
-                                      supervisor_id: _userAndPermissions.user
-                                          .supervisorId,
-                                      salesmanager_id: _userAndPermissions.user
-                                          .salesmanagerId,
-                                    ))
+                                        item: Insert_cheque_DB(
+                                  user_id: _userAndPermissions.user.userId,
+                                  employee_id: _userAndPermissions.user.id,
+                                  customer_id: int.parse(
+                                      Get.find<AllChequesController>()
+                                          .customer_id),
+                                  amount: double.tryParse(amount),
+                                  due_date: date2,
+                                  customer_name: allCheques
+                                      .customer.customerInfo.customerNameEn,
+                                  note: addnote,
+                                  payment_type: "cash",
+                                  reference_no:
+                                      allCheques.customer.customerInfo.refId,
+                                  supervisor_id:
+                                      _userAndPermissions.user.supervisorId,
+                                  salesmanager_id:
+                                      _userAndPermissions.user.salesmanagerId,
+                                ))
                                     .then((value) {
                                   print(
                                       '999999999999999999999999999999999999999999');
@@ -279,14 +331,14 @@ class _CashPayState extends State<CashPay> {
                                         height: 60,
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text('Anjum',
                                                 style: TextStyle(
                                                     fontSize: 25,
                                                     color: Colors.indigoAccent,
                                                     fontWeight:
-                                                    FontWeight.bold)),
+                                                        FontWeight.bold)),
                                           ],
                                         ),
                                       ),
@@ -295,17 +347,18 @@ class _CashPayState extends State<CashPay> {
                                         child: SingleChildScrollView(
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Text('Payment done sucessfully'),
+                                              Text('Paymentdone'.tr),
                                               Row(
                                                 children: [
                                                   TextButton(
                                                       onPressed: () {
-                                                       // Navigator.pop(context);
-                                                        int  count = 0;
-                                                        Navigator.popUntil(context, (route) {
+                                                        // Navigator.pop(context);
+                                                        int count = 0;
+                                                        Navigator.popUntil(
+                                                            context, (route) {
                                                           return count++ == 3;
                                                         });
                                                       },
@@ -316,7 +369,7 @@ class _CashPayState extends State<CashPay> {
                                                           SizedBox(
                                                             width: 8,
                                                           ),
-                                                          Text('Back'),
+                                                          Text('Back'.tr),
                                                           SizedBox(
                                                             width: 50,
                                                           ),
@@ -331,10 +384,10 @@ class _CashPayState extends State<CashPay> {
                                                                           .print),
                                                                       SizedBox(
                                                                         width:
-                                                                        8,
+                                                                            8,
                                                                       ),
                                                                       Text(
-                                                                          'Print')
+                                                                          'printers'.tr)
                                                                     ],
                                                                   ))
                                                             ],
@@ -360,12 +413,12 @@ class _CashPayState extends State<CashPay> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    )),
+                                  'Submit',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                )),
                               ),
                             ),
                           ),

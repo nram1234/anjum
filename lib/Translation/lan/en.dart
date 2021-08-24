@@ -98,4 +98,34 @@ const Map<String, String> en = {
   'beforeafter':  'Before/After'
   ,
   'photo':  'Photo'
+  ,
+  'route':  'Route Name'
+  ,
+  'info': 'Customer info'
+  ,
+  'cheque': 'Cheque'
+  ,
+  'Exit': "Confirm Exit"
+  ,
+  'exitm': "Are you sure you want to exit?"
+  ,
+  "YES":"YES"
+  ,
+  "NO":"NO"
+  ,
+  'Promotion':'Promotion List'
+  ,
+  'map':'view map'
+  ,
+  'Cashpayment':'Cash Payment'
+  ,
+  "date":"Date"
+  ,
+  "Amount":'Amount of Cash'
+  ,
+  'Paymentdone':'Payment done sucessfully'
+  ,
+  'Back':'Back'
+  ,
+  'Submit':'Submit'
 };

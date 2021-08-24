@@ -3,6 +3,7 @@ import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/item_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
@@ -53,7 +54,7 @@ class _CartEditProductState extends State<Cart> {
 
   final MyProdectListController _myProdectListController =
       Get.find<MyProdectListController>();
-
+  CurenceController _curenceController = Get.find<CurenceController>();
   @override
   void initState() {
     super.initState();
@@ -576,7 +577,7 @@ class _CartEditProductState extends State<Cart> {
                               Text('total'.tr),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
-                                  return Text(logic.totalpriceincart
+                                  return Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(  logic.totalpriceincart*double.parse(_curenceController.defultCurrencies.currencyRate))
                                       .toStringAsFixed(3));
                                 },
                               ),
@@ -599,7 +600,7 @@ class _CartEditProductState extends State<Cart> {
                               Text('discount'.tr),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
-                                  return Text(logic.sumOftotalDiscountincart
+                                  return Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(logic.sumOftotalDiscountincart*double.parse(_curenceController.defultCurrencies.currencyRate))
                                       .toStringAsFixed(3));
                                 },
                               ),
@@ -613,18 +614,18 @@ class _CartEditProductState extends State<Cart> {
                               height: 1,
                               color: Colors.teal,
                             )),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 8, right: 16, left: 16, bottom: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('totaltax'.tr),
-                              Text(_myProdectListController.totalTaxincart.value
-                                  .toStringAsFixed(3)),
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(
+                        //       top: 8, right: 16, left: 16, bottom: 8),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Text('totaltax'.tr),
+                        //       Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(_myProdectListController.totalTaxincart.value*double.parse(_curenceController.defultCurrencies.currencyRate))
+                        //           .toStringAsFixed(3)),
+                        //     ],
+                        //   ),
+                        // ),
                         Padding(
                             padding: EdgeInsets.only(
                                 top: 8, right: 16, left: 16, bottom: 8),
@@ -639,10 +640,10 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('total'.tr),
-                              Text((_myProdectListController
+                              Text(" ${_curenceController.defultCurrencies.currencySymbol} "+((_myProdectListController
                                           .totalTaxincart.value +
                                       _myProdectListController
-                                          .totalpriceincart.value)
+                                          .totalpriceincart.value)*double.parse(_curenceController.defultCurrencies.currencyRate))
                                   .toStringAsFixed(3)),
                             ],
                           ),
@@ -1001,11 +1002,11 @@ class _CartEditProductState extends State<Cart> {
                                             basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]].value.price.toString(),
                                             storeId: _userAndPermissions.user.storeId,
                                             measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
-                                            totalPrice: onleyprice.toString(),
-                                            totalPriceWithTax: onleypricewithtax.toString(),
-                                            totalPriceBeforeTax: onleyprice.toString(),
-                                            totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count).toString(),
-                                            totalDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))).toString(),
+                                            totalPrice:( onleyprice*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
+                                            totalPriceWithTax:( onleypricewithtax*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
+                                            totalPriceBeforeTax: (onleyprice*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
+                                            totalPriceWithoutTaxDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count)*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
+                                            totalDiscount: (((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100)))*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
                                             categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
                                             request_type: isinvoiceOrSalesOrderOrReturnInvoice,
                                             taxType: "percentage");
@@ -1115,11 +1116,93 @@ class _CartEditProductState extends State<Cart> {
 
                                       });
                                    } else {
-                                     list.forEach((element) { _databaseHelper
+                                   await  list.forEach((element) {
+                                       _databaseHelper
                                          .insert_Sales_Order_Request_Details(element).then((value) {
 
-                                     }); });
+                                     });
 
+                                   });
+                                   return showDialog(
+                                     context: context,
+                                     builder: (context) {
+                                       return AlertDialog(
+                                         title: Container(
+                                           width: size.width * .8,
+                                           height: 60,
+                                           child: Column(
+                                             crossAxisAlignment:
+                                             CrossAxisAlignment.start,
+                                             children: [
+                                               Text('Anjum',
+                                                   style: TextStyle(
+                                                       fontSize: 25,
+                                                       color: Colors.indigoAccent,
+                                                       fontWeight:
+                                                       FontWeight.bold)),
+                                             ],
+                                           ),
+                                         ),
+                                         content: Container(
+                                           width: size.width * .8,
+                                           child: SingleChildScrollView(
+                                             child: Column(
+                                               crossAxisAlignment:
+                                               CrossAxisAlignment.start,
+                                               mainAxisSize: MainAxisSize.max,
+                                               children: [
+                                                 Text('Order done sucessfully'),
+                                                 Row(
+                                                   children: [
+                                                     TextButton(
+                                                         onPressed: () {
+                                                           // Navigator.pop(context);
+
+                                                           int  count = 0;
+                                                           Navigator.popUntil(context, (route) {
+                                                             return count++ == 3;
+                                                           });   },
+                                                         child: Row(
+                                                           children: [
+                                                             Icon(
+                                                                 Icons.arrow_back),
+                                                             SizedBox(
+                                                               width: 8,
+                                                             ),
+                                                             Text('Back'),
+                                                             SizedBox(
+                                                               width: 50,
+                                                             ),
+                                                             Row(
+                                                               children: [
+                                                                 TextButton(
+                                                                     onPressed:
+                                                                         () {},
+                                                                     child: Row(
+                                                                       children: [
+                                                                         Icon(Icons
+                                                                             .print),
+                                                                         SizedBox(
+                                                                           width:
+                                                                           8,
+                                                                         ),
+                                                                         Text(
+                                                                             'Print')
+                                                                       ],
+                                                                     ))
+                                                               ],
+                                                             )
+                                                           ],
+                                                         ))
+                                                   ],
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                         ),
+                                       );
+                                     },
+                                   );
                                    }
                                     orderid++;
                                     box.write('orderid', orderid);
@@ -1242,11 +1325,11 @@ class _CartEditProductState extends State<Cart> {
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
-                          // image: DecorationImage(
-                          //   image: NetworkImage(data.itemDetails[0].image),
-                          //   fit: BoxFit.fill,
-                          // ),
+
+                          image: DecorationImage(
+                            image: NetworkImage(products.value.pic),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),

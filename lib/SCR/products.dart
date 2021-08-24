@@ -10,6 +10,7 @@ import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
+import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
@@ -67,7 +68,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
   DropdownMenuItemList dropdownMenuItemList =
       Get.put(DropdownMenuItemList(), permanent: true);
-
+  CurenceController _curenceController = Get.find<CurenceController>();
   //====================
   AllStockItems _allStockItems;
   var keysOfMap;
@@ -121,7 +122,15 @@ class _ProductsScrState extends State<ProductsScr> {
     getmeasurementUnit();
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
+    if(_curenceController.defultCurrencies==null){
 
+      _curenceController. allCurrencie.forEach((key, value) {
+        if (value.currencySymbolFirst == '1') {
+          _curenceController.setCurrencie( allCurrencies: value,context: context);
+          // defultCurrencies = value;
+        }
+      });
+    }
     for (int i = 0; i < bata.allItems.length; i++) {
       cartListItem.discount[int.parse(bata.allItems[i].itemId)] = 0;
       cartListItem.bounce[int.parse(bata.allItems[i].itemId)] = 0;
@@ -1758,6 +1767,7 @@ class _ProductsScrState extends State<ProductsScr> {
       }
     }
     discountController.text = products.value.diescount.toString();
+    bounceController.text= products.value.bonce.toString();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -1773,12 +1783,12 @@ class _ProductsScrState extends State<ProductsScr> {
                   Container(
                     height: size.height * .15,
                     width: size.height * .15,
-                    color: Colors.indigo,
-                    // child: Image.network(
-                    //   products.itemDetails[0].image,
-                    //   height: size.height * .1,
-                    //   width: size.height * .1,
-                    // ),
+
+                    child: Image.network(
+                      products.value.pic,
+                      height: size.height * .1,
+                      width: size.height * .1,
+                    ),
                   ),
                   SizedBox(
                     width: 8,
@@ -1803,7 +1813,7 @@ class _ProductsScrState extends State<ProductsScr> {
                             ': ' +
                             '${products.value.minimumQuantity}'),
                         //products.itemDetails[0].itemCost
-                        Text('price'.tr + ': ' + '${products.value.price}'),
+                        Text('price'.tr + ': ' + '${(products.value.price*double.parse(_curenceController.defultCurrencies.currencyRate) ).toStringAsFixed(3)}'),
                         //  Expanded(child: Container()),
                       ],
                     ),
@@ -1989,7 +1999,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           children: [
                             // Text(
                             //     'Item Price :${products.itemDetails[0].itemCost}'),
-                            Text('tax'.tr + ':  ' + '${products.value.tex}')
+                            Text('tax'.tr + ':  ' + '${(products.value.tex*double.parse(_curenceController.defultCurrencies.currencyRate)).toStringAsFixed(3)}')
                           ],
                         ),
                       ),
@@ -2230,7 +2240,12 @@ class _ProductsScrState extends State<ProductsScr> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: TextField(
                                     keyboardType: TextInputType.number,
-                                    onChanged: (v) {},
+                                    onChanged: (v) {
+                                      if (v != null && v.isNotEmpty) {
+                                        _myProdectListController.setbonce(id: products.value.id, val: v );
+                                        print(products.value.bonce);
+                                      }
+                                    },
                                     controller: bounceController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -2340,10 +2355,10 @@ class _ProductsScrState extends State<ProductsScr> {
                                   child: Center(
                                     child: GetBuilder<MyProdectListController>(
                                       builder: (logic) {
-                                        return Text(logic
+                                        return Text((logic
                                             .item[products.value.id]
                                             .value
-                                            .befordes
+                                            .befordes*double.parse(_curenceController.defultCurrencies.currencyRate))
                                             .toStringAsFixed(3));
                                       },
                                     ),
@@ -2375,10 +2390,10 @@ class _ProductsScrState extends State<ProductsScr> {
                                   child: Center(
                                     child: GetBuilder<MyProdectListController>(
                                       builder: (logic) {
-                                        return Text(logic
+                                        return Text((logic
                                             .item[products.value.id]
                                             .value
-                                            .afterdes
+                                            .afterdes*double.parse(_curenceController.defultCurrencies.currencyRate))
                                             .toStringAsFixed(3));
                                       },
                                     ),
@@ -2386,61 +2401,25 @@ class _ProductsScrState extends State<ProductsScr> {
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Text('tax'.tr + ' %'),
-                                Container(
-                                  width: size.width * .4,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                      child:
-                                          Text(products.value.tex.toString())),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text('totaltax'.tr),
-                                Container(
-                                    width: size.width * .4,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Center(
-                                      child:
-                                          GetBuilder<MyProdectListController>(
-                                        builder: (logic) {
-                                          return Text(logic
-                                              .item[products.value.id]
-                                              .value
-                                              .totalTaxForItem
-                                              .toStringAsFixed(3));
-                                        },
-                                      ),
-                                    )),
-                              ],
-                            ),
+                            // Column(
+                            //   children: [
+                            //     Text('tax'.tr + ' %'),
+                            //     Container(
+                            //       width: size.width * .4,
+                            //       height: 50,
+                            //       decoration: BoxDecoration(
+                            //           color: Colors.grey[200],
+                            //           border: Border.all(
+                            //             color: Colors.grey,
+                            //             width: 1,
+                            //           ),
+                            //           borderRadius: BorderRadius.circular(10)),
+                            //       child: Center(
+                            //           child:
+                            //               Text((products.value.tex*double.parse(_curenceController.defultCurrencies.currencyRate)).toString())),
+                            //     ),
+                            //   ],
+                            // ),
                             Column(
                               children: [
                                 Text('netprice'.tr),
@@ -2455,16 +2434,75 @@ class _ProductsScrState extends State<ProductsScr> {
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(child:
-                                      GetBuilder<MyProdectListController>(
+                                  GetBuilder<MyProdectListController>(
                                     builder: (logic) {
-                                      return Text(logic.item[products.value.id]
-                                          .value.totalPriceForItem
+                                      return Text((logic.item[products.value.id]
+                                          .value.totalPriceForItem*double.parse(_curenceController.defultCurrencies.currencyRate))
                                           .toStringAsFixed(3));
                                     },
                                   )),
                                 ),
                               ],
-                            ),
+                            ),   ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Column(
+                            //   children: [
+                            //     Text('totaltax'.tr),
+                            //     Container(
+                            //         width: size.width * .4,
+                            //         height: 50,
+                            //         decoration: BoxDecoration(
+                            //             color: Colors.grey[200],
+                            //             border: Border.all(
+                            //               color: Colors.grey,
+                            //               width: 1,
+                            //             ),
+                            //             borderRadius:
+                            //                 BorderRadius.circular(10)),
+                            //         child: Center(
+                            //           child:
+                            //               GetBuilder<MyProdectListController>(
+                            //             builder: (logic) {
+                            //               return Text((logic
+                            //                   .item[products.value.id]
+                            //                   .value
+                            //                   .totalTaxForItem*double.parse(_curenceController.defultCurrencies.currencyRate))
+                            //                   .toStringAsFixed(3));
+                            //             },
+                            //           ),
+                            //         )),
+                            //   ],
+                            // ),
+                            // Column(
+                            //   children: [
+                            //     Text('netprice'.tr),
+                            //     Container(
+                            //       width: size.width * .4,
+                            //       height: 50,
+                            //       decoration: BoxDecoration(
+                            //           color: Colors.grey[200],
+                            //           border: Border.all(
+                            //             color: Colors.grey,
+                            //             width: 1,
+                            //           ),
+                            //           borderRadius: BorderRadius.circular(10)),
+                            //       child: Center(child:
+                            //           GetBuilder<MyProdectListController>(
+                            //         builder: (logic) {
+                            //           return Text((logic.item[products.value.id]
+                            //               .value.totalPriceForItem*double.parse(_curenceController.defultCurrencies.currencyRate))
+                            //               .toStringAsFixed(3));
+                            //         },
+                            //       )),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

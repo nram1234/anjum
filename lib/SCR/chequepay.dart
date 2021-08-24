@@ -621,7 +621,7 @@ class _ChequePayState extends State<ChequePay> {
             Container(
               width: size.width * .85,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black, width: 1),
                 color: Colors.white,
                 // boxShadow: [
                 //   BoxShadow(

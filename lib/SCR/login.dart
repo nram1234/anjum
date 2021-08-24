@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'home.dart';
-
+import 'dart:developer'as developer;
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -34,11 +34,11 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     var lan = box.read('lan');
-    var user = box.read('user');
-    var passwor = box.read('password');
+    name.text  = box.read('user');
+    password.text = box.read('password');
+    user_Id.text = box.read('id');
 
-    name.text = user;
-    password.text = passwor;
+
 
     if (lan != null) {
       if (lan == 'ar') {
@@ -55,6 +55,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    print(box.read('id'));
+    print(box.read('password'));
+    print(box.read('id'));
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -249,6 +252,7 @@ class _LoginState extends State<Login> {
                           child: Checkbox(
                             value: _checkbox,
                             onChanged: (value) {
+
                               setState(() {
                                 _checkbox = !_checkbox;
                               });
@@ -286,46 +290,47 @@ class _LoginState extends State<Login> {
                             // print('000000000000000000000000000000000000000000000000000000000000000000');
                             //
 
-
-                            if(url.text.isNotEmpty){
-                              AllNetworking.paseurl=url.text;
+                            if (url.text.isNotEmpty) {
+                              AllNetworking.paseurl = url.text;
                             }
-                            print( AllNetworking.paseurl);
-                            if(user_Id.text != null&&user_Id.text.isNotEmpty){
+                            print(AllNetworking.paseurl);
+                            if (user_Id.text != null &&
+                                user_Id.text.isNotEmpty) {
                               if (name.text != null && password.text != null) {
-                                login=true;
-                                setState(() {
-
-                                });
-                                if(_checkbox){
+                                login = true;
+                                setState(() {});
+                                if (_checkbox) {
                                   box.write('user', name.text);
                                   box.write('password', password.text);
+                                  box.write('id', user_Id.text);
                                 }
                                 _allNetworking
                                     .login(
-                                    user_name: name.text, password: password.text,user_id: int.tryParse(user_Id.text))
+                                        user_name: name.text,
+                                        password: password.text,
+                                        user_id: int.tryParse(user_Id.text))
                                     .then((value) {
                                   if (value != null) {
                                     print(value.user);
                                     _userAndPermissions.setuser(value.user);
                                     _userAndPermissions
                                         .setPermissions(value.permissions);
-print(value.toString());
+                                    developer.log  (value.toString());
                                     Get.to(Home());
-
                                   }
-                                  login=false;
-                                  setState(() {
-
-                                  });  })
-                                    .catchError((e) {
-                                  print("oooooooooooooooooooooooooooooo");
-                                  Get.snackbar("", e.toString()+"oooooooooooooooooooooooooooooo");
+                                  login = false;
+                                  setState(() {});
+                                }).catchError((e) {
+                               
+                                  Get.snackbar(
+                                      "",
+                                      e.toString() +
+                                          "oooooooooooooooooooooooooooooo");
                                 });
                               } else {
                                 Get.snackbar("", 'تاكد من ادخال البيانات ');
                               }
-                            }else {
+                            } else {
                               Get.snackbar("", 'تاكد من ادخال رقم الشركة ');
                             }
                           },

@@ -14,6 +14,7 @@ import 'package:get/get_navigation/src/root/root_controller.dart';
 import 'package:location/location.dart';
 
 import 'all_customer_tap1.dart';
+import 'home.dart';
 
 class All_Customer extends StatefulWidget {
   @override
@@ -40,56 +41,62 @@ class _All_CustomerState extends State<All_Customer> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => TimeController());
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'startofJourney'.tr,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+    return  WillPopScope(
+        onWillPop: ()
+    {
+ Get.offAll(()=>Home());
+        },
+    child:  Scaffold(
+        body: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                'startofJourney'.tr,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              bottom: TabBar(
+                tabs: [
+                  Text('customers'.tr),
+                  Text('route'.tr),
+                ],
+              ),
             ),
-            bottom: TabBar(
-              tabs: [
-                Text('customers'.tr),
-                Text('Route Name'),
+            body: Column(
+              children: [Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20), color: Colors.white),
+                width: size.width * .9,
+                height: 50,
+                child: TextField(
+                  onChanged: (v) {
+                    bata.serchWord.value=v;
+                    bata.serchFilterCustom(v);
+                  },
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    suffixIcon: Icon(Icons.search),
+                  ),
+                ),
+              ),
+                SizedBox(
+                  width: size.height * .1,
+                ),
+                Expanded(flex: 1,
+                  child: TabBarView(
+                    children: [All_customer_tap1(), All_customer_tap2()],
+                  ),
+                ),
               ],
             ),
-          ),
-          body: Column(
-            children: [Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.white),
-              width: size.width * .9,
-              height: 50,
-              child: TextField(
-                onChanged: (v) {
-                  bata.serchWord.value=v;
-                  bata.serchFilterCustom(v);
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  suffixIcon: Icon(Icons.search),
-                ),
-              ),
-            ),
-              SizedBox(
-                width: size.height * .1,
-              ),
-              Expanded(flex: 1,
-                child: TabBarView(
-                  children: [All_customer_tap1(), All_customer_tap2()],
-                ),
-              ),
-            ],
           ),
         ),
       ),

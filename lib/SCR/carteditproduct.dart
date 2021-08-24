@@ -55,7 +55,7 @@ class _CartEditProductState extends State<CartEditProduct> {
     super.initState();
     showdropdowen = (_UnitController.MeasurementUnit_map[widget.data.value.id].length > 1);
     textEditingController_discount.text =widget.data.value.diescount.toString();
-
+    textEditingController_bounce.text =widget.data.value.bonce.toString();
 
     for (int i = 0;
     i < bata.cartlist.length;
@@ -529,9 +529,10 @@ class _CartEditProductState extends State<CartEditProduct> {
                                       controller: textEditingController_bounce,
                                       keyboardType: TextInputType.number,
                                       onChanged: (v) {
-                                        bata.bounce[
-                                                int.parse(widget.data.value.id)] =
-                                            double.parse(v);
+                                        if (v != null && v.isNotEmpty) {
+                                          _myProdectListController.setbonce(id: widget.data.value.id, val: v );
+                                          print(widget.data.value.bonce);
+                                        }
                                       },
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -684,62 +685,26 @@ class _CartEditProductState extends State<CartEditProduct> {
                                   ),
                                 ],
                               ),
-                              Column(
-                                children: [
-                                  Text('Tax %'),
-                                  Container(
-                                    width: size.width * .4,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Center(
-                                        child: Text(
-                                            widget.data.value.tex.toString())),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Text('Total Tax'),
-                                  Container(
-                                      width: size.width * .4,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          border: Border.all(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Center(
-                                        child:
-                                        GetBuilder<MyProdectListController>(
-                                          builder: (logic) {
-                                            return Text(
-                                               widget.data.value
-                                                    .totalTaxForItem
-                                                    .toStringAsFixed(3)
-                                            );
-                                          },
-                                        ),
-                                      )),
-                                ],
-                              ),
+                              // Column(
+                              //   children: [
+                              //     Text('Tax %'),
+                              //     Container(
+                              //       width: size.width * .4,
+                              //       height: 50,
+                              //       decoration: BoxDecoration(
+                              //           color: Colors.grey[200],
+                              //           border: Border.all(
+                              //             color: Colors.grey,
+                              //             width: 1,
+                              //           ),
+                              //           borderRadius:
+                              //               BorderRadius.circular(10)),
+                              //       child: Center(
+                              //           child: Text(
+                              //               widget.data.value.tex.toString())),
+                              //     ),
+                              //   ],
+                              // ),
                               Column(
                                 children: [
                                   Text('Net price'),
@@ -753,7 +718,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                           width: 1,
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(10)),
+                                        BorderRadius.circular(10)),
                                     child:  Center(child:
                                     GetBuilder<MyProdectListController>(
                                       builder: (logic) {
@@ -765,7 +730,68 @@ class _CartEditProductState extends State<CartEditProduct> {
                                     )),
                                   )
                                 ],
-                              ),
+                              ),     ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Column(
+                              //   children: [
+                              //     Text('Total Tax'),
+                              //     Container(
+                              //         width: size.width * .4,
+                              //         height: 50,
+                              //         decoration: BoxDecoration(
+                              //             color: Colors.grey[200],
+                              //             border: Border.all(
+                              //               color: Colors.grey,
+                              //               width: 1,
+                              //             ),
+                              //             borderRadius:
+                              //                 BorderRadius.circular(10)),
+                              //         child: Center(
+                              //           child:
+                              //           GetBuilder<MyProdectListController>(
+                              //             builder: (logic) {
+                              //               return Text(
+                              //                  widget.data.value
+                              //                       .totalTaxForItem
+                              //                       .toStringAsFixed(3)
+                              //               );
+                              //             },
+                              //           ),
+                              //         )),
+                              //   ],
+                              // ),
+                              // Column(
+                              //   children: [
+                              //     Text('Net price'),
+                              //     Container(
+                              //       width: size.width * .4,
+                              //       height: 50,
+                              //       decoration: BoxDecoration(
+                              //           color: Colors.grey[200],
+                              //           border: Border.all(
+                              //             color: Colors.grey,
+                              //             width: 1,
+                              //           ),
+                              //           borderRadius:
+                              //               BorderRadius.circular(10)),
+                              //       child:  Center(child:
+                              //       GetBuilder<MyProdectListController>(
+                              //         builder: (logic) {
+                              //           return Text(
+                              //               widget.data.value
+                              //                   .totalPriceForItem
+                              //                   .toStringAsFixed(3));
+                              //         },
+                              //       )),
+                              //     )
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

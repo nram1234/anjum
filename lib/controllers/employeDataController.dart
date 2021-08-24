@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 class EmployeDataController extends GetxController{
 
-  List<EmployeData> employeDatas=[];
-  void updateemployeDatasData(List<EmployeData> employeDatas){
+  EmployeData employeDatas ;
+  void updateemployeDatasData( EmployeData  employeDatas){
     this.employeDatas=employeDatas;
     update();
   }

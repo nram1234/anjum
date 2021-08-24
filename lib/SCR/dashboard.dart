@@ -3,6 +3,8 @@ import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
 import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/currencie_controller.dart';
+import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
@@ -29,8 +31,13 @@ class _DashboardState extends State<Dashboard> {
   final TimeController c = Get.find<TimeController>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-   // AllCustomers _customers=widget.thecustomers[0];
+    // AllCustomers _customers=widget.thecustomers[0];
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
@@ -65,7 +72,8 @@ class _DashboardState extends State<Dashboard> {
                             child: Text(
                               Get.find<AllChequesController>()
                                   .customer
-                                  .customerInfo.customerNameEn,
+                                  .customerInfo
+                                  .customerNameEn,
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -129,8 +137,17 @@ class _DashboardState extends State<Dashboard> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: GestureDetector(
-                                                onTap: () {  isinvoiceOrSalesOrderOrReturnInvoice='sales';
-                                                  Get.to(ProductsScr());
+                                                onTap: () {
+                                                  isinvoiceOrSalesOrderOrReturnInvoice =
+                                                      'sales';
+                                                  if(Get.find<CurenceController>().allCurrencie.length>1){
+                                                    Get.find<CurenceController>().showDio(context);
+                                                  }else{
+
+                                                    Get.to(ProductsScr());
+                                                  }
+
+
                                                 },
                                                 child: item(
                                                     color: Colors.orange[200],
@@ -152,7 +169,8 @@ class _DashboardState extends State<Dashboard> {
                                                     child: Column(
                                                       children: [
                                                         Text(
-                                                            'selectpaymentmethod'.tr),
+                                                            'selectpaymentmethod'
+                                                                .tr),
                                                         SizedBox(
                                                           height: 8,
                                                         ),
@@ -196,7 +214,8 @@ class _DashboardState extends State<Dashboard> {
                                                                             .spaceAround,
                                                                     children: [
                                                                       Text(
-                                                                        'cash'.tr,
+                                                                        'cash'
+                                                                            .tr,
                                                                         style: TextStyle(
                                                                             fontWeight:
                                                                                 FontWeight.bold,
@@ -246,7 +265,7 @@ class _DashboardState extends State<Dashboard> {
                                                                             .spaceAround,
                                                                     children: [
                                                                       Text(
-                                                                        'Cheque',
+                                                                        'cheque'.tr,
                                                                         style: TextStyle(
                                                                             fontWeight:
                                                                                 FontWeight.bold,
@@ -298,8 +317,15 @@ class _DashboardState extends State<Dashboard> {
                                                   const EdgeInsets.all(8.0),
                                               child: InkWell(
                                                 onTap: () {
-                                                  isinvoiceOrSalesOrderOrReturnInvoice='return_invoice';
-                                                  Get.to(ProductsScr());
+                                                  isinvoiceOrSalesOrderOrReturnInvoice =
+                                                      'return_invoice';
+                                                  if(Get.find<CurenceController>().allCurrencie.length>1){
+                                                    Get.find<CurenceController>().showDio(context);
+                                                  }else{
+                                                    Get.to(ProductsScr());
+                                                  }
+
+                                                  // Get.to(ProductsScr());
                                                 },
                                                 child: item(
                                                     color: Colors.pink[200],
@@ -315,15 +341,24 @@ class _DashboardState extends State<Dashboard> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: GestureDetector(onTap: (){
-                                                isinvoiceOrSalesOrderOrReturnInvoice='invoice';
-                                                Get.to(ProductsScr());
-                                              },
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  isinvoiceOrSalesOrderOrReturnInvoice =
+                                                      'invoice';
+                                                 // Get.to(ProductsScr());
+                                                  if(Get.find<CurenceController>().allCurrencie.length>1){
+                                                    Get.find<CurenceController>().showDio(context);
+                                                  }else{
+                                                    Get.to(ProductsScr());
+                                                  }
+
+
+                                                  },
                                                 child: item(
                                                     color: Colors
                                                         .purpleAccent[200],
                                                     size: size,
-                                                    name:'invoice'.tr,
+                                                    name: 'invoice'.tr,
                                                     path:
                                                         'assets/images/invoice.png'),
                                               ),
@@ -333,7 +368,7 @@ class _DashboardState extends State<Dashboard> {
                                             child: item(
                                                 color: Colors.purple[200],
                                                 size: size,
-                                                name:  'history'.tr,
+                                                name: 'history'.tr,
                                                 path:
                                                     'assets/images/history.png'),
                                           ),
@@ -348,9 +383,10 @@ class _DashboardState extends State<Dashboard> {
                                           if (_userAndPermissions.permissions
                                                   .beforeAfterPhoto ==
                                               'yes')
-                                            GestureDetector(onTap: (){
-                                              Get.to(BeforeAndAfter());
-                                            },
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(BeforeAndAfter());
+                                              },
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
@@ -371,7 +407,7 @@ class _DashboardState extends State<Dashboard> {
                                               child: item(
                                                   color: Colors.orange[200],
                                                   size: size,
-                                                  name:  'photo'.tr,
+                                                  name: 'photo'.tr,
                                                   path:
                                                       'assets/images/pic.png'),
                                             ),
@@ -390,10 +426,11 @@ class _DashboardState extends State<Dashboard> {
                                       color: Color(0xff2C4B89),
                                       child: Center(
                                           child: Text(
-                                            'startvisit'.tr,
+                                        'startvisit'.tr,
                                         style: TextStyle(
                                             fontSize: 20,
-                                            fontWeight: FontWeight.bold,color: Colors.white),
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       )),
                                     ),
                                   ),
@@ -415,9 +452,9 @@ class _DashboardState extends State<Dashboard> {
                           //   ),
                           // ],
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          )),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      )),
                       height: size.height * .1,
                       child: Row(
                         children: [
@@ -430,11 +467,11 @@ class _DashboardState extends State<Dashboard> {
                             width: size.width * .6,
                             child: Center(
                                 child: GetX<TimeController>(
-                                  init: TimeController(),
-                                  builder: (c) {
-                                    return Text(c.stoptimedisplay.value);
-                                  },
-                                )),
+                              init: TimeController(),
+                              builder: (c) {
+                                return Text(c.stoptimedisplay.value);
+                              },
+                            )),
                           ),
                           Expanded(
                             flex: 1,
@@ -449,19 +486,19 @@ class _DashboardState extends State<Dashboard> {
                                   DatabaseHelper()
                                       .insert_insert_visit(Insert_visit_DB(
                                     customer_id:
-                                    Get.find<AllChequesController>()
-                                        .customer
-                                        .customerInfo
-                                        .id,
+                                        Get.find<AllChequesController>()
+                                            .customer
+                                            .customerInfo
+                                            .id,
                                     user_id:
-                                    _userAndPermissions.user.id.toString(),
+                                        _userAndPermissions.user.id.toString(),
                                   ))
                                       .then((value) {
                                     Get.find<AllChequesController>().customer =
-                                    null;
+                                        null;
                                   });
                                   c.stopjor();
-                                  Get.to(() => All_Customer());
+                                  Get.off( ()=> All_Customer() );
                                 }
                               },
                               child: Container(
@@ -472,14 +509,14 @@ class _DashboardState extends State<Dashboard> {
                                 height: size.height * .1,
                                 child: Center(
                                     child: Obx(() => Text(
-                                      c.startswatch.value
-                                          ? 'endvisit'.tr
-                                          : 'startvisit'.tr,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ))),
+                                          c.startswatch.value
+                                              ? 'endvisit'.tr
+                                              : 'startvisit'.tr,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
                               ),
                             ),
                           ),
@@ -496,14 +533,14 @@ class _DashboardState extends State<Dashboard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.white,
-        //     spreadRadius: 5,
-        //     blurRadius: 7,
-        //     offset: Offset(0, 3), // changes position of shadow
-        //   ),
-        // ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white,
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       width: size.width * .45,
       height: size.width * .5,
