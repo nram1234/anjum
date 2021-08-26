@@ -11,7 +11,8 @@ import 'allChequesController.dart';
 import 'allStockItemsController.dart';
 
 class MyProdectListController extends GetxController {
-
+bool issearch=false;
+String searchWord="";
   Map<String, Rx<TheItemInList>> item = Map<String, Rx<TheItemInList>>();
   final AllItemsController bata = Get.find<AllItemsController>();
   RxDouble grandTotal = 0.0.obs;
@@ -24,7 +25,15 @@ class MyProdectListController extends GetxController {
   RxDouble totalDiscountincart = 0.0.obs;
   RxDouble sumOftotalDiscountincart = 0.0.obs;
 
-
+  var itemInCart =0.obs;
+setsearchword(String v){
+  searchWord=v;
+  update();
+}
+  setissearch(bool v){
+    issearch=v;
+    update();
+  }
   settotalDiscountincart({String v}) {
     totalDiscountincart.value = double.parse(v) / 100;
     gettotalpriceincart();
@@ -174,6 +183,21 @@ class MyProdectListController extends GetxController {
     });
 
     update();
+  }
+
+
+
+
+
+  deletItem(Rx<TheItemInList> products){
+    products.value.count=0;
+    itemInCart.value=0;
+    countInCart();
+    update();
+  }
+  countInCart(){
+    itemInCart.value=   item.entries.where((element) => element.value.value.count>0).length;
+    print(itemInCart.value);
   }
 }
 

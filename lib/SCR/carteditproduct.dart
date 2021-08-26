@@ -3,6 +3,7 @@ import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/unitController.dart';
+import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class _CartEditProductState extends State<CartEditProduct> {
 
   final MyProdectListController _myProdectListController = Get.find<MyProdectListController>();
 
-
+  final NetWorkController _netWorkController =
+  Get.find<NetWorkController>();
 
 
 
@@ -136,11 +138,11 @@ class _CartEditProductState extends State<CartEditProduct> {
                               height: size.height * .15,
                               width: size.height * .15,
                               color: Colors.indigo,
-                              child: Image.network(
+                              child:_netWorkController.connectionStatus.value? Image.network(
                                 widget.data.value.pic,
                                 height: size.height * .1,
                                 width: size.height * .1,
-                              ),
+                              ):Image.asset('assets/images/noimage.png'),
                             ),
                             SizedBox(
                               width: 8,
@@ -275,30 +277,30 @@ class _CartEditProductState extends State<CartEditProduct> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: Text(
-                                  'item Number: ${widget.data.value.itemNumber}',
-                                  maxLines: 2,
-                                ),
-                              ),
-                              // Expanded(
-                              //   child: Text(
-                              //       'item name:  ${widget.data.itemDetails[0].itemNameEn}', maxLines: 2,),
-                              // )
+                        //       Expanded(
+                        //         child: Text(
+                        //           'item Number: ${widget.data.value.itemNumber}',
+                        //           maxLines: 2,
+                        //         ),
+                        //       ),
+                        //       // Expanded(
+                        //       //   child: Text(
+                        //       //       'item name:  ${widget.data.itemDetails[0].itemNameEn}', maxLines: 2,),
+                        //       // )
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Item Price :${widget.data.value.price}'),
-                              Text('Tax:  ${widget.data.value.tex}')
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Text(
+                        //           'Item Price :${widget.data.value.price}'),
+                        //       Text('Tax:  ${widget.data.value.tex}')
+                        //     ],
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text('Details'),

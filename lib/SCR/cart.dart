@@ -55,6 +55,7 @@ class _CartEditProductState extends State<Cart> {
   final MyProdectListController _myProdectListController =
       Get.find<MyProdectListController>();
   CurenceController _curenceController = Get.find<CurenceController>();
+
   @override
   void initState() {
     super.initState();
@@ -183,24 +184,37 @@ class _CartEditProductState extends State<Cart> {
                                   topRight: Radius.circular(30),
                                   topLeft: Radius.circular(30))),
                           //     height: size.height * .4,
-                          child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: _myProdectListController.item.length,
-                              //listtoshow.length,
-                              itemBuilder: (context, pos) {
-                                _myProdectListController.item[keysOfMap[pos]];
-
-                                if (_myProdectListController
-                                        .item[keysOfMap[pos]].value.count >
-                                    0)
-                                  return Obx(() {
-                                    return item(
-                                        size: size,
-                                        products: _myProdectListController
-                                            .item[keysOfMap[pos]]);
-                                  });
-                              }),
+                          // child: ListView.builder(
+                          //
+                          //     itemCount: _myProdectListController.item.length,
+                          //     //listtoshow.length,
+                          //     itemBuilder: (context, pos) {
+                          //       _myProdectListController.item[keysOfMap[pos]];
+                          //
+                          //       if (_myProdectListController
+                          //               .item[keysOfMap[pos]].value.count >
+                          //           0)
+                          //         return Obx(() {
+                          //           return item(
+                          //               size: size,
+                          //               products: _myProdectListController
+                          //                   .item[keysOfMap[pos]]);
+                          //         });
+                          //     }),
+                          child: GetBuilder<MyProdectListController>(
+                            builder: (logic) {
+                              return Column(
+                                children: logic.item.entries
+                                    .map((e) {
+                                  if (e.value.value.count > 0) {
+                                    return item(size: size, products: e.value);
+                                  } else {
+                                    return const SizedBox();
+                                  }
+                                }).toList(),
+                              );
+                            },
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -577,8 +591,14 @@ class _CartEditProductState extends State<Cart> {
                               Text('total'.tr),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
-                                  return Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(  logic.totalpriceincart*double.parse(_curenceController.defultCurrencies.currencyRate))
-                                      .toStringAsFixed(3));
+                                  return Text(
+                                      " ${_curenceController.defultCurrencies.currencySymbol} " +
+                                          (logic.totalpriceincart *
+                                                  double.parse(
+                                                      _curenceController
+                                                          .defultCurrencies
+                                                          .currencyRate))
+                                              .toStringAsFixed(3));
                                 },
                               ),
                             ],
@@ -600,8 +620,14 @@ class _CartEditProductState extends State<Cart> {
                               Text('discount'.tr),
                               GetBuilder<MyProdectListController>(
                                 builder: (logic) {
-                                  return Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(logic.sumOftotalDiscountincart*double.parse(_curenceController.defultCurrencies.currencyRate))
-                                      .toStringAsFixed(3));
+                                  return Text(
+                                      " ${_curenceController.defultCurrencies.currencySymbol} " +
+                                          (logic.sumOftotalDiscountincart *
+                                                  double.parse(
+                                                      _curenceController
+                                                          .defultCurrencies
+                                                          .currencyRate))
+                                              .toStringAsFixed(3));
                                 },
                               ),
                             ],
@@ -640,11 +666,16 @@ class _CartEditProductState extends State<Cart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('total'.tr),
-                              Text(" ${_curenceController.defultCurrencies.currencySymbol} "+((_myProdectListController
-                                          .totalTaxincart.value +
-                                      _myProdectListController
-                                          .totalpriceincart.value)*double.parse(_curenceController.defultCurrencies.currencyRate))
-                                  .toStringAsFixed(3)),
+                              Text(
+                                  " ${_curenceController.defultCurrencies.currencySymbol} " +
+                                      ((_myProdectListController
+                                                      .totalTaxincart.value +
+                                                  _myProdectListController
+                                                      .totalpriceincart.value) *
+                                              double.parse(_curenceController
+                                                  .defultCurrencies
+                                                  .currencyRate))
+                                          .toStringAsFixed(3)),
                             ],
                           ),
                         ),
@@ -698,7 +729,7 @@ class _CartEditProductState extends State<Cart> {
                                     padding: EdgeInsets.all(4),
                                     child: Center(
                                         child: Text(
-                                          'cash'.tr,
+                                      'cash'.tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -919,7 +950,10 @@ class _CartEditProductState extends State<Cart> {
                                   height: 8,
                                 ),
                                 GestureDetector(
-                                  onTap: () async{
+                                  onTap: () async {
+
+
+
                                     var data = Insert_invoice_salesorder_json()
                                         .toJson();
                                     List<ListInvoice> list = [];
@@ -963,15 +997,12 @@ class _CartEditProductState extends State<Cart> {
                                                         .tex /
                                                     100));
 
-                                        print(_myProdectListController
-                                            .item[keysOfMap[itmeinlast]]
-                                            .value
-                                            .afterdes);
+
                                         ListInvoice i = ListInvoice(
                                             order_id: orderid,
                                             user_id:
                                                 _userAndPermissions.user.userId,
-                                            request_level: 2,
+                                            request_level: 2.toString(),
                                             salesmanagerNote: " ",
                                             supervisorNote: " ",
                                             totalTax: onleyprice *
@@ -981,7 +1012,7 @@ class _CartEditProductState extends State<Cart> {
                                                 .item[keysOfMap[itmeinlast]]
                                                 .value
                                                 .count
-                                                .toString(),
+                                               ,
                                             itemId: int.parse(_myProdectListController
                                                 .item[keysOfMap[itmeinlast]]
                                                 .value
@@ -999,14 +1030,14 @@ class _CartEditProductState extends State<Cart> {
                                                 .user.supervisorId,
                                             salesmanagerId:
                                                 _userAndPermissions.user.salesmanagerId,
-                                            basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]].value.price.toString(),
-                                            storeId: _userAndPermissions.user.storeId,
+                                            basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]].value.price ,
+                                            storeId: int.parse(_userAndPermissions.user.storeId),
                                             measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
-                                            totalPrice:( onleyprice*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
-                                            totalPriceWithTax:( onleypricewithtax*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
-                                            totalPriceBeforeTax: (onleyprice*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
-                                            totalPriceWithoutTaxDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count)*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
-                                            totalDiscount: (((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100)))*double.parse(_curenceController.defultCurrencies.currencyRate)).toString(),
+                                            totalPrice:  onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                            totalPriceWithTax:  onleypricewithtax * double.parse(_curenceController.defultCurrencies.currencyRate) ,
+                                            totalPriceBeforeTax:  onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate) ,
+                                            totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count) * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                            totalDiscount:  ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))) * double.parse(_curenceController.defultCurrencies.currencyRate) ,
                                             categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
                                             request_type: isinvoiceOrSalesOrderOrReturnInvoice,
                                             taxType: "percentage");
@@ -1017,19 +1048,19 @@ class _CartEditProductState extends State<Cart> {
                                     }
                                     data['list_invoice'] =
                                         list; //list.map((e) => e.toJson()).toList();
-                                    print(data);
-                                 await   Get.find<NetWorkController>().initConnctivity();
-                                 print(Get.find<NetWorkController>()
-                                     .connectionStatus
-                                     .value);
+
+                                    await Get.find<NetWorkController>()
+                                        .initConnctivity();
+
                                     if (Get.find<NetWorkController>()
                                         .connectionStatus
                                         .value) {
+                                      List<ListInvoice> aaa=         await     _databaseHelper.get_All_Sales_Order_Request_Details();
+                                      list.addAll(aaa);
+                                      print('lengthlengthlengthlength   ${list.length}' );
                                       _allNetworking
                                           .insert_invoice_salesorder(data: data)
                                           .then((value) {
-
-
                                         return showDialog(
                                           context: context,
                                           builder: (context) {
@@ -1039,14 +1070,16 @@ class _CartEditProductState extends State<Cart> {
                                                 height: 60,
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text('Anjum',
                                                         style: TextStyle(
                                                             fontSize: 25,
-                                                            color: Colors.indigoAccent,
+                                                            color: Colors
+                                                                .indigoAccent,
                                                             fontWeight:
-                                                            FontWeight.bold)),
+                                                                FontWeight
+                                                                    .bold)),
                                                   ],
                                                 ),
                                               ),
@@ -1055,24 +1088,32 @@ class _CartEditProductState extends State<Cart> {
                                                 child: SingleChildScrollView(
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    mainAxisSize: MainAxisSize.max,
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
                                                     children: [
-                                                      Text('Order done sucessfully'),
+                                                      Text(
+                                                          'Order done sucessfully'),
                                                       Row(
                                                         children: [
                                                           TextButton(
                                                               onPressed: () {
-                                                               // Navigator.pop(context);
+                                                                // Navigator.pop(context);
 
-                                                                int  count = 0;
-                                                                Navigator.popUntil(context, (route) {
-                                                                  return count++ == 3;
-                                                                });   },
+                                                                int count = 0;
+                                                                Navigator
+                                                                    .popUntil(
+                                                                        context,
+                                                                        (route) {
+                                                                  return count++ ==
+                                                                      3;
+                                                                });
+                                                              },
                                                               child: Row(
                                                                 children: [
-                                                                  Icon(
-                                                                      Icons.arrow_back),
+                                                                  Icon(Icons
+                                                                      .arrow_back),
                                                                   SizedBox(
                                                                     width: 8,
                                                                   ),
@@ -1085,16 +1126,14 @@ class _CartEditProductState extends State<Cart> {
                                                                       TextButton(
                                                                           onPressed:
                                                                               () {},
-                                                                          child: Row(
+                                                                          child:
+                                                                              Row(
                                                                             children: [
-                                                                              Icon(Icons
-                                                                                  .print),
+                                                                              Icon(Icons.print),
                                                                               SizedBox(
-                                                                                width:
-                                                                                8,
+                                                                                width: 8,
                                                                               ),
-                                                                              Text(
-                                                                                  'Print')
+                                                                              Text('Print')
                                                                             ],
                                                                           ))
                                                                     ],
@@ -1110,100 +1149,101 @@ class _CartEditProductState extends State<Cart> {
                                             );
                                           },
                                         );
-
-
-
-
                                       });
-                                   } else {
-                                   await  list.forEach((element) {
-                                       _databaseHelper
-                                         .insert_Sales_Order_Request_Details(element).then((value) {
+                                    } else {
+                                      await list.forEach((element) {
+                                        _databaseHelper
+                                            .insert_Sales_Order_Request_Details(
+                                                element)
+                                            .then((value) {});
+                                      });
+                                      return showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Container(
+                                              width: size.width * .8,
+                                              height: 60,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('Anjum',
+                                                      style: TextStyle(
+                                                          fontSize: 25,
+                                                          color: Colors
+                                                              .indigoAccent,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ],
+                                              ),
+                                            ),
+                                            content: Container(
+                                              width: size.width * .8,
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                        'Order done sucessfully'),
+                                                    Row(
+                                                      children: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              // Navigator.pop(context);
 
-                                     });
-
-                                   });
-                                   return showDialog(
-                                     context: context,
-                                     builder: (context) {
-                                       return AlertDialog(
-                                         title: Container(
-                                           width: size.width * .8,
-                                           height: 60,
-                                           child: Column(
-                                             crossAxisAlignment:
-                                             CrossAxisAlignment.start,
-                                             children: [
-                                               Text('Anjum',
-                                                   style: TextStyle(
-                                                       fontSize: 25,
-                                                       color: Colors.indigoAccent,
-                                                       fontWeight:
-                                                       FontWeight.bold)),
-                                             ],
-                                           ),
-                                         ),
-                                         content: Container(
-                                           width: size.width * .8,
-                                           child: SingleChildScrollView(
-                                             child: Column(
-                                               crossAxisAlignment:
-                                               CrossAxisAlignment.start,
-                                               mainAxisSize: MainAxisSize.max,
-                                               children: [
-                                                 Text('Order done sucessfully'),
-                                                 Row(
-                                                   children: [
-                                                     TextButton(
-                                                         onPressed: () {
-                                                           // Navigator.pop(context);
-
-                                                           int  count = 0;
-                                                           Navigator.popUntil(context, (route) {
-                                                             return count++ == 3;
-                                                           });   },
-                                                         child: Row(
-                                                           children: [
-                                                             Icon(
-                                                                 Icons.arrow_back),
-                                                             SizedBox(
-                                                               width: 8,
-                                                             ),
-                                                             Text('Back'),
-                                                             SizedBox(
-                                                               width: 50,
-                                                             ),
-                                                             Row(
-                                                               children: [
-                                                                 TextButton(
-                                                                     onPressed:
-                                                                         () {},
-                                                                     child: Row(
-                                                                       children: [
-                                                                         Icon(Icons
-                                                                             .print),
-                                                                         SizedBox(
-                                                                           width:
-                                                                           8,
-                                                                         ),
-                                                                         Text(
-                                                                             'Print')
-                                                                       ],
-                                                                     ))
-                                                               ],
-                                                             )
-                                                           ],
-                                                         ))
-                                                   ],
-                                                 )
-                                               ],
-                                             ),
-                                           ),
-                                         ),
-                                       );
-                                     },
-                                   );
-                                   }
+                                                              int count = 0;
+                                                              Navigator
+                                                                  .popUntil(
+                                                                      context,
+                                                                      (route) {
+                                                                return count++ ==
+                                                                    3;
+                                                              });
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons
+                                                                    .arrow_back),
+                                                                SizedBox(
+                                                                  width: 8,
+                                                                ),
+                                                                Text('Back'),
+                                                                SizedBox(
+                                                                  width: 50,
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    TextButton(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            Icon(Icons.print),
+                                                                            SizedBox(
+                                                                              width: 8,
+                                                                            ),
+                                                                            Text('Print')
+                                                                          ],
+                                                                        ))
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ))
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
                                     orderid++;
                                     box.write('orderid', orderid);
 
@@ -1260,7 +1300,7 @@ class _CartEditProductState extends State<Cart> {
                                     ),
                                     child: Center(
                                         child: Text(
-                                          'complete'.tr,
+                                      'complete'.tr,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -1325,7 +1365,6 @@ class _CartEditProductState extends State<Cart> {
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-
                           image: DecorationImage(
                             image: NetworkImage(products.value.pic),
                             fit: BoxFit.fill,
@@ -1376,10 +1415,7 @@ class _CartEditProductState extends State<Cart> {
                     Container(
                         child: InkWell(
                             onTap: () {
-                              // listtoshow.remove(data);
-                              // bata.removeAllChooseItexfromcart(item: data);
-                              //
-                              // setState(() {});
+                           _myProdectListController.deletItem(products);
                             },
                             child: Icon(
                               Icons.delete,

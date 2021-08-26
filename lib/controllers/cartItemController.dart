@@ -56,4 +56,7 @@ if(!v){
 
    }
  }
+ removeitem(){
+   itemInCart-1;
+ }
 }

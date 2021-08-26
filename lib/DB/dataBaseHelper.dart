@@ -700,6 +700,22 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     });
     return data;
   }
+  Future<List<ListInvoice>>
+  get_All_Sales_Order_Request_Details() async {
+    List<ListInvoice> data = [];
+
+    var dbClient = await db;
+    // List<Map>maps = await
+    await dbClient.query(sales_order_request_details_tabelname).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        data.add(ListInvoice.fromJson(value[i]));
+      }
+    });
+
+    return data;
+
+  }
+
   Future delete_Sales_Order_Request_Details(int id) async {
     var dbClient = await db;
     return await dbClient.delete(sales_order_request_details_tabelname,
@@ -729,26 +745,6 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     }
   }
 
-  Future<List<Sales_Order_Request_Details_Model>>
-  get_All_Sales_Order_Request_Details() async {
-    List<Sales_Order_Request_Details_Model> data = [];
-
-    var dbClient = await db;
-    // List<Map>maps = await
-    await dbClient.query(sales_order_request_details_tabelname).then((value) {
-      for (int i = 0; i < value.length; i++) {
-        data.add(Sales_Order_Request_Details_Model.fromJson(value[i]));
-      }
-    });
-
-    return data;
-    //
-    //
-    // return maps.isNotEmpty ? maps.map((data) =>
-    //     Sales_Order_Request_Details_Model.fromJson(data)).toList() :[];
-    //
-    //
-  }
 
 
 

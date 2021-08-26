@@ -27,30 +27,30 @@ class Insert_invoice_salesorder_json {
 class ListInvoice {
   int user_id;
   int order_id;
-  int request_level;
+  String request_level;
   String request_type;
   int employee_id;
   int customer_id;
-  String storeId;
+  int storeId;
   int supervisorId;
   int salesmanagerId;
   int noOfItems;
   String supervisorNote;
   String salesmanagerNote;
-  String totalPriceWithoutTaxDiscount;
+  double totalPriceWithoutTaxDiscount;
   double totalTax;
-  String totalDiscount;
-  String totalPrice;
+  double totalDiscount;
+  double totalPrice;
   String requestStatus;
   int itemId;
   int categoryId;
   int measurementUnitId;
-  String basePricePerUnit;
+  double basePricePerUnit;
   int bonus;
-  String quantity;
+  int quantity;
   String taxType;
-  String totalPriceBeforeTax;
-  String totalPriceWithTax;
+  double totalPriceBeforeTax;
+  double totalPriceWithTax;
 
   ListInvoice(
       {this.user_id,this.order_id,
