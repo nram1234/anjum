@@ -186,7 +186,21 @@ print(jsonEncode(data));
 }
 
 
+Future insert_photos(data)async{
+  var respons;
+  final formData = {
 
+    "key": '1234567890',
+    "list_invoice":data
 
+  };
+  print(jsonEncode(data));
+  return await dio.post('http://18.220.206.74/van/user_api/insert_photos', data: jsonEncode(data)  )
+      .then((value) {
+    print(value);
+    respons=value;
+
+  }) ;
+}
 
 }

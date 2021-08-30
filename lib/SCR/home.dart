@@ -9,6 +9,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
+import 'package:anjum/controllers/all_promotionsController.dart';
 import 'package:anjum/controllers/all_routes.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
@@ -21,6 +22,7 @@ import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/controllers/userDataController.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
+import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
@@ -361,7 +363,8 @@ Get.to(()=> Catalog());
     )
         .then((value) {
       //insert to database
-
+      Get.find<All_PromotionsController>()
+         .allPromotionsUpdat(value.result.allPromotions);
       Get.find<AllCustomersControllers>()
           .updateallCustomers(value.result.allCustomers);
       Get.find<UserDataController>().updateserData(value.result.userData);

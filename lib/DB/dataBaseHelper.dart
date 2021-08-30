@@ -701,12 +701,12 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     return data;
   }
   Future<List<ListInvoice>>
-  get_All_Sales_Order_Request_Details() async {
+  get_All_Sales_Order_Request_Details(int id) async {
     List<ListInvoice> data = [];
 
     var dbClient = await db;
     // List<Map>maps = await
-    await dbClient.query(sales_order_request_details_tabelname).then((value) {
+    await dbClient.query(sales_order_request_details_tabelname,where:  '$sales_order_request_details_sales_order_id=?', whereArgs: [id] ).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(ListInvoice.fromJson(value[i]));
       }

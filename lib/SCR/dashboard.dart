@@ -1,5 +1,6 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
+import 'package:anjum/SCR/photo_screen.dart';
 import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -401,15 +402,19 @@ class _DashboardState extends State<Dashboard> {
                                           if (_userAndPermissions
                                                   .permissions.takePhoto ==
                                               'yes')
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: item(
-                                                  color: Colors.orange[200],
-                                                  size: size,
-                                                  name: 'photo'.tr,
-                                                  path:
-                                                      'assets/images/pic.png'),
+                                            GestureDetector(   onTap: () {
+                                              Get.to(()=>PhotoScreen());
+                                            },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: item(
+                                                    color: Colors.orange[200],
+                                                    size: size,
+                                                    name: 'photo'.tr,
+                                                    path:
+                                                        'assets/images/pic.png'),
+                                              ),
                                             ),
                                         ],
                                       ),

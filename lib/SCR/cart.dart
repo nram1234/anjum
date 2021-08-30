@@ -2,6 +2,7 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/item_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/all_promotionsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
@@ -38,7 +39,7 @@ class _CartEditProductState extends State<Cart> {
   CartItemController bata = Get.find<CartItemController>();
   DatabaseHelper _databaseHelper = DatabaseHelper();
 
-  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+  UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   EmployeePermissionsController employeePermissionsController =
       Get.find<EmployeePermissionsController>();
   AllChequesController customer = Get.find<AllChequesController>();
@@ -55,7 +56,7 @@ class _CartEditProductState extends State<Cart> {
   final MyProdectListController _myProdectListController =
       Get.find<MyProdectListController>();
   CurenceController _curenceController = Get.find<CurenceController>();
-
+ final All_PromotionsController _all_promotionsController= Get.find<All_PromotionsController>();
   @override
   void initState() {
     super.initState();
@@ -80,6 +81,7 @@ class _CartEditProductState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
+
     print(customer.customer.customerInfo.paymentType);
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
@@ -951,8 +953,8 @@ class _CartEditProductState extends State<Cart> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-
-
+                                  //  sendAllData();
+if(_myProdectListController.itemInCart>0){
 
                                     var data = Insert_invoice_salesorder_json()
                                         .toJson();
@@ -1000,8 +1002,8 @@ class _CartEditProductState extends State<Cart> {
 
                                         ListInvoice i = ListInvoice(
                                             order_id: orderid,
-                                            user_id:
-                                                _userAndPermissions.user.userId,
+                                            user_id:  _userAndPermissions.user.userId
+                                              ,
                                             request_level: 2.toString(),
                                             salesmanagerNote: " ",
                                             supervisorNote: " ",
@@ -1019,13 +1021,13 @@ class _CartEditProductState extends State<Cart> {
                                                 .id),
                                             noOfItems: noOfItems,
                                             employee_id:
-                                                _userAndPermissions.user.userId,
+                                                _userAndPermissions.user.id,
                                             requestStatus: "pending",
                                             customer_id: int.parse(
                                                 Get.find<AllChequesController>()
                                                     .customer
                                                     .customerInfo
-                                                    .customerId),
+                                                    .id),
                                             supervisorId: _userAndPermissions
                                                 .user.supervisorId,
                                             salesmanagerId:
@@ -1055,12 +1057,14 @@ class _CartEditProductState extends State<Cart> {
                                     if (Get.find<NetWorkController>()
                                         .connectionStatus
                                         .value) {
-                                      List<ListInvoice> aaa=         await     _databaseHelper.get_All_Sales_Order_Request_Details();
-                                      list.addAll(aaa);
-                                      print('lengthlengthlengthlength   ${list.length}' );
+
+
+                            //        await  sendAllData();
+
                                       _allNetworking
                                           .insert_invoice_salesorder(data: data)
                                           .then((value) {
+
                                         return showDialog(
                                           context: context,
                                           builder: (context) {
@@ -1157,6 +1161,8 @@ class _CartEditProductState extends State<Cart> {
                                                 element)
                                             .then((value) {});
                                       });
+                                      orderid++;
+                                      box.write('orderid', orderid);
                                       return showDialog(
                                         context: context,
                                         builder: (context) {
@@ -1244,8 +1250,7 @@ class _CartEditProductState extends State<Cart> {
                                         },
                                       );
                                     }
-                                    orderid++;
-                                    box.write('orderid', orderid);
+
 
                                     // double totalprice = 0;
                                     //
@@ -1290,7 +1295,7 @@ class _CartEditProductState extends State<Cart> {
                                     // }).catchError((e) {
                                     //   print(e.toString());
                                     // });
-                                  },
+    }    },
                                   child: Container(
                                     height: 50,
                                     width: size.width * .9,
@@ -1798,5 +1803,25 @@ class _CartEditProductState extends State<Cart> {
     });
 
     // Get.off(Dashboard());
+  }
+
+  Future sendAllData() async{
+for(int i=0;i<orderid;i++){
+
+  List<ListInvoice> aaa = await     _databaseHelper.get_All_Sales_Order_Request_Details(i);
+if(aaa.length>0){
+  var data = Insert_invoice_salesorder_json()
+      .toJson();
+  data['key'] = '1234567890';
+
+  data['list_invoice'] =aaa;
+
+  await _allNetworking
+      .insert_invoice_salesorder(data: data).then((value) {
+    print('00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
+  });
+}
+
+}
   }
 }

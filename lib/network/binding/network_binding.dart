@@ -4,6 +4,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
+import 'package:anjum/controllers/all_promotionsController.dart';
 import 'package:anjum/controllers/all_routes.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
@@ -45,7 +46,7 @@ class NetWorkBinding extends Bindings{
      Get.lazyPut(() => UserDataController());
      Get.lazyPut(() => AllItemsController(),fenix: true);
 
-
+     Get.lazyPut(() => All_PromotionsController(),fenix: true);
      Get.lazyPut(() => PriceListsInfoController(),fenix: true);
      Get.lazyPut(() => All_routesController(),fenix: true);
   }
