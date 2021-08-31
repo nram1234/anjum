@@ -31,6 +31,7 @@ class Cart extends StatefulWidget {
 
 class _CartEditProductState extends State<Cart> {
   var box = GetStorage();
+  List<Widget> wawawa = [];
   int orderid;
   AllNetworking _allNetworking = AllNetworking();
   var keysOfMap;
@@ -56,7 +57,9 @@ class _CartEditProductState extends State<Cart> {
   final MyProdectListController _myProdectListController =
       Get.find<MyProdectListController>();
   CurenceController _curenceController = Get.find<CurenceController>();
- final All_PromotionsController _all_promotionsController= Get.find<All_PromotionsController>();
+  final All_PromotionsController _all_promotionsController =
+      Get.find<All_PromotionsController>();
+
   @override
   void initState() {
     super.initState();
@@ -72,17 +75,119 @@ class _CartEditProductState extends State<Cart> {
     _textEditingController.text = 0.toString();
 
     for (int i = 0; i < bata.cartlist.length; i++) {
-      if (!listtoshow.contains(bata.cartlist[i])) {
+      if (listtoshow.contains(bata.cartlist[i])) {
         listtoshow.add(bata.cartlist[i]);
         getTaxItemMap[bata.cartlist[i].itemId] = bata.cartlist[i];
       }
     }
+
+    _all_promotionsController.allPromotionss.forEach((element) {
+      if (_all_promotionsController.isInTime(
+              endDateTime: element.endDateTime,
+              startDateTime: element.startDateTime) &&
+          _all_promotionsController.isInall_group_customers(
+              customerId: int.parse(customer.customer_id),
+              list: element.allGroupCustomers)) {
+        element.allQuantityPromotionItems.forEach((item) {
+          ItemInProm i = ItemInProm(
+              bonus_qty: int.parse(element.bonusQty),
+              is_bonus_duplicate: element.isBonusDuplicate,
+              itemid: item.itemId,
+              minimum_quantity_value: int.parse(element.minimumQuantityValue));
+          _all_promotionsController.promitem[item.itemId] = i;
+        });
+      }
+    });
+    yitem();
+
+
   }
+
+  yitem() {
+    _myProdectListController.item.forEach((key, value) {
+      _all_promotionsController.promitem.forEach((k, val) {
+        print(k == key);
+        if (k == key && value.value.count >= val.minimum_quantity_value) {
+          wawawa.add(Row(crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: Text(value.value.name)),
+              Container( margin: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(3.0),
+        decoration: BoxDecoration(
+        border: Border.all(color: Colors.blueAccent)
+     ,borderRadius:  BorderRadius.circular(4)  ),
+                width: 50,height: 25,
+                child: TextField(onChanged: (v){
+                  if(v!=null){
+                    _myProdectListController.setbonce(id: val.itemid,val: v);
+                  }
+                },),
+              )
+            ],
+          ));
+        }
+      });
+    });
+
+    wawawa.add(
+      SizedBox(
+        height: 8,
+      ),
+    );
+    wawawa.add(
+        GestureDetector(onTap: (){
+          Get.back();
+        },
+          child: Center(
+            child: Container(
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius:
+                BorderRadius
+                    .circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey
+                        .withOpacity(
+                        0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0,
+                        3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Container(
+                height: 50,
+                decoration:
+                BoxDecoration(
+                  color: Colors.indigo,
+                  borderRadius:
+                  BorderRadius
+                      .circular(10),
+                ),
+                child: Center(
+                    child: Text(
+                      'Ok',
+                      style: TextStyle(
+                          color:
+                          Colors.white,
+                          fontWeight:
+                          FontWeight
+                              .bold,
+                          fontSize: 20),
+                    )),
+              ),
+            ),
+          ),
+        )
+    ); }
 
   @override
   Widget build(BuildContext context) {
+    print("wawawa b ${wawawa.length}");
 
-    print(customer.customer.customerInfo.paymentType);
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
@@ -206,8 +311,7 @@ class _CartEditProductState extends State<Cart> {
                           child: GetBuilder<MyProdectListController>(
                             builder: (logic) {
                               return Column(
-                                children: logic.item.entries
-                                    .map((e) {
+                                children: logic.item.entries.map((e) {
                                   if (e.value.value.count > 0) {
                                     return item(size: size, products: e.value);
                                   } else {
@@ -218,6 +322,7 @@ class _CartEditProductState extends State<Cart> {
                             },
                           ),
                         ),
+
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
@@ -250,9 +355,11 @@ class _CartEditProductState extends State<Cart> {
                                                 child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Text('You Get Promotion'),
-                                                Text('Bol 50+10'),
+                                                //  Text('Bol 50+10'),
                                               ],
                                             )),
                                             color: Colors.orangeAccent,
@@ -262,196 +369,14 @@ class _CartEditProductState extends State<Cart> {
                                             height: sHeight * .5,
                                             child: SingleChildScrollView(
                                               child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text('Description'),
-                                                      Text('Qty      '),
-                                                    ],
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: wawawa
+
+                                                  // [
+
+                                                  // ],
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      children: [
-                                                        Expanded(
-                                                            child: Text(
-                                                                'Safi  - corn oil 1 liter')),
-                                                        Container(
-                                                          width:
-                                                              size.width * .2,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            color: Colors.white,
-                                                            // boxShadow: [
-                                                            //   BoxShadow(
-                                                            //     color: Colors
-                                                            //         .grey
-                                                            //         .withOpacity(
-                                                            //             0.5),
-                                                            //     spreadRadius: 5,
-                                                            //     blurRadius: 7,
-                                                            //     offset: Offset(
-                                                            //         0,
-                                                            //         3), // changes position of shadow
-                                                            //   ),
-                                                            // ],
-                                                          ),
-                                                          child: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              focusedBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              enabledBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              errorBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              disabledBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      children: [
-                                                        Expanded(
-                                                            child: Text(
-                                                                'Safi  - corn oil 1 liter')),
-                                                        Container(
-                                                          width:
-                                                              size.width * .2,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            color: Colors.white,
-                                                            // boxShadow: [
-                                                            //   BoxShadow(
-                                                            //     color: Colors
-                                                            //         .grey
-                                                            //         .withOpacity(
-                                                            //             0.5),
-                                                            //     spreadRadius: 5,
-                                                            //     blurRadius: 7,
-                                                            //     offset: Offset(
-                                                            //         0,
-                                                            //         3), // changes position of shadow
-                                                            //   ),
-                                                            // ],
-                                                          ),
-                                                          child: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              focusedBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              enabledBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              errorBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                              disabledBorder:
-                                                                  InputBorder
-                                                                      .none,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(child: Container()),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text('Total Qty: 5'),
-                                                      Text(
-                                                          'Due Promotion Qty: 10'),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Center(
-                                                    child: Container(
-                                                      width: size.width * .3,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        color: Colors.white,
-                                                        // boxShadow: [
-                                                        //   BoxShadow(
-                                                        //     color: Colors.grey
-                                                        //         .withOpacity(
-                                                        //             0.5),
-                                                        //     spreadRadius: 5,
-                                                        //     blurRadius: 7,
-                                                        //     offset: Offset(0,
-                                                        //         3), // changes position of shadow
-                                                        //   ),
-                                                        // ],
-                                                      ),
-                                                      child: Container(
-                                                        height: 50,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.indigo,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Ok',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20),
-                                                        )),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
                                             ),
                                           ),
                                         );
@@ -953,118 +878,221 @@ class _CartEditProductState extends State<Cart> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                  //  sendAllData();
-if(_myProdectListController.itemInCart>0){
-
-                                    var data = Insert_invoice_salesorder_json()
-                                        .toJson();
-                                    List<ListInvoice> list = [];
-                                    int noOfItems = 0;
-                                    _myProdectListController.item
-                                        .forEach((key, value) {
-                                      if (value.value.count > 0) {
-                                        noOfItems++;
-                                      }
-                                    });
-                                    for (int itmeinlast = 0;
-                                        itmeinlast <
-                                            _myProdectListController
-                                                .item.length;
-                                        itmeinlast++) {
-                                      if (_myProdectListController
-                                              .item[keysOfMap[itmeinlast]]
-                                              .value
-                                              .count >
-                                          0) {
-                                        double onleyprice =
-                                            (_myProdectListController
-                                                    .item[keysOfMap[itmeinlast]]
-                                                    .value
-                                                    .afterdes -
-                                                (_myProdectListController
-                                                        .item[keysOfMap[
-                                                            itmeinlast]]
-                                                        .value
-                                                        .afterdes *
-                                                    _myProdectListController
-                                                        .totalDiscountincart
-                                                        .value));
-                                        //  double onleyprice=(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*_myProdectListController.item[keysOfMap[itmeinlast]].value.count)-(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*(_myProdectListController.totalDiscountincart/100)*_myProdectListController.item[keysOfMap[itmeinlast]].value.count);
-                                        double onleypricewithtax = onleyprice +
-                                            (onleyprice *
-                                                (_myProdectListController
-                                                        .item[keysOfMap[
-                                                            itmeinlast]]
-                                                        .value
-                                                        .tex /
-                                                    100));
-
-
-                                        ListInvoice i = ListInvoice(
-                                            order_id: orderid,
-                                            user_id:  _userAndPermissions.user.userId
-                                              ,
-                                            request_level: 2.toString(),
-                                            salesmanagerNote: " ",
-                                            supervisorNote: " ",
-                                            totalTax: onleyprice *
-                                                (_myProdectListController.item[keysOfMap[itmeinlast]].value.tex /
-                                                    100),
-                                            quantity: _myProdectListController
+                                    //  sendAllData();
+                                    if (_myProdectListController.itemInCart >
+                                        0) {
+                                      var data =
+                                          Insert_invoice_salesorder_json()
+                                              .toJson();
+                                      List<ListInvoice> list = [];
+                                      int noOfItems = 0;
+                                      _myProdectListController.item
+                                          .forEach((key, value) {
+                                        if (value.value.count > 0) {
+                                          noOfItems++;
+                                        }
+                                      });
+                                      for (int itmeinlast = 0;
+                                          itmeinlast <
+                                              _myProdectListController
+                                                  .item.length;
+                                          itmeinlast++) {
+                                        if (_myProdectListController
                                                 .item[keysOfMap[itmeinlast]]
                                                 .value
-                                                .count
-                                               ,
-                                            itemId: int.parse(_myProdectListController
-                                                .item[keysOfMap[itmeinlast]]
-                                                .value
-                                                .id),
-                                            noOfItems: noOfItems,
-                                            employee_id:
-                                                _userAndPermissions.user.id,
-                                            requestStatus: "pending",
-                                            customer_id: int.parse(
-                                                Get.find<AllChequesController>()
-                                                    .customer
-                                                    .customerInfo
-                                                    .id),
-                                            supervisorId: _userAndPermissions
-                                                .user.supervisorId,
-                                            salesmanagerId:
-                                                _userAndPermissions.user.salesmanagerId,
-                                            basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]].value.price ,
-                                            storeId: int.parse(_userAndPermissions.user.storeId),
-                                            measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
-                                            totalPrice:  onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate),
-                                            totalPriceWithTax:  onleypricewithtax * double.parse(_curenceController.defultCurrencies.currencyRate) ,
-                                            totalPriceBeforeTax:  onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate) ,
-                                            totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count) * double.parse(_curenceController.defultCurrencies.currencyRate),
-                                            totalDiscount:  ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))) * double.parse(_curenceController.defultCurrencies.currencyRate) ,
-                                            categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
-                                            request_type: isinvoiceOrSalesOrderOrReturnInvoice,
-                                            taxType: "percentage");
+                                                .count >
+                                            0) {
+                                          double onleyprice =
+                                              (_myProdectListController
+                                                      .item[
+                                                          keysOfMap[itmeinlast]]
+                                                      .value
+                                                      .afterdes -
+                                                  (_myProdectListController
+                                                          .item[keysOfMap[
+                                                              itmeinlast]]
+                                                          .value
+                                                          .afterdes *
+                                                      _myProdectListController
+                                                          .totalDiscountincart
+                                                          .value));
+                                          //  double onleyprice=(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*_myProdectListController.item[keysOfMap[itmeinlast]].value.count)-(_myProdectListController.item[keysOfMap[itmeinlast]].value.afterdes*(_myProdectListController.totalDiscountincart/100)*_myProdectListController.item[keysOfMap[itmeinlast]].value.count);
+                                          double onleypricewithtax =
+                                              onleyprice +
+                                                  (onleyprice *
+                                                      (_myProdectListController
+                                                              .item[keysOfMap[
+                                                                  itmeinlast]]
+                                                              .value
+                                                              .tex /
+                                                          100));
 
-                                        data['key'] = '1234567890';
-                                        list.add(i);
+                                          ListInvoice i = ListInvoice(
+                                              order_id: orderid,
+                                              user_id: _userAndPermissions
+                                                  .user.userId,
+                                              request_level: 2.toString(),
+                                              salesmanagerNote: " ",
+                                              supervisorNote: " ",
+                                              totalTax: onleyprice *
+                                                  (_myProdectListController.item[keysOfMap[itmeinlast]].value.tex /
+                                                      100),
+                                              quantity: _myProdectListController
+                                                  .item[keysOfMap[itmeinlast]]
+                                                  .value
+                                                  .count,
+                                              itemId: int.parse(_myProdectListController
+                                                  .item[keysOfMap[itmeinlast]]
+                                                  .value
+                                                  .id),
+                                              noOfItems: noOfItems,
+                                              employee_id:
+                                                  _userAndPermissions.user.id,
+                                              requestStatus: "pending",
+                                              customer_id: int.parse(
+                                                  Get.find<AllChequesController>()
+                                                      .customer
+                                                      .customerInfo
+                                                      .id),
+                                              supervisorId: _userAndPermissions
+                                                  .user.supervisorId,
+                                              salesmanagerId:
+                                                  _userAndPermissions
+                                                      .user.salesmanagerId,
+                                              basePricePerUnit:
+                                                  _myProdectListController
+                                                      .item[keysOfMap[itmeinlast]]
+                                                      .value
+                                                      .price,
+                                              storeId: int.parse(_userAndPermissions.user.storeId),
+                                              measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
+                                              totalPrice: onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                              totalPriceWithTax: onleypricewithtax * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                              totalPriceBeforeTax: onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                              totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count) * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                              totalDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))) * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                              categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
+                                              request_type: isinvoiceOrSalesOrderOrReturnInvoice,
+                                              taxType: "percentage");
+
+                                          data['key'] = '1234567890';
+                                          list.add(i);
+                                        }
                                       }
-                                    }
-                                    data['list_invoice'] =
-                                        list; //list.map((e) => e.toJson()).toList();
+                                      data['list_invoice'] =
+                                          list; //list.map((e) => e.toJson()).toList();
 
-                                    await Get.find<NetWorkController>()
-                                        .initConnctivity();
+                                      await Get.find<NetWorkController>()
+                                          .initConnctivity();
 
-                                    if (Get.find<NetWorkController>()
-                                        .connectionStatus
-                                        .value) {
+                                      if (Get.find<NetWorkController>()
+                                          .connectionStatus
+                                          .value) {
+                                        //        await  sendAllData();
 
+                                        _allNetworking
+                                            .insert_invoice_salesorder(
+                                                data: data)
+                                            .then((value) {
+                                          return showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Container(
+                                                  width: size.width * .8,
+                                                  height: 60,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text('Anjum',
+                                                          style: TextStyle(
+                                                              fontSize: 25,
+                                                              color: Colors
+                                                                  .indigoAccent,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                content: Container(
+                                                  width: size.width * .8,
+                                                  child: SingleChildScrollView(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                            'Order done sucessfully'),
+                                                        Row(
+                                                          children: [
+                                                            TextButton(
+                                                                onPressed: () {
+                                                                  // Navigator.pop(context);
 
-                            //        await  sendAllData();
-
-                                      _allNetworking
-                                          .insert_invoice_salesorder(data: data)
-                                          .then((value) {
-
+                                                                  int count = 0;
+                                                                  Navigator.popUntil(
+                                                                      context,
+                                                                      (route) {
+                                                                    return count++ ==
+                                                                        3;
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  children: [
+                                                                    Icon(Icons
+                                                                        .arrow_back),
+                                                                    SizedBox(
+                                                                      width: 8,
+                                                                    ),
+                                                                    Text(
+                                                                        'Back'),
+                                                                    SizedBox(
+                                                                      width: 50,
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        TextButton(
+                                                                            onPressed:
+                                                                                () {},
+                                                                            child:
+                                                                                Row(
+                                                                              children: [
+                                                                                Icon(Icons.print),
+                                                                                SizedBox(
+                                                                                  width: 8,
+                                                                                ),
+                                                                                Text('Print')
+                                                                              ],
+                                                                            ))
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ))
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        });
+                                      } else {
+                                        await list.forEach((element) {
+                                          _databaseHelper
+                                              .insert_Sales_Order_Request_Details(
+                                                  element)
+                                              .then((value) {});
+                                        });
+                                        orderid++;
+                                        box.write('orderid', orderid);
                                         return showDialog(
                                           context: context,
                                           builder: (context) {
@@ -1153,149 +1181,53 @@ if(_myProdectListController.itemInCart>0){
                                             );
                                           },
                                         );
-                                      });
-                                    } else {
-                                      await list.forEach((element) {
-                                        _databaseHelper
-                                            .insert_Sales_Order_Request_Details(
-                                                element)
-                                            .then((value) {});
-                                      });
-                                      orderid++;
-                                      box.write('orderid', orderid);
-                                      return showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Container(
-                                              width: size.width * .8,
-                                              height: 60,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Anjum',
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          color: Colors
-                                                              .indigoAccent,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                            ),
-                                            content: Container(
-                                              width: size.width * .8,
-                                              child: SingleChildScrollView(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                        'Order done sucessfully'),
-                                                    Row(
-                                                      children: [
-                                                        TextButton(
-                                                            onPressed: () {
-                                                              // Navigator.pop(context);
+                                      }
 
-                                                              int count = 0;
-                                                              Navigator
-                                                                  .popUntil(
-                                                                      context,
-                                                                      (route) {
-                                                                return count++ ==
-                                                                    3;
-                                                              });
-                                                            },
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(Icons
-                                                                    .arrow_back),
-                                                                SizedBox(
-                                                                  width: 8,
-                                                                ),
-                                                                Text('Back'),
-                                                                SizedBox(
-                                                                  width: 50,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    TextButton(
-                                                                        onPressed:
-                                                                            () {},
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            Icon(Icons.print),
-                                                                            SizedBox(
-                                                                              width: 8,
-                                                                            ),
-                                                                            Text('Print')
-                                                                          ],
-                                                                        ))
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ))
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
+                                      // double totalprice = 0;
+                                      //
+                                      // for (int oo = 0;
+                                      //     oo < bata.cartlist.length;
+                                      //     oo++) {
+                                      //   totalprice = totalprice +
+                                      //       double.parse(bata.cartlist[oo]
+                                      //           .itemDetails[0].sellingPrice);
+                                      // }
+                                      //
+                                      // _databaseHelper
+                                      //     .insert_sales_order_requests(
+                                      //         Sales_Order_Requests_Model(
+                                      //   user_id: _userAndPermissions.user.id,
+                                      //   customer_id:   int.parse(_userAndPermissions.user.customerId),
+                                      //   employee_id:
+                                      //       _userAndPermissions.user.userId,
+                                      //   request_status: 'accepted',
+                                      //   salesmanager_id: _userAndPermissions
+                                      //       .user.salesmanagerId,
+                                      //   request_type:
+                                      //       isinvoiceOrSalesOrderOrReturnInvoice,
+                                      //   // 'salesOrder',
+                                      //   salesmanager_status: 'pending',
+                                      //   store_id: 1,
+                                      //   total_price: totalprice,
+                                      //   created_at: DateTime.now().toString(),
+                                      //   supervisor_id:
+                                      //       _userAndPermissions.user.supervisorId,
+                                      //   total_discount: 1000,
+                                      //   is_successfully_submitted: 0,
+                                      //   no_of_items:
+                                      //       bata.cartlist.length.toString(),
+                                      //   salesmanager_note: '',
+                                      //   request_level: 1,
+                                      //   total_tax: 10,
+                                      //   total_price_without_tax_discount: 55,
+                                      // ))
+                                      //     .then((value) {
+                                      //   insertItemInDataBase(value);
+                                      // }).catchError((e) {
+                                      //   print(e.toString());
+                                      // });
                                     }
-
-
-                                    // double totalprice = 0;
-                                    //
-                                    // for (int oo = 0;
-                                    //     oo < bata.cartlist.length;
-                                    //     oo++) {
-                                    //   totalprice = totalprice +
-                                    //       double.parse(bata.cartlist[oo]
-                                    //           .itemDetails[0].sellingPrice);
-                                    // }
-                                    //
-                                    // _databaseHelper
-                                    //     .insert_sales_order_requests(
-                                    //         Sales_Order_Requests_Model(
-                                    //   user_id: _userAndPermissions.user.id,
-                                    //   customer_id:   int.parse(_userAndPermissions.user.customerId),
-                                    //   employee_id:
-                                    //       _userAndPermissions.user.userId,
-                                    //   request_status: 'accepted',
-                                    //   salesmanager_id: _userAndPermissions
-                                    //       .user.salesmanagerId,
-                                    //   request_type:
-                                    //       isinvoiceOrSalesOrderOrReturnInvoice,
-                                    //   // 'salesOrder',
-                                    //   salesmanager_status: 'pending',
-                                    //   store_id: 1,
-                                    //   total_price: totalprice,
-                                    //   created_at: DateTime.now().toString(),
-                                    //   supervisor_id:
-                                    //       _userAndPermissions.user.supervisorId,
-                                    //   total_discount: 1000,
-                                    //   is_successfully_submitted: 0,
-                                    //   no_of_items:
-                                    //       bata.cartlist.length.toString(),
-                                    //   salesmanager_note: '',
-                                    //   request_level: 1,
-                                    //   total_tax: 10,
-                                    //   total_price_without_tax_discount: 55,
-                                    // ))
-                                    //     .then((value) {
-                                    //   insertItemInDataBase(value);
-                                    // }).catchError((e) {
-                                    //   print(e.toString());
-                                    // });
-    }    },
+                                  },
                                   child: Container(
                                     height: 50,
                                     width: size.width * .9,
@@ -1420,7 +1352,7 @@ if(_myProdectListController.itemInCart>0){
                     Container(
                         child: InkWell(
                             onTap: () {
-                           _myProdectListController.deletItem(products);
+                              _myProdectListController.deletItem(products);
                             },
                             child: Icon(
                               Icons.delete,
@@ -1805,23 +1737,23 @@ if(_myProdectListController.itemInCart>0){
     // Get.off(Dashboard());
   }
 
-  Future sendAllData() async{
-for(int i=0;i<orderid;i++){
+  Future sendAllData() async {
+    for (int i = 0; i < orderid; i++) {
+      List<ListInvoice> aaa =
+          await _databaseHelper.get_All_Sales_Order_Request_Details(i);
+      if (aaa.length > 0) {
+        var data = Insert_invoice_salesorder_json().toJson();
+        data['key'] = '1234567890';
 
-  List<ListInvoice> aaa = await     _databaseHelper.get_All_Sales_Order_Request_Details(i);
-if(aaa.length>0){
-  var data = Insert_invoice_salesorder_json()
-      .toJson();
-  data['key'] = '1234567890';
+        data['list_invoice'] = aaa;
 
-  data['list_invoice'] =aaa;
-
-  await _allNetworking
-      .insert_invoice_salesorder(data: data).then((value) {
-    print('00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
-  });
-}
-
-}
+        await _allNetworking
+            .insert_invoice_salesorder(data: data)
+            .then((value) {
+          print(
+              '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
+        });
+      }
+    }
   }
 }

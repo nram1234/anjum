@@ -122,7 +122,7 @@ class Result {
       });
     }
     if (json['all_promotions'] != null) {
-      allPromotions = <AllPromotions>[];
+      allPromotions = new List<AllPromotions>();
       json['all_promotions'].forEach((v) {
         allPromotions.add(new AllPromotions.fromJson(v));
       });
@@ -1681,21 +1681,21 @@ class AllGroupCustomers {
 class AllGroupSalesmans {
   String id;
   String userId;
-  String customerId;
+  String employeeId;
 
-  AllGroupSalesmans({this.id, this.userId, this.customerId});
+  AllGroupSalesmans({this.id, this.userId, this.employeeId});
 
   AllGroupSalesmans.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    customerId = json['customer_id'];
+    employeeId = json['employee_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
-    data['customer_id'] = this.customerId;
+    data['employee_id'] = this.employeeId;
     return data;
   }
 }
