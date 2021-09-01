@@ -106,24 +106,41 @@ class _CartEditProductState extends State<Cart> {
   yitem() {
     _myProdectListController.item.forEach((key, value) {
       _all_promotionsController.promitem.forEach((k, val) {
-        print(k == key);
-        if (k == key && value.value.count >= val.minimum_quantity_value) {
-          wawawa.add(Row(crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(child: Text(value.value.name)),
-              Container( margin: const EdgeInsets.all(15.0),
+    //    print(k == key);k == key &&
+         if ( value.value.count >= val.minimum_quantity_value) {
+          int youget=val.bonus_qty;
+          if(val.is_bonus_duplicate=="1"){
+            youget=(value.value.count/val.minimum_quantity_value).toInt();
+          }
+
+          wawawa.add(Card(elevation:8 ,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(crossAxisAlignment:CrossAxisAlignment.start,
+                children: [
+                  Row(crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(child: Text(value.value.name)),
+                      Container( margin: const EdgeInsets.all(15.0),
         padding: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
         border: Border.all(color: Colors.blueAccent)
      ,borderRadius:  BorderRadius.circular(4)  ),
-                width: 50,height: 25,
-                child: TextField(onChanged: (v){
-                  if(v!=null){
-                    _myProdectListController.setbonce(id: val.itemid,val: v);
-                  }
-                },),
-              )
-            ],
+                        width: 50,height: 25,
+                        child: TextField(onChanged: (v){
+                          if(v!=null&&int.parse(v)<=youget){
+                            _myProdectListController.setbonce(id: val.itemid,val: v);
+                          }else{
+                            Get.snackbar('', 'تاكد من الرقم الصحيح');
+                          }
+                        },),
+                      )
+                    ],
+                  ),
+                  Text('${val.minimum_quantity_value} get  ${val.bonus_qty}     / $youget ')
+                ],
+              ),
+            ),
           ));
         }
       });
