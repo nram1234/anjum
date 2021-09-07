@@ -1546,7 +1546,8 @@ class AllPromotions {
   String invoicePerSalesman;
   String invoicePerCustomer;
   String minimumQuantityValue;
-  List<AllQuantityPromotionItems> allQuantityPromotionItems;
+  List<AllInQuantityPromotionItems> allInQuantityPromotionItems;
+  List<AllOutQuantityPromotionItems> allOutQuantityPromotionItems;
 
   AllPromotions(
       {this.description,
@@ -1571,7 +1572,8 @@ class AllPromotions {
         this.invoicePerSalesman,
         this.invoicePerCustomer,
         this.minimumQuantityValue,
-        this.allQuantityPromotionItems});
+        this.allInQuantityPromotionItems,
+        this.allOutQuantityPromotionItems});
 
   AllPromotions.fromJson(Map<String, dynamic> json) {
     description = json['description'];
@@ -1606,11 +1608,18 @@ class AllPromotions {
     invoicePerSalesman = json['invoice_per_salesman'];
     invoicePerCustomer = json['invoice_per_customer'];
     minimumQuantityValue = json['minimum_quantity_value'];
-    if (json['all_quantity_promotion_items'] != null) {
-      allQuantityPromotionItems = new List<AllQuantityPromotionItems>();
-      json['all_quantity_promotion_items'].forEach((v) {
-        allQuantityPromotionItems
-            .add(new AllQuantityPromotionItems.fromJson(v));
+    if (json['all_in_quantity_promotion_items'] != null) {
+      allInQuantityPromotionItems = new List<AllInQuantityPromotionItems>();
+      json['all_in_quantity_promotion_items'].forEach((v) {
+        allInQuantityPromotionItems
+            .add(new AllInQuantityPromotionItems.fromJson(v));
+      });
+    }
+    if (json['all_out_quantity_promotion_items'] != null) {
+      allOutQuantityPromotionItems = <AllOutQuantityPromotionItems>[];
+      json['all_out_quantity_promotion_items'].forEach((v) {
+        allOutQuantityPromotionItems
+            .add(new AllOutQuantityPromotionItems.fromJson(v));
       });
     }
   }
@@ -1645,9 +1654,13 @@ class AllPromotions {
     data['invoice_per_salesman'] = this.invoicePerSalesman;
     data['invoice_per_customer'] = this.invoicePerCustomer;
     data['minimum_quantity_value'] = this.minimumQuantityValue;
-    if (this.allQuantityPromotionItems != null) {
-      data['all_quantity_promotion_items'] =
-          this.allQuantityPromotionItems.map((v) => v.toJson()).toList();
+    if (this.allInQuantityPromotionItems != null) {
+      data['all_in_quantity_promotion_items'] =
+          this.allInQuantityPromotionItems.map((v) => v.toJson()).toList();
+    }
+    if (this.allOutQuantityPromotionItems != null) {
+      data['all_out_quantity_promotion_items'] =
+          this.allOutQuantityPromotionItems.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1700,21 +1713,53 @@ class AllGroupSalesmans {
   }
 }
 
-class AllQuantityPromotionItems {
+class AllInQuantityPromotionItems {
   String id;
   String userId;
   String qtyPromotionId;
   String itemId;
   String measurementUnitId;
 
-  AllQuantityPromotionItems(
+  AllInQuantityPromotionItems(
       {this.id,
         this.userId,
         this.qtyPromotionId,
         this.itemId,
         this.measurementUnitId});
 
-  AllQuantityPromotionItems.fromJson(Map<String, dynamic> json) {
+  AllInQuantityPromotionItems.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    qtyPromotionId = json['qty_promotion_id'];
+    itemId = json['item_id'];
+    measurementUnitId = json['measurement_unit_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['qty_promotion_id'] = this.qtyPromotionId;
+    data['item_id'] = this.itemId;
+    data['measurement_unit_id'] = this.measurementUnitId;
+    return data;
+  }
+}
+class AllOutQuantityPromotionItems {
+  String id;
+  String userId;
+  String qtyPromotionId;
+  String itemId;
+  String measurementUnitId;
+
+  AllOutQuantityPromotionItems(
+      {this.id,
+        this.userId,
+        this.qtyPromotionId,
+        this.itemId,
+        this.measurementUnitId});
+
+  AllOutQuantityPromotionItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     qtyPromotionId = json['qty_promotion_id'];

@@ -59,6 +59,7 @@ class _CartEditProductState extends State<Cart> {
   CurenceController _curenceController = Get.find<CurenceController>();
   final All_PromotionsController _all_promotionsController =
       Get.find<All_PromotionsController>();
+  int youget = 0;
 
   @override
   void initState() {
@@ -80,7 +81,6 @@ class _CartEditProductState extends State<Cart> {
         getTaxItemMap[bata.cartlist[i].itemId] = bata.cartlist[i];
       }
     }
-
     _all_promotionsController.allPromotionss.forEach((element) {
       if (_all_promotionsController.isInTime(
               endDateTime: element.endDateTime,
@@ -88,7 +88,7 @@ class _CartEditProductState extends State<Cart> {
           _all_promotionsController.isInall_group_customers(
               customerId: int.parse(customer.customer_id),
               list: element.allGroupCustomers)) {
-        element.allQuantityPromotionItems.forEach((item) {
+        element.allInQuantityPromotionItems.forEach((item) {
           ItemInProm i = ItemInProm(
               bonus_qty: int.parse(element.bonusQty),
               is_bonus_duplicate: element.isBonusDuplicate,
@@ -99,107 +99,160 @@ class _CartEditProductState extends State<Cart> {
       }
     });
     yitem();
-
-
   }
+
+  int vv = 1;
 
   yitem() {
     _myProdectListController.item.forEach((key, value) {
-      _all_promotionsController.promitem.forEach((k, val) {
-    //    print(k == key);k == key &&
-         if ( value.value.count >= val.minimum_quantity_value) {
-          int youget=val.bonus_qty;
-          if(val.is_bonus_duplicate=="1"){
-            youget=(value.value.count/val.minimum_quantity_value).toInt();
-          }
+_all_promotionsController.allPromotionss.forEach((element) {
+  element.allInQuantityPromotionItems.forEach((e ) {
+    if (e.itemId == key &&value.value.count >= int.parse(element.minimumQuantityValue)) {
 
-          wawawa.add(Card(elevation:8 ,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(crossAxisAlignment:CrossAxisAlignment.start,
+      int youget = int.parse(element.bonusQty);
+      if (element.isBonusDuplicate == "1") {
+        youget = (value.value.count / int.parse(element.minimumQuantityValue)).toInt();
+      }
+
+      wawawa.add(
+          Card(
+        elevation: 8,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(child: Text(value.value.name)),
-                      Container( margin: const EdgeInsets.all(15.0),
-        padding: const EdgeInsets.all(3.0),
-        decoration: BoxDecoration(
-        border: Border.all(color: Colors.blueAccent)
-     ,borderRadius:  BorderRadius.circular(4)  ),
-                        width: 50,height: 25,
-                        child: TextField(onChanged: (v){
-                          if(v!=null&&int.parse(v)<=youget){
-                            _myProdectListController.setbonce(id: val.itemid,val: v);
-                          }else{
-                            Get.snackbar('', 'تاكد من الرقم الصحيح');
-                          }
-                        },),
-                      )
-                    ],
-                  ),
-                  Text('${val.minimum_quantity_value} get  ${val.bonus_qty}     / $youget ')
+                  Expanded(child: Text(value.value.name)),
+                  Container(
+                    margin: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(3.0),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        borderRadius: BorderRadius.circular(4)),
+                    width: 50,
+                    height: 25,
+                    child: TextField(
+                      onChanged: (v) {
+                        if (v != null && int.parse(v) <= youget) {
+                          _myProdectListController.setbonce(
+                              id: e.itemId, val: v);
+                        } else {
+                          Get.snackbar('', 'تاكد من الرقم الصحيح');
+                        }
+                      },
+                    ),
+                  )
                 ],
               ),
-            ),
-          ));
-        }
-      });
-    });
+              Text(
+                  '${element.minimumQuantityValue} get  ${element.bonusQty}     / $youget ')
+            ],
+          ),
+        ),
+      )
+      );
+    }
+  });
+
+});
+wawawa.add(Container(color: Colors.orange,height: 10,));
+      // _all_promotionsController.promitem.forEach((k, val) {
+      //   //    print(k == key);
+      //   if (k == key &&value.value.count >= val.minimum_quantity_value) {
+      //
+      //     int youget = val.bonus_qty;
+      //     if (val.is_bonus_duplicate == "1") {
+      //       youget = (value.value.count / val.minimum_quantity_value).toInt();
+      //     }
+      //
+      //     wawawa.add(Card(
+      //       elevation: 8,
+      //       child: Padding(
+      //         padding: const EdgeInsets.all(8.0),
+      //         child: Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
+      //             Row(
+      //               crossAxisAlignment: CrossAxisAlignment.center,
+      //               children: [
+      //                 Expanded(child: Text(value.value.name)),
+      //                 Container(
+      //                   margin: const EdgeInsets.all(15.0),
+      //                   padding: const EdgeInsets.all(3.0),
+      //                   decoration: BoxDecoration(
+      //                       border: Border.all(color: Colors.blueAccent),
+      //                       borderRadius: BorderRadius.circular(4)),
+      //                   width: 50,
+      //                   height: 25,
+      //                   child: TextField(
+      //                     onChanged: (v) {
+      //                       if (v != null && int.parse(v) <= youget) {
+      //                         _myProdectListController.setbonce(
+      //                             id: val.itemid, val: v);
+      //                       } else {
+      //                         Get.snackbar('', 'تاكد من الرقم الصحيح');
+      //                       }
+      //                     },
+      //                   ),
+      //                 )
+      //               ],
+      //             ),
+      //             Text(
+      //                 '${val.minimum_quantity_value} get  ${val.bonus_qty}     / $youget ')
+      //           ],
+      //         ),
+      //       ),
+      //     ));
+      //   }
+      //   });
+   vv++;});
 
     wawawa.add(
       SizedBox(
         height: 8,
       ),
     );
-    wawawa.add(
-        GestureDetector(onTap: (){
-          Get.back();
-        },
-          child: Center(
-            child: Container(
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius:
-                BorderRadius
-                    .circular(10),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey
-                        .withOpacity(
-                        0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0,
-                        3), // changes position of shadow
-                  ),
-                ],
+    wawawa.add(GestureDetector(
+      onTap: () {
+        Get.back();
+      },
+      child: Center(
+        child: Container(
+          width: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
               ),
-              child: Container(
-                height: 50,
-                decoration:
-                BoxDecoration(
-                  color: Colors.indigo,
-                  borderRadius:
-                  BorderRadius
-                      .circular(10),
-                ),
-                child: Center(
-                    child: Text(
-                      'Ok',
-                      style: TextStyle(
-                          color:
-                          Colors.white,
-                          fontWeight:
-                          FontWeight
-                              .bold,
-                          fontSize: 20),
-                    )),
-              ),
-            ),
+            ],
           ),
-        )
-    ); }
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.indigo,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+                child: Text(
+              'Ok',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            )),
+          ),
+        ),
+      ),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -361,6 +414,9 @@ class _CartEditProductState extends State<Cart> {
                                             Radius.circular(10))),
                                   ),
                                   onPressed: () {
+                                    // _myProdectListController
+                                    //     .getlistpromiision();
+                                    _myProdectListController.mytray();
                                     return showDialog(
                                       context: context,
                                       builder: (context) {
@@ -370,15 +426,15 @@ class _CartEditProductState extends State<Cart> {
                                             height: 60,
                                             child: Center(
                                                 child: Column(
-                                              crossAxisAlignment:
+                                                  crossAxisAlignment:
                                                   CrossAxisAlignment.center,
-                                              mainAxisAlignment:
+                                                  mainAxisAlignment:
                                                   MainAxisAlignment.center,
-                                              children: [
-                                                Text('You Get Promotion'),
-                                                //  Text('Bol 50+10'),
-                                              ],
-                                            )),
+                                                  children: [
+                                                    Text('You Get Promotion'),
+                                                    //  Text('Bol 50+10'),
+                                                  ],
+                                                )),
                                             color: Colors.orangeAccent,
                                           ),
                                           content: Container(
@@ -387,13 +443,13 @@ class _CartEditProductState extends State<Cart> {
                                             child: SingleChildScrollView(
                                               child: Column(
                                                   mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: wawawa
+                                                  MainAxisSize.min,
+                                                  children: _myProdectListController.liPro
 
-                                                  // [
+                                                // [
 
-                                                  // ],
-                                                  ),
+                                                // ],
+                                              ),
                                             ),
                                           ),
                                         );
@@ -971,11 +1027,14 @@ class _CartEditProductState extends State<Cart> {
                                                       .customer
                                                       .customerInfo
                                                       .id),
+                                              bonus: _myProdectListController
+                                                  .item[keysOfMap[itmeinlast]]
+                                                  .value
+                                                  .bonce,
                                               supervisorId: _userAndPermissions
                                                   .user.supervisorId,
-                                              salesmanagerId:
-                                                  _userAndPermissions
-                                                      .user.salesmanagerId,
+                                              salesmanagerId: _userAndPermissions
+                                                  .user.salesmanagerId,
                                               basePricePerUnit:
                                                   _myProdectListController
                                                       .item[keysOfMap[itmeinlast]]
@@ -1722,6 +1781,33 @@ class _CartEditProductState extends State<Cart> {
   //         )),
   //   );
   // }
+  Widget nastedlist() {
+    return new ListView.builder(
+      itemCount: 10,
+      itemBuilder: (BuildContext context, int blockIdx) {
+        print("Building block $blockIdx");
+        return new Column(
+          children: [
+            Padding(
+                child: Text("Block $blockIdx"), padding: EdgeInsets.all(8.0)),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int childIdx) {
+                print("Building block $blockIdx child $childIdx");
+                return Padding(
+                  child: Text("Child $childIdx"),
+                  padding: EdgeInsets.only(
+                      left: 20.0, right: 8.0, top: 8.0, bottom: 8.0),
+                );
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
 
   insertItemInDataBase(int i) async {
     for (int oo = 0; oo < bata.cartlist.length; oo++) {

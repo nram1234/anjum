@@ -38,13 +38,7 @@ class All_PromotionsController extends GetxController {
     return ids.contains(customerId);
   }
 
-  bool isInPromotionItems({List<AllQuantityPromotionItems> list, int itemID}) {
-    List<int> ids = [];
-    list.forEach((element) {
-      ids.add(int.parse(element.itemId));
-    });
-    return ids.contains(itemID);
-  }
+
 //
 // bool is_bonus_duplicate() {
 //   return allPromotion.isBonusDuplicate == 1.toString();
@@ -58,9 +52,9 @@ class ItemInProm {
   int minimum_quantity_value;
 
   String is_bonus_duplicate;
-
+  String strictly_listed_item;
   ItemInProm(
-      {this.itemid,
+      {this.itemid,this.strictly_listed_item,
       this.bonus_qty,
       this.minimum_quantity_value,
       this.is_bonus_duplicate});

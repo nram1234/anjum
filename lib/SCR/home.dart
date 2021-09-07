@@ -365,6 +365,7 @@ Get.to(()=> Catalog());
       //insert to database
       Get.find<All_PromotionsController>()
          .allPromotionsUpdat(value.result.allPromotions);
+
       Get.find<AllCustomersControllers>()
           .updateallCustomers(value.result.allCustomers);
       Get.find<UserDataController>().updateserData(value.result.userData);
