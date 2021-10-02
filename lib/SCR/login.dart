@@ -9,6 +9,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'home.dart';
 import 'dart:developer'as developer;
+
+import 'new/getalldatafromweb.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -265,6 +267,22 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: size.height * .02,
                   ),
+                  // Container(       width: size.width * .85,
+                  //   child: Row(children: [Spacer(),     Text('تحميل الصور' ),
+                  //     Container(
+                  //       height: 50,
+                  //       width: 25,
+                  //       child: Checkbox(
+                  //         value: _checkbox,
+                  //         onChanged: (value) {
+                  //
+                  //           setState(() {
+                  //             _checkbox = !_checkbox;
+                  //           });
+                  //         },
+                  //       ),
+                  //     ),],),
+                  // ),
                   login
                       ? CircularProgressIndicator()
                       : GestureDetector(
@@ -312,11 +330,14 @@ class _LoginState extends State<Login> {
                                     .then((value) {
                                   if (value != null) {
                                     print(value.user);
+                                     box.write('token', value.user.userId);
+                                    box.write('userAnd', value.user);
                                     _userAndPermissions.setuser(value.user);
+                                    box.write('permissions', value.permissions);
                                     _userAndPermissions
                                         .setPermissions(value.permissions);
                                     developer.log  (value.toString());
-                                    Get.to(Home());
+                                    Get.to(()=>GetAllDataFRomWeb());
                                   }
                                   login = false;
                                   setState(() {});

@@ -2,9 +2,14 @@ import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
+import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/jsonofnwetry/get_Fifth_step_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step2_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step3_json.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,23 +24,10 @@ class CartEditProduct extends StatefulWidget {
 }
 
 class _CartEditProductState extends State<CartEditProduct> {
+  final MyProdectListController _myProdectListController =
+      Get.find<MyProdectListController>();
 
-  final MyProdectListController _myProdectListController = Get.find<MyProdectListController>();
-
-  final NetWorkController _netWorkController =
-  Get.find<NetWorkController>();
-
-
-
-
-
-
-
-
-
-
-
-
+  final NetWorkController _netWorkController = Get.find<NetWorkController>();
 
   final UnitController _UnitController = Get.find<UnitController>();
   int itemCountinCart = 0;
@@ -49,28 +41,30 @@ class _CartEditProductState extends State<CartEditProduct> {
   double total_Tax = 0;
   double net_sal = 0;
   double totalPriceBeforDes = 0;
-  double totalPriceafterDes=0;
+  double totalPriceafterDes = 0;
+
 //  AllStockItems val
-  bool showdropdowen ;
+  bool showdropdowen;
+
   @override
   void initState() {
     super.initState();
-    showdropdowen = (_UnitController.MeasurementUnit_map[widget.data.value.id].length > 1);
-    textEditingController_discount.text =widget.data.value.diescount.toString();
-    textEditingController_bounce.text =widget.data.value.bonce.toString();
+    showdropdowen =
+        false; //(_UnitController.MeasurementUnit_map[widget.data.value.id].length > 1);
+    textEditingController_discount.text =
+        widget.data.value.diescount.toString();
+    textEditingController_bounce.text = widget.data.value.bonce.toString();
 
-    for (int i = 0;
-    i < bata.cartlist.length;
-    i++) {
+    for (int i = 0; i < bata.cartlist.length; i++) {
       if (bata.cartlist[i].id == widget.data.value.id) {
         itemCountinCart++;
       }
     }
-    }
+  }
 
   @override
   Widget build(BuildContext context) {
-   // allPrice(bata.discount[int.parse(widget.data.itemId)]);
+    // allPrice(bata.discount[int.parse(widget.data.itemId)]);
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -138,11 +132,13 @@ class _CartEditProductState extends State<CartEditProduct> {
                               height: size.height * .15,
                               width: size.height * .15,
                               color: Colors.indigo,
-                              child:_netWorkController.connectionStatus.value? Image.network(
-                                widget.data.value.pic,
-                                height: size.height * .1,
-                                width: size.height * .1,
-                              ):Image.asset('assets/images/noimage.png'),
+                              child: _netWorkController.connectionStatus.value
+                                  ? Image.network(
+                                      widget.data.value.pic,
+                                      height: size.height * .1,
+                                      width: size.height * .1,
+                                    )
+                                  : Image.asset('assets/images/noimage.png'),
                             ),
                             SizedBox(
                               width: 8,
@@ -164,8 +160,8 @@ class _CartEditProductState extends State<CartEditProduct> {
                                   SizedBox(
                                     height: 4,
                                   ),
-                                  Text("minimum Quantity: ${widget
-                                      .data.value.minimumQuantity}"),
+                                  Text(
+                                      "minimum Quantity: ${widget.data.value.minimumQuantity}"),
                                   //products.itemDetails[0].itemCost       _UnitController. val_Of_uint_map[widget.data.itemId]!=null?_UnitController. val_Of_uint_map[widget.data.itemId].sellingPrice:widget.data.itemDetails[0].sellingPrice
                                   Text('Price: ${widget.data.value.price}'),
                                   //  Expanded(child: Container()),
@@ -180,14 +176,19 @@ class _CartEditProductState extends State<CartEditProduct> {
                           children: [
                             InkWell(
                               onTap: () {
-                                if(_myProdectListController
-                                    .item[widget.data.value.id].value.count>0){
-                                  int v = _myProdectListController
-                                      .item[widget.data.value.id].value.count - 1;
+                                if (_myProdectListController
+                                        .item[widget.data.value.id]
+                                        .value
+                                        .count >
+                                    0) {
+                                  double v = _myProdectListController
+                                          .item[widget.data.value.id]
+                                          .value
+                                          .count -
+                                      1;
                                   print(widget.data.value.count);
                                   _myProdectListController.setCount(
-                                      id: widget.data.value.id,
-                                      count: v);
+                                      id: widget.data.value.id, count: v);
                                 }
                               },
                               child: Container(
@@ -215,14 +216,16 @@ class _CartEditProductState extends State<CartEditProduct> {
                               child: Center(
                                 child: GetBuilder<MyProdectListController>(
                                   builder: (logic) {
-                                    textEditingController.text=logic.item[widget.data.value.id].value.count.toString();
+                                    textEditingController.text = logic
+                                        .item[widget.data.value.id].value.count
+                                        .toString();
 
                                     return TextField(
                                       onChanged: (v) {
                                         if (v != null && v.isNotEmpty) {
                                           _myProdectListController.setCount(
                                               id: widget.data.value.id,
-                                              count: int.parse(v));
+                                              count: double.parse(v));
                                         }
                                       },
                                       onEditingComplete: () {},
@@ -239,12 +242,14 @@ class _CartEditProductState extends State<CartEditProduct> {
                             ),
                             InkWell(
                               onTap: () {
-                                int v = _myProdectListController
-                                    .item[widget.data.value.id].value.count + 1;
+                                double v = _myProdectListController
+                                        .item[widget.data.value.id]
+                                        .value
+                                        .count +
+                                    1;
                                 print(widget.data.value.count);
                                 _myProdectListController.setCount(
-                                    id: widget.data.value.id,
-                                    count: v);
+                                    id: widget.data.value.id, count: v);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -277,16 +282,16 @@ class _CartEditProductState extends State<CartEditProduct> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                        //       Expanded(
-                        //         child: Text(
-                        //           'item Number: ${widget.data.value.itemNumber}',
-                        //           maxLines: 2,
-                        //         ),
-                        //       ),
-                        //       // Expanded(
-                        //       //   child: Text(
-                        //       //       'item name:  ${widget.data.itemDetails[0].itemNameEn}', maxLines: 2,),
-                        //       // )
+                              //       Expanded(
+                              //         child: Text(
+                              //           'item Number: ${widget.data.value.itemNumber}',
+                              //           maxLines: 2,
+                              //         ),
+                              //       ),
+                              //       // Expanded(
+                              //       //   child: Text(
+                              //       //       'item name:  ${widget.data.itemDetails[0].itemNameEn}', maxLines: 2,),
+                              //       // )
                             ],
                           ),
                         ),
@@ -450,38 +455,57 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                      child:         showdropdowen
-                                          ? DropdownButton<ItemUnits>(value:   _UnitController. val_Of_uint_map[widget.data.value.id] ,
-                                        icon: const Icon(
-                                            Icons.arrow_downward),
-                                        iconSize: 24,
-                                        elevation: 16,
-                                        style: const TextStyle(
-                                            color: Colors.deepPurple),
-                                        underline: Container(
-                                          height: 2,
-                                          color: Colors.deepPurpleAccent,
+                                        child: showdropdowen
+                                            ? DropdownButton<PriceListsInfo>(
+                                                value: Get.find<PriceListsInfoController>().val_Of_PriceListsInfo_map[
+                                                widget.data.value.id],
+                                                icon: const Icon(
+                                                    Icons.arrow_downward),
+                                                iconSize: 24,
+                                                elevation: 16,
+
+                                                underline: Container(
+                                                  height: 2,
+                                                  color:
+                                                      Colors.deepPurpleAccent,
+                                                ),
+                                                onChanged:
+                                                    (PriceListsInfo newValue) {
+                                                      Get.find<PriceListsInfoController>().val_Of_PriceListsInfo_map[
+                                                      widget.data.value.id]=newValue;
+                                                      // _UnitController
+                                                      //     .val_Of_PriceListsInfo_map[
+                                                      // products.value.id] =
+                                                      //     newValue;
+                                                      //
+                                                      _myProdectListController
+                                                          .setprice(
+                                                          id: widget.data.value.id,
+                                                          val: newValue
+                                                              .sellingPrice);
+                                                  //   print(_UnitController. val_Of_uint_map[widget.data.itemId].itemMeasurementUnits);
+                                                  setState(() {});
+                                                },
+                                                items:Get.find<PriceListsInfoController>().priceList[
+                                                widget.data.value.id]
+                                                    .map<
+                                                            DropdownMenuItem<
+                                                                PriceListsInfo>>(
+                                                        (PriceListsInfo value) {
+                                                  return DropdownMenuItem<
+                                                      PriceListsInfo>(
+                                                    value: value,
+                                                    child: Text(value
+                                                        .unit),
+                                                  );
+                                                }).toList(),
+                                              )
+                                            : Text(Get.find<PriceListsInfoController>().priceList[
+                                        widget.data.value.id][0]
+                                                .unit)
+                                        //  : Text(  _UnitController.val_Of_uint_map[widget.data.value.id]!=null?
+                                        // _UnitController.val_Of_uint_map[widget.data.value.id].itemMeasurementUnits:_UnitController.MeasurementUnit_map[widget.data.value.id][0].itemMeasurementUnits ),
                                         ),
-                                        onChanged: (ItemUnits newValue) {
-                                          _UnitController. val_Of_uint_map[widget.data.value.id]=newValue;
-                                       //   print(_UnitController. val_Of_uint_map[widget.data.itemId].itemMeasurementUnits);
-                                          setState(() {});
-                                        },
-                                        items: _UnitController.MeasurementUnit_map[widget.data.value.id].map<
-                                            DropdownMenuItem<
-                                                ItemUnits>>(
-                                                (ItemUnits value) {
-                                              return DropdownMenuItem<
-                                                  ItemUnits>(
-                                                value: value,
-                                                child: Text(
-                                                    value.itemMeasurementUnits),
-                                              );
-                                            }).toList(),
-                                      )
-                                          : Text(  _UnitController.val_Of_uint_map[widget.data.value.id]!=null?
-                                         _UnitController.val_Of_uint_map[widget.data.value.id].itemMeasurementUnits:_UnitController.MeasurementUnit_map[widget.data.value.id][0].itemMeasurementUnits ),
-                                    ),
                                   )
                                 ],
                               ),
@@ -499,8 +523,8 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                      child: Text(widget.data.value
-                                          .minimumQuantity
+                                      child: Text(widget
+                                          .data.value.minimumQuantity
                                           .toString()),
                                     ),
                                   )
@@ -527,23 +551,11 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: TextField(
-                                      controller: textEditingController_bounce,
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (v) {
-                                        if (v != null && v.isNotEmpty) {
-                                          _myProdectListController.setbonce(id: widget.data.value.id, val: v );
-                                          print(widget.data.value.bonce);
-                                        }
-                                      },
-                                      textAlign: TextAlign.center,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
-                                      ),
+                                    child: Center(
+                                      child: Obx(() {
+                                        return Text(
+                                            widget.data.value.bonce.toString());
+                                      }),
                                     ),
                                   ),
                                 ],
@@ -563,13 +575,10 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             BorderRadius.circular(10)),
                                     child: TextField(
                                       onChanged: (v) {
-
                                         if (v != null && v.isNotEmpty) {
                                           _myProdectListController.setdiscount(
                                               id: widget.data.value.id, val: v);
                                         }
-
-
                                       },
                                       controller:
                                           textEditingController_discount,
@@ -610,9 +619,8 @@ class _CartEditProductState extends State<CartEditProduct> {
                                               BorderRadius.circular(10)),
                                       child: Center(
                                         child:
-                                        GetBuilder<MyProdectListController>(
+                                            GetBuilder<MyProdectListController>(
                                           builder: (logic) {
-
                                             return Text(logic
                                                 .item[widget.data.value.id]
                                                 .value
@@ -637,8 +645,9 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child:Center(
-                                      child: GetBuilder<MyProdectListController>(
+                                    child: Center(
+                                      child:
+                                          GetBuilder<MyProdectListController>(
                                         builder: (logic) {
                                           return Text(logic
                                               .item[widget.data.value.id]
@@ -674,7 +683,8 @@ class _CartEditProductState extends State<CartEditProduct> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
-                                      child: GetBuilder<MyProdectListController>(
+                                      child:
+                                          GetBuilder<MyProdectListController>(
                                         builder: (logic) {
                                           return Text(logic
                                               .item[widget.data.value.id]
@@ -720,19 +730,19 @@ class _CartEditProductState extends State<CartEditProduct> {
                                           width: 1,
                                         ),
                                         borderRadius:
-                                        BorderRadius.circular(10)),
-                                    child:  Center(child:
-                                    GetBuilder<MyProdectListController>(
+                                            BorderRadius.circular(10)),
+                                    child: Center(child:
+                                        GetBuilder<MyProdectListController>(
                                       builder: (logic) {
-                                        return Text(
-                                            widget.data.value
-                                                .totalPriceForItem
-                                                .toStringAsFixed(3));
+                                        return Text(widget
+                                            .data.value.totalPriceForItem
+                                            .toStringAsFixed(3));
                                       },
                                     )),
                                   )
                                 ],
-                              ),     ],
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
@@ -813,22 +823,25 @@ class _CartEditProductState extends State<CartEditProduct> {
                               //       borderRadius: BorderRadius.circular(10)),
                               //   child: Center(child: Text('Cancel')),
                               // ),
-                         GestureDetector(onTap: (){
-                           Navigator.pop(context);
-                         },child:      Container(
-                           decoration: BoxDecoration(
-                             color: Color(0xff2C4B89),
-                             borderRadius: BorderRadius.circular(10),
-                           ),
-                           height: 50,
-                           width: size.width * .4,
-                           child: Center(
-                             child: Text(
-                               'ok',
-                               style: TextStyle(color: Colors.white),
-                             ),
-                           ),
-                         ),)
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff2C4B89),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  height: 50,
+                                  width: size.width * .4,
+                                  child: Center(
+                                    child: Text(
+                                      'ok',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         )

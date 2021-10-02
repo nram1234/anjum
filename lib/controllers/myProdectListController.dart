@@ -3,7 +3,8 @@ import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/all_promotionsController.dart';
 import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/jsonofnwetry/get_Fifth_step_json.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,21 +14,23 @@ import 'allChequesController.dart';
 import 'allStockItemsController.dart';
 
 class MyProdectListController extends GetxController {
+Map<int,Map<String,TextEditingController>>mapofcontrpoler={};
   List<Widget> liPro = [];
-
+  Map<String, int> mapofpounce = {};
   Map<String, Rx<TheItemInList>> myitemPro = {};
   List<Map<String, AllInQuantityPromotionItems>> itemInPro = [];
   final All_PromotionsController _all_promotionsController =
-  Get.find<All_PromotionsController>();
+      Get.find<All_PromotionsController>();
 
   bool issearch = false;
   String searchWord = "";
   Map<String, Rx<TheItemInList>> item = Map<String, Rx<TheItemInList>>();
+Map<String, Rx<TheItemInList>> itemprodecttest = Map<String, Rx<TheItemInList>>();
   final AllItemsController bata = Get.find<AllItemsController>();
   RxDouble grandTotal = 0.0.obs;
   RxDouble totalTax = 0.0.obs;
   final AllStockItemsController _allStockItemsController =
-  Get.find<AllStockItemsController>();
+      Get.find<AllStockItemsController>();
 
   RxDouble totalpriceincart = 0.0.obs;
   RxDouble totalTaxincart = 0.0.obs;
@@ -75,7 +78,7 @@ class MyProdectListController extends GetxController {
             value.value.afterdes * totalDiscountincart.value;
 
         totalTaxincart.value += (((value.value.afterdes) -
-            ((value.value.afterdes) * totalDiscountincart.value)) *
+                ((value.value.afterdes) * totalDiscountincart.value)) *
             value.value.tex /
             100);
       }
@@ -124,46 +127,80 @@ class MyProdectListController extends GetxController {
     //   listofPro.add(myWidgets);
     // });
   }
+newItemForTestprod(){
 
+}
   @override
   void onInit() {
     if (item.length == 0) {
       for (int i = 0; i < bata.allItems.length; i++) {
+        print('allStockItems ${_allStockItemsController.allStockItems}');
         for (int p = 0;
-        p < _allStockItemsController.allStockItems.length;
-        p++) {
+            p < _allStockItemsController.allStockItems.length;
+            p++) {
           if (bata.allItems[i].itemId ==
               _allStockItemsController.allStockItems[p].itemId) {
+
+print(bata.allItems[i].itemDetails[0].sellingPrice);
             item[bata.allItems[i].itemId] = TheItemInList(
-                totalPriceForItem: 0,
-                totalTaxForItem: 0,
-                quantity_in_store: int.parse(
-                    _allStockItemsController.allStockItems[p].quantity),
-                count: 0,
-                measurementUnitId: int.parse(_allStockItemsController
-                    .allStockItems[p].measurementUnitId),
-                id: bata.allItems[i].itemId,
-                tex: double.parse(bata.allItems[i].itemDetails[0].tax),
-                befordes: double.parse(
-                    bata.allItems[i].itemDetails[0].sellingPrice),
-                price: double.parse(
-                    bata.allItems[i].itemDetails[0].sellingPrice),
-                name: bata.allItems[i].itemDetails[0].itemNameEn,
-                afterdes: double.parse(
-                    bata.allItems[i].itemDetails[0].sellingPrice),
-                itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
-                minimumQuantity:
-                bata.allItems[i].itemDetails[0].minimumQuantity,
-                pic: bata.allItems[i].itemDetails[0].image,
-                bonce: 0,
-                categoryId:
-                int.parse(bata.allItems[i].itemDetails[0].categoryId),
-                diescount: 0)
+                    totalPriceForItem: 0,
+                    totalTaxForItem: 0,
+                    quantity_in_store: int.parse(
+                        _allStockItemsController.allStockItems[p].quantity),
+                    count: 0,
+                    measurementUnitId: int.parse(_allStockItemsController
+                        .allStockItems[p].measurementUnitId),
+                    id: bata.allItems[i].itemId,
+                    tex: double.parse(bata.allItems[i].itemDetails[0].tax),
+                    befordes: double.parse(
+                        bata.allItems[i].itemDetails[0].sellingPrice),
+                    price: double.parse(
+                        bata.allItems[i].itemDetails[0].sellingPrice),
+                    name: bata.allItems[i].itemDetails[0].itemNameEn,
+                    afterdes: double.parse(
+                        bata.allItems[i].itemDetails[0].sellingPrice),
+                    itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
+                    minimumQuantity:
+                        bata.allItems[i].itemDetails[0].minimumQuantity,
+                    pic: bata.allItems[i].itemDetails[0].image,
+                    bonce: 0,
+                    categoryId:
+                        int.parse(bata.allItems[i].itemDetails[0].categoryId),
+                    diescount: 0)
                 .obs;
           }
         }
       }
     }
+// bata.allItems.forEach((element) {
+//
+//   print('${element.itemDetails[0].itemNameEn}');
+//           item[element.itemId] = TheItemInList(
+//                   totalPriceForItem: 0,
+//                   totalTaxForItem: 0,
+//                   quantity_in_store: 100,
+//                   count: 0,
+//                   measurementUnitId: 100,
+//                   id: element.itemId,
+//                   tex: 5.5,//double.parse(element.itemDetails[0].tax),
+//                   befordes: double.parse(
+//                       element.itemDetails[0].sellingPrice),
+//                   price: double.parse(
+//                       element.itemDetails[0].sellingPrice),
+//                   name: element.itemDetails[0].itemNameEn,
+//                   afterdes: double.parse(
+//                       element.itemDetails[0].sellingPrice),
+//                   itemNumber: element.itemDetails[0].itemNumber,
+//                   minimumQuantity:
+//                   element.itemDetails[0].minimumQuantity,
+//                   pic: element.itemDetails[0].image,
+//                   bonce: 0,
+//                   categoryId:
+//                       int.parse(element.itemDetails[0].categoryId),
+//                   diescount: 0)
+//               .obs;
+// });
+
   }
 
   mypro() {
@@ -193,7 +230,7 @@ class MyProdectListController extends GetxController {
     update();
   }
 
-  setCount({String id, int count}) {
+  setCount({String id, double count}) {
     item[id].value.count = count;
     item[id].value.befordes = item[id].value.price * item[id].value.count;
     item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
@@ -230,11 +267,12 @@ class MyProdectListController extends GetxController {
   }
 
   setbonce({String id, String val}) {
-    item[id].value.bonce = int.parse(val);
+    item[id].value.bonce = double.parse(val);
     update();
   }
 
   setdiscount({String id, String val}) {
+       if (val != null && val.isNotEmpty) {
     item[id].value.diescount = double.parse(val);
     item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
         ((item[id].value.price * item[id].value.count) *
@@ -245,7 +283,7 @@ class MyProdectListController extends GetxController {
     getTotalTax();
     netprice();
     //  gettotalpriceincart();
-    update();
+    update();}
   }
 
   netprice() {
@@ -278,16 +316,14 @@ class MyProdectListController extends GetxController {
 
   countInCart() {
     itemInCart.value =
-        item.entries
-            .where((element) => element.value.value.count > 0)
-            .length;
+        item.entries.where((element) => element.value.value.count > 0).length;
     //  print(itemInCart.value);
   }
 
   mytray() {
     liPro.clear();
     DateTime now = new DateTime.now();
-
+   Map<String,double> pouncemap={};
     Map<int, Map<String, dynamic>> mapofall = {};
     for (int i = 0; i < _all_promotionsController.allPromotionss.length; i++) {
       bool indate;
@@ -295,22 +331,20 @@ class MyProdectListController extends GetxController {
 
       bool isinall_group_customers = false;
       bool isinall_group_salesmans = false;
-      _all_promotionsController.allPromotionss[i].allGroupCustomers.forEach((
-          element) {
-
-        if (element.customerId == Get
-            .find<AllChequesController>()
-            .customer_id){
-          isinall_group_customers=true;
+      _all_promotionsController.allPromotionss[i].allGroupCustomers
+          .forEach((element) {
+        if (element.customerId ==
+            Get.find<AllChequesController>().customer_id) {
+          isinall_group_customers = true;
         }
       });
-      _all_promotionsController.allPromotionss[i].allGroupSalesmans.forEach((
-          element) {
-
-        if (int.parse(element.employeeId) ==  Get.find<UserAndPermissions>().user.id){
-          isinall_group_salesmans=true;
-        }else{
-          isinall_group_salesmans=false;
+      _all_promotionsController.allPromotionss[i].allGroupSalesmans
+          .forEach((element) {
+        if (int.parse(element.employeeId) ==
+            Get.find<UserAndPermissions>().user.id) {
+          isinall_group_salesmans = true;
+        } else {
+          isinall_group_salesmans = false;
         }
       });
 
@@ -327,7 +361,6 @@ class MyProdectListController extends GetxController {
       g['isinall_group_salesmans'] = isinall_group_salesmans;
       g['isinall_group_customers'] = isinall_group_customers;
       g['active'] = indate;
-
 
       g['bonusQty'] = _all_promotionsController.allPromotionss[i].bonusQty;
 
@@ -349,18 +382,18 @@ class MyProdectListController extends GetxController {
           .allPromotionss[i].allOutQuantityPromotionItems;
       mapofall[i] = g;
       List<Rx<TheItemInList>> itemm = [];
-      int ii = 0;
+      double ii = 0;
       item.forEach((key, value) {
+   Map<String,List<TextEditingController>>     textcontrol={};
         _all_promotionsController.allPromotionss[i].allOutQuantityPromotionItems
             .forEach((el) {
+
           if (value.value.count > 0 && value.value.id == el.itemId) {
-            // print(value.value.id==el.itemId);
-            // print("id  ${value.value.id}   $i");
-            // print('itemId ${el.itemId}    $i');
-            // print('count  ${value.value.count}   $i');
+
             ii += value.value.count;
             itemm.add(value);
           }
+
           print("ii  $ii      $i");
           g['QuantityValue'] = ii;
           mapofall[i] = g;
@@ -374,124 +407,201 @@ class MyProdectListController extends GetxController {
       print('isinall_group_salesmans ${value['isinall_group_salesmans']}');
       print('isinall_group_customers ${value['isinall_group_customers']}');
       print('active ${value['active']}');
-      if( value['isinall_group_salesmans'] ==true&& value['isinall_group_customers']==true&& value['active']==true){
-      int youget = 0;
-      if (value['isBonusDuplicate'] == '1') {
-        double pp = (value['QuantityValue'] /
-            int.parse(value['minimumQuantityValue']));
-        youget = pp.toInt() * int.parse(value['bonusQty']);
-      } else {
-        youget = int.parse(value['bonusQty']);
-      };
-      // print(value['QuantityValue']);
-      // print(value['QuantityValue'] > int.parse(value['minimumQuantityValue']));
-      if (value['QuantityValue'] >= int.parse(value['minimumQuantityValue'])) {
-        liPro.add(Container(color: Colors.orange,
-            child: Column(
-              children: [
-                Center(child: Text('العرض رقم ${key + 1}')),
-                Center(child: Text('ستحصل علي ${youget}')),
-              ],
-            )));
-        if (value['strictlyListedItem'] == 'yes') {
-          List<Rx<TheItemInList>> _myv = value['iteminlist'];
-          _myv.forEach((element) {
-            liPro.add(Card(
-              elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(child: Text(element.value.name)),
-                        Container(
-                          margin: const EdgeInsets.all(15.0),
-                          padding: const EdgeInsets.all(3.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blueAccent),
-                              borderRadius: BorderRadius.circular(4)),
-                          width: 50,
-                          height: 25,
-                          child: TextField(
-                            onChanged: (v) {
-                              if (v != null ) {
-                                if(int.parse(v) <= youget){
-                                  setbonce(id: element.value.id,val: v);
-                                }else {
-                                  Get.snackbar('', 'تاكد من الرقم الصحيح');
-                                }
-
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                    // Text(
-                    //     '${element.minimumQuantityValue} get  ${element
-                    //         .bonusQty}     / $youget ')
-                  ],
-                ),
-              ),
-            ));
-          });
+      if (value['isinall_group_salesmans'] == true &&
+          value['isinall_group_customers'] == true &&
+          value['active'] == true) {
+        int youget = 0;
+        if (value['isBonusDuplicate'] == '1') {
+          double pp = (value['QuantityValue'] /
+              int.parse(value['minimumQuantityValue']));
+          youget = pp.toInt() * int.parse(value['bonusQty']);
         } else {
-          List<AllOutQuantityPromotionItems> _allitemout =
-          value['AllOutQuantityPromotionItems'];
+          youget = int.parse(value['bonusQty']);
+        }
+        ;
 
-          _allitemout.forEach((elll) {
-            item.forEach((key, vll) {
-              if (elll.itemId == vll.value.id) {
-                liPro.add(Card(
-                  elevation: 8,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(child: Text(vll.value.name)),
-                            Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(3.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.blueAccent),
-                                  borderRadius: BorderRadius.circular(4)),
-                              width: 50,
-                              height: 25,
-                              child: TextField(
-                                onChanged: (v) {
-                                  // if (v != null && int.parse(v) <= youget) {
-                                  //   _myProdectListController.setbonce(
-                                  //       id: e.itemId, val: v);
-                                  // } else {
-                                  //   Get.snackbar('', 'تاكد من الرقم الصحيح');
-                                  // }
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                        // Text(
-                        //     '${element.minimumQuantityValue} get  ${element
-                        //         .bonusQty}     / $youget ')
-                      ],
-                    ),
-                  ),
-                ));
+        if (value['QuantityValue'] >=
+            int.parse(value['minimumQuantityValue'])) {
+          liPro.add(Container(
+              color: Colors.orange,
+              child: Column(
+                children: [
+                  Center(child: Text('العرض رقم ${key + 1}')),
+                  Center(child: Text('ستحصل علي ${youget}')),
+                ],
+              )));
+          if (value['strictlyListedItem'] == 'yes') {
+            List<Rx<TheItemInList>> _myv = value['iteminlist'];
+            _myv.forEach((element) {
+              if (pouncemap[element.value.id]== null) {
+                pouncemap[element.value.id]=0;}
+              pouncemap[element.value.id]=0;
+              if (mapofpounce[element.value.id] == null) {
+                pouncemap[element.value.id]=0;
+                mapofpounce[element.value.id] = youget;
+
+              } else {
+                mapofpounce[element.value.id]  =mapofpounce[element.value.id]+ youget;
               }
+              liPro.add(Card(
+                elevation: 8,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(child: Text(element.value.name)),
+                          Container(
+                            margin: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.blueAccent),
+                                borderRadius: BorderRadius.circular(4)),
+                            width: 50,
+                            height: 25,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              // onChanged: (v) {
+                              //   // if (v != null) {
+                              //   //   if (int.parse(v) <= youget) {
+                              //   //     print(
+                              //   //         (element.value.bonce + int.parse(v)) <=
+                              //   //             mapofpounce[element.value.id]);
+                              //   //     print(element.value.bonce + int.parse(v));
+                              //   //     if ((element.value.bonce + int.parse(v)) <=
+                              //   //         mapofpounce[element.value.id]) {
+                              //   //       setbonce(
+                              //   //           id: element.value.id,
+                              //   //           val: (element.value.bonce +
+                              //   //                   int.parse(v))
+                              //   //               .toString());
+                              //   //     } else {
+                              //   //       setbonce(id: element.value.id, val: v);
+                              //   //     }
+                              //   //   } else {
+                              //   //     Get.snackbar('', 'تاكد من الرقم الصحيح');
+                              //   //   }
+                              //   // }
+                              // },
+                              onSubmitted: (v){   if (v != null) {
+                              if (int.parse(v) <= youget) {
+
+
+
+                                  pouncemap[element.value.id]=pouncemap[element.value.id] + int.parse(v);
+                                  // setbonce(
+                                  //     id: element.value.id,
+                                  //     val: (element.value.bonce +
+                                  //         int.parse(v))
+                                  //         .toString());
+
+                              } else {
+                                Get.snackbar('', 'تاكد من الرقم الصحيح');
+                              }
+                            }},
+                            ),
+                          )
+                        ],
+                      ),
+                      // Text(
+                      //     '${element.minimumQuantityValue} get  ${element
+                      //         .bonusQty}     / $youget ')
+                    ],
+                  ),
+                ),
+              ));
             });
-          });
+          } else {
+            List<AllOutQuantityPromotionItems> _allitemout =
+                value['AllOutQuantityPromotionItems'];
+
+            _allitemout.forEach((elll) {
+              item.forEach((key, vll) {
+
+                if (elll.itemId == vll.value.id) {
+                  if (pouncemap[vll.value.id]== null) {
+                    pouncemap[vll.value.id]=0;}
+                  if (mapofpounce[vll.value.id] == null) {
+
+                    mapofpounce[vll.value.id] = youget;
+                  } else {
+                      mapofpounce[vll.value.id]=mapofpounce[vll.value.id]+ youget;
+                  }
+
+                  liPro.add(Card(
+                    elevation: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(child: Text(vll.value.name)),
+                              Container(
+                                margin: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.all(3.0),
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: Colors.blueAccent),
+                                    borderRadius: BorderRadius.circular(4)),
+                                width: 50,
+                                height: 25,
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  onSubmitted: (v) {
+                                    if (v != null) {
+                                      if (int.parse(v) <= youget) {
+
+
+                                          pouncemap[vll.value.id]=vll.value.bonce + double.parse(v);
+                                          // setbonce(
+                                          //     id: vll.value.id,
+                                          //     val: (vll.value.bonce +
+                                          //         int.parse(v))
+                                          //         .toString());
+
+                                        //  setbonce(id: vll.value.id,val: v);
+                                      } else {
+                                        Get.snackbar(
+                                            '', 'تاكد من الرقم الصحيح');
+                                      }
+                                    }
+
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                          // Text(
+                          //     '${element.minimumQuantityValue} get  ${element
+                          //         .bonusQty}     / $youget ')
+                        ],
+                      ),
+                    ),
+                  ));
+                }
+              });
+            });
+          }
         }
       }
-      }  });
+    });
     liPro.add(GestureDetector(
       onTap: () {
+        print(mapofpounce);
+        pouncemap.forEach((key, value) {
+          print('$key   $value');
+          item.forEach((ke, va) {
+            if(key==ke){
+              setbonce(id: ke,val: value.toString());
+            }
+          });
+        });
         Get.back();
       },
       child: Center(
@@ -517,12 +627,12 @@ class MyProdectListController extends GetxController {
             ),
             child: Center(
                 child: Text(
-                  'Ok',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                )),
+              'Ok',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            )),
           ),
         ),
       ),
@@ -542,12 +652,12 @@ class MytrayItem {
 class TheItemInList {
   String id;
   double diescount;
-  int bonce;
+  double bonce;
   String name;
   double price;
   double tex;
   int quantity_in_store;
-  int count;
+  double count;
   double afterdes;
   double befordes;
   double totalPriceForItem;
@@ -558,23 +668,24 @@ class TheItemInList {
   int categoryId;
   int measurementUnitId;
 
-  TheItemInList({this.id,
-    this.diescount,
-    this.quantity_in_store,
-    this.bonce,
-    this.name,
-    this.price,
-    this.tex,
-    this.count,
-    this.afterdes,
-    this.befordes,
-    this.totalPriceForItem,
-    this.totalTaxForItem,
-    this.pic,
-    this.itemNumber,
-    this.minimumQuantity,
-    this.categoryId,
-    this.measurementUnitId});
+  TheItemInList(
+      {this.id,
+      this.diescount,
+      this.quantity_in_store,
+      this.bonce,
+      this.name,
+      this.price,
+      this.tex,
+      this.count,
+      this.afterdes,
+      this.befordes,
+      this.totalPriceForItem,
+      this.totalTaxForItem,
+      this.pic,
+      this.itemNumber,
+      this.minimumQuantity,
+      this.categoryId,
+      this.measurementUnitId});
 }
 
 // TheItemInList(

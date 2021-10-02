@@ -10,6 +10,7 @@ import 'package:anjum/controllers/cartItemController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/employeePermissionsController.dart';
+import 'package:anjum/controllers/itemUnits_controller.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/salesOrderController.dart';
@@ -21,6 +22,7 @@ import 'package:get/get.dart';
 class NetWorkBinding extends Bindings{
   @override
   void dependencies() {
+    Get.lazyPut(() => ItemUnitsController() ,fenix: true);
      Get.lazyPut<NetWorkController>(() => NetWorkController());
      Get.lazyPut(() => MyProdectListController() ,fenix: true);
      Get.lazyPut(() => CartItemController(),fenix: true );

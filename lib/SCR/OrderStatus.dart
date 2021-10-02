@@ -2,7 +2,9 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:get/get.dart';
@@ -227,8 +229,8 @@ class _OrderStatusState extends State<OrderStatus> {
     List<AllCustomers> allCustomers=   Get.find<AllCustomersControllers>().allCustomers;
 
     for(int i=0;i<allCustomers.length;i++){
-   if(allCustomers[i].customerInfo.id==data.customer_id){
-     name=allCustomers[i].customerInfo.customerNameEn;
+   if(allCustomers[i].id==data.customer_id){
+     name=allCustomers[i].customerNameEn;
    }
     }
 

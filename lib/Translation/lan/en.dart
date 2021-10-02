@@ -128,4 +128,6 @@ const Map<String, String> en = {
   'Back':'Back'
   ,
   'Submit':'Submit'
+  ,
+  'update':'update'
 };

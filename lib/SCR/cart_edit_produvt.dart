@@ -161,7 +161,7 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                                         .insert_insert_visit(Insert_visit_DB(
                                       customer_id: Get.find<AllChequesController>()
                                           .customer
-                                          .customerInfo
+
                                           .id,
                                       user_id: _userAndPermissions.user.id.toString(),
                                     ))

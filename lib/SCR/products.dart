@@ -6,7 +6,7 @@ import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
-import 'package:anjum/controllers/allCustomersControllers.dart';
+
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/allStockItemsController.dart';
 import 'package:anjum/controllers/cartItemController.dart';
@@ -14,16 +14,23 @@ import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/dropdownMenuItemList.dart';
 import 'package:anjum/controllers/employeDataController.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
+import 'package:anjum/controllers/priceListsInfoController.dart';
 
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/controllers/network_controller.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+
 import 'package:anjum/network/json/olderpost_json.dart';
+import 'package:anjum/network/jsonofnwetry/get_Fifth_step_json.dart';
+
+import 'package:anjum/network/jsonofnwetry/get_third_step_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step3_json.dart';
 import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 
 import 'package:anjum/utilitie/utilities.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -45,8 +52,8 @@ class _ProductsScrState extends State<ProductsScr> {
 
   final AllItemsController bata = Get.find<AllItemsController>();
 
-  final AllCustomersControllers _allCustomersControllers =
-  Get.find<AllCustomersControllers>();
+  final PriceListsInfoController priceListsInfoController =
+  Get.find<PriceListsInfoController>();
 
   final UnitController _UnitController =
   Get.find<UnitController>(); //Get.put(UnitController());
@@ -91,42 +98,42 @@ class _ProductsScrState extends State<ProductsScr> {
     print(
         'disposedisposedisposedisposedisposedisposedisposedisposedisposedisposedispose');
   } //getstock
-
-  getmeasurementUnit() {
-    AllCustomers allCustomers = Get
-        .find<AllChequesController>()
-        .customer;
-    List<List<ItemUnits>> MeasurementUnit2 = [];
-    for (int uu = 0; uu < allCustomers.priceListsInfo.length; uu++) {
-      MeasurementUnit2.add([]);
-    }
-
-    //  List<String>MeasurementUnit=[];
-
-    for (int i = 0; i < allCustomers.priceListsInfo.length; i++) {
-      //    MeasurementUnit.clear();
-
-      for (int p = 0;
-      p < allCustomers.priceListsInfo[i].itemUnits.length;
-      p++) {
-        MeasurementUnit2[i].add(allCustomers.priceListsInfo[i].itemUnits[p]);
-
-        //  MeasurementUnit.add( allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
-
-      }
-
-      _UnitController
-          .MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId] =
-      MeasurementUnit2[i];
-    }
-  }
+  //
+  // getmeasurementUnit() {
+  //   AllCustomers allCustomers = Get
+  //       .find<AllChequesController>()
+  //       .customer;
+  //   List<List<ItemUnits>> MeasurementUnit2 = [];
+  //   for (int uu = 0; uu < Get.find<PriceListsInfoController>().priceList.length; uu++) {
+  //     MeasurementUnit2.add([]);
+  //   }
+  //
+  //   //  List<String>MeasurementUnit=[];
+  //
+  //   for (int i = 0; i < Get.find<PriceListsInfoController>().priceList.length; i++) {
+  //     //    MeasurementUnit.clear();
+  //
+  //     for (int p = 0;
+  //     p < allCustomers.priceListsInfo[i].itemUnits.length;
+  //     p++) {
+  //       MeasurementUnit2[i].add(allCustomers.priceListsInfo[i].itemUnits[p]);
+  //
+  //       //  MeasurementUnit.add( allCustomers.priceListsInfo[i].itemUnits[p].itemMeasurementUnits);
+  //
+  //     }
+  //
+  //     _UnitController
+  //         .MeasurementUnit_map[allCustomers.priceListsInfo[i].itemId] =
+  //     MeasurementUnit2[i];
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
     _netWorkController.initConnctivity();
     keysOfMap = _myProdectListController.item.keys.toList();
-    getmeasurementUnit();
+    //getmeasurementUnit();
     dropdownMenuItemList.allStockItems.clear();
     dropdownMenuItemList.listtextEditingControllerOfItem.clear();
     if (_curenceController.defultCurrencies == null) {
@@ -291,9 +298,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                     } else {
                                       _myProdectListController.setissearch(
                                           false);
-                                      _myProdectListController.setsearchword('');
-                                   
-
+                                      _myProdectListController.setsearchword(
+                                          '');
                                     }
                                   }
 
@@ -580,7 +586,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       if (_myProdectListController
                                           .item[keysOfMap[pos]].value.name
                                           .contains(
-                                          _myProdectListController.searchWord)){
+                                          _myProdectListController
+                                              .searchWord)) {
                                         return iteminthelist(
                                           unitslist: unitlist,
 
@@ -600,7 +607,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       else {
                                         return const SizedBox();
                                       }
-                                    } else {
+                                    }
+                                    else {
                                       return iteminthelist(
                                         unitslist: unitlist,
 
@@ -670,7 +678,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                         Get
                                             .find<AllChequesController>()
                                             .customer
-                                            .customerInfo
+
                                             .id,
                                         user_id:
                                         _userAndPermissions.user.id.toString(),
@@ -1621,8 +1629,9 @@ class _ProductsScrState extends State<ProductsScr> {
     if (showdropdowen) {
       for (int i = 0; i < unitslist.length; i++) {
         if (unitslist[i].defaultValue == "yes") {
-          _myProdectListController.setprice(
-              id: products.value.id, val: unitslist[i].sellingPrice);
+          // _myProdectListController.setprice(
+          //     id: products.value.id, val:  unitslist[i].sellingPrice
+          // );
           _UnitController.val_Of_uint_map[products.value.id] = unitslist[i];
         }
       }
@@ -1645,12 +1654,14 @@ class _ProductsScrState extends State<ProductsScr> {
                     height: size.height * .15,
                     width: size.height * .15,
 
-                    child: _netWorkController.connectionStatus.value ? Image
-                        .network(
-                      products.value.pic,
-                      height: size.height * .1,
-                      width: size.height * .1,
-                    ) : Image.asset('assets/images/noimage.png'),
+                    child:CachedNetworkImage(imageUrl: products.value.pic,     height: size.height * .1,
+                      width: size.height * .1,) //_netWorkController.connectionStatus.value ?
+                    // Image
+                    //     .network(
+                    //   products.value.pic,
+                    //   height: size.height * .1,
+                    //   width: size.height * .1,
+                    // ) //: Image.asset('assets/images/noimage.png'),
                   ),
                   SizedBox(
                     width: 8,
@@ -1754,7 +1765,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                         _myProdectListController.setCount(
                                             id: _myProdectListController
                                                 .item[keysOfMap[pos]].value.id,
-                                            count: int.parse(v));
+                                            count: double.parse(v));
                                       } else {
                                         Get.snackbar('',
                                             'لا يمكنك ادخال كمية اكبر من الموجودة في المخزن');
@@ -1764,7 +1775,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     _myProdectListController.setCount(
                                         id: _myProdectListController
                                             .item[keysOfMap[pos]].value.id,
-                                        count: int.parse(v));
+                                        count: double.parse(v));
                                   }
                                 },
                                 onEditingComplete: () {},
@@ -1998,71 +2009,71 @@ class _ProductsScrState extends State<ProductsScr> {
                             Column(
                               children: [
                                 Text('unit'.tr),
-                                //  Obx(()=>
-                                Container(
-                                  width: size.width * .25,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                    child: showdropdowen
-                                        ? GetBuilder<MyProdectListController>(
-                                      builder: (logic) {
-                                        return DropdownButton<ItemUnits>(
-                                          value: _UnitController
-                                              .val_Of_uint_map[
-                                          products.value.id],
-                                          icon: const Icon(
-                                              Icons.arrow_downward),
-                                          iconSize: 24,
-                                          elevation: 16,
-                                          style: const TextStyle(
-                                              color: Colors.deepPurple),
-                                          underline: Container(
-                                            height: 2,
-                                            color:
-                                            Colors.deepPurpleAccent,
-                                          ),
-                                          onChanged:
-                                              (ItemUnits newValue) {
-                                            _UnitController
-                                                .val_Of_uint_map[
-                                            products.value.id] =
-                                                newValue;
-
-                                            _myProdectListController
-                                                .setprice(
-                                                id: products.value.id,
-                                                val: newValue
-                                                    .sellingPrice);
-
-                                            print(_myProdectListController
-                                                .item[products.value.id]
-                                                .value
-                                                .price);
-                                          },
-                                          items: unitslist.map<
-                                              DropdownMenuItem<
-                                                  ItemUnits>>(
-                                                  (ItemUnits value) {
-                                                return DropdownMenuItem<
-                                                    ItemUnits>(
-                                                  value: value,
-                                                  child: Text(value
-                                                      .itemMeasurementUnits),
-                                                );
-                                              }).toList(),
-                                        );
-                                      },
-                                    )
-                                        : Text(
-                                        unitslist[0].itemMeasurementUnits),
-                                  ),
-                                )
+                                // //  Obx(()=>
+                                // Container(
+                                //   width: size.width * .25,
+                                //   height: 50,
+                                //   decoration: BoxDecoration(
+                                //       border: Border.all(
+                                //         color: Colors.grey,
+                                //         width: 1,
+                                //       ),
+                                //       borderRadius: BorderRadius.circular(10)),
+                                //   child: Center(
+                                //     child: showdropdowen
+                                //         ? GetBuilder<MyProdectListController>(
+                                //       builder: (logic) {
+                                //         return DropdownButton<ItemUnits>(
+                                //           value: _UnitController
+                                //               .val_Of_uint_map[
+                                //           products.value.id],
+                                //           icon: const Icon(
+                                //               Icons.arrow_downward),
+                                //           iconSize: 24,
+                                //           elevation: 16,
+                                //           style: const TextStyle(
+                                //               color: Colors.deepPurple),
+                                //           underline: Container(
+                                //             height: 2,
+                                //             color:
+                                //             Colors.deepPurpleAccent,
+                                //           ),
+                                //           onChanged:
+                                //               (ItemUnits newValue) {
+                                //             _UnitController
+                                //                 .val_Of_uint_map[
+                                //             products.value.id] =
+                                //                 newValue;
+                                //
+                                //             _myProdectListController
+                                //                 .setprice(
+                                //                 id: products.value.id,
+                                //                 val: newValue
+                                //                     .sellingPrice);
+                                //
+                                //             print(_myProdectListController
+                                //                 .item[products.value.id]
+                                //                 .value
+                                //                 .price);
+                                //           },
+                                //           items: unitslist.map<
+                                //               DropdownMenuItem<
+                                //                   ItemUnits>>(
+                                //                   (ItemUnits value) {
+                                //                 return DropdownMenuItem<
+                                //                     ItemUnits>(
+                                //                   value: value,
+                                //                   child: Text(value
+                                //                       .itemMeasurementUnits),
+                                //                 );
+                                //               }).toList(),
+                                //         );
+                                //       },
+                                //     )
+                                //         : Text(
+                                //         unitslist[0].itemMeasurementUnits),
+                                //   ),
+                                // )
                                 //     )
                               ],
                             ),
@@ -2105,29 +2116,10 @@ class _ProductsScrState extends State<ProductsScr> {
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: TextField(
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (v) {
-                                      if (v != null && v.isNotEmpty) {
-                                        _myProdectListController.setbonce(
-                                            id: products.value.id, val: v);
-                                        print(products.value.bonce);
-                                      }
-                                    },
-                                    controller: bounceController,
-                                    textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                        onPressed: () =>
-                                            bounceController.clear(),
-                                        icon: Icon(Icons.clear),
-                                      ),
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
+                                  child: Center(
+                                    child: Obx(() {
+                                      return Text(products.value.bonce.toString());
+                                    }),
                                   ),
                                 ),
                               ],

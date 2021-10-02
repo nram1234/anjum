@@ -25,15 +25,21 @@ import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/utilities.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
+import 'package:path_provider/path_provider.dart';
 
 import 'OrderStatus.dart';
 import 'all _customer.dart';
 import 'dashboard.dart';
+import 'login.dart';
 import 'new/Catalog.dart';
 import 'new/TimeLine.dart';
+import 'new/getalldatafromweb.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -52,37 +58,34 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     var size = MediaQuery.of(context).size;
-    return WillPopScope(onWillPop:  () {
-      return showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Exit".tr),
-              content: Text('exitm'.tr),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("YES".tr),
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text("NO".tr),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          }
-      );
-      return Future.value(true);
-    } ,
+    return WillPopScope(
+      onWillPop: () {
+        return showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Exit".tr),
+                content: Text('exitm'.tr),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("YES".tr),
+                    onPressed: () {
+                      SystemNavigator.pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("NO".tr),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            });
+        return Future.value(true);
+      },
       child: Scaffold(
           body: Container(
         height: size.height,
@@ -102,11 +105,21 @@ class _HomeState extends State<Home> {
                     Positioned(
                         left: size.width * .1,
                         top: size.height * .05,
-                        child: Image.network(
-                          _userAndPermissions.user.image,
-                          height: 75,
+                        child: CachedNetworkImage(  height: 75,
                           width: 75,
-                        )),
+                          imageUrl: _userAndPermissions.user.image,//imageBuilder: (context, imageprovider) =>Container(),
+                          placeholder: (context, url) => Center(
+                            child: Text(". . . "),
+                          ),
+                        )
+
+                        // Image.network(
+                        //   _userAndPermissions.user.image,
+                        //   height: 75,
+                        //   width: 75,
+                        // )
+
+                        ),
                     Positioned(
                         left: (size.width * .1) + 80,
                         top: size.height * .06,
@@ -134,69 +147,96 @@ class _HomeState extends State<Home> {
                         SizedBox(
                           height: 16,
                         ),
-                        InkWell(
-                          onTap: () {
-                            startJourney = !startJourney;
-                            print(startJourney);
-                            if (startJourney) {
-                              getMyLoction(firesjornytlocation);
-                              jornystartTime = DateTime.now();
-                              setState(() {});
-                              Get.to(()=>All_Customer());
-                            } else {
-                              setState(() {});
-                              jornyEndTime = DateTime.now();
-                              getMyLoction(endjornylocation);
-                              DatabaseHelper()
-                                  .insert_insert_journeys(Insert_journeys_DB(
-                                      user_id:
-                                          _userAndPermissions.user.id.toString(),
-                                      start_date: jornystartTime.toString(),
-                                      end_date: jornyEndTime.toString(),
-                                      start_lang: firesjornytlocation == null
-                                          ? ""
-                                          : firesjornytlocation.longitude
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                startJourney = !startJourney;
+                                print(startJourney);
+                                if (startJourney) {
+                                  getMyLoction(firesjornytlocation);
+                                  jornystartTime = DateTime.now();
+                                  setState(() {});
+                                  Get.to(() => All_Customer());
+                                } else {
+                                  setState(() {});
+                                  jornyEndTime = DateTime.now();
+                                  getMyLoction(endjornylocation);
+                                  DatabaseHelper()
+                                      .insert_insert_journeys(Insert_journeys_DB(
+                                          user_id: _userAndPermissions.user.id
                                               .toString(),
-                                      start_lat: firesjornytlocation == null
-                                          ? ""
-                                          : firesjornytlocation.latitude
-                                              .toString(),
-                                      end_lang: endjornylocation == null
-                                          ? ""
-                                          : endjornylocation.longitude.toString(),
-                                      end_lat: endjornylocation == null
-                                          ? ""
-                                          : endjornylocation.latitude.toString()))
-                                  .then((value) {
-                                print(value);
-                              });
-                            }
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    startJourney
-                                        ? 'endofJourney'.tr
-                                        : 'startofJourney'.tr,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                          start_date: jornystartTime.toString(),
+                                          end_date: jornyEndTime.toString(),
+                                          start_lang: firesjornytlocation == null
+                                              ? ""
+                                              : firesjornytlocation.longitude
+                                                  .toString(),
+                                          start_lat: firesjornytlocation == null
+                                              ? ""
+                                              : firesjornytlocation.latitude
+                                                  .toString(),
+                                          end_lang: endjornylocation == null
+                                              ? ""
+                                              : endjornylocation.longitude
+                                                  .toString(),
+                                          end_lat: endjornylocation == null
+                                              ? ""
+                                              : endjornylocation.latitude
+                                                  .toString()))
+                                      .then((value) {
+                                    print(value);
+                                  });
+                                }
+                              },
+                              child:
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        startJourney
+                                            ? 'endofJourney'.tr
+                                            : 'startofJourney'.tr,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Image.asset('assets/images/van.png'),
+                                    ],
                                   ),
-                                  Image.asset('assets/images/van.png'),
-                                ],
+                                ),
+                                width: size.width * .7,
+                                height: size.height * .08,
+                                decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
                             ),
-                            width: size.width * .9,
-                            height: size.height * .08,
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
+                            InkWell(onTap: (){
+                              Get.to(()=>GetAllDataFRomWeb())   ;                         },child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Center(
+                                child: Text(
+                                   'update'.tr,
+
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                              ),
+                              width: size.width * .25,
+                              height: size.height * .08,
+                              decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),)
+                          ],
                         ),
                         SizedBox(
                           height: size.height * .05,
@@ -206,7 +246,7 @@ class _HomeState extends State<Home> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(()=>OrderStatus());
+                                Get.to(() => OrderStatus());
                               },
                               child: item(
                                   color: Colors.orange[200],
@@ -216,8 +256,7 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                               Get.to( ()=> TimeLine());
-
+                                Get.to(() => TimeLine());
                               },
                               child: item(
                                   color: Colors.red[200],
@@ -225,9 +264,10 @@ class _HomeState extends State<Home> {
                                   name: 'timeline'.tr,
                                   path: 'assets/images/g.png'),
                             ),
-                            GestureDetector(onTap: (){
-Get.to(()=> Catalog());
-                            },
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => Catalog());
+                              },
                               child: item(
                                   color: Colors.cyan[200],
                                   size: size,
@@ -249,7 +289,7 @@ Get.to(()=> Catalog());
                                 path: 'assets/images/promotion.png'),
                             GestureDetector(
                               onTap: () {
-                                Get.to(()=> Reports());
+                                Get.to(() => Reports());
                               },
                               child: item(
                                   color: Colors.cyan[200],
@@ -258,8 +298,14 @@ Get.to(()=> Catalog());
                                   path: 'assets/images/report.png'),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                Get.to(Printer1());
+                              onTap: () async {
+                                //    Get.to(Printer1());
+                                var boxx = GetStorage();
+print('ooooooooooooooooooooooooooooooooooooooooooooooooooooo');
+                                print(boxx.read("key"));
+                                print(boxx.read("userAnd"));
+                                print(boxx.read("permissions"));
+                                print('ooooooooooooooooooooooooooooooooooooooooooooooooooooo');
                               },
                               child: item(
                                   color: Colors.orange[200],
@@ -277,35 +323,46 @@ Get.to(()=> Catalog());
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.green[200].withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                width: size.width * .62,
-                                height: size.height * .2,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/log.png',
-                                        height: size.height * .07,
-                                        width: size.height * .07,
-                                        color: Colors.green,
+                              InkWell(onTap: (){
+                                var box = GetStorage();
+                                 box.remove('token' );
+                                 Get.offAll(()=>Login());
+                              },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.green[200].withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
                                       ),
-                                      Text('logout',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
                                     ],
+                                  ),
+                                  width: size.width * .62,
+                                  height: size.height * .2,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/log.png',
+                                          height: size.height * .07,
+                                          width: size.height * .07,
+                                          color: Colors.green,
+                                        ),
+                                        Text(
+                                          'logout',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -342,10 +399,11 @@ Get.to(()=> Catalog());
 //                             ),
                             ],
                           ),
-                        )
-                       , SizedBox(
+                        ),
+                        SizedBox(
                           height: size.height * .05,
-                        ),      ],
+                        ),
+                      ],
                     ),
                   ),
                 )),
@@ -355,70 +413,135 @@ Get.to(()=> Catalog());
     );
   }
 
+//  Box box;
+//
+//   Future openBox() async {
+//     var dir = await getApplicationDocumentsDirectory();
+//     Hive.init(dir.path);
+//     box = await Hive.openBox('data');
+//   }
+
   @override
   void initState() {
     super.initState();
-    _allNetworking.Get_employee_data(
-            user_id: _userAndPermissions.user.id.toString()
-    )
-        .then((value) {
-      //insert to database
-      Get.find<All_PromotionsController>()
-         .allPromotionsUpdat(value.result.allPromotions);
+      Get.find<NetWorkController>()
+        .initConnctivity();
 
-      Get.find<AllCustomersControllers>()
-          .updateallCustomers(value.result.allCustomers);
-      Get.find<UserDataController>().updateserData(value.result.userData);
-      Get.find<AllBanksController>().allBanks.clear();
-      Get.find<AllBanksController>().updateallBanksData(value.result.allBanks);
+    // if (!Get.find<NetWorkController>()
+    //     .connectionStatus
+    //     .value){
+    //   var box = GetStorage();
+    //   // Get_employee_data_json value=Get_employee_data_json.fromJson(box.read("key"));
+    //   Get.find<All_PromotionsController>()
+    //       .allPromotionsUpdat(value.result.allPromotions);
+    //
+    //   Get.find<AllCustomersControllers>()
+    //       .updateallCustomers(value.result.allCustomers);
+    //   Get.find<UserDataController>().updateserData(value.result.userData);
+    //
+    //   Get.find<AllBanksController>().updateallBanksData(value.result.allBanks);
+    //
+    //
+    //
+    //   print(value.result.allCategories.length);
+    //   print(value.result.allCategories);
+    //
+    //
+    //
+    //   Get.find<CurenceController>().setallCurrencie(value.result.allCurrencies);
+    //
+    //   allCategoriesController
+    //       .updateallCategoriesData(value.result.allCategories);
+    //
+    //   Get.find<AllChequesController>()
+    //       .updateallChequesData(value.result.allCheques);
+    //
+    //   Get.find<AllCustomersControllers>()
+    //       .updateallCustomers(value.result.allCustomers);
+    //
+    //   Get.find<AllStockItemsController>()
+    //       .updateallStockItemsData(value.result.allStockItems);
+    //
+    //   Get.find<AllCategoriesController>()
+    //       .updateallCategoriesData(value.result.allCategories);
+    //   Get.find<All_routesController>().updateAllRoutes(value.result.allRoutes);
+    //   Get.find<EmployeDataController>()
+    //       .updateemployeDatasData(value.result.employeData);
+    //
+    //   Get.find<EmployeePermissionsController>()
+    //       .updateemployeePermissionsData(value.result.employeePermissions);
+    //
+    //   Get.find<SalesOrderController>()
+    //       .updatesalesOrderData(value.result.salesOrder);
+    //
+    //   Get.find<AllItemsController>().updateallItemsData(value.result.allItems);
+    // }
 
-      // Get.find<AllCategoriesController>()
-      //     .allCategories
-      //     .clear();
-      // Get.find<AllCategoriesController>()
-      //     .updateallCategoriesData(
-      //         value.result.allCategories);
-      allCategoriesController.allCategories.clear();
-      print('00000000000000000000000000000000000');
 
 
-      print(value.result.allCategories.length);
-      print(value.result.allCategories);
-
-      print('00000000000000000000000000000000000');
-
-      Get.find<CurenceController>().setallCurrencie(value.result.allCurrencies);
-
-      allCategoriesController
-          .updateallCategoriesData(value.result.allCategories);
-
-      Get.find<AllChequesController>()
-          .updateallChequesData(value.result.allCheques);
-
-      Get.find<AllCustomersControllers>()
-          .updateallCustomers(value.result.allCustomers);
-
-      Get.find<AllStockItemsController>()
-          .updateallStockItemsData(value.result.allStockItems);
-
-      Get.find<AllCategoriesController>()
-          .updateallCategoriesData(value.result.allCategories);
-      Get.find<All_routesController>()
-          .updateAllRoutes(value.result.allRoutes);
-      Get.find<EmployeDataController>()
-          .updateemployeDatasData(value.result.employeData);
-
-      Get.find<EmployeePermissionsController>()
-          .updateemployeePermissionsData(value.result.employeePermissions);
-
-      Get.find<SalesOrderController>()
-          .updatesalesOrderData(value.result.salesOrder);
-
-      Get.find<AllItemsController>().updateallItemsData(value.result.allItems);
-
-      updatethedata = true;
-      print(value.result.allItems);
-    });
+//     _allNetworking.Get_employee_data(
+//             user_id: _userAndPermissions.user.id.toString())
+//         .then((value) async {
+//       // await openBox();
+//       // await box.clear();
+//       // print(box.isOpen);
+// //box.add(value);
+//
+//       //insert to database
+//       Get.find<All_PromotionsController>()
+//           .allPromotionsUpdat(value.result.allPromotions);
+//
+//       Get.find<AllCustomersControllers>()
+//           .updateallCustomers(value.result.allCustomers);
+//       Get.find<UserDataController>().updateserData(value.result.userData);
+//       Get.find<AllBanksController>().allBanks.clear();
+//       Get.find<AllBanksController>().updateallBanksData(value.result.allBanks);
+//
+//       // Get.find<AllCategoriesController>()
+//       //     .allCategories
+//       //     .clear();
+//       // Get.find<AllCategoriesController>()
+//       //     .updateallCategoriesData(
+//       //         value.result.allCategories);
+//       allCategoriesController.allCategories.clear();
+//       print('00000000000000000000000000000000000');
+//
+//       print(value.result.allCategories.length);
+//       print(value.result.allCategories);
+//
+//       print('00000000000000000000000000000000000');
+//
+//       Get.find<CurenceController>().setallCurrencie(value.result.allCurrencies);
+//
+//       allCategoriesController
+//           .updateallCategoriesData(value.result.allCategories);
+//
+//       Get.find<AllChequesController>()
+//           .updateallChequesData(value.result.allCheques);
+//
+//       Get.find<AllCustomersControllers>()
+//           .updateallCustomers(value.result.allCustomers);
+//
+//       Get.find<AllStockItemsController>()
+//           .updateallStockItemsData(value.result.allStockItems);
+//
+//       Get.find<AllCategoriesController>()
+//           .updateallCategoriesData(value.result.allCategories);
+//       Get.find<All_routesController>().updateAllRoutes(value.result.allRoutes);
+//       Get.find<EmployeDataController>()
+//           .updateemployeDatasData(value.result.employeData);
+//
+//       Get.find<EmployeePermissionsController>()
+//           .updateemployeePermissionsData(value.result.employeePermissions);
+//
+//       Get.find<SalesOrderController>()
+//           .updatesalesOrderData(value.result.salesOrder);
+//
+//       Get.find<AllItemsController>().updateallItemsData(value.result.allItems);
+//
+//       updatethedata = true;
+//       print(value.result.allItems);
+//     });
   }
 
   Widget item({String path, String name, size, Color color}) {

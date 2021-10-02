@@ -1,5 +1,8 @@
+import 'package:anjum/SCR/new/supCategories.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/jsonofnwetry/get_third_step_json.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,12 +14,11 @@ class Catalog extends StatefulWidget {
 class _CatalogState extends State<Catalog> {
   List<AllCategories> allCategories =
       Get.find<AllCategoriesController>().allCategories;
-  List<String>listofimage=[];
-
+  List<String> listofimage = [];
+  UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
 
   @override
   Widget build(BuildContext context) {
-
     print(allCategories);
 
     var size = MediaQuery.of(context).size;
@@ -99,12 +101,35 @@ class _CatalogState extends State<Catalog> {
                             crossAxisSpacing: 5,
                           ),
                           itemBuilder: (context, pos) {
-                            return Container(child:Center(child: Text(allCategories[pos].categoryNameEn),),
-                              height: size.height * .2,
-                              width: size.width * .4,
-                              decoration: BoxDecoration(color: Colors.indigoAccent[100],
-                                  borderRadius: BorderRadius.circular(10)),
-                            );
+                            print(allCategories[pos].userId ==
+                                _userAndPermissions.user.userId.toString());
+
+                            if (allCategories[pos].userId ==
+                                _userAndPermissions.user.userId.toString()) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(
+                                      () => SupCategories(allCategories[pos]));
+                                },
+                                child: Container(
+                                  child: Center(
+                                    child: Text(
+                                      allCategories[pos].categoryNameEn,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,color: Colors.white),
+                                    ),
+                                  ),
+                                  height: size.height * .2,
+                                  width: size.width * .4,
+                                  decoration: BoxDecoration(
+                                      color: Colors.indigoAccent[100],
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
                           })))),
         ],
       ),

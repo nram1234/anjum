@@ -3,7 +3,8 @@ import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/jsonofnwetry/get_fourth_step_json.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -112,318 +113,320 @@ class _CashPayState extends State<CashPay> {
                 right: 0,
                 left: 0,
                 top: size.height * .2,
-                child: Container(
-                  height: size.height * .8,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(30),
-                          topLeft: Radius.circular(30))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("date".tr,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Center(
-                          child: Padding(
+                child: SingleChildScrollView(
+                  child: Container(
+                    height: size.height * .8,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(30),
+                            topLeft: Radius.circular(30))),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              // onTap: () {
-                              //   pickdate().then((value) {
-                              //     if (value != null) {
-                              //       date2 = value;
-                              //       setState(() {});
-                              //     }
-                              //   });
-                              // },
-                              child: Container(
-                                height: 50,
-                                width: size.width * .85,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
-                                  color: Colors.white,
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     color: Colors.grey.withOpacity(0.5),
-                                  //     spreadRadius: 5,
-                                  //     blurRadius: 7,
-                                  //     offset: Offset(
-                                  //         0, 3), // changes position of shadow
-                                  //   ),
-                                  // ],
+                            child: Text("date".tr,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                // onTap: () {
+                                //   pickdate().then((value) {
+                                //     if (value != null) {
+                                //       date2 = value;
+                                //       setState(() {});
+                                //     }
+                                //   });
+                                // },
+                                child: Container(
+                                  height: 50,
+                                  width: size.width * .85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border:
+                                        Border.all(color: Colors.black, width: 1),
+                                    color: Colors.white,
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.withOpacity(0.5),
+                                    //     spreadRadius: 5,
+                                    //     blurRadius: 7,
+                                    //     offset: Offset(
+                                    //         0, 3), // changes position of shadow
+                                    //   ),
+                                    // ],
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    date2,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  )),
                                 ),
-                                child: Center(
-                                    child: Text(
-                                  date2,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                )),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Amount".tr,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Center(
-                          child: Container(
-                            width: size.width * .85,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.black, width: 1),
-                              color: Colors.white,
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //     color: Colors.grey.withOpacity(0.5),
-                              //     spreadRadius: 5,
-                              //     blurRadius: 7,
-                              //     offset: Offset(
-                              //         0, 3), // changes position of shadow
-                              //   ),
-                              // ],
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: TextField(
-                                    onChanged: (v) {
-                                      amount = v;
-                                    },
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Amount".tr,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Center(
+                            child: Container(
+                              width: size.width * .85,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.black, width: 1),
+                                color: Colors.white,
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.grey.withOpacity(0.5),
+                                //     spreadRadius: 5,
+                                //     blurRadius: 7,
+                                //     offset: Offset(
+                                //         0, 3), // changes position of shadow
+                                //   ),
+                                // ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: TextField(
+                                      onChanged: (v) {
+                                        amount = v;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                GetBuilder<CurenceController>(
-                                  builder: (logic) {
-                                    return DropdownButton(
-                                        elevation: 8,
-                                        value:
-                                        logic.defultCurrencies,
-                                        hint: Text("اختار العملة"),
-                                        onChanged: (v) {
-                                          logic.setCurrenciedropdowen(allCurrencies: v);
+                                  GetBuilder<CurenceController>(
+                                    builder: (logic) {
+                                      return DropdownButton(
+                                          elevation: 8,
+                                          value:
+                                          logic.defultCurrencies,
+                                          hint: Text("اختار العملة"),
+                                          onChanged: (v) {
+                                            logic.setCurrenciedropdowen(allCurrencies: v);
 
-                                        },
-                                        items: logic
-                                            .allCurrencie.entries
-                                            .map<
-                                                DropdownMenuItem<
-                                                    AllCurrencies>>((e) {
-                                          return DropdownMenuItem<
-                                              AllCurrencies>(
-                                            value:
-                                            logic.allCurrencie[
-                                                    e.value.currencyName],
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text('${e.value.currencyName  } ${e.value.currencySymbol}'),
-                                            ),
-                                          );
-                                        }).toList());
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('addnote'.tr,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Center(
-                          child: Container(
-                            width: size.width * .85,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.black, width: 1),
-                              color: Colors.white,
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //     color: Colors.grey.withOpacity(0.5),
-                              //     spreadRadius: 5,
-                              //     blurRadius: 7,
-                              //     offset: Offset(
-                              //         0, 3), // changes position of shadow
-                              //   ),
-                              // ],
-                            ),
-                            child: TextField(
-                              onChanged: (v) {
-                                addnote = v;
-                              },
-                              maxLines: 6,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
+                                          },
+                                          items: logic
+                                              .allCurrencie.entries
+                                              .map<
+                                                  DropdownMenuItem<
+                                                      AllCurrencies>>((e) {
+                                            return DropdownMenuItem<
+                                                AllCurrencies>(
+                                              value:
+                                              logic.allCurrencie[
+                                                      e.value.currencyName],
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text('${e.value.currencyName  } ${e.value.currencySymbol}'),
+                                              ),
+                                            );
+                                          }).toList());
+                                    },
+                                  )
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(child: Container()),
-                        Center(
-                          child: Padding(
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                DatabaseHelper()
-                                    .insert_insert_cheque(
-                                        item: Insert_cheque_DB(
-                                  user_id: _userAndPermissions.user.userId,
-                                  employee_id: _userAndPermissions.user.id,
-                                  customer_id: int.parse(
-                                      Get.find<AllChequesController>()
-                                          .customer_id),
-                                  amount: double.tryParse(amount),
-                                  due_date: date2,
-                                  customer_name: allCheques
-                                      .customer.customerInfo.customerNameEn,
-                                  note: addnote,
-                                  payment_type: "cash",
-                                  reference_no:
-                                      allCheques.customer.customerInfo.refId,
-                                  supervisor_id:
-                                      _userAndPermissions.user.supervisorId,
-                                  salesmanager_id:
-                                      _userAndPermissions.user.salesmanagerId,
-                                ))
-                                    .then((value) {
-                                  print(
-                                      '999999999999999999999999999999999999999999');
-                                  print(value);
-                                });
+                            child: Text('addnote'.tr,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Center(
+                            child: Container(
+                              width: size.width * .85,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.black, width: 1),
+                                color: Colors.white,
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.grey.withOpacity(0.5),
+                                //     spreadRadius: 5,
+                                //     blurRadius: 7,
+                                //     offset: Offset(
+                                //         0, 3), // changes position of shadow
+                                //   ),
+                                // ],
+                              ),
+                              child: TextField(
+                                onChanged: (v) {
+                                  addnote = v;
+                                },
+                                maxLines: 6,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(child: Container()),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  DatabaseHelper()
+                                      .insert_insert_cheque(
+                                          item: Insert_cheque_DB(
+                                    user_id: _userAndPermissions.user.userId,
+                                    employee_id: _userAndPermissions.user.id,
+                                    customer_id: int.parse(
+                                        Get.find<AllChequesController>()
+                                            .customer_id),
+                                    amount: double.tryParse(amount),
+                                    due_date: date2,
+                                    customer_name: allCheques
+                                        .customer .customerNameEn,
+                                    note: addnote,
+                                    payment_type: "cash",
+                                    reference_no:
+                                        allCheques.customer .refId,
+                                    supervisor_id:
+                                        _userAndPermissions.user.supervisorId,
+                                    salesmanager_id:
+                                        _userAndPermissions.user.salesmanagerId,
+                                  ))
+                                      .then((value) {
+                                    print(
+                                        '999999999999999999999999999999999999999999');
+                                    print(value);
+                                  });
 
-                                return showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Container(
-                                        width: size.width * .8,
-                                        height: 60,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text('Anjum',
-                                                style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.indigoAccent,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ),
-                                      content: Container(
-                                        width: size.width * .8,
-                                        child: SingleChildScrollView(
+                                  return showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Container(
+                                          width: size.width * .8,
+                                          height: 60,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Text('Paymentdone'.tr),
-                                              Row(
-                                                children: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        // Navigator.pop(context);
-                                                        int count = 0;
-                                                        Navigator.popUntil(
-                                                            context, (route) {
-                                                          return count++ == 3;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(
-                                                              Icons.arrow_back),
-                                                          SizedBox(
-                                                            width: 8,
-                                                          ),
-                                                          Text('Back'.tr),
-                                                          SizedBox(
-                                                            width: 50,
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Icon(Icons
-                                                                          .print),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            8,
-                                                                      ),
-                                                                      Text(
-                                                                          'printers'.tr)
-                                                                    ],
-                                                                  ))
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ))
-                                                ],
-                                              )
+                                              Text('Anjum',
+                                                  style: TextStyle(
+                                                      fontSize: 25,
+                                                      color: Colors.indigoAccent,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
                                             ],
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Container(
-                                height: 50,
-                                width: size.width * .85,
-                                decoration: BoxDecoration(
-                                  color: Color(0xff2C4B89),
-                                  borderRadius: BorderRadius.circular(10),
+                                        content: Container(
+                                          width: size.width * .8,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Text('Paymentdone'.tr),
+                                                Row(
+                                                  children: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          // Navigator.pop(context);
+                                                          int count = 0;
+                                                          Navigator.popUntil(
+                                                              context, (route) {
+                                                            return count++ == 3;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                                Icons.arrow_back),
+                                                            SizedBox(
+                                                              width: 8,
+                                                            ),
+                                                            Text('Back'.tr),
+                                                            SizedBox(
+                                                              width: 50,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                TextButton(
+                                                                    onPressed:
+                                                                        () {},
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(Icons
+                                                                            .print),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              8,
+                                                                        ),
+                                                                        Text(
+                                                                            'printers'.tr)
+                                                                      ],
+                                                                    ))
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: size.width * .85,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff2C4B89),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )),
                                 ),
-                                child: Center(
-                                    child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )),
                               ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )),

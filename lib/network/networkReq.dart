@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
+import 'package:path_provider/path_provider.dart';
 import 'dart:developer'as developer;
 import 'json/customer_json.dart';
 import 'json/get_employee_data_json.dart';
@@ -13,6 +16,17 @@ import 'json/products_json.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
+import 'jsonofnwetry/get_Fifth_step_json.dart';
+import 'jsonofnwetry/get_first_step_json.dart';
+import 'dart:convert' as convert;
+
+import 'jsonofnwetry/get_fourth_step_json.dart';
+
+import 'jsonofnwetry/get_third_step_json.dart';
+
+import 'newjosomnLast/get_second_step1_json.dart';
+import 'newjosomnLast/get_second_step2_json.dart';
+import 'newjosomnLast/get_second_step3_json.dart';
 class AllNetworking {
   static var paseurl = 'http://18.220.206.74/';//http://18.220.206.74/API/api/auth/login
 
@@ -103,6 +117,174 @@ class AllNetworking {
     return data;
   }
 
+
+
+    Future< Get_first_step_json> get_first_step ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_first_step_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_first_step');
+ await http.post(url,body: { "key":  "1234567890" ,
+   "user_id":user_id.toString()}).then((value) {
+     print(value.body);
+   data =Get_first_step_json.fromJson(convert.jsonDecode(value.body));
+
+ }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+  Future< Get_second_step1_json> get_second_step1 ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_second_step1_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_second_step1');
+    await http.post(url,body: { "key":  "1234567890" ,
+      "user_id":user_id.toString()}).then((value) {
+      data =Get_second_step1_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+
+  Future< Get_second_step2_json> get_second_step2 ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_second_step2_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_second_step2');
+    await http.post(url,body: { "key":  "1234567890" ,
+      "user_id":user_id.toString()}).then((value) {
+      data =Get_second_step2_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+  Future< Get_second_step3_json> get_second_step3 ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_second_step3_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_second_step3');
+    await http.post(url,body: { "key":  "1234567890" ,
+      "user_id":user_id.toString()}).then((value) {
+      data =Get_second_step3_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+
+  Future< Get_third_step_json> get_third_step ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_third_step_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_third_step');
+    await http.post(url,body: { "key":  "1234567890" ,
+      "user_id":user_id.toString()}).then((value) {
+      data =Get_third_step_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+  Future< Get_fourth_step_json> get_fourth_step ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_fourth_step_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_fourth_step');
+    await http.post(url,body: { "key":  "1234567890" ,
+      "user_id":user_id.toString()}).then((value) {
+      data =Get_fourth_step_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+  Future< Get_Fifth_step_json> get_Fifth_step ({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id
+
+    };
+    Get_Fifth_step_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_Fifth_step');
+    await http.post(url,body: { "key":  "1234567890" ,
+      "user_id":user_id.toString()}).then((value) {
+        print(value.body);
+      data =Get_Fifth_step_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+
 //
 //   Future< Get_employee_data_json> Get_employee_data ({
 //     @required int user_id,
@@ -128,23 +310,37 @@ class AllNetworking {
 //
 //     return data;
 //   }
-  Future<Get_employee_data_json> Get_employee_data(
-      {@required String user_id}) async {
-    Get_employee_data_json get_employee_data_json;
-    http.Response response = await http.post(
-      Uri.parse(paseurl + 'van/user_api/get_employee_data'),
-      body: {"mode": "formdata", "key": "1234567890", "user_id": user_id},
-    ).then((value) {
-      developer.log(value.toString());
-      var v = jsonDecode(value.body);
 
-    ///    print(v ['result']  );
-      get_employee_data_json =
-          Get_employee_data_json.fromJson(jsonDecode(value.body));
-    });
-
-    return get_employee_data_json;
-  }
+//   Future<Get_employee_data_json> Get_employee_data(
+//       {@required String user_id}) async {
+//     Get_employee_data_json get_employee_data_json;
+//     http.Response response = await http.post(
+//       Uri.parse(paseurl + 'van/user_api/get_employee_data'),
+//       body: {"mode": "formdata", "key": "1234567890", "user_id": user_id},
+//     ).then((value) async{
+//       var box = GetStorage();
+//
+//       // box=await Hive.openBox('data');
+//
+//
+// //box.add(value);
+//       var v = jsonDecode(value.body);
+//       box.write("key", v);
+//
+//
+//
+//
+//       developer.log(value.toString());
+//
+//
+//
+//     ///    print(v ['result']  );
+//       get_employee_data_json =
+//           Get_employee_data_json.fromJson(jsonDecode(value.body));
+//     });
+//
+//     return get_employee_data_json;
+//   }
 
   Future insert_cheque_to_Web({data}) async {
     var respons;

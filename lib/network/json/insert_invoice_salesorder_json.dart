@@ -46,8 +46,8 @@ class ListInvoice {
   int categoryId;
   int measurementUnitId;
   double basePricePerUnit;
-  int bonus;
-  int quantity;
+  double bonus;
+  double quantity;
   String taxType;
   double totalPriceBeforeTax;
   double totalPriceWithTax;

@@ -1,45 +1,53 @@
-import 'package:anjum/network/json/get_employee_data_json.dart';
+
+import 'package:anjum/network/newjosomnLast/get_second_step2_json.dart';
 import 'package:get/get.dart';
 
 import 'allCustomersControllers.dart';
 import 'allItemsController.dart';
 
 class PriceListsInfoController extends GetxController {
-  CustomerInfo _customerInfo;
-  var bata = Get.find<AllCustomersControllers>( );
-  var allItemController = Get.find<AllItemsController>( );
+Map<String,List<PriceListsInfo>>priceList= {};
+Map<String,PriceListsInfo>val_Of_PriceListsInfo_map={};
+Map<String,List<PriceBarUint>>priceparunit={};
+updatepriceListMap({List<PriceListsInfo> priceListsInfo}){
+   priceListsInfo.forEach((element) {
+     print('////////////////////////////////////////////////////');
+     print("id ${element.id}");
+     print("unit ${element.unit}");
+     print("priceListId ${element.priceListId}");
+     print("sellingPrice ${element.sellingPrice}");
+     if(priceList[element.itemId]==null){
+       List<PriceListsInfo>a=[];
+           a.add(element);
+       priceList[element.itemId]=a;
 
-  List<List<PriceListsInfo>> _listpriceListsInfo = [];
+     }if(priceList[element.itemId]!=null){
+   List<String>pp=    priceList[element.itemId].map((e) => e.unit).toList();
+   if(!pp.contains(element.unit)){
+       priceList[element.itemId].add(element);
 
-  //--------------------------------------
-  List<PriceListsInfo> listOfItemPrice = [];
+     }}
+   });
+   print('tttttttttttttttttttttttttttttttttttttttt');
+   print(priceList);
+   print('tttttttttttttttttttttttttttttttttttttttt');
+  update();
+}
 
-  //--------------------------------------
-  //--------------------------------------
+    var allItemController = Get.find<AllItemsController>( );
+
   List<PriceListsInfo> _listOfAllPriceListsInfo = [];
   List<PriceListsInfo> _listOfcustomerPriceListsInfo = [];
-//List<String>itemId=[];
-  //--------------------------------------
-  //--------------------------------------
-  //List<AllItems> showItemDataWithPrice = [];
 
-  makeAListOfPriceListsInfo(CustomerInfo customerInfo) {
+  makeAListOfPriceListsInfo(String customerInfo) {
     _listOfAllPriceListsInfo.clear();
     _listOfcustomerPriceListsInfo.clear();
 
-    allItemController.clearcustomerListItems();
-     // make list of priceListsInfo
-    for (int i = 0; i < bata.allCustomers.length; i++) {
-      for (int o = 0; o < bata.allCustomers[i].priceListsInfo.length; o++) {
-        _listOfAllPriceListsInfo.add(bata.allCustomers[i].priceListsInfo[o]);
-      }
-    }
-    print('00000000000000000000000000');
-    print(_listOfAllPriceListsInfo);
-    print('00000000000000000000000000');
+
+
     // filtter customerInfo list price
-    for (int i = 0; i < _listOfAllPriceListsInfo.length; i++) {
-      if (_listOfAllPriceListsInfo[i].priceListId == customerInfo.priceListId) {
+    for (int i = 0; i < priceList.length; i++) {
+      if (_listOfAllPriceListsInfo[i].priceListId == customerInfo) {
 
         _listOfcustomerPriceListsInfo.add(_listOfAllPriceListsInfo[i]);
       }
@@ -97,5 +105,12 @@ for(int o=0;o<allItemController.allItems.length;o++){
 //
 //
 //   }
+
+}
+class PriceBarUint {
+  String unit;
+  double price;
+
+  PriceBarUint({this.unit, this.price});
 
 }

@@ -227,17 +227,17 @@ class _TimeLineState extends State<TimeLine> {
         for (int p = 0; p < listofallcustomer.length; p++) {
           print(value[i].customer_id
           );
-          print(listofallcustomer[p].customerInfo.id
+          print(listofallcustomer[p].id
           );
           //int.parse(listofallcustomer[p].customerInfo.id
-          if (value[i].customer_id ==int.parse(listofallcustomer[p].customerInfo.id)){
+          if (value[i].customer_id ==int.parse(listofallcustomer[p].id)){
 
             theData.add(DatainItem(
                 orderid: value[i].id,
                 time: value[i].created_at,
-                customername: listofallcustomer[p].customerInfo.customerNameEn,
+                customername: listofallcustomer[p].customerNameEn,
                 salesOrdertybe: value[i].request_type,
-                custormerpic: listofallcustomer[p].customerInfo.image));
+                custormerpic: listofallcustomer[p].image));
           }
         }
       }

@@ -1,15 +1,17 @@
-import 'package:anjum/network/json/get_employee_data_json.dart';
+
+import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AllCustomersControllers extends GetxController{
   ValueNotifier<bool> get loading => _loading;
-  ValueNotifier<bool> _loading = ValueNotifier(true);
+  ValueNotifier<bool> _loading = ValueNotifier(false);
   RxString serchWord="".obs;
   List<AllCustomers> allCustomers=[];
   RxList<AllCustomers> allCustomersSerchFilter= RxList<AllCustomers>();
-  void updateallCustomers(List<AllCustomers> allCustomers){
-    this.allCustomers=allCustomers;
+  void updateallCustomers(List<AllCustomers> allCust){
+    allCustomers=allCust;
+    print("allllllllll${allCustomers}");
     _loading.value = false;
     update();
   }
@@ -18,7 +20,7 @@ class AllCustomersControllers extends GetxController{
 
   //   if(v.isAlphabetOnly){
       for(int i=0;i<allCustomers.length;i++){
-        if(allCustomers[i].customerInfo.customerNameEn.toLowerCase().contains(v.toLowerCase())){
+        if(allCustomers[i].customerNameEn.toLowerCase().contains(v.toLowerCase())){
           allCustomersSerchFilter.add(allCustomers[i]);
           print('allCustomersSerchFilter');
         }

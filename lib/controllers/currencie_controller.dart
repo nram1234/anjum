@@ -1,5 +1,7 @@
+import 'package:anjum/SCR/prodectsTestt.dart';
 import 'package:anjum/SCR/products.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/jsonofnwetry/get_fourth_step_json.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,10 +15,15 @@ class CurenceController extends GetxController {
       allCurrencie[element.currencyName]=element;
     });
     allCurrencie.forEach((key, value) {
+      if(allCurrencie.length<2)
+      {
+      defultCurrencies = value;
+      }
       if (value.currencySymbolFirst == '1') {
-       // defultCurrencies = value;
+         // defultCurrencies = value;
       }
     });
+
     update();}
 
   showDio(context){
@@ -96,7 +103,8 @@ class CurenceController extends GetxController {
                             onChanged: (v) {
                               logic.setCurrencie(context: cont, allCurrencies: v);
                               Navigator.pop(cont);
-                             Get.to(ProductsScr());
+                              //Get.to(ProductsScr());
+                              Get.to(ProdectTestt());
                             });
                       },
                     )

@@ -127,4 +127,6 @@ const Map<String, String> ar = {
   'Back':'رجوع'
   ,
   'Submit':'ارسال'
+  ,
+  'update':'تحديث البيانات'
 };

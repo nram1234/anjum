@@ -1,7 +1,10 @@
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/all_routes.dart';
 import 'package:anjum/controllers/timeController.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
+
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +50,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                   if (e.customerId ==
                       Get.find<AllChequesController>()
                           .customer
-                          .customerInfo
+
                           .id) {
                     Get.to(()=>Dashboard());
                   } else {
@@ -67,8 +70,8 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
 
   bool iscust(AllCustomers data) {
     if (Get.find<AllChequesController>().customer != null) {
-      return Get.find<AllChequesController>().customer.customerInfo.id ==
-          data.customerInfo.id;
+      return Get.find<AllChequesController>().customer.id ==
+          data.id;
     } else {
       return false;
     }
@@ -97,12 +100,15 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
                 padding: EdgeInsets.all(16),
-                child: Image.network(
-                  data.customerInfo.image,
-                  width: size.height * .08,
+                child:  CachedNetworkImage(imageUrl:data.image ,width: size.height * .08,
                   height: size.height * .08,
-                  fit: BoxFit.fill,
-                ),
+                  fit: BoxFit.fill,)
+                // Image.network(
+                //   data.customerInfo.image,
+                //   width: size.height * .08,
+                //   height: size.height * .08,
+                //   fit: BoxFit.fill,
+                // ),
               ),
             ),
             Container(width: 1, height: size.height * .2, color: Colors.cyan),
@@ -117,7 +123,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                     height: 8,
                   ),
                   Text(
-                    data.customerInfo.customerNameEn,
+                    data.customerNameEn,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
@@ -134,7 +140,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                       //+"\n"+data.customerInfo.area2??
                       children: [
                         Icon(Icons.add_location),
-                        Text(data.customerInfo.phoneNo ?? ""),
+                        Text(data.phoneNo ?? ""),
                         Expanded(child: Container()),
                         //if(iscust(data))     Image.asset('assets/images/fast.png')
                       ],
@@ -203,7 +209,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'customername'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.customerNameEn}',
+                                                  '${data.customerNameEn}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -211,7 +217,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'Email' +
                                                   ' : ' +
-                                                  '${data.customerInfo.email}',
+                                                  '${data.email}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -219,7 +225,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'customertype'.tr +
                                                   ' :  ' +
-                                                  '${data.customerInfo.customerTypeId}',
+                                                  '${data.customerTypeId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -227,13 +233,13 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'phone'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.phoneNo}',
+                                                  '${data.phoneNo}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Fax : ${data.customerInfo.fax}',
+                                              'Fax : ${data.fax}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -241,7 +247,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'state'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.stateId}',
+                                                  '${data.stateId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -249,7 +255,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'city'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.cityId}',
+                                                  '${data.cityId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -257,13 +263,13 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'creditlimit'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.creditLimit}',
+                                                  '${data.creditLimit}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Cheque Due Date : ${data.customerInfo.chequeDueDate}',
+                                              'Cheque Due Date : ${data.chequeDueDate}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -271,7 +277,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'paymenttype'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.paymentType}',
+                                                  '${data.paymentType}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -279,15 +285,17 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                             Text(
                                               'location'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.area1}',
+                                                  '${data.area1}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
                                               'pricelist'.tr +
-                                                  ' : ' +
-                                                  '${data.priceListsInfo[0].id}',
+                                                  ' : '
+                                                  // +
+                                                  // '${data.priceListsInfo[0].id}'
+                                              ,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -308,7 +316,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                         radius: Consts.avatarRadius,
                                         child: ClipOval(
                                           child: Image.network(
-                                            data.customerInfo.image,
+                                            data.image,
                                             fit: BoxFit.fill,
                                           ),
                                         ),
@@ -336,7 +344,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                             onTap: () {
                               //   location
                               List<String> l =
-                                  data.customerInfo.location.split(',');
+                                  data.location.split(',');
                               // var lat=double.tryParse(l[0].trim());
                               // var Lng=double.tryParse(l[1].trim());
 
@@ -344,7 +352,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                   double.tryParse(l[1].trim()));
                               Get.to(() => MyMapScr(
                                     loc: loc,
-                                    name: data.customerInfo.customerNameEn,
+                                    name: data.customerNameEn,
                                   ));
                             },
                             child: Text('view map')),

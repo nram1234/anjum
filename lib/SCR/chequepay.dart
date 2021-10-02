@@ -3,7 +3,8 @@ import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
 import 'package:anjum/controllers/allBanksController.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/jsonofnwetry/get_fourth_step_json.dart';
+
 import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class _ChequePayState extends State<ChequePay> {
   AllNetworking _allNetworking=AllNetworking();
   Future<String> pickdate() async {
     var lastDate = DateTime.now().add(new Duration(
-        days: int.tryParse(allCheques.customer.customerInfo.chequeDueDate)));
+        days: int.tryParse(allCheques.customer.chequeDueDate)));
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
@@ -448,12 +449,12 @@ class _ChequePayState extends State<ChequePay> {
                                     cheque_no:
                                     int.tryParse(cheqnumber.text),
                                     customer_name: allCheques.customer
-                                        .customerInfo.customerNameEn,
+                                        .customerNameEn,
                                     note: addnote.text,
                                     payment_date: Chequetime,
                                     payment_no: chechamount.text, //TO DO
                                     payment_type: "cheque",
-                                    reference_no: allCheques.customer.customerInfo.refId,
+                                    reference_no: allCheques.customer.refId,
                                     supervisor_id: _userAndPermissions.user.supervisorId,
                                     salesmanager_id: _userAndPermissions.user.salesmanagerId,
                                     due_date: Chequetime,

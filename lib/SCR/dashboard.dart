@@ -1,6 +1,7 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_visit_DB.dart';
 import 'package:anjum/SCR/photo_screen.dart';
+import 'package:anjum/SCR/prodectsTestt.dart';
 import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -73,7 +74,7 @@ class _DashboardState extends State<Dashboard> {
                             child: Text(
                               Get.find<AllChequesController>()
                                   .customer
-                                  .customerInfo
+
                                   .customerNameEn,
                               style: TextStyle(
                                   fontSize: 20,
@@ -145,7 +146,8 @@ class _DashboardState extends State<Dashboard> {
                                                     Get.find<CurenceController>().showDio(context);
                                                   }else{
 
-                                                    Get.to(ProductsScr());
+                                                    //Get.to(ProductsScr());
+                                                     Get.to(ProdectTestt());
                                                   }
 
 
@@ -323,7 +325,8 @@ class _DashboardState extends State<Dashboard> {
                                                   if(Get.find<CurenceController>().allCurrencie.length>1){
                                                     Get.find<CurenceController>().showDio(context);
                                                   }else{
-                                                    Get.to(ProductsScr());
+                                                    //Get.to(ProductsScr());
+                                                    Get.to(ProdectTestt());
                                                   }
 
                                                   // Get.to(ProductsScr());
@@ -350,7 +353,8 @@ class _DashboardState extends State<Dashboard> {
                                                   if(Get.find<CurenceController>().allCurrencie.length>1){
                                                     Get.find<CurenceController>().showDio(context);
                                                   }else{
-                                                    Get.to(ProductsScr());
+                                                    //Get.to(ProductsScr());
+                                                    Get.to(ProdectTestt());
                                                   }
 
 
@@ -493,7 +497,7 @@ class _DashboardState extends State<Dashboard> {
                                     customer_id:
                                         Get.find<AllChequesController>()
                                             .customer
-                                            .customerInfo
+
                                             .id,
                                     user_id:
                                         _userAndPermissions.user.id.toString(),

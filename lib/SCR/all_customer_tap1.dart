@@ -4,9 +4,10 @@ import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/priceListsInfoController.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
-import 'package:anjum/network/json/customer_json.dart';
-import 'package:anjum/network/json/get_employee_data_json.dart';
-import 'package:anjum/network/networkReq.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
+
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,9 +32,11 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
     return Scaffold(body: GetBuilder<AllCustomersControllers>(
       builder: (logic) {
+
         return logic.loading.value?Center(child: CircularProgressIndicator(),): ListView.builder(
             itemCount: logic.serchWord.trim().isNotEmpty
                 ? logic.allCustomersSerchFilter.length
@@ -44,10 +47,10 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     if (Get.find<AllChequesController>().customer == null ||
                         !c.startswatch.value) {
                       allItemsController.clearcustomerListItems();
-                      pricelistinf.makeAListOfPriceListsInfo(
-                          logic.serchWord.trim().isNotEmpty
-                              ? logic.allCustomersSerchFilter[pos].customerInfo
-                              : logic.allCustomers[pos].customerInfo);
+                      // pricelistinf.makeAListOfPriceListsInfo(
+                      //     logic.serchWord.trim().isNotEmpty
+                      //         ? logic.allCustomersSerchFilter[pos].priceListId
+                      //         : logic.allCustomers[pos].priceListId);
 
                       Get.find<AllChequesController>()
                           .setcustomer(logic.allCustomers[pos]);
@@ -56,8 +59,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                               .serchWord
                               .trim()
                               .isNotEmpty
-                          ? logic.allCustomersSerchFilter[pos].customerInfo.id
-                          : logic.allCustomers[pos].customerInfo.id);
+                          ? logic.allCustomersSerchFilter[pos].id
+                          : logic.allCustomers[pos].id);
 
                       setState(() {});
                       //arguments:  [bata.allCustomers[pos]]
@@ -65,10 +68,10 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                         () => Dashboard(),
                       );
                     } else {
-                      if (logic.allCustomers[pos].customerInfo.id ==
+                      if (logic.allCustomers[pos].id ==
                           Get.find<AllChequesController>()
                               .customer
-                              .customerInfo
+
                               .id) {
                         Get.to(() => Dashboard());
                       } else {
@@ -88,8 +91,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
 
   bool iscust(AllCustomers data) {
     if (Get.find<AllChequesController>().customer != null) {
-      return Get.find<AllChequesController>().customer.customerInfo.id ==
-          data.customerInfo.id;
+      return Get.find<AllChequesController>().customer. id ==
+          data. id;
     } else {
       return false;
     }
@@ -118,12 +121,16 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
                 padding: EdgeInsets.all(16),
-                child: Image.network(
-                  data.customerInfo.image,
-                  width: size.height * .08,
+                child: CachedNetworkImage(imageUrl:data.image ,width: size.height * .08,
                   height: size.height * .08,
-                  fit: BoxFit.fill,
-                ),
+                  fit: BoxFit.fill,)
+
+                // Image.network(
+                //   data.customerInfo.image,
+                //   width: size.height * .08,
+                //   height: size.height * .08,
+                //   fit: BoxFit.fill,
+                // ),
               ),
             ),
             Container(width: 1, height: size.height * .2, color: Colors.cyan),
@@ -138,7 +145,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     height: 8,
                   ),
                   Text(
-                    data.customerInfo.customerNameEn,
+                    data.customerNameEn,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
@@ -155,7 +162,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                       //+"\n"+data.customerInfo.area2??
                       children: [
                         Icon(Icons.add_location),
-                        Text(data.customerInfo.phoneNo ?? ""),
+                        Text(data.phoneNo ?? ""),
                         Expanded(child: Container()),
                         if (iscust(data)) Image.asset('assets/images/fast.png')
                       ],
@@ -224,7 +231,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'customername'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.customerNameEn}',
+                                                  '${data.customerNameEn}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -232,7 +239,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'Email' +
                                                   ' : ' +
-                                                  '${data.customerInfo.email}',
+                                                  '${data.email}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -240,7 +247,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'customertype'.tr +
                                                   ' :  ' +
-                                                  '${data.customerInfo.customerTypeId}',
+                                                  '${data.customerTypeId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -248,13 +255,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'phone'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.phoneNo}',
+                                                  '${data.phoneNo}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Fax : ${data.customerInfo.fax}',
+                                              'Fax : ${data.fax}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -262,7 +269,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'state'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.stateId}',
+                                                  '${data.stateId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -270,7 +277,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'city'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.cityId}',
+                                                  '${data.cityId}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -278,13 +285,13 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'creditlimit'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.creditLimit}',
+                                                  '${data.creditLimit}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
-                                              'Cheque Due Date : ${data.customerInfo.chequeDueDate}',
+                                              'Cheque Due Date : ${data.chequeDueDate}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -292,7 +299,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'paymenttype'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.paymentType}',
+                                                  '${data.paymentType}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -300,15 +307,17 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'location'.tr +
                                                   ' : ' +
-                                                  '${data.customerInfo.area1}',
+                                                  '${data.area1}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
                                               'pricelist'.tr +
-                                                  ' : ' +
-                                                  '${data.priceListsInfo[0].id}',
+                                                  ' : '
+                                                  // +
+                                                  // '${data.priceListsInfo[0].id}'
+                                              ,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -329,7 +338,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                         radius: Consts.avatarRadius,
                                         child: ClipOval(
                                           child: Image.network(
-                                            data.customerInfo.image,
+                                            data.image,
                                             fit: BoxFit.fill,
                                           ),
                                         ),
@@ -357,7 +366,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                             onTap: () {
                               //   location
                               List<String> l =
-                                  data.customerInfo.location.split(',');
+                                  data.location.split(',');
                               // var lat=double.tryParse(l[0].trim());
                               // var Lng=double.tryParse(l[1].trim());
 
@@ -365,7 +374,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                   double.tryParse(l[1].trim()));
                               Get.to(() => MyMapScr(
                                     loc: loc,
-                                    name: data.customerInfo.customerNameEn,
+                                    name: data.customerNameEn,
                                   ));
                             },
                             child: Text('map'.tr)),

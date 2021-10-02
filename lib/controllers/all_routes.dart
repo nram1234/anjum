@@ -1,4 +1,7 @@
-import 'package:anjum/network/json/get_employee_data_json.dart';
+
+import 'package:anjum/network/jsonofnwetry/get_first_step_json.dart';
+import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +25,7 @@ List<int>routMaptoshwkeys=[];
     super.onInit();
 
     Get.find<AllCustomersControllers>().allCustomers.forEach((element) {
-      mapOfCustomar[element.customerInfo.id] = element;
+      mapOfCustomar[element.id] = element;
     });
   }
 
