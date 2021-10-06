@@ -250,7 +250,7 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
         item[id].value.afterdes * (item[id].value.tex / 100);
     item[id].value.totalPriceForItem =
         item[id].value.afterdes + item[id].value.totalTaxForItem;
-    update();
+    //update();
   }
 
   setprice({String id, String val}) {
@@ -263,12 +263,12 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
     getTotalTax();
     netprice();
     //   gettotalpriceincart();
-    update();
+    //update();
   }
 
   setbonce({String id, String val}) {
     item[id].value.bonce = double.parse(val);
-    update();
+    //update();
   }
 
   setdiscount({String id, String val}) {
@@ -294,7 +294,7 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
     });
     grandTotal.value = grandTotal.value + totalTax.value;
     gettotalpriceincart();
-    update();
+    //update();
   }
 
   getTotalTax() {
@@ -304,14 +304,14 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
           totalTax.value + (value.value.afterdes * value.value.tex);
     });
 
-    update();
+    //update();
   }
 
   deletItem(Rx<TheItemInList> products) {
     products.value.count = 0;
     itemInCart.value = 0;
     countInCart();
-    update();
+   // update();
   }
 
   countInCart() {

@@ -36,6 +36,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'new/bluetooth_printer_scr.dart';
+import 'new/newtrybluth.dart';
+
 
 
 
@@ -2165,14 +2167,147 @@ pw.Row(children:[ pw.Expanded(
         onLayout: (PdfPageFormat format) async => doc.save());
     await Printing.sharePdf(
         bytes: await doc.save(), filename: 'my-document.pdf');
+    await for (var page in Printing.raster(await doc.save())) {
+      final image = page.asImage();
+      print('000000000000000000000000000000000000000000000000000');
+      print(image);
+      print('000000000000000000000000000000000000000000000000000');
+    }
     PdfPreview(
       build: (format) => doc.save(),
     );
-    _getimagetoprint();
+
+   // _getimagetoprint();
   }
 
-  void bluetoothPrinter() {
-    Get.to(()=>BluetoothPrinterScr());
+  void bluetoothPrinter() async{
+
+    List<Rx<TheItemInList>> item = _myProdectListController.item.values
+        .where((element) => element.value.count > 0)
+        .toList();
+    final doc = pw.Document();
+    //final font = await fontFromAssetBundle('assets/font/HTQaysSansPro-Regular.ttf');
+    final font =
+        await rootBundle.load("assets/font/ArbFONTS-GE-Snd-Book_1.ttf");
+    final ttf = pw.Font.ttf(font);
+
+    //var myTheme  =pw.PageTheme(theme:pw. Theme(  data: pw.ThemeData( defaultTextStyle: pw.TextStyle(font: ttf,  ) ),   ) );
+    List<pw.Widget>listsss=[];
+    await   item.forEach((e) {
+
+      double total=e.value.count*e.value.afterdes ;
+      listsss.add(
+          pw.Container(alignment: pw.Alignment.centerRight, width: double.infinity,child:   pw.Text(
+              "${e.value.name} ",
+
+              textDirection: pw.TextDirection.rtl,textAlign: pw.TextAlign.right,
+              style: pw.TextStyle(
+                font: ttf,
+              )))
+      );
+      listsss.add(    pw.Row(
+
+          children: [
+            pw.Expanded(flex: 1,child: pw.Text(e.value.afterdes .toStringAsFixed(2),
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(font: ttf))),
+            pw.Expanded(flex: 1,child:pw.Text(e.value.count.toString(),
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(font: ttf))),
+
+            pw.Expanded(flex: 1,child:  pw.Text(e.value.price.toString(),
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(font: ttf))),
+            pw.Expanded(
+                flex: 1,
+                child: pw.Text(
+                    " ",
+
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(
+                      font: ttf,
+                    )))
+
+          ]));
+      listsss.add(pw.SizedBox(height: 3)) ;});
+    doc.addPage(pw.Page(
+        textDirection: pw.TextDirection.rtl,
+        pageFormat: PdfPageFormat.roll80,
+        build: (pw.Context context) {
+          return pw.Column(children: [
+            pw.Text('${_userDataController.userData.branchNameAr}',
+                style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+                textDirection: pw.TextDirection.rtl),
+            pw.Text(' الهاتف ${_userDataController.userData.phoneNo}',
+                style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+                textDirection: pw.TextDirection.rtl),
+            pw.Text(' الفاكس ${_userDataController.userData.faxNo}',
+                style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+                textDirection: pw.TextDirection.rtl),
+            pw.Text('${_userDataController.userData}',
+                style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+                textDirection: pw.TextDirection.rtl),
+            pw.Text(' EMail ${_userDataController.userData.email}',
+                style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+                textDirection: pw.TextDirection.rtl),
+            pw.Text('${_userDataController.userData.area1}',
+                style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+                textDirection: pw.TextDirection.rtl),
+
+            pw.SizedBox(height: 10),
+
+            pw.Row(children:[ pw.Expanded(
+                flex: 1,
+                child: pw.Text('الاجمالي',
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(font: ttf))),
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('الكميه',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf))),
+
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('السعر',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf))),
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('المنتج',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf)))] )
+
+            ,pw.Column(children: listsss)
+
+          ]); // Center
+        })); // Page
+    print(listsss);
+    final date = DateTime.now();
+
+
+    final output = await getTemporaryDirectory();
+    final file = File('${output.path}/example.pdf');
+    await file.writeAsBytes(await doc.save());
+    // await Printing.layoutPdf(
+    // onLayout: (PdfPageFormat format) async => doc.save());
+    // await Printing.sharePdf(
+    // bytes: await doc.save(), filename: 'my-document.pdf');
+    // await for (var page in Printing.raster(await doc.save())) {
+    // final   image = awaitpage.toImage();
+    //
+    // print('000000000000000000000000000000000000000000000000000');
+    // print(image);
+    //
+    //   // final String pat = await getApplicationDocumentsDirectory().path;
+    //   //
+    //   // final File imagee = await image.copy('$path/image1.png');
+    // print('000000000000000000000000000000000000000000000000000');
+    // }
+
+    Get.to(()=>NewTryBluth( ));
+
+ //Get.to(()=>BluetoothPrinterScr(file));
   }
 
 }

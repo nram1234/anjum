@@ -118,7 +118,7 @@ ifhaveinternetornot()async{
         get_fourth_step_json.result.allBanks);
     //===========================================================
     Get_Fifth_step_json get_fifth_step_json=await Get_Fifth_step_json.fromJson(box.read('get_Fifth_step'))  ;
-print('allStockItems ${     get_fifth_step_json.result.allStockItems}');
+
     Get.find<All_PromotionsController>()
         .allPromotionsUpdat(get_fifth_step_json.result.allPromotions);
     Get.find<AllStockItemsController>()
@@ -230,8 +230,7 @@ value.result.itemUnits;
                           // value.result.allCurrencies;
                           // value.result.allCheques;
                           // value.result.allBanks;
-                          print(value.result.allCurrencies);
-                          print(value.result.allCheques);
+
                           Get.find<UserDataController>().updateserData(value.result.userData);
                           Get.find<CurenceController>().setallCurrencie(
                               value.result.allCurrencies);

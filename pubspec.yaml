@@ -47,8 +47,17 @@ dependencies:
   printing: ^5.6.0
   pdf: 3.4.2
   open_file: ^3.1.0
+
+
+  blue_thermal_printer: ^1.1.8
   google_fonts_arabic: ^1.1.7
-  bluetooth_print: ^3.0.1
+  bluetooth_thermal_printer:
+  esc_pos_utils: ^1.0.0
+  image: ^3.0.8
+
+
+
+
 
 
 
