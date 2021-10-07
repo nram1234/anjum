@@ -41,7 +41,7 @@ class Result {
       });
     }
     if (json['all_items'] != null) {
-      allItems = new List<AllItems>();
+      allItems = <AllItems>[];
       json['all_items'].forEach((v) {
         allItems.add(new AllItems.fromJson(v));
       });
@@ -72,6 +72,7 @@ class AllCategories {
   String userId;
   String categoryNameEn;
   String categoryNameAr;
+  String categoryImage;
   String status;
   List<SubCategories> subCategories;
 
@@ -80,6 +81,7 @@ class AllCategories {
         this.userId,
         this.categoryNameEn,
         this.categoryNameAr,
+        this.categoryImage,
         this.status,
         this.subCategories});
 
@@ -88,6 +90,7 @@ class AllCategories {
     userId = json['user_id'];
     categoryNameEn = json['category_name_en'];
     categoryNameAr = json['category_name_ar'];
+    categoryImage = json['category_image'];
     status = json['status'];
     if (json['sub_categories'] != null) {
       subCategories = new List<SubCategories>();
@@ -103,6 +106,7 @@ class AllCategories {
     data['user_id'] = this.userId;
     data['category_name_en'] = this.categoryNameEn;
     data['category_name_ar'] = this.categoryNameAr;
+    data['category_image'] = this.categoryImage;
     data['status'] = this.status;
     if (this.subCategories != null) {
       data['sub_categories'] =
@@ -118,7 +122,6 @@ class SubCategories {
   String categoryId;
   String subCategoryNameEn;
   String subCategoryNameAr;
-  String image;
   String categoryNameEn;
 
   SubCategories(
@@ -127,7 +130,6 @@ class SubCategories {
         this.categoryId,
         this.subCategoryNameEn,
         this.subCategoryNameAr,
-        this.image,
         this.categoryNameEn});
 
   SubCategories.fromJson(Map<String, dynamic> json) {
@@ -136,7 +138,6 @@ class SubCategories {
     categoryId = json['category_id'];
     subCategoryNameEn = json['sub_category_name_en'];
     subCategoryNameAr = json['sub_category_name_ar'];
-    image = json['image'];
     categoryNameEn = json['category_name_en'];
   }
 
@@ -147,7 +148,6 @@ class SubCategories {
     data['category_id'] = this.categoryId;
     data['sub_category_name_en'] = this.subCategoryNameEn;
     data['sub_category_name_ar'] = this.subCategoryNameAr;
-    data['image'] = this.image;
     data['category_name_en'] = this.categoryNameEn;
     return data;
   }

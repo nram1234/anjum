@@ -2,6 +2,7 @@ import 'package:anjum/SCR/new/supCategories.dart';
 import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/jsonofnwetry/get_third_step_json.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class _CatalogState extends State<Catalog> {
 
   @override
   Widget build(BuildContext context) {
-    print(allCategories);
+
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -95,10 +96,10 @@ class _CatalogState extends State<Catalog> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: .8,
+                            childAspectRatio: 1.3,
                             //(itemWidth / itemHeight),
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 8,
                           ),
                           itemBuilder: (context, pos) {
                             print(allCategories[pos].userId ==
@@ -111,20 +112,32 @@ class _CatalogState extends State<Catalog> {
                                   Get.to(
                                       () => SupCategories(allCategories[pos]));
                                 },
-                                child: Container(
-                                  child: Center(
-                                    child: Text(
-                                      allCategories[pos].categoryNameEn,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,color: Colors.white),
-                                    ),
+                                child: Container( height: size.height * .25,decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)
                                   ),
-                                  height: size.height * .2,
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                      color: Colors.indigoAccent[100],
-                                      borderRadius: BorderRadius.circular(10)),
+
+                                ),
+                                  child: Stack(
+
+                                   children: [ CachedNetworkImage(fit: BoxFit.fill,height: size.height * .25,
+                                     imageUrl: allCategories[pos].categoryImage,//imageBuilder: (context, imageprovider) =>Container(),
+                                     placeholder: (context, url) => Center(
+                                       child: Text(". . . "),
+                                     ),
+                                   ),Positioned(bottom: 4,left: 0,right: 0,
+                                     child: Text(
+                                       allCategories[pos].categoryNameEn,textAlign: TextAlign.center,
+                                       style: TextStyle(backgroundColor: Colors.white.withOpacity(.5),
+                                           fontWeight: FontWeight.bold,
+                                           fontSize: 20,color: Colors.black),
+                                     ),
+                                   ),],
+                                  ),
                                 ),
                               );
                             } else {

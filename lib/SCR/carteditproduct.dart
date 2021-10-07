@@ -154,7 +154,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                     height: 8,
                                   ),
                                   Text(
-                                    widget.data.value.name,
+                                    widget.data.value.enName,
                                     maxLines: 2,
                                   ),
                                   SizedBox(

@@ -32,7 +32,10 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
 
   @override
   Widget build(BuildContext context) {
-
+    print('----------------------------------------------------------------------------------');
+print(Get.locale.languageCode =="ar");
+print(Get.locale.languageCode =="en");
+    print('----------------------------------------------------------------------------------');
     var size = MediaQuery.of(context).size;
     return Scaffold(body: GetBuilder<AllCustomersControllers>(
       builder: (logic) {
@@ -231,7 +234,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'customername'.tr +
                                                   ' : ' +
-                                                  '${data.customerNameEn}',
+                                                  '${Get.locale.languageCode =="en" ?data.customerNameEn:data.customerNameAr}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),

@@ -142,7 +142,7 @@ newItemForTestprod(){
               _allStockItemsController.allStockItems[p].itemId) {
 
 print(bata.allItems[i].itemDetails[0].sellingPrice);
-            item[bata.allItems[i].itemId] = TheItemInList(
+            item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
                     totalPriceForItem: 0,
                     totalTaxForItem: 0,
                     quantity_in_store: int.parse(
@@ -156,7 +156,7 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
                         bata.allItems[i].itemDetails[0].sellingPrice),
                     price: double.parse(
                         bata.allItems[i].itemDetails[0].sellingPrice),
-                    name: bata.allItems[i].itemDetails[0].itemNameEn,
+                    enName: bata.allItems[i].itemDetails[0].itemNameEn,
                     afterdes: double.parse(
                         bata.allItems[i].itemDetails[0].sellingPrice),
                     itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
@@ -453,7 +453,7 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(child: Text(element.value.name)),
+                          Expanded(child: Text(element.value.enName)),
                           Container(
                             margin: const EdgeInsets.all(15.0),
                             padding: const EdgeInsets.all(3.0),
@@ -541,7 +541,7 @@ print(bata.allItems[i].itemDetails[0].sellingPrice);
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(child: Text(vll.value.name)),
+                              Expanded(child: Text(vll.value.enName)),
                               Container(
                                 margin: const EdgeInsets.all(15.0),
                                 padding: const EdgeInsets.all(3.0),
@@ -650,10 +650,11 @@ class MytrayItem {
 }
 
 class TheItemInList {
+  String arName;
   String id;
   double diescount;
   double bonce;
-  String name;
+  String enName;
   double price;
   double tex;
   int quantity_in_store;
@@ -669,11 +670,11 @@ class TheItemInList {
   int measurementUnitId;
 
   TheItemInList(
-      {this.id,
+      {this.id,this.arName,
       this.diescount,
       this.quantity_in_store,
       this.bonce,
-      this.name,
+      this.enName,
       this.price,
       this.tex,
       this.count,

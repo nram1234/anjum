@@ -59,6 +59,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    print( 'languageCode   ${Get.locale.languageCode}');
     return WillPopScope(
       onWillPop: () {
         return showDialog(

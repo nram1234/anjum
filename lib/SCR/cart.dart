@@ -145,7 +145,7 @@ class _CartEditProductState extends State<Cart> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(child: Text(value.value.name)),
+                        Expanded(child: Text(value.value.enName)),
                         Container(
                           margin: const EdgeInsets.all(15.0),
                           padding: const EdgeInsets.all(3.0),
@@ -1479,7 +1479,7 @@ class _CartEditProductState extends State<Cart> {
                               );
                             },
                             child: Text(
-                              products.value.name,
+                              products.value.enName,
                               // overflow: TextOverflow.fade,
                               maxLines: 2,
 
@@ -1994,7 +1994,7 @@ List<pw.Widget>listsss=[];
       double total=e.value.count*e.value.afterdes ;
       listsss.add(
         pw.Container(alignment: pw.Alignment.centerRight, width: double.infinity,child:   pw.Text(
-            "${e.value.name} ",
+            "${e.value.enName} ",
 
             textDirection: pw.TextDirection.rtl,textAlign: pw.TextAlign.right,
             style: pw.TextStyle(
@@ -2198,7 +2198,7 @@ pw.Row(children:[ pw.Expanded(
       double total=e.value.count*e.value.afterdes ;
       listsss.add(
           pw.Container(alignment: pw.Alignment.centerRight, width: double.infinity,child:   pw.Text(
-              "${e.value.name} ",
+              "${e.value.enName} ",
 
               textDirection: pw.TextDirection.rtl,textAlign: pw.TextAlign.right,
               style: pw.TextStyle(

@@ -95,8 +95,7 @@ class _ProductsScrState extends State<ProductsScr> {
     _UnitController.all_Uint_List.clear();
     _UnitController.val_Of_uint_map.clear();
     _UnitController.MeasurementUnit_map;
-    print(
-        'disposedisposedisposedisposedisposedisposedisposedisposedisposedisposedispose');
+
   } //getstock
   //
   // getmeasurementUnit() {
@@ -584,7 +583,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     ];
                                     if (_myProdectListController.issearch) {
                                       if (_myProdectListController
-                                          .item[keysOfMap[pos]].value.name
+                                          .item[keysOfMap[pos]].value.enName
                                           .contains(
                                           _myProdectListController
                                               .searchWord)) {
@@ -1676,7 +1675,7 @@ class _ProductsScrState extends State<ProductsScr> {
                           height: 8,
                         ),
                         Text(
-                          products.value.name,
+                          Get.locale.languageCode =="en" ?      products.value.enName: products.value.arName,
                           maxLines: 2,
                         ),
                         SizedBox(

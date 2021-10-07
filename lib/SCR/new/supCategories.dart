@@ -60,12 +60,11 @@ class _SupCategoriesState extends State<SupCategories> {
                       // ),
                         CachedNetworkImage(  height: 75,
                           width: 75,
-                          imageUrl: widget.categories.subCategories[pos].categoryNameEn??widget.categories.subCategories[pos].image,//imageBuilder: (context, imageprovider) =>Container(),
+                          imageUrl: widget.categories.subCategories[pos].categoryNameEn,//imageBuilder: (context, imageprovider) =>Container(),
                           placeholder: (context, url) => Center(
                             child: Text(". . . "),
                           ),
-                        )
-                    ),
+                        )),
                     Expanded(
                         flex: 1,
                         child: Padding(

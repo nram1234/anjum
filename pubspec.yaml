@@ -52,8 +52,9 @@ dependencies:
   blue_thermal_printer: ^1.1.8
   google_fonts_arabic: ^1.1.7
   bluetooth_thermal_printer:
-  esc_pos_utils: ^1.0.0
-  image: ^3.0.8
+  esc_pos_bluetooth:
+  esc_pos_utils:
+  image:
 
 
 

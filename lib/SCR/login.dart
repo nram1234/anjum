@@ -49,6 +49,7 @@ class _LoginState extends State<Login> {
       } else {
         var locale = Locale('en', 'En');
         Get.updateLocale(locale);
+
       }
     }
     print('llllllllllllllllllll');
