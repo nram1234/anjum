@@ -103,6 +103,8 @@ class AllStockItems {
 }
 
 class AllPromotions {
+  String id;
+  String name;
   String description;
   String promotionType;
   String priorityId;
@@ -129,7 +131,9 @@ class AllPromotions {
   List<AllOutQuantityPromotionItems> allOutQuantityPromotionItems;
 
   AllPromotions(
-      {this.description,
+      {this.id,
+        this.name,
+        this.description,
         this.promotionType,
         this.priorityId,
         this.priority,
@@ -155,6 +159,8 @@ class AllPromotions {
         this.allOutQuantityPromotionItems});
 
   AllPromotions.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
     description = json['description'];
     promotionType = json['promotion_type'];
     priorityId = json['priority_id'];
@@ -205,6 +211,8 @@ class AllPromotions {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
     data['description'] = this.description;
     data['promotion_type'] = this.promotionType;
     data['priority_id'] = this.priorityId;
@@ -324,6 +332,7 @@ class AllInQuantityPromotionItems {
     return data;
   }
 }
+
 class AllOutQuantityPromotionItems {
   String id;
   String userId;

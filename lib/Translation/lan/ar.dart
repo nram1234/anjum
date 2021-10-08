@@ -129,4 +129,6 @@ const Map<String, String> ar = {
   'Submit':'ارسال'
   ,
   'update':'تحديث البيانات'
+  ,
+  'cat':'الفئات'
 };

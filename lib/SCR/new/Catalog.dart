@@ -70,7 +70,7 @@ class _CatalogState extends State<Catalog> {
               left: size.width * .1,
               top: size.height * .1,
               child: Text(
-                'Catalog',
+                'cat'.tr,
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -112,19 +112,19 @@ class _CatalogState extends State<Catalog> {
                                   Get.to(
                                       () => SupCategories(allCategories[pos]));
                                 },
-                                child: Container( height: size.height * .25,decoration: BoxDecoration(
+                                child: Container( margin: EdgeInsets.all(4),height: size.height * .25,decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       topRight: Radius.circular(10),
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10)
-                                  ),
+                                  ),border: Border.all(color: Colors.blueAccent)
 
                                 ),
                                   child: Stack(
 
-                                   children: [ CachedNetworkImage(fit: BoxFit.fill,height: size.height * .25,
+                                   children: [ CachedNetworkImage( fit: BoxFit.fill,height: size.height * .25,
                                      imageUrl: allCategories[pos].categoryImage,//imageBuilder: (context, imageprovider) =>Container(),
                                      placeholder: (context, url) => Center(
                                        child: Text(". . . "),

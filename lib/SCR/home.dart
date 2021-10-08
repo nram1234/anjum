@@ -38,6 +38,7 @@ import 'all _customer.dart';
 import 'dashboard.dart';
 import 'login.dart';
 import 'new/Catalog.dart';
+import 'new/Promotion List.dart';
 import 'new/TimeLine.dart';
 import 'new/getalldatafromweb.dart';
 
@@ -283,11 +284,15 @@ class _HomeState extends State<Home> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            item(
-                                color: Colors.purpleAccent[200],
-                                size: size,
-                                name: 'Promotion'.tr,
-                                path: 'assets/images/promotion.png'),
+                            InkWell(onTap: (){
+                              Get.to(()=>PromotionList());
+                            },
+                              child: item(
+                                  color: Colors.purpleAccent[200],
+                                  size: size,
+                                  name: 'Promotion'.tr,
+                                  path: 'assets/images/promotion.png'),
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => Reports());

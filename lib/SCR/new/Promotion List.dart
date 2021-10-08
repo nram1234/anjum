@@ -1,4 +1,7 @@
+import 'package:anjum/controllers/all_promotionsController.dart';
+import 'package:anjum/network/jsonofnwetry/get_Fifth_step_json.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 class PromotionList extends StatefulWidget {
   @override
   _PromotionListState createState() => _PromotionListState();
@@ -6,6 +9,8 @@ class PromotionList extends StatefulWidget {
 
 class _PromotionListState extends State<PromotionList> {
   List<String> titles = ["Promotion No","Promotion Name","Promotion Details"];
+  All_PromotionsController _all_promotionsController =Get.find<All_PromotionsController>();
+String serchword="";
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -82,7 +87,14 @@ class _PromotionListState extends State<PromotionList> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15), color: Colors.white),
                             child: TextField(
-                              onChanged: (v) {},
+                              onChanged: (v) {
+                                if(!v.isEmpty||v!=null){
+                                  serchword=v;
+                                  setState(() {
+
+                                  });
+                                }
+                              },
                               decoration: InputDecoration(
                                 hintText: "Search",
                                 border: InputBorder.none,
@@ -99,8 +111,11 @@ class _PromotionListState extends State<PromotionList> {
                           itemCount: 3,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context,index){
-                          return PRomotionListCardUI();
+                            itemBuilder: (context,index){serchword;
+if( _all_promotionsController.allPromotionss[index].id.contains(serchword)){
+  return PRomotionListCardUI(allPromotions:  _all_promotionsController.allPromotionss[index]);
+}else{return SizedBox();}
+
                         })
                       ],
                     ),
@@ -114,7 +129,7 @@ class _PromotionListState extends State<PromotionList> {
     );
   }
 
-  Widget PRomotionListCardUI() {
+  Widget PRomotionListCardUI({AllPromotions allPromotions}) {
     return Container(
       height: 150,
       margin: EdgeInsets.all(10),
@@ -129,7 +144,7 @@ class _PromotionListState extends State<PromotionList> {
             child: Row(
               children: [
                 Expanded(child: Text(titles[0],style: TextStyle(color: Colors.black,fontSize: 17),)),
-                Expanded(child: Text("342",style: TextStyle(color: Colors.black),)),
+                Expanded(child: Text(allPromotions.id.toString(),style: TextStyle(color: Colors.black),)),
               ],
             ),
           ),
@@ -137,7 +152,7 @@ class _PromotionListState extends State<PromotionList> {
             child: Row(
               children: [
                 Expanded(child: Text(titles[1],style: TextStyle(color: Colors.black,fontSize: 17),)),
-                Expanded(child: Text("342",style: TextStyle(color: Colors.black),)),
+                Expanded(child: Text(allPromotions.name,style: TextStyle(color: Colors.black),)),
               ],
             ),
           ),
@@ -145,11 +160,26 @@ class _PromotionListState extends State<PromotionList> {
             child: Row(
               children: [
                 Expanded(child: Text(titles[2],style: TextStyle(color: Colors.black,fontSize: 17),)),
-                Expanded(child: Text("342",style: TextStyle(color: Colors.black),)),
+                Expanded(child: Text(allPromotions.description,style: TextStyle(color: Colors.black),)),
+              ],
+            ),
+          ), Expanded(
+            child: Row(
+              children: [
+                Expanded(child: Row(
+                  children: [Icon(Icons.calendar_today),SizedBox(width: 4,),
+                    Text(allPromotions.startDateTime.split(' ')[0].toString(),style: TextStyle(color: Colors.black ),),
+                  ],
+                )),
+                Expanded(child: Row(
+                  children: [Icon(Icons.calendar_today),SizedBox(width: 4,),
+                    Text(allPromotions.endDateTime.split(' ')[0].toString(),style: TextStyle(color: Colors.black),textAlign: TextAlign.start,),
+                  ],
+                )),
               ],
             ),
           ),
-        ],
+       ],
       ),
     );
   }

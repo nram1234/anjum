@@ -63,44 +63,35 @@ class _SupCategoriesItemState extends State<SupCategoriesItem> {
                               ),
                             ),
                             Flexible(flex:1 ,
-                              child: Column(crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(Get.find<AllItemsController>()
+                              child: Padding(
+                                padding: const EdgeInsets.only(right:16),
+                                child: Column(crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(Get.find<AllItemsController>()
                                         .allItems[pos]
                                         .itemDetails[0]
-                                        .itemNameEn),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(Get.find<AllItemsController>()
+                                        .itemNameEn,textAlign: TextAlign.end,),
+                                    Text(Get.find<AllItemsController>()
                                         .allItems[pos]
                                         .itemDetails[0]
-                                        .itemNameAr),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(" السعر : ${Get.find<AllItemsController>()
+                                        .itemNameAr,textAlign: TextAlign.end,),
+                                    Text(" السعر : ${Get.find<AllItemsController>()
                                         .allItems[pos]
                                         .itemDetails[0]
-                                        .sellingPrice}"),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(" اقل كمية : ${Get.find<AllItemsController>()
+                                        .sellingPrice}",textAlign: TextAlign.end,),
+                                    Text(" اقل كمية : ${Get.find<AllItemsController>()
                                         .allItems[pos]
                                         .itemDetails[0]
-                                        .minimumQuantity}"),
-                                  ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(8.0),
-                                  //   child: Text(Get.find<AllItemsController>()
-                                  //       .allItems[pos]
-                                  //       .itemDetails[0]
-                                  //       .itemCost),
-                                  // ),
-                                ],
+                                        .minimumQuantity}",textAlign: TextAlign.end,),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.all(8.0),
+                                    //   child: Text(Get.find<AllItemsController>()
+                                    //       .allItems[pos]
+                                    //       .itemDetails[0]
+                                    //       .itemCost),
+                                    // ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

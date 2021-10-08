@@ -130,4 +130,6 @@ const Map<String, String> en = {
   'Submit':'Submit'
   ,
   'update':'update'
+  ,
+  'cat':'Catalog'
 };
