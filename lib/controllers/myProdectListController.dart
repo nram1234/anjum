@@ -141,10 +141,10 @@ newItemForTestprod(){
           if (bata.allItems[i].itemId ==
               _allStockItemsController.allStockItems[p].itemId) {
 
-print(bata.allItems[i].itemDetails[0].sellingPrice);
+
             item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
                     totalPriceForItem: 0,
-                    totalTaxForItem: 0,
+                    totalTaxForItem: 0,subCategoryId: bata.allItems[i].itemDetails[0].subCategoryId,shoow: true,
                     quantity_in_store: int.parse(
                         _allStockItemsController.allStockItems[p].quantity),
                     count: 0,
@@ -650,6 +650,7 @@ class MytrayItem {
 }
 
 class TheItemInList {
+  bool shoow;
   String arName;
   String id;
   double diescount;
@@ -667,10 +668,11 @@ class TheItemInList {
   String itemNumber;
   String minimumQuantity;
   int categoryId;
+  String subCategoryId;
   int measurementUnitId;
 
   TheItemInList(
-      {this.id,this.arName,
+      {this.id,this.arName,this.subCategoryId,this.shoow,
       this.diescount,
       this.quantity_in_store,
       this.bonce,

@@ -12,53 +12,60 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  AllCategoriesController bata = Get.put(AllCategoriesController()) ;
+  AllCategoriesController bata = Get.put(AllCategoriesController());
+  bool tee = false;
+  var slide = RangeValues(0.5, 50);
 
-  var slide=RangeValues(0.5,50);
+  List<Widget> cat = [];
+  List<Widget> subcat = [];
+  List<AllCategories> allcat = [];
+  List<SubCategories> allsubcat = [];
 
-List<Widget>cat=[];
-  List<Widget>subcat=[];
-  List<AllCategories>allcat=[];
-  List<SubCategories>allsubcat=[];
   @override
   void initState() {
     super.initState();
-    for(int i=0;i<bata.allCategories.length;i++){
+
+    // for(int i=0;i<allcat.length;i++){
+    //   cat.add(items(data: allcat[i]));
+    // }
+    // for(int i=0;i<allsubcat.length;i++){
+    //   subcat.add(subitems(data: allsubcat[i]));
+    // }
+    restcato();
+  }
+
+  restcato() {
+    cat.clear();
+    subcat.clear();
+    for (int i = 0; i < bata.allCategories.length; i++) {
       allcat.add(bata.allCategories[i]);
-       cat.add(items(data: bata.allCategories[i]));
-      for(int o=0;o<bata.allCategories[i].subCategories.length;o++){
-        allsubcat.add( bata.allCategories[i].subCategories[o]);
-       subcat.add(subitems (data: bata.allCategories[i].subCategories[o] ));
+      cat.add(items(data: bata.allCategories[i]));
+      for (int o = 0; o < bata.allCategories[i].subCategories.length; o++) {
+        allsubcat.add(bata.allCategories[i].subCategories[o]);
+        subcat.add(subitems(data: bata.allCategories[i].subCategories[o]));
       }
     }
-    for(int i=0;i<allcat.length;i++){
+  }
+
+  removefromcat(AllCategories categories) {
+    allcat.remove(categories);
+    cat.clear();
+    subcat.clear();
+    for (int i = 0; i < allcat.length; i++) {
       cat.add(items(data: allcat[i]));
     }
-    for(int i=0;i<allsubcat.length;i++){
+    for (int i = 0; i < categories.subCategories.length; i++) {
+      allsubcat.remove(categories.subCategories[i]);
+    }
+    for (int i = 0; i < allsubcat.length; i++) {
       subcat.add(subitems(data: allsubcat[i]));
     }
+    setState(() {});
   }
-removefromcat(AllCategories categories){
-  allcat.remove(categories);
-  cat.clear();
-  subcat.clear();
-  for(int i=0;i<allcat.length;i++){
-    cat.add(items(data: allcat[i]));
-  }
-  for(int i=0;i<categories.subCategories.length;i++){
-    allsubcat.remove(categories.subCategories[i]);
 
-  }
-  for(int i=0;i<allsubcat.length;i++){
-    subcat.add(subitems(data: allsubcat[i]));
-  }
-setState(() {
-
-});
-  }
   @override
   Widget build(BuildContext context) {
-print(bata.allCategories.length);
+    print(bata.allCategories.length);
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -70,7 +77,13 @@ print(bata.allCategories.length);
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: InkWell(onTap: () {}, child: Text('X')),
+                  child: InkWell(
+                      onTap: () {},
+                      child: Text(
+                        'X',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -82,21 +95,27 @@ print(bata.allCategories.length);
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Categories'),
-                      Text('Clear All'),
+                      InkWell(
+                          onTap: () {
+                            restcato();
+                            setState(() {});
+                          },
+                          child: Text('Clear All')),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
+                  child: GetBuilder<AllCategoriesController>(builder: (logic) {
+                    print(logic.filterCategories);
+                    restcato();
+                    return Wrap(children: cat
 
-                  Wrap(
-                    children: cat
-
-                    // bata.allCategories.map((e) {
-                    //   items(data: e);
-                    // }).toList(),
-                  ),
+                      // bata.allCategories.map((e) {
+                      //   items(data: e);
+                      // }).toList(),
+                    );
+                  }),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -110,34 +129,29 @@ print(bata.allCategories.length);
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
-                    children: subcat,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Sub Categories'),
-                      Text('Clear All'),
-                    ],
-                  ),
-                ),    Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
-                    children: cat,
-                  ),
-                ),
-                RangeSlider(   onChanged: (v){
-                  slide=v;
-                  setState(() {
+                  child: GetBuilder<AllCategoriesController>(
 
-                  });
-                },max: 100,min: 0,values: slide,  labels: RangeLabels(
-                  slide.start.round().toString(),
-                  slide.end.round().toString(),
-                ), divisions: 20,)
+                    builder: (logic) {
+                      return Wrap(
+                        children: subcat,
+                      );
+                    },
+                  ),
+                ),
+                RangeSlider(
+                  onChanged: (v) {
+                    slide = v;
+                    setState(() {});
+                  },
+                  max: 100,
+                  min: 0,
+                  values: slide,
+                  labels: RangeLabels(
+                    slide.start.round().toString(),
+                    slide.end.round().toString(),
+                  ),
+                  divisions: 20,
+                )
               ],
             ),
           ),
@@ -146,33 +160,62 @@ print(bata.allCategories.length);
     );
   }
 
-  Widget items({AllCategories  data}) {
-    return GestureDetector(onTap: (){
-      removefromcat(  data);
-    },
+  Widget items({AllCategories data}) {
+    return GestureDetector(
+      onTap: () {
+        // removefromcat(  data);
+        print("5555555555555555555555");
+        bata.updatefilterCategories(data);
+        print(bata.filterCategories);
+        tee = true;
+        setState(() {
+
+        });
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           width: 80,
-          height: 50,//data.categoryNameAr
-          child: Center(child: Text(data.categoryNameEn)),
+          height: 50, //data.categoryNameAr
+          child: Center(
+              child: Text(
+                Get.locale.languageCode == "en"
+                    ? data.categoryNameEn
+                    : data.categoryNameAr,
+                textAlign: TextAlign.center,
+              )),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
-              color: const Color(0xFFCBCED1)),
+              color: bata.filterCategories
+                  .where((element) => element.id == data.id)
+                  .length > 0 ? const Color(
+                  0xFF0078F3) : const Color(0xFFCBCED1)),
         ),
       ),
     );
   }
-  Widget subitems({SubCategories  data}) {
+
+  Widget subitems({SubCategories data}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 80,
-        height: 50,//data.categoryNameAr
-        child: Center(child: Text(data.subCategoryNameEn)),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(7),
-            color: const Color(0xFFCBCED1)),
+      child: InkWell(onTap: () {
+        bata.updatefiltersubCategories(data);
+      },
+        child: Container(
+          width: 80,
+          height: 50, //data.categoryNameAr
+          child: Center(
+              child: Text(
+                data.subCategoryNameEn,
+                textAlign: TextAlign.center,
+              )),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: bata.filtersubCategories
+                  .where((element) => element.id == data.id)
+                  .length > 0 ? const Color(
+                  0xFF0078F3) : const Color(0xFFCBCED1)),
+        ),
       ),
     );
   }

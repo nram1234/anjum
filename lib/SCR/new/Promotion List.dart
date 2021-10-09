@@ -112,7 +112,7 @@ String serchword="";
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context,index){serchword;
-if( _all_promotionsController.allPromotionss[index].id.contains(serchword)){
+if( _all_promotionsController.allPromotionss[index].id.contains(serchword)||_all_promotionsController.allPromotionss[index].name.contains(serchword)){
   return PRomotionListCardUI(allPromotions:  _all_promotionsController.allPromotionss[index]);
 }else{return SizedBox();}
 
