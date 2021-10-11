@@ -11,11 +11,7 @@ Map<String,PriceListsInfo>val_Of_PriceListsInfo_map={};
 Map<String,List<PriceBarUint>>priceparunit={};
 updatepriceListMap({List<PriceListsInfo> priceListsInfo}){
    priceListsInfo.forEach((element) {
-     print('////////////////////////////////////////////////////');
-     print("id ${element.id}");
-     print("unit ${element.unit}");
-     print("priceListId ${element.priceListId}");
-     print("sellingPrice ${element.sellingPrice}");
+
      if(priceList[element.itemId]==null){
        List<PriceListsInfo>a=[];
            a.add(element);
@@ -28,9 +24,7 @@ updatepriceListMap({List<PriceListsInfo> priceListsInfo}){
 
      }}
    });
-   print('tttttttttttttttttttttttttttttttttttttttt');
-   print(priceList);
-   print('tttttttttttttttttttttttttttttttttttttttt');
+
   update();
 }
 

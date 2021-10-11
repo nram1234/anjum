@@ -32,7 +32,7 @@ dependencies:
   get: ^4.3.8
   adobe_xd: ^1.1.0+1
   sqflite: ^2.0.0+3
-  path_provider: 2.0.1
+  path_provider: 2.0.5
   permission_handler:
   dio: ^4.0.0
   connectivity: ^3.0.3
@@ -55,6 +55,8 @@ dependencies:
   esc_pos_bluetooth:
   esc_pos_utils:
   image:
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
 
 
 

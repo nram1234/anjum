@@ -17,6 +17,7 @@ class AllCategoriesController extends GetxController{
     update();
   }
 void updatefilterCategories(AllCategories categorie){
+    isflter.value=false;
 //print(filterCategories.where((element) => element.id==categorie.id).length>0);
     if(filterCategories.where((element) => element.id==categorie.id).length>0){
       filterCategories.remove(categorie);
@@ -39,7 +40,14 @@ print(categorie);
    }
     update();
 }
-
+updatf(){
+  if(filterCategories.length>0){
+    isflter.value=true;
+  }else{
+    isflter.value=false;
+  }
+  update();
+}
   void updatefiltersubCategories(SubCategories categorie){
     print(filterCategories.where((element) => element.id==categorie.categoryId).length>0);
    if(filterCategories.where((element) => element.id==categorie.categoryId).length>0){

@@ -32,6 +32,7 @@ class _FilterState extends State<Filter> {
     //   subcat.add(subitems(data: allsubcat[i]));
     // }
     restcato();
+    print('444444444444444444444444444444444444444444444444444444444');
   }
 
   restcato() {
@@ -41,6 +42,8 @@ class _FilterState extends State<Filter> {
       allcat.add(bata.allCategories[i]);
       cat.add(items(data: bata.allCategories[i]));
       for (int o = 0; o < bata.allCategories[i].subCategories.length; o++) {
+        print(bata.allCategories[i].subCategories[o].subCategoryNameEn);
+        print(bata.allCategories[i].categoryNameEn);
         allsubcat.add(bata.allCategories[i].subCategories[o]);
         subcat.add(subitems(data: bata.allCategories[i].subCategories[o]));
       }
@@ -151,8 +154,30 @@ class _FilterState extends State<Filter> {
                     slide.end.round().toString(),
                   ),
                   divisions: 20,
-                )
-              ],
+                ),
+                Center(
+                  child: InkWell(onTap: (){
+                    bata.updatf();
+Get.back();
+                  },
+                    child: Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Color(0xff2C4B89),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                          child: Text(
+                            'apply'.tr,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          )),
+                    ),
+                  ),
+                ),  ],
             ),
           ),
         ),

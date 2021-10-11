@@ -17,7 +17,7 @@ class MyProdectListController extends GetxController {
 Map<int,Map<String,TextEditingController>>mapofcontrpoler={};
   List<Widget> liPro = [];
   Map<String, int> mapofpounce = {};
-  Map<String, Rx<TheItemInList>> myitemPro = {};
+   Map<String, Rx<TheItemInList>> myitemPro = {};
   List<Map<String, AllInQuantityPromotionItems>> itemInPro = [];
   final All_PromotionsController _all_promotionsController =
       Get.find<All_PromotionsController>();
@@ -134,13 +134,13 @@ newItemForTestprod(){
   void onInit() {
     if (item.length == 0) {
       for (int i = 0; i < bata.allItems.length; i++) {
-        print('allStockItems ${_allStockItemsController.allStockItems}');
+        print('allStockItems ${_allStockItemsController.allStockItems[i]}');
         for (int p = 0;
             p < _allStockItemsController.allStockItems.length;
             p++) {
           if (bata.allItems[i].itemId ==
               _allStockItemsController.allStockItems[p].itemId) {
-
+print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
 
             item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
                     totalPriceForItem: 0,
