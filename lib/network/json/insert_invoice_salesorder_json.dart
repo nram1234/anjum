@@ -27,6 +27,7 @@ class Insert_invoice_salesorder_json {
 class ListInvoice {
   int user_id;
   int order_id;
+  int no_invoice;
   String request_level;
   String request_type;
   int employee_id;
@@ -53,7 +54,7 @@ class ListInvoice {
   double totalPriceWithTax;
 
   ListInvoice(
-      {this.user_id,this.order_id,
+      {this.user_id,this.order_id,this.no_invoice,
         this.request_level,
         this.request_type,
         this.employee_id,
@@ -112,7 +113,7 @@ class ListInvoice {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['user_id'] = this.user_id;
     data['order_id'] = this.order_id;
-
+    data['no_invoice'] = this.no_invoice;
     data['request_level'] = this.request_level;
     data['request_type'] = this.request_type;
     data['employee_id'] = this.employee_id;

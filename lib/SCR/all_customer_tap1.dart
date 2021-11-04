@@ -32,10 +32,10 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
 
   @override
   Widget build(BuildContext context) {
-    print('----------------------------------------------------------------------------------');
-print(Get.locale.languageCode =="ar");
-print(Get.locale.languageCode =="en");
-    print('----------------------------------------------------------------------------------');
+//     print('----------------------------------------------------------------------------------');
+// print(Get.locale.languageCode =="ar");
+// print(Get.locale.languageCode =="en");
+//     print('----------------------------------------------------------------------------------');
     var size = MediaQuery.of(context).size;
     return Scaffold(body: GetBuilder<AllCustomersControllers>(
       builder: (logic) {
@@ -78,7 +78,7 @@ print(Get.locale.languageCode =="en");
                               .id) {
                         Get.to(() => Dashboard());
                       } else {
-                        Get.snackbar('', 'stopvisitingfirst'.tr);
+                        Get.snackbar(  'stopvisitingfirst'.tr, Get.locale.languageCode =="ar"?    Get.find<AllChequesController>().customer.customerNameAr:    Get.find<AllChequesController>().customer.customerNameEn);
                       }
                     }
                   },

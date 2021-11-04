@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:anjum/DB/dataBaseHelper.dart';
+import 'package:anjum/DB/hivee/not_complete_order.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/item_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
@@ -24,12 +25,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import 'all _customer.dart';
 import 'carteditproduct.dart';
 
 import 'dart:typed_data';
@@ -63,7 +66,7 @@ class _CartEditProductState extends State<Cart> {
       Get.find<EmployeePermissionsController>();
   AllChequesController customer = Get.find<AllChequesController>();
   UserDataController _userDataController = Get.find<UserDataController>();
-
+  Box<dynamic> notComorder ;
   String dropdownvalue;
 
   var items = ['Cash', 'Cheque'];
@@ -82,11 +85,17 @@ class _CartEditProductState extends State<Cart> {
 
   @override
   void initState() {
+
     super.initState();
+    print("isinvoiceOrSalesOrderOrReturnInvoiceisinvoiceOrSalesOrderOrReturnInvoiceisinvoiceOrSalesOrderOrReturnInvoice   $isinvoiceOrSalesOrderOrReturnInvoice");
     orderid = box.read('orderid');
     if (orderid == null) {
-      orderid = 1;
-      box.write('orderid', 1);
+      orderid =    int.parse(_userAndPermissions.user.id.toString()+"001");
+      print("orderidorderidorderidorderid      ${orderid}");
+      box.write('orderid', orderid);
+    }else{
+      orderid++;
+      box.write('orderid', orderid);
     }
     keysOfMap = _myProdectListController.item.keys.toList();
     requestToChangeInvoicePaymentType = employeePermissionsController
@@ -418,7 +427,7 @@ class _CartEditProductState extends State<Cart> {
                             ),
                           ),
 
-                          Padding(
+                                   Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                               child: Container(
@@ -495,7 +504,7 @@ class _CartEditProductState extends State<Cart> {
                           //   padding: const EdgeInsets.only(left: 16, right: 16),
                           //   child: Text('Discount'),
                           // ),
-                          Padding(
+                          if( employeePermissionsController.employeePermissions[0].addVoucherDiscount=='yes' )          Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -982,6 +991,14 @@ class _CartEditProductState extends State<Cart> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
+
+
+                                      getdtatafromdatabaseanddelet();
+
+
+
+
+
                                       final doc = pw.Document();
 
                                       doc.addPage(pw.Page(
@@ -1004,6 +1021,7 @@ class _CartEditProductState extends State<Cart> {
                                             .forEach((key, value) {
                                           if (value.value.count > 0) {
                                             noOfItems++;
+                                         //   value.value.quantity_in_store-value.value.count;
                                           }
                                         });
                                         for (int itmeinlast = 0;
@@ -1048,8 +1066,17 @@ class _CartEditProductState extends State<Cart> {
                                                                 .tex /
                                                             100));
 
-                                            ListInvoice i = ListInvoice(
-                                                order_id: orderid,
+
+
+                                            _myProdectListController.setcountinstore(id: _myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value
+                                                .id,count: _myProdectListController
+                                                .item[keysOfMap[itmeinlast]]
+                                                .value
+                                                .count);
+                                            ListInvoice i = ListInvoice(no_invoice: orderid,
+                                                order_id:  orderid,
                                                 user_id: _userAndPermissions
                                                     .user.userId,
                                                 request_level: 2.toString(),
@@ -1272,13 +1299,13 @@ class _CartEditProductState extends State<Cart> {
                                                             TextButton(
                                                                 onPressed: () {
                                                                   // Navigator.pop(context);
-
+                                                                 // Get.off(() => All_Customer());
                                                                   int count = 0;
                                                                   Navigator.popUntil(
                                                                       context,
                                                                       (route) {
                                                                     return count++ ==
-                                                                        3;
+                                                                        4;
                                                                   });
                                                                 },
                                                                 child: Row(
@@ -2309,5 +2336,72 @@ pw.Row(children:[ pw.Expanded(
 
  //Get.to(()=>BluetoothPrinterScr(file));
   }
+  getdtatafromdatabaseanddelet()async{
+    notComorder=await Hive.openBox<NotComplete_order>('NotCompleteorder');
+    // print ( "notComorder  ${notComorder.values}");
+    // notComorder.values.forEach((element) {
+    //   NotComplete_order s=element as NotComplete_order;
+    //   print(Get.find<AllChequesController>()
+    //       .customer
+    //
+    //       .id);
+    //   print(s.customerId);
+    //   print(Get.find<AllChequesController>()
+    //       .customer
+    //
+    //       .id==s.customerId);
+    //   if(Get.find<AllChequesController>()
+    //       .customer
+    //
+    //       .id==s.customerId){
 
+        notComorder.keys.forEach((element) {
+          NotComplete_order s=notComorder.get(element) as NotComplete_order;
+  print(Get.find<AllChequesController>()
+                .customer
+
+                .id);
+            print(s.customerId);
+          print(element);
+            print(Get.find<AllChequesController>()
+                .customer
+
+                .id==s.customerId);
+          if(Get.find<AllChequesController>()
+                .customer
+
+                .id==s.customerId){
+            notComorder.delete(element);
+          }
+
+        });
+     // }
+
+
+ //   }
+    //) ;
+// notComorder.keys.forEach((element) {
+//   NotComplete_order s=notComorder.get(element) as NotComplete_order;
+//   print(Get.find<AllChequesController>()
+//       .customer
+//
+//       .id);
+//
+//   if(Get.find<AllChequesController>()
+//       .customer
+//
+//       .id==s.customerId){
+//
+//     notComorder.delete(element);
+//   }
+// });
+    _myProdectListController
+        .item.forEach((key, value) {
+      _myProdectListController.setCount(
+          id:value.value.id,
+          count: 0);
+    });
+    _myProdectListController.countInCart();
+
+  }
 }

@@ -4,7 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'DB/hivee/not_complete_order.dart';
 import 'SCR/Bill.dart';
 import 'SCR/OrderStatus.dart';
 import 'SCR/OrderStatusdetails.dart';
@@ -18,6 +21,7 @@ import 'SCR/myMapScr.dart';
 import 'SCR/new/BeforeAndAfter.dart';
 import 'SCR/new/TimeLine.dart';
 import 'SCR/new/getalldatafromweb.dart';
+import 'SCR/new/teestHive.dart';
 import 'SCR/printer-1.dart';
 import 'SCR/products.dart';
 import 'SCR/products_Expand.dart';
@@ -38,6 +42,7 @@ import 'controllers/currencie_controller.dart';
 import 'controllers/employeDataController.dart';
 import 'controllers/employeePermissionsController.dart';
 import 'controllers/itemUnits_controller.dart';
+import 'controllers/myProdectListController.dart';
 import 'controllers/priceListsInfoController.dart';
 import 'controllers/salesOrderController.dart';
 import 'controllers/userAndpermissions.dart';
@@ -57,8 +62,11 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  //var dir= await getApplicationDocumentsDirectory();
-  //Hive.init(dir.path);
+  var dir= await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  Hive.registerAdapter( NotCompleteorderAdapter(),  );
+
+ //await Hive.openBox("NotCompleteorder");
   runApp(MyApp());
 }
 
@@ -85,6 +93,7 @@ if(token!=null){
   _userAndPermissions
       .setPermissions( permissions);
 }
+
     _requestPermission();
     return GetMaterialApp(
       locale: LocalizationService.locale,
@@ -96,8 +105,8 @@ if(token!=null){
           fontFamily: ArabicFonts.Cairo,
 
         primarySwatch: Colors.indigo,
-        visualDensity: VisualDensity.adaptivePlatformDensity,),
-      home:    token==null? Login(): get_first_step_json!=null ?Home():GetAllDataFRomWeb()//Reports()//ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
+        visualDensity: VisualDensity.adaptivePlatformDensity,),//TtryHive()//
+      home:   token==null? Login(): get_first_step_json!=null ?Home():GetAllDataFRomWeb()//Reports()//ProductsScr()//OrderStatusdetails()// OrderStatus()//Login()//Filter()//BeforeAndAfter()// CashPay()//Login()//Printer1()// CashPay()//Home()//Login()//Bill()//All_Customer()//Dashboard()//Login()// Products_Expand()//Products()//All_Customer()//,
     );
   }
   ifhaveinternetornot()async{
@@ -109,8 +118,8 @@ if(token!=null){
         Get.find<EmployeePermissionsController>()
             .updateemployeePermissionsData(
             get_first_step_json.result.employeePermissions);
-        Get.find<All_routesController>()
-            .updateAllRoutes(get_first_step_json.result.allRoutes);
+        print(get_first_step_json.result.allRoutes);
+
         Get.find<EmployeDataController>()
             .updateemployeDatasData(get_first_step_json.result.employeData);
         //===========================================================
@@ -166,10 +175,16 @@ if(token!=null){
         Get.find<AllStockItemsController>()
             .updateallStockItemsData(
             get_fifth_step_json.result.allStockItems);
-      }
+
+
+
+        Get.find<All_routesController>()
+            .updateAllRoutes(get_first_step_json.result.allRoutes);
+        Get.find<MyProdectListController>().myoninit();}
 
   }
   _requestPermission() async {
+
     Map<Permission, PermissionStatus> statuses = await [
       Permission.storage,
     ].request();

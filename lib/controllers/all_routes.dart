@@ -13,10 +13,23 @@ class All_routesController extends GetxController {
   Map<int, AllRoutes> routMap = {};
   Map<int, AllRoutes> routMaptoshw = {};
 List<int>routMaptoshwkeys=[];
+var thisweek=0;
   void updateAllRoutes(List<AllRoutes> allroutes) {
+
+   //  allRoutes.clear();
+    mapOfCustomar.clear();
+   //  routMap.clear();
+     routMaptoshwkeys.clear();
+     routMaptoshw.clear();
+
+
     this.allRoutes = allroutes;
     allCustomarInRouts();
-
+    Get.find<AllCustomersControllers>().allCustomers.forEach((element) {
+    print("66666666666666666666666666666666 $element");
+      mapOfCustomar[element.id] = element;
+    });
+    mytryget();
     update();
   }
 
@@ -24,9 +37,7 @@ List<int>routMaptoshwkeys=[];
   void onInit() {
     super.onInit();
 
-    Get.find<AllCustomersControllers>().allCustomers.forEach((element) {
-      mapOfCustomar[element.id] = element;
-    });
+
   }
 
   allCustomarInRouts() {
@@ -41,13 +52,15 @@ List<int>routMaptoshwkeys=[];
 
     for (int p = 0; p < allRoutes.length; p++) {
       routMap[p] = allRoutes[p];
-      // for (int i = 0; i < allRoutes[i].listRoutesInfo.length; i++) {
-      //   listRoutes.add(allRoutes[p].listRoutesInfo[i]);
-      // }
+print(allRoutes[p].name);
 
     }
+
+    //دي الي عامله مشكله التكرار
     routMap.forEach((key, value) {
+
       value.listRoutesInfo.forEach((element) {
+        print(element.schedule);
         Map<String, String> mapOfDay = {};
         mapOfDay["sunday"] = element.sunday;
         mapOfDay["monday"] = element.monday;
@@ -56,9 +69,12 @@ List<int>routMaptoshwkeys=[];
         mapOfDay["thursday"] = element.thursday;
         mapOfDay["saturday"] = element.saturday;
         mapOfDay["friday"] = element.friday;
-        DateTime from =DateTime.now();// DateTime.parse(element.startDate);
-        DateTime todate =DateTime.now();//  DateTime.parse(element.endDate);
-
+        DateTime from =  DateTime.parse(element.startDate);
+        DateTime todate =   DateTime.parse(element.endDate);
+        // print( "${time.isAfter(from) && time.isBefore(todate)}    555555555555555555555555555555555555");
+        // print(time.isAfter(from));
+        // print(time.day);
+        // print(mapOfDay[formatter.format(time).toLowerCase()] == "yes");
         if (time.isAfter(from) && time.isBefore(todate)) {
           // if (element.schedule.toLowerCase() == "weekly") {
           //
@@ -68,11 +84,13 @@ List<int>routMaptoshwkeys=[];
           //   }
           // }
 
-          if (mapOfDay[formatter.format(time).toLowerCase()] == "yes") {
+          if (mapOfDay[formatter.format(time).toLowerCase()] == "yes"&&element.schedule=="weekly") {
+print("will add $element for key $key");
             if(!routMaptoshwkeys.contains(key)){
+              print('routMaptoshwkeys            $key');
               routMaptoshwkeys.add(key);
             }
-            print('key  $key');
+           // print('key  $key');
             if (routMaptoshw[key] != null) {
               routMaptoshw[key].listRoutesInfo.add(element);
             } else {
@@ -82,7 +100,66 @@ List<int>routMaptoshwkeys=[];
               routMaptoshw[key].listRoutesInfo.add(element);
             }
           }
-        }
+          if(element.schedule=="monthly"){
+
+
+            Map<String, String> mapOfweek = {};
+            mapOfweek["1st"] = element.s1st;
+            mapOfweek["2nd"] = element.s2nd;
+            mapOfweek["3rd"] = element.s3rd;
+            mapOfweek["4th"] = element.s4th;
+            mapOfweek["5th"] = element.s5th;
+
+            mapOfweek.forEach((keye, valueee) {
+              print('lllllllllllllllll');
+print(valueee=="yes"&&int.parse(keye[0])==thisweek);
+              if(valueee=="yes"&&int.parse(keye[0])==thisweek){
+
+                print('1111111111111111111111111111111111111111111111111111111111111111111111');
+                print(int.parse(keye[0])==thisweek);
+                print(int.parse(keye[0]));
+                print( thisweek);
+                print('1111111111111111111111111111111111111111111111111111111111111111111111');
+                //  if(!routMaptoshwkeys.contains(key )){
+                //    print('routMaptoshwkeys            $key');
+                //    routMaptoshwkeys.add( key  );
+                //  }
+                //  if (routMaptoshw[key] != null) {
+                //    routMaptoshw[key].listRoutesInfo.add(element);
+                //  } else {
+                //
+                //    routMaptoshw[key]  = value;
+                //    routMaptoshw[key].listRoutesInfo=[];
+                //    routMaptoshw[key].listRoutesInfo.add(element);
+                //  }
+
+                if (mapOfDay[formatter.format(time).toLowerCase()] == "yes") {
+
+                  if(!routMaptoshwkeys.contains(key)){
+                    print('routMaptoshwkeys            $key');
+                    routMaptoshwkeys.add(key);
+                  }
+                  // print('key  $key');
+                  if (routMaptoshw[key] != null) {
+                    routMaptoshw[key].listRoutesInfo.add(element);
+                  } else {
+
+                    routMaptoshw[key]  = value;
+                    routMaptoshw[key].listRoutesInfo=[];
+                    routMaptoshw[key].listRoutesInfo.add(element);
+                  }
+                }
+
+
+
+
+              }
+            });
+
+
+
+          }  }
+
       });
     });
     update();
@@ -119,4 +196,32 @@ List<int>routMaptoshwkeys=[];
     //   }
     // });
   }
+  mytryget(){
+    // Current date and time of system
+    String date = DateTime.now().toString();
+
+// This will generate the time and date for first day of month
+    String firstDay = date.substring(0, 8) + '01' + date.substring(10);
+
+// week day for the first day of the month
+    int weekDay = DateTime.parse(firstDay).weekday;
+
+    DateTime testDate = DateTime.now();
+
+    int weekOfMonth;
+
+//  If your calender starts from Monday
+    weekDay--;
+    weekOfMonth = ((testDate.day + weekDay) / 7).ceil();
+    print('Week of the month: $weekOfMonth');
+    weekDay++;
+
+// If your calender starts from sunday
+    if (weekDay == 7) {
+      weekDay = 0;
+    }
+    weekOfMonth = ((testDate.day + weekDay) / 7).ceil();
+    thisweek=weekOfMonth;
+    print('Week of the month: $weekOfMonth');
+    update(); }
 }

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/insert_photos_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 
 class PhotoScreen extends StatefulWidget {
@@ -23,7 +26,8 @@ class _PhotoScreenState extends State<PhotoScreen> {
   PermissionStatus _permissionGranted;
   LocationData _locationData;
 
-
+  File   _image;
+  final picker = ImagePicker();
   @override
   void initState() {
     super.initState();
@@ -32,6 +36,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     return SafeArea(
         top: true,
         child: Scaffold(
@@ -40,7 +45,34 @@ class _PhotoScreenState extends State<PhotoScreen> {
               const SizedBox(
                 height: 10,
               ),
+              GestureDetector(
+                onTap: () async{
+                  final pickedFile = await picker.getImage(source: ImageSource.camera);
 
+                  setState(() {
+                    if (pickedFile != null) {
+                      _image = File(pickedFile.path);
+                    } else {
+                      print('No image selected.');
+                    }
+                  });
+                },
+                child: Container(
+                  height:size.height*.5,
+                  width: size.width*.8,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child:_image==null? Icon(
+                    Icons.camera_alt,
+                    size: 50,
+                  ):Image.file(_image,height:size.height*.5,fit: BoxFit.fill,
+                    width: size.width*.8,),
+                ),
+              ),const SizedBox(height: 10,), const SizedBox(
+                height: 10,
+              ),
               Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width * .85,
@@ -74,36 +106,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .85,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.black, width: 1),
-                    color: Colors.white,
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.grey.withOpacity(0.5),
-                    //     spreadRadius: 5,
-                    //     blurRadius: 7,
-                    //     offset: Offset(
-                    //         0, 3), // changes position of shadow
-                    //   ),
-                    // ],
-                  ),
-                  child: TextField(controller: salesmanager_note,
 
-                    maxLines: 6,
-                    decoration: InputDecoration(hintText: 'salesmanager note',
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),const SizedBox(height: 10,),
               GestureDetector(
                 onTap: ()async {
                   var data =Insert_photos_json().toJson();

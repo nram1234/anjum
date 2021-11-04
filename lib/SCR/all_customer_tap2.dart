@@ -3,7 +3,6 @@ import 'package:anjum/controllers/all_routes.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/network/newjosomnLast/get_second_step1_json.dart';
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -22,41 +21,56 @@ class All_customer_tap2 extends StatefulWidget {
 
 class _All_customer_tap2State extends State<All_customer_tap2> {
   final TimeController c = Get.find<TimeController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
       body: GetBuilder<All_routesController>(
         builder: (logic) {
+        print(logic.allRoutes);
           return ListView.builder(
               itemCount: logic.routMaptoshwkeys.length,
               itemBuilder: (context, pos) {
+
+               // print(" allRoutes[pos].name    ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]].name}");
                 return ExpansionTile(
-                  title: Text(" Route Name : ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]].name}"),
-                  children: logic.routMaptoshw[logic.routMaptoshwkeys[pos]].listRoutesInfo.map((e) {
-                    return InkWell(onTap: (){
-                if (Get.find<AllChequesController>().customer == null||!c.startswatch.value) {
-                      Get.find<AllChequesController>()
-                          .setcustomer(logic.mapOfCustomar[e.customerId]);
+                  title: Text(
+                      " Route Name : ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]].name}"),
+                  children: logic
+                      .routMaptoshw[logic.routMaptoshwkeys[pos]].listRoutesInfo
+                      .map((e) {
+                    return InkWell(
+                      onTap: () {
+                        if (Get.find<AllChequesController>().customer == null ||
+                            !c.startswatch.value) {
+                          Get.find<AllChequesController>()
+                              .setcustomer(logic.mapOfCustomar[e.customerId]);
 
-                      Get.find<AllChequesController>().setcustomerID(
-       e.customerId);
+                          Get.find<AllChequesController>()
+                              .setcustomerID(e.customerId);
 
-                      setState(() {});
-                      //arguments:  [bata.allCustomers[pos]]
-                      Get.to(()=>Dashboard(),  );
-                    }
-                else {
-                  if (e.customerId ==
-                      Get.find<AllChequesController>()
-                          .customer
-
-                          .id) {
-                    Get.to(()=>Dashboard());
-                  } else {
-                    Get.snackbar('','stopvisitingfirst'.tr);
-                  }
-                }      },
+                          setState(() {});
+                          //arguments:  [bata.allCustomers[pos]]
+                          Get.to(
+                            () => Dashboard(),
+                          );
+                        } else {
+                          if (e.customerId ==
+                              Get.find<AllChequesController>().customer.id) {
+                            Get.to(() => Dashboard());
+                          } else {
+                            Get.snackbar('', 'stopvisitingfirst'.tr);
+                          }
+                        }
+                      },
+                    //  child: Text("jjj"),
                       child: item(
                           data: logic.mapOfCustomar[e.customerId], size: _size),
                     );
@@ -70,14 +84,15 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
 
   bool iscust(AllCustomers data) {
     if (Get.find<AllChequesController>().customer != null) {
-      return Get.find<AllChequesController>().customer.id ==
-          data.id;
+      return Get.find<AllChequesController>().customer.id == data.id;
     } else {
       return false;
     }
   }
 
   Widget item({size, AllCustomers data}) {
+    print(data);
+   // return Text('ppppp');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -99,17 +114,20 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                padding: EdgeInsets.all(16),
-                child:  CachedNetworkImage(imageUrl:data.image ,width: size.height * .08,
-                  height: size.height * .08,
-                  fit: BoxFit.fill,)
-                // Image.network(
-                //   data.customerInfo.image,
-                //   width: size.height * .08,
-                //   height: size.height * .08,
-                //   fit: BoxFit.fill,
-                // ),
-              ),
+                  padding: EdgeInsets.all(16),
+                  child: CachedNetworkImage(
+                    imageUrl: data.image,
+                    width: size.height * .08,
+                    height: size.height * .08,
+                    fit: BoxFit.fill,
+                  )
+                  // Image.network(
+                  //   data.customerInfo.image,
+                  //   width: size.height * .08,
+                  //   height: size.height * .08,
+                  //   fit: BoxFit.fill,
+                  // ),
+                  ),
             ),
             Container(width: 1, height: size.height * .2, color: Colors.cyan),
             SizedBox(
@@ -215,9 +233,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                               ),
                                             ),
                                             Text(
-                                              'Email' +
-                                                  ' : ' +
-                                                  '${data.email}',
+                                              'Email' + ' : ' + '${data.email}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -291,10 +307,9 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                                               ),
                                             ),
                                             Text(
-                                              'pricelist'.tr +
-                                                  ' : '
-                                                  // +
-                                                  // '${data.priceListsInfo[0].id}'
+                                              'pricelist'.tr + ' : '
+                                              // +
+                                              // '${data.priceListsInfo[0].id}'
                                               ,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -343,8 +358,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                         InkWell(
                             onTap: () {
                               //   location
-                              List<String> l =
-                                  data.location.split(',');
+                              List<String> l = data.location.split(',');
                               // var lat=double.tryParse(l[0].trim());
                               // var Lng=double.tryParse(l[1].trim());
 

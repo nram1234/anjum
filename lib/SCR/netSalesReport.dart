@@ -1,7 +1,10 @@
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
+import 'package:anjum/controllers/get_order_statusController.dart';
+import 'package:anjum/controllers/get_reports_controller.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'dashboard.dart';
@@ -12,6 +15,10 @@ class NetSalesReport extends StatefulWidget {
 }
 
 class _NetSalesReportState extends State<NetSalesReport> {
+  String from = "From";
+  String to = "To";
+  DateTime selectedfromDate = DateTime.now();
+  DateTime selectedtoDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -100,146 +107,324 @@ class _NetSalesReportState extends State<NetSalesReport> {
                             style: TextStyle(fontSize: 20),
                           )),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16, left: 16,bottom: 16),
+                      child: Row(
+                        children: [
+                          Expanded(flex: 1,
+                            child: InkWell(
+                                onTap: () async {
+                                  final DateTime selected =
+                                  await showDatePicker(
+                                    context: context,
+                                    initialDate: selectedfromDate,
+                                    firstDate: DateTime(2010),
+                                    lastDate: DateTime(2030),
+                                  );
+                                  if (selected != null  )
+                                    setState(() {
+                                      selectedfromDate = selected;
+                                      from =
+                                      "From \n${selected.day}-${selected.month}-${selected.year}";
+                                    });
+                                },
+                                child: Text(
+                                  from,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          // SizedBox(
+                          //   width: 16,
+                          // ),
+                          Expanded(flex: 1,
+                            child: InkWell(
+                                onTap: () async {
+                                  final DateTime selected =
+                                  await showDatePicker(
+                                    context: context,
+                                    initialDate: selectedfromDate,
+                                    firstDate: DateTime(2010),
+                                    lastDate: DateTime(2030),
+                                  );
+                                  if (selected != null  )
+                                    setState(() {
+                                      selectedtoDate = selected;
+                                      to =
+                                      "To \n${selected.day}-${selected.month}-${selected.year}";
+                                    });
+                                },
+                                child: Text(
+                                  to,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          // SizedBox(
+                          //   width: 16,
+                          // ),
+                          InkWell(onTap: (){
+
+                            String formattedDatefrom=   DateFormat('yyyy-MM-dd').format(selectedfromDate);
+                            String formattedDateto=   DateFormat('yyyy-MM-dd').format(selectedtoDate);
+                            print("formattedDateto formattedDateto $formattedDateto");
+                            print(formattedDatefrom);
+                            Get.find<GetReportsController>().getreportsbydate(from: formattedDatefrom,to: formattedDateto);
+                          },child: Icon(Icons.refresh))
+                        ],
+                      ),
+                    ),
                     Container(
                       color: Colors.white,
-                      child: FutureBuilder<List<Sales_Order_Requests_Model>>(
-                          future: DatabaseHelper().get_All_sales_order_requests(),
-                          builder: (context, snapshot) {
-                            print(snapshot);
-                            double amountofInvoice = 0;
-                            int noofInvoices = 0;
-                            int noOfReturnInvoices = 0;
-                            double totalamoun = 0;
-                            double amountofReturnInvoice = 0;
-                            if (snapshot.hasData) {
-                              for (int i = 0; i < snapshot.data.length; i++) {
-
-                                  if (snapshot
-                                          .data[i].request_type==
-                                      'invoice') {
-                                    amountofInvoice = amountofInvoice +
-                                        snapshot
-                                            .data[i] .total_price;
-                                    noofInvoices++;
-                                  } else if (snapshot
-                                          .data[i]. request_type  ==
-                                      'return_invoice') {
-                                    amountofReturnInvoice =
-                                        amountofReturnInvoice +
-                                            snapshot.data[i]
-                                                .total_price;
-                                    noOfReturnInvoices++;
-
-                                }
-                              }
-                              return Column(
+                      child:     GetBuilder<GetReportsController>(
+                      builder: (logic) {
+                        return logic.get_reports_json != null
+                            ?  Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'No of Invoices:',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(
-                                            noofInvoices .toStringAsFixed(3)
-
-                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
-                                          // .toString(),
-                                        ),
-                                      ],
-                                    ),
+                                  Text(
+                                    'Total_invoice:',
+                                    style: TextStyle(fontSize: 18),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'No Of Return Invoices :',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(
-                                            noOfReturnInvoices     .toStringAsFixed(3)
+                                  Text(
+                                      logic.get_reports_json.result.reports.totalInvoice//.toStringAsFixed(3)
 
-                                         //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
-                                         // .toString(),
-                                        ),
-                                      ],
-                                    ),
+                                    // NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
+                                    // .toString(),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Amount of Invoice:',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(
-                                        amountofInvoice            .toStringAsFixed(3)
-
-                                        // NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
-                                        //  .toString(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Amount of Return Invoice :',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(
-                                        amountofReturnInvoice               .toStringAsFixed(3)
-
-
-                                        // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
-                                        //  .toString(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Net Sales Amount :',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(
-                            (amountofInvoice-amountofReturnInvoice)  .toStringAsFixed(3)
-
-                            // NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
-                            //           .toString(),
-                                        ),
-                                      ],
-                                    ),
-                                  )
                                 ],
-                              );
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          }),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'No Of Return Invoices :',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                      logic.get_reports_json.result.reports.totalReturnInvoice  //  .toStringAsFixed(3)
+                                    //
+                                    //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                                    // .toString(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Amount of Invoice:',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                      logic.get_reports_json.result.reports.totalInvoiceValue        //   .toStringAsFixed(3)
+
+                                    // NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
+                                    //  .toString(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Amount of Return Invoice :',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                      logic.get_reports_json.result.reports.totalReturnInvoiceValue       //        .toStringAsFixed(3)
+
+
+                                    // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
+                                    //  .toString(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Net Sales Amount :',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text( 
+                                     ( double.parse(logic.get_reports_json.result.reports.totalInvoiceValue)-double.parse( logic.get_reports_json.result.reports.totalReturnInvoiceValue ))  .toStringAsFixed(3)
+
+                                    // NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
+                                    //           .toString(),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ) : Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+
+
+                      // FutureBuilder<List<Sales_Order_Requests_Model>>(
+                      //     future: DatabaseHelper().get_All_sales_order_requests(),
+                      //     builder: (context, snapshot) {
+                      //       print(snapshot);
+                      //       double amountofInvoice = 0;
+                      //       int noofInvoices = 0;
+                      //       int noOfReturnInvoices = 0;
+                      //       double totalamoun = 0;
+                      //       double amountofReturnInvoice = 0;
+                      //       if (snapshot.hasData) {
+                      //         for (int i = 0; i < snapshot.data.length; i++) {
+                      //
+                      //             if (snapshot
+                      //                     .data[i].request_type==
+                      //                 'invoice') {
+                      //               amountofInvoice = amountofInvoice +
+                      //                   snapshot
+                      //                       .data[i] .total_price;
+                      //               noofInvoices++;
+                      //             } else if (snapshot
+                      //                     .data[i]. request_type  ==
+                      //                 'return_invoice') {
+                      //               amountofReturnInvoice =
+                      //                   amountofReturnInvoice +
+                      //                       snapshot.data[i]
+                      //                           .total_price;
+                      //               noOfReturnInvoices++;
+                      //
+                      //           }
+                      //         }
+                      //         return Column(
+                      //           children: [
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(8.0),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     'No of Invoices:',
+                      //                     style: TextStyle(fontSize: 18),
+                      //                   ),
+                      //                   Text(
+                      //                       noofInvoices .toStringAsFixed(3)
+                      //
+                      //                     // NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
+                      //                     // .toString(),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(8.0),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     'No Of Return Invoices :',
+                      //                     style: TextStyle(fontSize: 18),
+                      //                   ),
+                      //                   Text(
+                      //                       noOfReturnInvoices     .toStringAsFixed(3)
+                      //
+                      //                    //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                      //                    // .toString(),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(8.0),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     'Amount of Invoice:',
+                      //                     style: TextStyle(fontSize: 18),
+                      //                   ),
+                      //                   Text(
+                      //                   amountofInvoice            .toStringAsFixed(3)
+                      //
+                      //                   // NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
+                      //                   //  .toString(),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(8.0),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     'Amount of Return Invoice :',
+                      //                     style: TextStyle(fontSize: 18),
+                      //                   ),
+                      //                   Text(
+                      //                   amountofReturnInvoice               .toStringAsFixed(3)
+                      //
+                      //
+                      //                   // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
+                      //                   //  .toString(),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(8.0),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     'Net Sales Amount :',
+                      //                     style: TextStyle(fontSize: 18),
+                      //                   ),
+                      //                   Text(
+                      //       (amountofInvoice-amountofReturnInvoice)  .toStringAsFixed(3)
+                      //
+                      //       // NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
+                      //       //           .toString(),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             )
+                      //           ],
+                      //         );
+                      //       } else {
+                      //         return Center(
+                      //           child: CircularProgressIndicator(),
+                      //         );
+                      //       }
+                      //     }),
                     )
-                  ],
+                    )],
                 ),
               )),
         ],

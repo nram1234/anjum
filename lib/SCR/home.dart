@@ -248,7 +248,7 @@ class _HomeState extends State<Home> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => OrderStatus());
+                                Get.to(() => OrderStatusScr());
                               },
                               child: item(
                                   color: Colors.orange[200],

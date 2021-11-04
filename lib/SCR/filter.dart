@@ -12,17 +12,23 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  AllCategoriesController bata = Get.put(AllCategoriesController());
+  AllCategoriesController bata = Get.find<AllCategoriesController>();
   bool tee = false;
-  var slide = RangeValues(0.5, 50);
 
+
+// double maxRang=0;
+//   double minRang=0;
+//   double selectmaxRang=0;
+//   double selectminRang=0;
   List<Widget> cat = [];
   List<Widget> subcat = [];
   List<AllCategories> allcat = [];
   List<SubCategories> allsubcat = [];
-
+// TextEditingController maxRang=TextEditingController();
+//   TextEditingController minRang=TextEditingController();
   @override
   void initState() {
+
     super.initState();
 
     // for(int i=0;i<allcat.length;i++){
@@ -114,10 +120,10 @@ class _FilterState extends State<Filter> {
                     restcato();
                     return Wrap(children: cat
 
-                      // bata.allCategories.map((e) {
-                      //   items(data: e);
-                      // }).toList(),
-                    );
+                        // bata.allCategories.map((e) {
+                        //   items(data: e);
+                        // }).toList(),
+                        );
                   }),
                 ),
                 Padding(
@@ -133,7 +139,6 @@ class _FilterState extends State<Filter> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GetBuilder<AllCategoriesController>(
-
                     builder: (logic) {
                       return Wrap(
                         children: subcat,
@@ -141,25 +146,59 @@ class _FilterState extends State<Filter> {
                     },
                   ),
                 ),
-                RangeSlider(
-                  onChanged: (v) {
-                    slide = v;
-                    setState(() {});
-                  },
-                  max: 100,
-                  min: 0,
-                  values: slide,
-                  labels: RangeLabels(
-                    slide.start.round().toString(),
-                    slide.end.round().toString(),
+                // GetBuilder<AllCategoriesController>(builder: (logic) {
+                //   return RangeSlider(
+                //     onChanged: (v) {
+                //    logic.updataRangeVal(v)  ;
+                //     //  setState(() {});
+                //     },
+                //     max: 100,
+                //     min: 0,
+                //     values: logic.slide,
+                //     labels: RangeLabels(
+                //       logic.    slide.start.round().toString(),
+                //       logic.    slide.end.round().toString(),
+                //     ),
+                //     divisions: 20,
+                //   );
+                // }),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text("Price From",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                      Flexible(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(onChanged: (v){
+                              if(v!=null||v.isEmpty){
+                                bata.updataminRangVal(v);
+                              }
+
+                            },),
+                          )),
+                      Text("To",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),) ,
+                      Flexible(flex: 1, child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(onChanged: (v){
+                          if(v!=null||v.isEmpty){
+                            bata.updatamaxRangVal(v);
+                          }
+
+                        },),
+                      )),
+                    ],
                   ),
-                  divisions: 20,
                 ),
                 Center(
-                  child: InkWell(onTap: (){
-                    bata.updatf();
-Get.back();
-                  },
+                  child: InkWell(
+                    onTap: () {
+                      bata.isflter.value=true;
+
+                      bata.updatf();
+                      Get.back();
+                    },
                     child: Container(
                       height: 50,
                       width: 100,
@@ -169,15 +208,16 @@ Get.back();
                       ),
                       child: Center(
                           child: Text(
-                            'apply'.tr,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          )),
+                        'apply'.tr,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      )),
                     ),
                   ),
-                ),  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -193,9 +233,7 @@ Get.back();
         bata.updatefilterCategories(data);
         print(bata.filterCategories);
         tee = true;
-        setState(() {
-
-        });
+        setState(() {});
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -204,17 +242,19 @@ Get.back();
           height: 50, //data.categoryNameAr
           child: Center(
               child: Text(
-                Get.locale.languageCode == "en"
-                    ? data.categoryNameEn
-                    : data.categoryNameAr,
-                textAlign: TextAlign.center,
-              )),
+            Get.locale.languageCode == "en"
+                ? data.categoryNameEn
+                : data.categoryNameAr,
+            textAlign: TextAlign.center,
+          )),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
               color: bata.filterCategories
-                  .where((element) => element.id == data.id)
-                  .length > 0 ? const Color(
-                  0xFF0078F3) : const Color(0xFFCBCED1)),
+                          .where((element) => element.id == data.id)
+                          .length >
+                      0
+                  ? const Color(0xFF0078F3)
+                  : const Color(0xFFCBCED1)),
         ),
       ),
     );
@@ -223,23 +263,26 @@ Get.back();
   Widget subitems({SubCategories data}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: InkWell(onTap: () {
-        bata.updatefiltersubCategories(data);
-      },
+      child: InkWell(
+        onTap: () {
+          bata.updatefiltersubCategories(data);
+        },
         child: Container(
           width: 80,
           height: 50, //data.categoryNameAr
           child: Center(
               child: Text(
-                data.subCategoryNameEn,
-                textAlign: TextAlign.center,
-              )),
+            data.subCategoryNameEn,
+            textAlign: TextAlign.center,
+          )),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
               color: bata.filtersubCategories
-                  .where((element) => element.id == data.id)
-                  .length > 0 ? const Color(
-                  0xFF0078F3) : const Color(0xFFCBCED1)),
+                          .where((element) => element.id == data.id)
+                          .length >
+                      0
+                  ? const Color(0xFF0078F3)
+                  : const Color(0xFFCBCED1)),
         ),
       ),
     );

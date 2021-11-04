@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:anjum/network/json/get_order_status_json.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:developer'as developer;
 import 'json/customer_json.dart';
 import 'json/get_employee_data_json.dart';
+import 'json/get_reports_json.dart';
 import 'json/invoice_json.dart';
 import 'json/login_json.dart';
 import 'json/products_json.dart';
@@ -362,7 +364,26 @@ class AllNetworking {
 
     }) ;
     }
+  Future insert_cash({data}) async {
+    var respons;
+    final formData = {
 
+      "key": '1234567890',
+      "lisit_cheque":data
+
+    };
+    // dio.options.headers['content-Type'] = 'application/json';
+    // // dio.options.headers['Content-Length'] = '<calculated when request is sent>';
+    // // dio.options.headers['Host'] = '<calculated when request is sent>';
+    // dio.options.headers['Accept'] = '*/*';
+    // dio.options.headers['Accept-Encoding'] = 'gzip, deflate, br';
+    // dio.options.headers['Connection'] = 'keep-alive';
+    return await dio.post('http://18.220.206.74/van/user_api/insert_cash', data:  formData,)
+        .then((value) {
+      respons=value;
+
+    }) ;
+  }
 
 Future  insert_invoice_salesorder({data})async{
   var respons;
@@ -398,5 +419,61 @@ Future insert_photos(data)async{
 
   }) ;
 }
+  Future< Get_Order_Status_json> get_order_status ({
+    @required int user_id,
+String from ="",
+    String to="",
+  }) async {
+print(from );
+print(to );
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id.toString(),
+      "from_date":from,
+      "to_date":to
 
+    };
+    Get_Order_Status_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_order_status');
+    await http.post(url,body: formData).then((value) {
+      print(value.body);
+      data =Get_Order_Status_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
+
+
+
+
+  Future< Get_Reports_json> get_reports ({
+    @required int user_id,
+    String from ="",
+    String to="",
+  }) async {
+    print(from );
+    final formData = {
+      "mode": "formdata",
+      "key":  "1234567890" ,
+      "user_id":user_id.toString(),
+      "from_date":from,
+      "to_date":to
+
+    };
+    Get_Reports_json data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_reports');
+    await http.post(url,body: formData).then((value) {
+      print(value.body);
+      data =Get_Reports_json.fromJson(convert.jsonDecode(value.body));
+
+    }).catchError((e){print(e.toString());});
+
+
+    return data;
+  }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'allCustomersControllers.dart';
 import 'allItemsController.dart';
+import 'myProdectListController.dart';
 
 class PriceListsInfoController extends GetxController {
 Map<String,List<PriceListsInfo>>priceList= {};
@@ -99,7 +100,15 @@ for(int o=0;o<allItemController.allItems.length;o++){
 //
 //
 //   }
+setvalofdrob({id,PriceListsInfo val}){
+print('11111111');
+  val_Of_PriceListsInfo_map[id]=val;
+ // Get.find<MyProdectListController>().item[id].value.price=double.parse(val.sellingPrice);
+ // print( Get.find<MyProdectListController>().item[id].value.price);
+Get.find<MyProdectListController>().setprice(id: id,val: val.sellingPrice);
+  update();
 
+}
 }
 class PriceBarUint {
   String unit;

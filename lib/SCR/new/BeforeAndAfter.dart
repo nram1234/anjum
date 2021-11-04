@@ -97,15 +97,15 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                 ),
                                 GestureDetector(
                                   onTap: () async{
-                                    // final pickedFile = await picker.getImage(source: ImageSource.camera);
-                                    //
-                                    // setState(() {
-                                    //   if (pickedFile != null) {
-                                    //     _image1 = File(pickedFile.path);
-                                    //   } else {
-                                    //     print('No image selected.');
-                                    //   }
-                                    // });
+                                    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+                                    setState(() {
+                                      if (pickedFile != null) {
+                                        _image1 = File(pickedFile.path);
+                                      } else {
+                                        print('No image selected.');
+                                      }
+                                    });
                                     },
                                   child: Container(
                                     height:size.width*.4,
@@ -117,7 +117,8 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                     child:_image1==null? Icon(
                                       Icons.camera_alt,
                                       size: 50,
-                                    ):Image.file(_image1),
+                                    ):Image.file(_image1, height:size.width*.4,
+                                      width: size.width*.4,fit: BoxFit.fill,),
                                   ),
                                 ),
                               ],
@@ -132,15 +133,15 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                 ),
                                 GestureDetector(
                                   onTap: () async{
-                                    // final pickedFile = await picker.getImage(source: ImageSource.camera);
-                                    //
-                                    // setState(() {
-                                    //   if (pickedFile != null) {
-                                    //     _image2 = File(pickedFile.path);
-                                    //   } else {
-                                    //     print('No image selected.');
-                                    //   }
-                                    // });
+                                    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+                                    setState(() {
+                                      if (pickedFile != null) {
+                                        _image2 = File(pickedFile.path);
+                                      } else {
+                                        print('No image selected.');
+                                      }
+                                    });
                                   },
                                   child: Container(
                                     height:size.width*.4,
@@ -152,7 +153,8 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                     child:_image2==null? Icon(
                                       Icons.camera_alt,
                                       size: 50,
-                                    ):Image.file(_image2),
+                                    ):Image.file(_image2, height:size.width*.4,
+                                      width: size.width*.4,fit: BoxFit.fill,),
                                   ),
                                 ),
                               ],

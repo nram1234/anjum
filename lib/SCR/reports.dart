@@ -1,3 +1,5 @@
+import 'package:anjum/controllers/get_order_statusController.dart';
+import 'package:anjum/controllers/get_reports_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,7 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -114,7 +117,7 @@ class _ReportsState extends State<Reports> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Sales Target',style: TextStyle(fontSize: 25),),
+                              Text('Sales order',style: TextStyle(fontSize: 25),),
                               Icon(Icons.arrow_forward_ios,size: 50,)
                             ],
                           )),
@@ -140,5 +143,12 @@ class _ReportsState extends State<Reports> {
         ],
       ),
     ));
+  }
+
+  @override
+  void initState() {
+    GetReportsController controller=Get.put(GetReportsController());
+
+    super.initState();
   }
 }

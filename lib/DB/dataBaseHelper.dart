@@ -49,6 +49,7 @@ class DatabaseHelper {
 CREATE TABLE  $sales_order_request_details_tabelname  (
    $sales_order_request_details_id   INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL  ,
    $sales_order_request_details_user_id INTEGER   NOT NULL ,
+   $sales_order_request_details_sales_no_invoice INTEGER   NOT NULL ,
    $sales_order_request_details_employee_id  INTEGER  NOT NULL ,
    $sales_order_request_details_store_id  INTEGER  NOT NULL ,
    $sales_order_request_details_item_id  INTEGER  NOT NULL ,

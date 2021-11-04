@@ -6,6 +6,7 @@ import 'package:anjum/SCR/products.dart';
 import 'package:anjum/SCR/products_Expand.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
+import 'package:anjum/controllers/employeePermissionsController.dart';
 import 'package:anjum/controllers/myProdectListController.dart';
 import 'package:anjum/controllers/timeController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
@@ -29,12 +30,14 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final NetWorkController _controller = Get.put(NetWorkController());
-  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+   UserAndPermissions _user = Get.put(UserAndPermissions());
+  EmployeePermissionsController _userAndPermissions= Get.put(EmployeePermissionsController());
   final TimeController c = Get.find<TimeController>();
 
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -132,8 +135,8 @@ class _DashboardState extends State<Dashboard> {
                                       ),
                                       Wrap(
                                         children: [
-                                          if (_userAndPermissions
-                                                  .permissions.order ==
+                                          if (_userAndPermissions.employeePermissions[0]
+                                                  .order ==
                                               'yes')
                                             Padding(
                                               padding:
@@ -161,7 +164,7 @@ class _DashboardState extends State<Dashboard> {
                                               ),
                                             ),
                                           if (_userAndPermissions
-                                                  .permissions.payment ==
+                                              .employeePermissions[0].payment ==
                                               'yes')
                                             InkWell(
                                               onTap: () {
@@ -313,7 +316,7 @@ class _DashboardState extends State<Dashboard> {
                                               ),
                                             ),
                                           if (_userAndPermissions
-                                                  .permissions.returnInvoice ==
+                                              .employeePermissions[0].returnInvoice ==
                                               'yes')
                                             Padding(
                                               padding:
@@ -340,7 +343,7 @@ class _DashboardState extends State<Dashboard> {
                                               ),
                                             ),
                                           if (_userAndPermissions
-                                                  .permissions.invoice ==
+                                              .employeePermissions[0].invoice ==
                                               'yes')
                                             Padding(
                                               padding:
@@ -385,7 +388,7 @@ class _DashboardState extends State<Dashboard> {
                                                 name: 'SOA',
                                                 path: 'assets/images/soaa.png'),
                                           ),
-                                          if (_userAndPermissions.permissions
+                                          if (_userAndPermissions.employeePermissions[0]
                                                   .beforeAfterPhoto ==
                                               'yes')
                                             GestureDetector(
@@ -404,7 +407,7 @@ class _DashboardState extends State<Dashboard> {
                                               ),
                                             ),
                                           if (_userAndPermissions
-                                                  .permissions.takePhoto ==
+                                              .employeePermissions[0].takePhoto ==
                                               'yes')
                                             GestureDetector(   onTap: () {
                                               Get.to(()=>PhotoScreen());
@@ -500,7 +503,7 @@ class _DashboardState extends State<Dashboard> {
 
                                             .id,
                                     user_id:
-                                        _userAndPermissions.user.id.toString(),
+                                        _user.user.id.toString(),
                                   ))
                                       .then((value) {
                                     Get.find<AllChequesController>().customer =

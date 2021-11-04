@@ -9,9 +9,14 @@ class AllCustomersControllers extends GetxController{
   RxString serchWord="".obs;
   List<AllCustomers> allCustomers=[];
   RxList<AllCustomers> allCustomersSerchFilter= RxList<AllCustomers>();
+  Map<String,AllCustomers>mapofCustomer={};
   void updateallCustomers(List<AllCustomers> allCust){
     allCustomers=allCust;
+
     print("allllllllll${allCustomers}");
+    allCust.forEach((element) {
+      mapofCustomer[element.id]=element;
+    });
     _loading.value = false;
     update();
   }

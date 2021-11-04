@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
+import 'package:anjum/controllers/get_reports_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'dashboard.dart';
@@ -13,6 +15,10 @@ class PaymentReport extends StatefulWidget {
 }
 
 class _PaymentReportState extends State<PaymentReport> {
+  String from = "From";
+  String to = "To";
+  DateTime selectedfromDate = DateTime.now();
+  DateTime selectedtoDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -101,98 +107,96 @@ class _PaymentReportState extends State<PaymentReport> {
                             style: TextStyle(fontSize: 20),
                           )),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16, left: 16,bottom: 16),
+                      child: Row(
+                        children: [
+                          Expanded(flex: 1,
+                            child: InkWell(
+                                onTap: () async {
+                                  final DateTime selected =
+                                  await showDatePicker(
+                                    context: context,
+                                    initialDate: selectedfromDate,
+                                    firstDate: DateTime(2010),
+                                    lastDate: DateTime(2030),
+                                  );
+                                  if (selected != null  )
+                                    setState(() {
+                                      selectedfromDate = selected;
+                                      from =
+                                      "From :\n${selected.day}-${selected.month}-${selected.year}";
+                                    });
+                                },
+                                child: Text(
+                                  from,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          // SizedBox(
+                          //   width: 16,
+                          // ),
+                          Expanded(flex: 1,
+                            child: InkWell(
+                                onTap: () async {
+                                  final DateTime selected =
+                                  await showDatePicker(
+                                    context: context,
+                                    initialDate: selectedfromDate,
+                                    firstDate: DateTime(2010),
+                                    lastDate: DateTime(2030),
+                                  );
+                                  if (selected != null  )
+                                    setState(() {
+                                      selectedtoDate = selected;
+                                      to =
+                                      "To :\n${selected.day}-${selected.month}-${selected.year}";
+                                    });
+                                },
+                                child: Text(
+                                  to,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          // SizedBox(
+                          //   width: 16,
+                          // ),
+                          InkWell(onTap: (){
+
+                            String formattedDatefrom=   DateFormat('yyyy-MM-dd').format(selectedfromDate);
+                            String formattedDateto=   DateFormat('yyyy-MM-dd').format(selectedtoDate);
+                            print(formattedDateto);
+                            print(formattedDatefrom);
+                          Get.find<GetReportsController>().getreportsbydate(from: formattedDatefrom,to: formattedDateto);
+                          },child: Icon(Icons.refresh))
+                        ],
+                      ),
+                    ),
                     Container(
-                      color: Colors.white,
-                      child: FutureBuilder<List<Insert_cheque_DB>>(
-                          future:
-                              DatabaseHelper().get_All_item_in_insert_cheque(),
-                          builder: (context, snapshot) {
-                            print(snapshot);
-                            int noOfCash=0;
-                            double amountofCashPayment=0;
-                            double amountofChequePayment=0;
-                            double totalamoun=0;
-                            int noOfCeq=0;
-                            if (snapshot.hasData) {
-                              for(int i=0;i<snapshot.data.length;i++){
-                                totalamoun=totalamoun+snapshot.data[i].amount;
-                            if(snapshot.data[i].payment_type=="cash"){
-                              amountofCashPayment=amountofCashPayment+snapshot.data[i].amount;
-                              noOfCash++;
-                            }else{
-                              amountofChequePayment=amountofChequePayment+snapshot.data[i].amount;
-                              noOfCeq++;
-                            }
-                              }
-                              return Column(
+                        color: Colors.white,
+                        child:     GetBuilder<GetReportsController>(
+                            builder: (logic) {
+                              return logic.get_reports_json != null
+                                  ?  Column(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'No of Cash Payment :',
+                                          'Total cash:',
                                           style: TextStyle(fontSize: 18),
                                         ),
                                         Text(
-                                            noOfCash  .toStringAsFixed(3)
-                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCash)
-                                          // .toString(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'No of Cheque Payment  :',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(noOfCeq.toStringAsFixed(3)
-                                         //  NumberFormat.currency(locale: 'eu', symbol: '').format(noOfCeq)
-                                         // .toString(),
+                                            logic.get_reports_json.result.reports.totalCash//.toStringAsFixed(3)
 
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Amount No of Cash Payment :',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(  amountofCashPayment. toStringAsFixed(3)
-                                         //  NumberFormat.currency(locale: 'eu', symbol: '').format(amountofCashPayment)
-                                         // .toString(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Amount No of Cheque Payment  :',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        Text(
-                            amountofChequePayment.    toStringAsFixed(3)
-
-                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofChequePayment)
+                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
                                           // .toString(),
                                         ),
                                       ],
@@ -202,28 +206,203 @@ class _PaymentReportState extends State<PaymentReport> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Total Amount :',
+                                          'Total Cheque :',
                                           style: TextStyle(fontSize: 18),
                                         ),
                                         Text(
-                                        totalamoun.   toStringAsFixed(3)
-                                          // NumberFormat.currency(locale: 'eu', symbol: '').format(totalamoun)
+                                            logic.get_reports_json.result.reports.totalCheque  //  .toStringAsFixed(3)
+                                          //
+                                          //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
                                           // .toString(),
                                         ),
                                       ],
                                     ),
-                                  )
-                                ],
-                              );
-                            } else {
-                              return Center(
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Total cash value :',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                        Text(
+                                            logic.get_reports_json.result.reports.totalCashValue  //  .toStringAsFixed(3)
+                                          //
+                                          //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                                          // .toString(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Total Cheque value:',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                        Text(
+                                            logic.get_reports_json.result.reports.totalChequeValue  //  .toStringAsFixed(3)
+                                          //
+                                          //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                                          // .toString(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),     ],
+                              ) : Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
-                          }),
+
+
+
+                          // FutureBuilder<List<Sales_Order_Requests_Model>>(
+                          //     future: DatabaseHelper().get_All_sales_order_requests(),
+                          //     builder: (context, snapshot) {
+                          //       print(snapshot);
+                          //       double amountofInvoice = 0;
+                          //       int noofInvoices = 0;
+                          //       int noOfReturnInvoices = 0;
+                          //       double totalamoun = 0;
+                          //       double amountofReturnInvoice = 0;
+                          //       if (snapshot.hasData) {
+                          //         for (int i = 0; i < snapshot.data.length; i++) {
+                          //
+                          //             if (snapshot
+                          //                     .data[i].request_type==
+                          //                 'invoice') {
+                          //               amountofInvoice = amountofInvoice +
+                          //                   snapshot
+                          //                       .data[i] .total_price;
+                          //               noofInvoices++;
+                          //             } else if (snapshot
+                          //                     .data[i]. request_type  ==
+                          //                 'return_invoice') {
+                          //               amountofReturnInvoice =
+                          //                   amountofReturnInvoice +
+                          //                       snapshot.data[i]
+                          //                           .total_price;
+                          //               noOfReturnInvoices++;
+                          //
+                          //           }
+                          //         }
+                          //         return Column(
+                          //           children: [
+                          //             Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.spaceBetween,
+                          //                 children: [
+                          //                   Text(
+                          //                     'No of Invoices:',
+                          //                     style: TextStyle(fontSize: 18),
+                          //                   ),
+                          //                   Text(
+                          //                       noofInvoices .toStringAsFixed(3)
+                          //
+                          //                     // NumberFormat.currency(locale: 'eu', symbol: '').format(noofInvoices)
+                          //                     // .toString(),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //             Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.spaceBetween,
+                          //                 children: [
+                          //                   Text(
+                          //                     'No Of Return Invoices :',
+                          //                     style: TextStyle(fontSize: 18),
+                          //                   ),
+                          //                   Text(
+                          //                       noOfReturnInvoices     .toStringAsFixed(3)
+                          //
+                          //                    //  NumberFormat.currency(locale: 'eu', symbol: '').format( noOfReturnInvoices)
+                          //                    // .toString(),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //             Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.spaceBetween,
+                          //                 children: [
+                          //                   Text(
+                          //                     'Amount of Invoice:',
+                          //                     style: TextStyle(fontSize: 18),
+                          //                   ),
+                          //                   Text(
+                          //                   amountofInvoice            .toStringAsFixed(3)
+                          //
+                          //                   // NumberFormat.currency(locale: 'eu', symbol: '').format(  amountofInvoice)
+                          //                   //  .toString(),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //             Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.spaceBetween,
+                          //                 children: [
+                          //                   Text(
+                          //                     'Amount of Return Invoice :',
+                          //                     style: TextStyle(fontSize: 18),
+                          //                   ),
+                          //                   Text(
+                          //                   amountofReturnInvoice               .toStringAsFixed(3)
+                          //
+                          //
+                          //                   // NumberFormat.currency(locale: 'eu', symbol: '').format(amountofReturnInvoice)
+                          //                   //  .toString(),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //             Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.spaceBetween,
+                          //                 children: [
+                          //                   Text(
+                          //                     'Net Sales Amount :',
+                          //                     style: TextStyle(fontSize: 18),
+                          //                   ),
+                          //                   Text(
+                          //       (amountofInvoice-amountofReturnInvoice)  .toStringAsFixed(3)
+                          //
+                          //       // NumberFormat.currency(locale: 'eu', symbol: '').format((amountofInvoice-amountofReturnInvoice))
+                          //       //           .toString(),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             )
+                          //           ],
+                          //         );
+                          //       } else {
+                          //         return Center(
+                          //           child: CircularProgressIndicator(),
+                          //         );
+                          //       }
+                          //     }),
+                        )
                     )
                   ],
                 ),

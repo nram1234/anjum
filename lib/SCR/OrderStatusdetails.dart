@@ -1,3 +1,5 @@
+import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/network/json/get_order_status_json.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:adobe_xd/page_link.dart';
@@ -6,6 +8,10 @@ import './home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderStatusdetails extends StatelessWidget {
+  AllOrderStatus data;
+
+  OrderStatusdetails(this.data);
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -54,7 +60,6 @@ class OrderStatusdetails extends StatelessWidget {
                               ),
                             ),
                           ),
-
                         ],
                       ))),
                   Positioned(
@@ -123,7 +128,10 @@ class OrderStatusdetails extends StatelessWidget {
                                   Container(
                                     width: size.width * .4,
                                     child: Text(
-                                      'Soudi',
+                                      Get.locale.languageCode == "ar"
+                                          ? data.customerNameAr
+                                          : data.customerNameEn,
+                                      //Get.find<AllCustomersControllers>().mapofCustomer[data.customerId].customerNameEn:Get.find<AllCustomersControllers>().mapofCustomer[data.customerId].customerNameAr,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -132,33 +140,33 @@ class OrderStatusdetails extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Order Number',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Container(),
-                                  ),
-                                  Container(
-                                    width: size.width * .4,
-                                    child: Text(
-                                      '123',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       Text(
+                            //         'Order Number',
+                            //         style: TextStyle(
+                            //             fontSize: 18,
+                            //             fontWeight: FontWeight.bold),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: Container(),
+                            //       ),
+                            //       Container(
+                            //         width: size.width * .4,
+                            //         child: Text(
+                            //           data.id,
+                            //           style: TextStyle(
+                            //             fontSize: 16,
+                            //           ),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -177,7 +185,7 @@ class OrderStatusdetails extends StatelessWidget {
                                   Container(
                                     width: size.width * .4,
                                     child: Text(
-                                      'Main Store',
+                                      data.storeId,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -191,11 +199,160 @@ class OrderStatusdetails extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Image.asset('assets/images/accepted.png'),
+                                  Text(
+                                    'number of items',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(),
+                                  ),
+                                  Container(
+                                    width: size.width * .4,
+                                    child: Text(
+                                      data.noOfItems,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       Text(
+                            //         'price without tax and discount',
+                            //         style: TextStyle(
+                            //             fontSize: 18,
+                            //             fontWeight: FontWeight.bold),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: Container(),
+                            //       ),
+                            //       Text(
+                            //         data.totalPriceWithoutTaxDiscount,
+                            //         style: TextStyle(
+                            //           fontSize: 16,
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            //
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       Text(
+                            //         'total tax',
+                            //         style: TextStyle(
+                            //             fontSize: 18,
+                            //             fontWeight: FontWeight.bold),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: Container(),
+                            //       ),
+                            //       Container(
+                            //         width: size.width * .4,
+                            //         child: Text(
+                            //           data.totalTax,
+                            //           style: TextStyle(
+                            //             fontSize: 16,
+                            //           ),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       Text(
+                            //         'total discount',
+                            //         style: TextStyle(
+                            //             fontSize: 18,
+                            //             fontWeight: FontWeight.bold),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: Container(),
+                            //       ),
+                            //       Container(
+                            //         width: size.width * .4,
+                            //         child: Text(
+                            //           data.totalDiscount,
+                            //           style: TextStyle(
+                            //             fontSize: 16,
+                            //           ),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'total price',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(),
+                                  ),
+                                  Container(
+                                    width: size.width * .4,
+                                    child: Text(
+                                      data.totalPrice,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(data.supervisorStatus == "pending"
+                                      ? 'assets/images/pause.png'
+                                      : data.supervisorStatus == "rejected"
+                                          ? 'assets/images/cancel.png'
+                                          : 'assets/images/accepted.png'),
                                   SizedBox(
                                     width: 2,
                                   ),
-                                  Text('Accepted'),
+                                  Text(
+                                    data.supervisorStatus,
+                                    style: TextStyle(
+                                        color:
+                                            data.supervisorStatus == "pending"
+                                                ? Colors.orange
+                                                : data.supervisorStatus ==
+                                                        "rejected"
+                                                    ? Colors.red
+                                                    : Colors.green),
+                                  ),
                                 ],
                               ),
                             )
@@ -203,18 +360,18 @@ class OrderStatusdetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: ListView.builder(
-                          itemCount: 50,
-                          itemBuilder: (context, pos) {
-                            return listItem(size: size);
-                          }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Add note'),
-                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: ListView.builder(
+                    //       itemCount: 50,
+                    //       itemBuilder: (context, pos) {
+                    //         return listItem(size: size);
+                    //       }),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Text('Add note'),
+                    // ),
                     Center(
                       child: Container(
                         width: size.width * .85,
@@ -275,21 +432,26 @@ class OrderStatusdetails extends StatelessWidget {
               height: size.height * .1,
               color: Colors.indigo,
             ),
-           SizedBox(width: 8,), Column(  crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SizedBox(
+              width: 8,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text('Safi  - corn oil 1 liter'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Price - 20.00 JD'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('No of items'),
                 )
-
-             ,Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Text('Price - 20.00 JD'),
-             )
-              ,Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('No of items'),
-              )],
+              ],
             ),
           ],
         ),

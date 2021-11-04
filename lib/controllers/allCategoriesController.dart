@@ -1,5 +1,6 @@
 
 import 'package:anjum/network/jsonofnwetry/get_third_step_json.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AllCategoriesController extends GetxController{
@@ -8,8 +9,39 @@ class AllCategoriesController extends GetxController{
   List<SubCategories> filtersubCategories=[];
   List<AllCategories> allCategories=[];
 
+  var slide = RangeValues(0.5, 50);
+  double maxRang=9999999;
+  double minRang=0;
+  double selectmaxRang=0;
+  double selectminRang=0;
 
+  @override
+  void onInit() {
+    super.onInit();
+   // RangeValues(minRang, 500);
+  }
 
+  updataRangeVal(v){
+
+  slide=v;
+  //slide = RangeValues(minRang, maxRang);
+  update();
+
+}
+  updatamaxRangVal(v){
+print(v);
+    maxRang=double.parse(v);
+ // slide = RangeValues(minRang, 500);
+    update();
+
+  }
+  updataminRangVal(v){
+    print(v);
+    minRang=double.parse(v);
+  //  slide = RangeValues(minRang, 500);
+    update();
+
+  }
   void updateallCategoriesData( List<AllCategories> allCategories){
     this.allCategories=allCategories;
    // allCategories.forEach((element) { updatefilterCategories(element);
@@ -41,7 +73,7 @@ print(categorie);
     update();
 }
 updatf(){
-  if(filterCategories.length>0){
+  if(filterCategories.length>0||minRang!=0||maxRang!=9999999){
     isflter.value=true;
   }else{
     isflter.value=false;

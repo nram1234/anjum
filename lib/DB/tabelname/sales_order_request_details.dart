@@ -2,6 +2,7 @@ final String sales_order_request_details_tabelname="sales_order_request_details"
 final String sales_order_request_details_id='id';
 final String sales_order_request_details_user_id='user_id';
  final String sales_order_request_details_sales_order_id='order_id';
+final String sales_order_request_details_sales_no_invoice='no_invoice';
 final String sales_order_request_details_employee_id='employee_id';
 final String sales_order_request_details_store_id='store_id';
 final String sales_order_request_details_item_id='item_id';

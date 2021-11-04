@@ -460,6 +460,7 @@ class _ChequePayState extends State<ChequePay> {
                                     due_date: Chequetime,
                                     drawer_name: drawerName,).toJson()];
                                   _allNetworking.insert_cheque_to_Web( data: mydata).then((value) {
+                                    print(value);
                                     return showDialog(
                                       context: context,
                                       builder: (context) {

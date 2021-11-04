@@ -3,7 +3,9 @@ import 'package:anjum/DB/tabelname/insert_cheque_tabel.dart';
 import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/currencie_controller.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/controllers/network_controller.dart';
 import 'package:anjum/network/jsonofnwetry/get_fourth_step_json.dart';
+import 'package:anjum/network/networkReq.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +24,7 @@ class _CashPayState extends State<CashPay> {
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   var allCheques = Get.find<AllChequesController>();
   String amount = '', addnote = '';
-
+  AllNetworking _allNetworking=AllNetworking();
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
@@ -205,7 +207,7 @@ class _CashPayState extends State<CashPay> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: TextField(
+                                    child: TextField(keyboardType: TextInputType.number,
                                       onChanged: (v) {
                                         amount = v;
                                       },
@@ -296,115 +298,228 @@ class _CashPayState extends State<CashPay> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
-                                onTap: () {
-                                  DatabaseHelper()
-                                      .insert_insert_cheque(
-                                          item: Insert_cheque_DB(
-                                    user_id: _userAndPermissions.user.userId,
-                                    employee_id: _userAndPermissions.user.id,
-                                    customer_id: int.parse(
-                                        Get.find<AllChequesController>()
-                                            .customer_id),
-                                    amount: double.tryParse(amount),
-                                    due_date: date2,
-                                    customer_name: allCheques
-                                        .customer .customerNameEn,
-                                    note: addnote,
-                                    payment_type: "cash",
-                                    reference_no:
-                                        allCheques.customer .refId,
-                                    supervisor_id:
-                                        _userAndPermissions.user.supervisorId,
-                                    salesmanager_id:
-                                        _userAndPermissions.user.salesmanagerId,
-                                  ))
-                                      .then((value) {
-                                    print(
-                                        '999999999999999999999999999999999999999999');
-                                    print(value);
-                                  });
+                                onTap: ()async {
+                                  var d=[  Insert_cheque_DB(   user_id: _userAndPermissions.user.userId,
+                                      employee_id: _userAndPermissions.user.id,
+                                      customer_id: int.parse(
+                                          Get.find<AllChequesController>()
+                                              .customer_id),
+                                      amount: double.tryParse(amount),
+                                      due_date: date2,
+                                      customer_name: allCheques
+                                          .customer .customerNameEn,
+                                      note: addnote,
+                                      payment_type: "cash",
+                                      reference_no:
+                                      allCheques.customer .refId,
+                                      supervisor_id:
+                                      _userAndPermissions.user.supervisorId,
+                                      salesmanager_id:
+                                      _userAndPermissions.user.salesmanagerId).toJson()];
 
-                                  return showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Container(
-                                          width: size.width * .8,
-                                          height: 60,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text('Anjum',
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      color: Colors.indigoAccent,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
+    await Get.find<NetWorkController>()
+        .initConnctivity();
+
+    if (Get.find<NetWorkController>()
+        .connectionStatus
+        .value)  {
+      await   _allNetworking.insert_cash( data: d );
+
+
+      return showDialog(
+      context: context,
+      builder: (context) {
+
+
+
+
+
+        return AlertDialog(
+          title: Container(
+            width: size.width * .8,
+            height: 60,
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.start,
+              children: [
+                Text('Anjum',
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.indigoAccent,
+                        fontWeight:
+                        FontWeight.bold)),
+              ],
+            ),
+          ),
+          content: Container(
+            width: size.width * .8,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text('Paymentdone'.tr),
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            // Navigator.pop(context);
+                            int count = 0;
+                            Navigator.popUntil(
+                                context, (route) {
+                              return count++ == 3;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                  Icons.arrow_back),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('Back'.tr),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                      onPressed:
+                                          () {},
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons
+                                              .print),
+                                          SizedBox(
+                                            width:
+                                            8,
                                           ),
-                                        ),
-                                        content: Container(
-                                          width: size.width * .8,
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text('Paymentdone'.tr),
-                                                Row(
-                                                  children: [
-                                                    TextButton(
-                                                        onPressed: () {
-                                                          // Navigator.pop(context);
-                                                          int count = 0;
-                                                          Navigator.popUntil(
-                                                              context, (route) {
-                                                            return count++ == 3;
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                                Icons.arrow_back),
-                                                            SizedBox(
-                                                              width: 8,
-                                                            ),
-                                                            Text('Back'.tr),
-                                                            SizedBox(
-                                                              width: 50,
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                TextButton(
-                                                                    onPressed:
-                                                                        () {},
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Icon(Icons
-                                                                            .print),
-                                                                        SizedBox(
-                                                                          width:
-                                                                              8,
-                                                                        ),
-                                                                        Text(
-                                                                            'printers'.tr)
-                                                                      ],
-                                                                    ))
-                                                              ],
-                                                            )
-                                                          ],
-                                                        ))
-                                                  ],
-                                                )
-                                              ],
-                                            ),
+                                          Text(
+                                              'printers'.tr)
+                                        ],
+                                      ))
+                                ],
+                              )
+                            ],
+                          ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );}else{ DatabaseHelper()
+        .insert_insert_cheque(
+        item: Insert_cheque_DB(
+          user_id: _userAndPermissions.user.userId,
+          employee_id: _userAndPermissions.user.id,
+          customer_id: int.parse(
+              Get.find<AllChequesController>()
+                  .customer_id),
+          amount: double.tryParse(amount),
+          due_date: date2,
+          customer_name: allCheques
+              .customer .customerNameEn,
+          note: addnote,
+          payment_type: "cash",
+          reference_no:
+          allCheques.customer .refId,
+          supervisor_id:
+          _userAndPermissions.user.supervisorId,
+          salesmanager_id:
+          _userAndPermissions.user.salesmanagerId,
+        ))
+        .then((value) {
+      print(
+          '999999999999999999999999999999999999999999');
+      print(value);
+    });
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Container(
+            width: size.width * .8,
+            height: 60,
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.start,
+              children: [
+                Text('Anjum',
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.indigoAccent,
+                        fontWeight:
+                        FontWeight.bold)),
+              ],
+            ),
+          ),
+          content: Container(
+            width: size.width * .8,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text('Paymentdone'.tr),
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            // Navigator.pop(context);
+                            int count = 0;
+                            Navigator.popUntil(
+                                context, (route) {
+                              return count++ == 3;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                  Icons.arrow_back),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('Back'.tr),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                      onPressed:
+                                          () {},
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons
+                                              .print),
+                                          SizedBox(
+                                            width:
+                                            8,
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  );
+                                          Text(
+                                              'printers'.tr)
+                                        ],
+                                      ))
+                                ],
+                              )
+                            ],
+                          ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );}
+
                                 },
                                 child: Container(
                                   height: 50,

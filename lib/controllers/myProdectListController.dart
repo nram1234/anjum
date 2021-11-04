@@ -1,9 +1,11 @@
 import 'package:anjum/SCR/products.dart';
+import 'package:anjum/controllers/allCategoriesController.dart';
 import 'package:anjum/controllers/allItemsController.dart';
 import 'package:anjum/controllers/all_promotionsController.dart';
 import 'package:anjum/controllers/unitController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/jsonofnwetry/get_Fifth_step_json.dart';
+import 'package:anjum/utilitie/invoiceOrSalesOrderOrReturnInvoice.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,48 +132,61 @@ Map<String, Rx<TheItemInList>> itemprodecttest = Map<String, Rx<TheItemInList>>(
 newItemForTestprod(){
 
 }
-  @override
-  void onInit() {
-    if (item.length == 0) {
-      for (int i = 0; i < bata.allItems.length; i++) {
-        print('allStockItems ${_allStockItemsController.allStockItems[i]}');
-        for (int p = 0;
-            p < _allStockItemsController.allStockItems.length;
-            p++) {
-          if (bata.allItems[i].itemId ==
-              _allStockItemsController.allStockItems[p].itemId) {
-print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
+myoninit(){
+  if (item.length == 0) {
+    for (int i = 0; i < bata.allItems.length; i++) {
 
-            item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
-                    totalPriceForItem: 0,
-                    totalTaxForItem: 0,subCategoryId: bata.allItems[i].itemDetails[0].subCategoryId,shoow: true,
-                    quantity_in_store: int.parse(
-                        _allStockItemsController.allStockItems[p].quantity),
-                    count: 0,
-                    measurementUnitId: int.parse(_allStockItemsController
-                        .allStockItems[p].measurementUnitId),
-                    id: bata.allItems[i].itemId,
-                    tex: double.parse(bata.allItems[i].itemDetails[0].tax),
-                    befordes: double.parse(
-                        bata.allItems[i].itemDetails[0].sellingPrice),
-                    price: double.parse(
-                        bata.allItems[i].itemDetails[0].sellingPrice),
-                    enName: bata.allItems[i].itemDetails[0].itemNameEn,
-                    afterdes: double.parse(
-                        bata.allItems[i].itemDetails[0].sellingPrice),
-                    itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
-                    minimumQuantity:
-                        bata.allItems[i].itemDetails[0].minimumQuantity,
-                    pic: bata.allItems[i].itemDetails[0].image,
-                    bonce: 0,
-                    categoryId:
-                        int.parse(bata.allItems[i].itemDetails[0].categoryId),
-                    diescount: 0)
-                .obs;
+
+
+
+
+      // print('allStockItems ${_allStockItemsController.allStockItems[i]}');
+      for (int p = 0;
+      p < _allStockItemsController.allStockItems.length;
+      p++) {
+        if (bata.allItems[i].itemId ==
+            _allStockItemsController.allStockItems[p].itemId) {
+//print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
+          if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) >Get.find<AllCategoriesController>().maxRang){
+            Get.find<AllCategoriesController>().updatamaxRangVal(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
           }
+          if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) <Get.find<AllCategoriesController>().minRang){
+            Get.find<AllCategoriesController>().updatamaxRangVal (double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
+          }
+          item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
+              totalPriceForItem: 0,
+              totalTaxForItem: 0,subCategoryId: bata.allItems[i].itemDetails[0].subCategoryId,shoow: true,
+              quantity_in_store: double.parse(
+                  _allStockItemsController.allStockItems[p].quantity),
+              count: 0,
+              measurementUnitId: int.parse(_allStockItemsController
+                  .allStockItems[p].measurementUnitId),
+              id: bata.allItems[i].itemId,
+              tex: double.parse(bata.allItems[i].itemDetails[0].tax),
+              befordes: double.parse(
+                  bata.allItems[i].itemDetails[0].sellingPrice),
+              price: double.parse(
+                  bata.allItems[i].itemDetails[0].sellingPrice),
+              enName: bata.allItems[i].itemDetails[0].itemNameEn,
+              afterdes: double.parse(
+                  bata.allItems[i].itemDetails[0].sellingPrice),
+              itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
+              minimumQuantity:
+              bata.allItems[i].itemDetails[0].minimumQuantity,
+              pic: bata.allItems[i].itemDetails[0].image,
+              bonce: 0,
+              categoryId:
+              int.parse(bata.allItems[i].itemDetails[0].categoryId),
+              diescount: 0)
+              .obs;
         }
       }
     }
+  }
+}
+  @override
+  void onInit() {
+
 // bata.allItems.forEach((element) {
 //
 //   print('${element.itemDetails[0].itemNameEn}');
@@ -236,25 +251,42 @@ print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
     item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
         ((item[id].value.price * item[id].value.count) *
             (item[id].value.diescount / 100));
+
     setTotalPriceAndTotalTex(id: id);
 
     getTotalTax();
     netprice();
-    //  gettotalpriceincart();
+     gettotalpriceincart();
 
     update();
   }
+setcountinstore({String id, double count}){
+    // print('999999999999999999999999999');
+    // print (id);
+    // print (count);
+    //
+    // print(item[id].value.quantity_in_store-count);
+if(isinvoiceOrSalesOrderOrReturnInvoice=='invoice'){
+  item[id].value.quantity_in_store=item[id].value.quantity_in_store-count;
+}
+if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
+  item[id].value.quantity_in_store=item[id].value.quantity_in_store+count;
+}
+   // print (item[id].value.quantity_in_store);
 
+    update();
+}
   setTotalPriceAndTotalTex({String id}) {
     item[id].value.totalTaxForItem =
         item[id].value.afterdes * (item[id].value.tex / 100);
     item[id].value.totalPriceForItem =
         item[id].value.afterdes + item[id].value.totalTaxForItem;
-    //update();
+   //  update();
   }
 
   setprice({String id, String val}) {
     item[id].value.price = double.parse(val);
+
     item[id].value.befordes = item[id].value.price * item[id].value.count;
     item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
         ((item[id].value.price * item[id].value.count) *
@@ -262,13 +294,13 @@ print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
     setTotalPriceAndTotalTex(id: id);
     getTotalTax();
     netprice();
-    //   gettotalpriceincart();
-    //update();
+      gettotalpriceincart();
+      //update();
   }
 
   setbonce({String id, String val}) {
     item[id].value.bonce = double.parse(val);
-    //update();
+   //  update();
   }
 
   setdiscount({String id, String val}) {
@@ -283,7 +315,9 @@ print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
     getTotalTax();
     netprice();
     //  gettotalpriceincart();
-    update();}
+   // update();
+
+       }
   }
 
   netprice() {
@@ -311,13 +345,13 @@ print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
     products.value.count = 0;
     itemInCart.value = 0;
     countInCart();
-   // update();
+    // update();
   }
 
   countInCart() {
     itemInCart.value =
         item.entries.where((element) => element.value.value.count > 0).length;
-    //  print(itemInCart.value);
+ update();
   }
 
   mytray() {
@@ -658,7 +692,7 @@ class TheItemInList {
   String enName;
   double price;
   double tex;
-  int quantity_in_store;
+  double quantity_in_store;
   double count;
   double afterdes;
   double befordes;
