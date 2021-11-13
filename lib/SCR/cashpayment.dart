@@ -9,6 +9,7 @@ import 'package:anjum/network/networkReq.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 import 'dashboard.dart';
@@ -20,11 +21,13 @@ class CashPay extends StatefulWidget {
 
 class _CashPayState extends State<CashPay> {
  // CurenceController _curenceController = Get.find<CurenceController>();
+  var box = GetStorage();
   String date2 = 'Select Date';
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   var allCheques = Get.find<AllChequesController>();
   String amount = '', addnote = '';
   AllNetworking _allNetworking=AllNetworking();
+  int orderid;
   Future<String> pickdate() async {
     DateTime time = await showDatePicker(
         initialDate: DateTime.now(),
@@ -45,7 +48,15 @@ class _CashPayState extends State<CashPay> {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     date2 = formatter.format(now);
-
+    orderid = box.read( "cashnumber");
+    if (orderid == null) {
+      orderid =    int.parse(_userAndPermissions.user.id.toString()+"001");
+      print("orderidorderidorderidorderid      ${orderid}");
+      box.write("cashnumber", orderid);
+    }else{
+      orderid++;
+      box.write("cashnumber", orderid);
+    }
   }
 
   @override
@@ -299,7 +310,7 @@ class _CashPayState extends State<CashPay> {
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                 onTap: ()async {
-                                  var d=[  Insert_cheque_DB(   user_id: _userAndPermissions.user.userId,
+                                  var d=[  Insert_cheque_DB(  searialno:orderid.toString() , user_id: _userAndPermissions.user.userId,
                                       employee_id: _userAndPermissions.user.id,
                                       customer_id: int.parse(
                                           Get.find<AllChequesController>()

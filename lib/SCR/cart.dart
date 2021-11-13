@@ -87,15 +87,15 @@ class _CartEditProductState extends State<Cart> {
   void initState() {
 
     super.initState();
-    print("isinvoiceOrSalesOrderOrReturnInvoiceisinvoiceOrSalesOrderOrReturnInvoiceisinvoiceOrSalesOrderOrReturnInvoice   $isinvoiceOrSalesOrderOrReturnInvoice");
-    orderid = box.read('orderid');
+
+    orderid = box.read( isinvoiceOrSalesOrderOrReturnInvoice);
     if (orderid == null) {
       orderid =    int.parse(_userAndPermissions.user.id.toString()+"001");
       print("orderidorderidorderidorderid      ${orderid}");
-      box.write('orderid', orderid);
+      box.write(isinvoiceOrSalesOrderOrReturnInvoice, orderid);
     }else{
       orderid++;
-      box.write('orderid', orderid);
+      box.write(isinvoiceOrSalesOrderOrReturnInvoice, orderid);
     }
     keysOfMap = _myProdectListController.item.keys.toList();
     requestToChangeInvoicePaymentType = employeePermissionsController
@@ -127,6 +127,7 @@ class _CartEditProductState extends State<Cart> {
       }
     });
     yitem();
+    print("orderidorderidorderidorderid   $isinvoiceOrSalesOrderOrReturnInvoice      ${orderid}");
   }
 
   int vv = 1;

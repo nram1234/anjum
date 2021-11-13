@@ -8,6 +8,7 @@ import 'package:anjum/network/jsonofnwetry/get_fourth_step_json.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'dashboard.dart';
 
@@ -18,6 +19,8 @@ class ChequePay extends StatefulWidget {
 
 class _ChequePayState extends State<ChequePay> {
   String getDate, date2;
+  int orderid;
+  var box = GetStorage();
   var allBanks = Get.find<AllBanksController>();
   var allCheques = Get.find<AllChequesController>();
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
@@ -79,6 +82,15 @@ class _ChequePayState extends State<ChequePay> {
 
       //
 
+    }
+    orderid = box.read( "cashnumber");
+    if (orderid == null) {
+      orderid =    int.parse(_userAndPermissions.user.id.toString()+"001");
+      print("cashnumber      ${orderid}");
+      box.write("cashnumber", orderid);
+    }else{
+      orderid++;
+      box.write("cashnumber", orderid);
     }
   }
 
@@ -431,7 +443,7 @@ class _ChequePayState extends State<ChequePay> {
                               padding: const EdgeInsets.all(8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  var mydata=[Insert_cheque_DB(
+                                  var mydata=[Insert_cheque_DB(searialno: orderid.toString(),
                                     user_id: _userAndPermissions
                                         .user.userId,
                                     employee_id:

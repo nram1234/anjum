@@ -1,5 +1,6 @@
 final String insert_cheque_tabelname="insert_cheque";
 final String insert_cheque_Column_user_id="user_id";
+final String insert_cheque_Column_searialno="searialno";
 final String insert_cheque_Column_employee_id="employee_id";
 final String insert_cheque_Column_customer_id="customer_id";
 final String insert_cheque_Column_supervisor_id="supervisor_id";
@@ -38,10 +39,10 @@ class Insert_cheque_DB {
   int cheque_no;
   String due_date;
   String note;
-
+  String searialno;
   Insert_cheque_DB(
       {this.user_id,
-        this.employee_id,
+        this.employee_id,this.searialno,
         this.customer_id,
         this.supervisor_id,
         this.salesmanager_id,
@@ -60,6 +61,7 @@ class Insert_cheque_DB {
         this.note});
 
   Insert_cheque_DB.fromJson(Map<String, dynamic> json) {
+    searialno = json['searialno'];
     user_id = json['user_id'];
     employee_id = json['employee_id'];
     customer_id = json['customer_id'];
@@ -82,6 +84,7 @@ class Insert_cheque_DB {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+  data['searialno'] = this.searialno;
     data['user_id'] = this.user_id;
     data['employee_id'] = this.employee_id;
     data['customer_id'] = this.customer_id;
