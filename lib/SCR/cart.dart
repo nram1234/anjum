@@ -678,18 +678,19 @@ class _CartEditProductState extends State<Cart> {
                                 height: 1,
                                 color: Colors.teal,
                               )),
-                          // Padding(
-                          //   padding: EdgeInsets.only(
-                          //       top: 8, right: 16, left: 16, bottom: 8),
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Text('totaltax'.tr),
-                          //       Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(_myProdectListController.totalTaxincart.value*double.parse(_curenceController.defultCurrencies.currencyRate))
-                          //           .toStringAsFixed(3)),
-                          //     ],
-                          //   ),
-                          // ),
+                          if(  Get.find<AllChequesController>()
+                              .customer.taxStatus=="yes")       Padding(
+                            padding: EdgeInsets.only(
+                                top: 8, right: 16, left: 16, bottom: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('totaltax'.tr),
+                                Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(_myProdectListController.totalTaxincart.value*double.parse(_curenceController.defultCurrencies.currencyRate))
+                                    .toStringAsFixed(3)),
+                              ],
+                            ),
+                          ),
                           Padding(
                               padding: EdgeInsets.only(
                                   top: 8, right: 16, left: 16, bottom: 8),

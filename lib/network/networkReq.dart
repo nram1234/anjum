@@ -12,6 +12,7 @@ import 'dart:developer' as developer;
 import 'json/customer_json.dart';
 import 'json/get_employee_data_json.dart';
 import 'json/get_reports_json.dart';
+import 'json/get_timelines_json.dart';
 import 'json/invoice_json.dart';
 import 'json/login_json.dart';
 import 'json/products_json.dart';
@@ -502,4 +503,28 @@ class AllNetworking {
     //
     // }).catchError((e){print(e.toString());});
   }
+  Future<GetTimelinesJson> get_timelines({
+    @required int user_id,
+
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key": "1234567890",
+      "user_id": user_id.toString(),
+
+    };
+    GetTimelinesJson data;
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/get_timelines');
+    await http.post(url, body: formData).then((value) {
+      print(value.body);
+      data = GetTimelinesJson.fromJson(convert.jsonDecode(value.body));
+    }).catchError((e) {
+      print(e.toString());
+    });
+
+    return data;
+  }
+
 }

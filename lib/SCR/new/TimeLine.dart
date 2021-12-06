@@ -2,7 +2,10 @@ import 'package:anjum/DB/dataBaseHelper.dart';
 import 'package:anjum/DB/myModel.dart';
 import 'package:anjum/DB/tabelname/make_older.dart';
 import 'package:anjum/controllers/allCustomersControllers.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/get_employee_data_json.dart';
+import 'package:anjum/network/networkReq.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,15 +18,10 @@ class TimeLine extends StatefulWidget {
 }
 
 
-var listofallcustomer = Get.find<AllCustomersControllers>().allCustomers;
+ var listofallcustomer = Get.find<AllCustomersControllers>().allCustomers;
 bool getdatafromdatabase=true;
 List<DatainItem> theDatalist= [];
-//   Future<List<DatainItem>> getcustomeridinlist() async{
-//    theDatalist=await
-//
-//
-//
-// }
+AllNetworking _allNetworking=AllNetworking();
 
 class _TimeLineState extends State<TimeLine> {
 
@@ -107,8 +105,7 @@ class _TimeLineState extends State<TimeLine> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              print(theDatalist[index].orderid);
-                              print('66666666666666666666666666666666');
+
                               Get.to(() => SalesOrderDetails(),
                                   arguments:
                                   theDatalist[index].orderid);
@@ -136,15 +133,16 @@ class _TimeLineState extends State<TimeLine> {
       String salesOrdertybe,
       String custormerpic,
       String customername}) {
+    print(custormerpic);
     return Row(
       children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: Text(time.substring(0, 10)),
-          ),
-        ),
+        // Expanded(
+        //   flex: 2,
+        //   child: Container(
+        //     alignment: Alignment.topCenter,
+        //     child: Text(time.substring(0, 10)),
+        //   ),
+        // ),
         Expanded(
           flex: 7,
           child: Container(
@@ -163,12 +161,9 @@ class _TimeLineState extends State<TimeLine> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           bottomLeft: Radius.circular(10)),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: "assets/images/pic.png",
-                        image: custormerpic,
-                        fit: BoxFit.fill,
-                        height: double.infinity,
-                      ),
+                      child: CachedNetworkImage(imageUrl:custormerpic ,width: size.height * .08,
+                        height: size.height * .08,
+                        fit: BoxFit.fill,),
                     ),
                   ),
                   Expanded(
@@ -230,8 +225,9 @@ class _TimeLineState extends State<TimeLine> {
           print(listofallcustomer[p].id
           );
           //int.parse(listofallcustomer[p].customerInfo.id
-          if (value[i].customer_id ==int.parse(listofallcustomer[p].id)){
-
+          if (value[i].customer_id.toString() == listofallcustomer[p].id){
+print(listofallcustomer[p].image);
+print("11111111111111111111111111111111111");
             theData.add(DatainItem(
                 orderid: value[i].id,
                 time: value[i].created_at,
@@ -247,6 +243,33 @@ class _TimeLineState extends State<TimeLine> {
     setState(() {
 
     });});
+   print(Get.find<UserAndPermissions>().user.id);
+    _allNetworking.get_timelines(user_id: Get.find<UserAndPermissions>().user.id).then((value) {
+      List<DatainItem> theData = [];
+      for (int i = 0; i < value.result.totalTimelines.length; i++) {
+        for (int p = 0; p < listofallcustomer.length; p++) {
+
+          //int.parse(listofallcustomer[p].customerInfo.id
+          if ( value.result.totalTimelines[i].customerId  == listofallcustomer[p].id ){
+
+            theData.add(DatainItem(
+                orderid: int.parse(value.result.totalTimelines[i].id) ,
+                time: "",
+                customername: listofallcustomer[p].customerNameEn,
+                salesOrdertybe:value.result.totalTimelines[i].contentType,
+                custormerpic: listofallcustomer[p].image));
+          }
+        }
+      }
+      theDatalist=theData;
+      getdatafromdatabase=false;
+
+      setState(() {
+
+      });
+     // theDatalist=value.result.totalTimelines;
+      // getdatafromdatabase=false;
+    });
   }
 
 // @override
