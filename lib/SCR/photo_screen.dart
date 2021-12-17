@@ -142,16 +142,52 @@ class _PhotoScreenState extends State<PhotoScreen> {
                   // data['list_invoice'] =
                   //     list;
                   // _allNetworking.insert_photos(data);
-print(Get.find<AllChequesController>()
-    .customer
-
-    .id);
-                  _allNetworking.insert_employee_visit_photos(
-                      user_id: _userAndPermissions.user.userId, customer_id:Get.find<AllChequesController>()
+                  print("00000000000000000000000000000000000000000000000000000");
+                  print(Get
+                      .find<AllChequesController>()
                       .customer
 
-                      .id,
-                      employee_id:_userAndPermissions.user.id.toString(), file:_image);
+                      .userId);
+                  print(Get
+                      .find<AllChequesController>()
+                      .customer
+
+                      .customerId);print(Get
+                      .find<AllChequesController>()
+                      .customer
+
+                      .id);
+                  print("00000000000000000000000000000000000000000000000000000");
+                  _allNetworking.insert_employee_visit_photos(
+                      user_id: _userAndPermissions.user.userId,
+                      customer_id: Get
+                          .find<AllChequesController>()
+                          .customer
+
+                          .id,
+                      employee_id: _userAndPermissions.user.id.toString(),
+                      file: _image).then((value) {
+                    _allNetworking.insert_visit_photo_comments(user_id: int.tryParse(Get
+                        .find<AllChequesController>()
+                        .customer
+
+                        .userId) ,
+                        employee_id: Get
+                            .find<AllChequesController>()
+                            .customer
+
+                            .id,
+                        customer_id: Get
+                            .find<AllChequesController>()
+                            .customer
+
+                            .id,
+                        comment: "comment",
+                        commented_by: 55.toString(),
+                        visit_id: 1.toString(),
+                        photo_id: value.visitId.toString());
+                    print(value.visitId);
+                  });
                 },
                 child: Container(
                   padding: EdgeInsets.all(4),

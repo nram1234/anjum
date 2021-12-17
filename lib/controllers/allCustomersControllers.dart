@@ -13,7 +13,7 @@ class AllCustomersControllers extends GetxController{
   void updateallCustomers(List<AllCustomers> allCust){
     allCustomers=allCust;
 
-    print("allllllllll${allCustomers}");
+
     allCust.forEach((element) {
       mapofCustomer[element.id]=element;
     });

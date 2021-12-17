@@ -111,24 +111,24 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: CachedNetworkImage(
-                    imageUrl: data.image,
-                    width: size.height * .08,
-                    height: size.height * .08,
-                    fit: BoxFit.fill,
-                  )
-                  // Image.network(
-                  //   data.customerInfo.image,
-                  //   width: size.height * .08,
-                  //   height: size.height * .08,
-                  //   fit: BoxFit.fill,
-                  // ),
-                  ),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(8.0),
+            //   child: Container(
+            //       padding: EdgeInsets.all(16),
+            //       child: CachedNetworkImage(
+            //         imageUrl: data.image,
+            //         width: size.height * .08,
+            //         height: size.height * .08,
+            //         fit: BoxFit.fill,
+            //       )
+            //       // Image.network(
+            //       //   data.customerInfo.image,
+            //       //   width: size.height * .08,
+            //       //   height: size.height * .08,
+            //       //   fit: BoxFit.fill,
+            //       // ),
+            //       ),
+            // ),
             Container(width: 1, height: size.height * .2, color: Colors.cyan),
             SizedBox(
               width: 8,

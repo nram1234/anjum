@@ -62,6 +62,7 @@ class TotalTimelines {
   String appVersion;
   String latitude;
   String longitude;
+  String creationDate;
 
   TotalTimelines(
       {this.id,
@@ -74,7 +75,8 @@ class TotalTimelines {
         this.androidVersion,
         this.appVersion,
         this.latitude,
-        this.longitude});
+        this.longitude,
+        this.creationDate});
 
   TotalTimelines.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -88,6 +90,7 @@ class TotalTimelines {
     appVersion = json['app_version'];
     latitude = json['latitude'];
     longitude = json['longitude'];
+    creationDate = json['creation_date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +106,7 @@ class TotalTimelines {
     data['app_version'] = this.appVersion;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
+    data['creation_date'] = this.creationDate;
     return data;
   }
 }

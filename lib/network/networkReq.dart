@@ -13,6 +13,7 @@ import 'json/customer_json.dart';
 import 'json/get_employee_data_json.dart';
 import 'json/get_reports_json.dart';
 import 'json/get_timelines_json.dart';
+import 'json/insert_employee_visit_photos_json.dart';
 import 'json/invoice_json.dart';
 import 'json/login_json.dart';
 import 'json/products_json.dart';
@@ -460,7 +461,7 @@ class AllNetworking {
     return data;
   }
 
-  Future insert_employee_visit_photos(
+  Future <InsertEmployeeVisitPhotosJson>insert_employee_visit_photos(
       {@required int user_id,
       @required File file,
       @required String employee_id,
@@ -479,6 +480,7 @@ class AllNetworking {
     //         filename: fileName, contentType: new MediaType('image', 'png')),
     //   },
     // };
+    InsertEmployeeVisitPhotosJson data;
     FormData formData =    FormData.fromMap({
       // "mode": "formdata",
       "mode": "formdata",
@@ -495,6 +497,7 @@ class AllNetworking {
             data: formData)
         .then((value) {
 
+      data = InsertEmployeeVisitPhotosJson.fromJson( value.data);
           print(value.data);
     });
     // var url = Uri.parse('http://18.220.206.74/van/user_api/insert_employee_visit_photos');
@@ -502,15 +505,22 @@ class AllNetworking {
     //   print(value.body);
     //
     // }).catchError((e){print(e.toString());});
+    return data;
   }
+
+
+
+
+
+
   Future<GetTimelinesJson> get_timelines({
-    @required int user_id,
+    @required int user_id,@required String date2
 
   }) async {
 
     final formData = {
       "mode": "formdata",
-      "key": "1234567890",
+      "key": "1234567890","from_date":date2,
       "user_id": user_id.toString(),
 
     };
@@ -525,6 +535,143 @@ class AllNetworking {
     });
 
     return data;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Future  insert_visit_photo_comments({
+    @required int user_id,
+    @required String employee_id,
+    @required String customer_id
+    ,
+    @required String comment,
+    @required String commented_by
+   , @required String visit_id,
+    @required String photo_id
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key": "1234567890",
+      "user_id": user_id.toString(),
+      "employee_id":  employee_id ,
+      "customer_id": customer_id,
+      "comment": comment,
+
+    "commented_by": commented_by,
+    "visit_id": visit_id, "photo_id": photo_id
+    };
+
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/insert_visit_photo_comments');
+    await http.post(url, body: formData).then((value) {
+      print(value.body);
+
+    }).catchError((e) {
+      print(e.toString());
+    });
+
+
+  }
+
+
+
+
+
+
+  Future <InsertEmployeeVisitPhotosJson>insert_visit_before_after_photos(
+      {@required int user_id,
+        @required File file,  @required File file2,
+        @required String employee_id,
+        @required String customer_id}) async {
+    String fileName = file.path.split('/').last;
+    String fileName2 = file2.path.split('/').last;
+    // final formData = {
+    //   "mode": "formdata",
+    //   "key": "1234567890",
+    //   "user_id": user_id.toString(),
+    //   "visit_id": 1.toString(),
+    //   "employee_id": employee_id,
+    //   "customer_id": customer_id,
+    //   "file":         {
+    //     "image": await di.MultipartFile.fromFile(file.path,
+    //         filename: fileName, contentType: new MediaType('image', 'png')),
+    //   },
+    // };
+    InsertEmployeeVisitPhotosJson data;
+    FormData formData =    FormData.fromMap({
+      // "mode": "formdata",
+      "mode": "formdata",
+      "key": "1234567890",
+      "user_id": user_id.toString(),
+      "visit_id": 1.toString(),
+      "employee_id": employee_id,
+      "customer_id": customer_id,"visit_id":1,
+      "before_image": await MultipartFile.fromFile(file.path,
+          filename: fileName, contentType: new MediaType('image', 'png')),
+      "after_image": await MultipartFile.fromFile(file2.path,
+          filename: fileName, contentType: new MediaType('image', 'png')),
+    })   ;
+    await dio
+        .post('http://18.220.206.74/van/user_api/insert_visit_before_after_photos',
+        data: formData)
+        .then((value) {
+
+      data = InsertEmployeeVisitPhotosJson.fromJson( value.data);
+      print(value.data);
+    });
+    // var url = Uri.parse('http://18.220.206.74/van/user_api/insert_employee_visit_photos');
+    // await http.post(url,body: formData).then((value) {
+    //   print(value.body);
+    //
+    // }).catchError((e){print(e.toString());});
+    return data;
+  }
+  Future  insert_visit_before_after_photo_comments({
+    @required int user_id,
+    @required String employee_id,
+    @required String customer_id
+    ,
+    @required String comment,
+    @required String commented_by
+    , @required String visit_id,
+    @required String photo_id
+  }) async {
+
+    final formData = {
+      "mode": "formdata",
+      "key": "1234567890",
+      "user_id": user_id.toString(),
+      "employee_id":  employee_id ,
+      "customer_id": customer_id,
+      "comment": comment,
+
+      "commented_by": commented_by,
+      "visit_id": visit_id, "photo_id": photo_id
+    };
+
+
+    var url = Uri.parse('http://18.220.206.74/van/user_api/insert_visit_before_after_photo_comments');
+    await http.post(url, body: formData).then((value) {
+      print(value.body);
+
+    }).catchError((e) {
+      print(e.toString());
+    });
+
+
   }
 
 }

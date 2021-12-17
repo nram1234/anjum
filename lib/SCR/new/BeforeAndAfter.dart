@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:anjum/controllers/allChequesController.dart';
+import 'package:anjum/controllers/userAndpermissions.dart';
+import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 
@@ -11,6 +15,8 @@ class BeforeAndAfter extends StatefulWidget {
 }
 
 class _BeforeAndAfterState extends State<BeforeAndAfter> {
+  AllNetworking _allNetworking = AllNetworking();
+  UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   File _image1, _image2;
   final picker = ImagePicker();
   LocationData locationData;
@@ -188,6 +194,34 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                       RaisedButton(
                         onPressed: () {
                           getMyLoction(  locationData    );
+                          _allNetworking.insert_visit_before_after_photos(
+                              user_id: _userAndPermissions.user.userId, customer_id:Get.find<AllChequesController>()
+                              .customer
+
+                              .id,
+                              employee_id:_userAndPermissions.user.id.toString(), file:_image1, file2: _image2).then((value) {
+
+                            _allNetworking.insert_visit_before_after_photo_comments(user_id: int.tryParse(Get
+                                .find<AllChequesController>()
+                                .customer
+
+                                .userId) ,
+                                employee_id: Get
+                                    .find<AllChequesController>()
+                                    .customer
+
+                                    .id,
+                                customer_id: Get
+                                    .find<AllChequesController>()
+                                    .customer
+
+                                    .id,
+                                comment: "comment",
+                                commented_by: 55.toString(),
+                                visit_id: 1.toString(),
+                                photo_id: value.visitId.toString());
+                            print(value.visitId);
+                          });
                         },
                         color: Color(0xff2C4B89),
                         child: Text(

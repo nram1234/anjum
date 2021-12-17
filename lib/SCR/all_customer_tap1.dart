@@ -102,6 +102,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
   }
 
   Widget item({size, AllCustomers data}) {
+    print(data.image);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -120,22 +121,22 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: CachedNetworkImage(imageUrl:data.image ,width: size.height * .08,
-                  height: size.height * .08,
-                  fit: BoxFit.fill,)
-
-                // Image.network(
-                //   data.customerInfo.image,
-                //   width: size.height * .08,
-                //   height: size.height * .08,
-                //   fit: BoxFit.fill,
-                // ),
-              ),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(8.0),
+            //   child: Container(
+            //     padding: EdgeInsets.all(16),
+            //     child: CachedNetworkImage(imageUrl:data.image ,width: size.height * .08,
+            //       height: size.height * .08,
+            //       fit: BoxFit.fill,)
+            //
+            //     // Image.network(
+            //     //   data.customerInfo.image,
+            //     //   width: size.height * .08,
+            //     //   height: size.height * .08,
+            //     //   fit: BoxFit.fill,
+            //     // ),
+            //   ),
+            // ),
             Container(width: 1, height: size.height * .2, color: Colors.cyan),
             SizedBox(
               width: 8,
@@ -214,13 +215,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                         shape: BoxShape.rectangle,
                                         borderRadius: BorderRadius.circular(
                                             Consts.padding),
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //     color: Colors.black26,
-                                        //     blurRadius: 10.0,
-                                        //     offset: const Offset(0.0, 10.0),
-                                        //   ),
-                                        // ],
+
                                       ),
                                       child: SingleChildScrollView(
                                         child: Column(
