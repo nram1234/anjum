@@ -21,6 +21,7 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
   final picker = ImagePicker();
   LocationData locationData;
   bool sendpic = false;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
