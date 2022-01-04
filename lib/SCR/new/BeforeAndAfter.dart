@@ -20,6 +20,7 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
   File _image1, _image2;
   final picker = ImagePicker();
   LocationData locationData;
+  bool sendpic = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -191,8 +192,16 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                       SizedBox(
                         height: 50,
                       ),
-                      RaisedButton(
+                      sendpic
+                          ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                          :  RaisedButton(
                         onPressed: () {
+                          sendpic=true;
+                          setState(() {
+
+                          });
                           getMyLoction(  locationData    );
                           _allNetworking.insert_visit_before_after_photos(
                               user_id: _userAndPermissions.user.userId, customer_id:Get.find<AllChequesController>()
@@ -217,9 +226,18 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
 
                                     .id,
                                 comment: "comment",
-                                commented_by: 55.toString(),
-                                visit_id: 1.toString(),
-                                photo_id: value.visitId.toString());
+                                commented_by: 1.toString(),
+                                visit_id:value.visitId.toString(),
+                                photo_id: value.visitId.toString()).then((value) {
+                              int count =
+                              0;
+                              Navigator.popUntil(
+                                  context,
+                                      (route) {
+                                    return count++ ==
+                                        1;
+                                  });
+                            });
                             print(value.visitId);
                           });
                         },

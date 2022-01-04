@@ -1,12 +1,10 @@
-
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:anjum/network/json/get_order_status_json.dart';
-import 'package:dio/dio.dart' ;
+import 'package:dio/dio.dart';
 
 import 'package:flutter/material.dart';
-
 
 import 'dart:developer' as developer;
 import 'json/customer_json.dart';
@@ -19,11 +17,11 @@ import 'json/login_json.dart';
 import 'json/products_json.dart';
 
 import 'package:http/http.dart' as http;
- import 'package:http_parser/http_parser.dart';
+import 'package:http_parser/http_parser.dart';
 
 import 'jsonofnwetry/get_Fifth_step_json.dart';
 import 'jsonofnwetry/get_first_step_json.dart';
- import 'dart:convert' as convert;
+import 'dart:convert' as convert;
 
 import 'jsonofnwetry/get_fourth_step_json.dart';
 
@@ -38,7 +36,7 @@ class AllNetworking {
       'http://18.220.206.74/'; //http://18.220.206.74/API/api/auth/login
 
   //Response response;
-  Dio dio = new  Dio();
+  Dio dio = new Dio();
 
   Future<Login_json> login({
     @required String user_name,
@@ -461,7 +459,7 @@ class AllNetworking {
     return data;
   }
 
-  Future <InsertEmployeeVisitPhotosJson>insert_employee_visit_photos(
+  Future<InsertEmployeeVisitPhotosJson> insert_employee_visit_photos(
       {@required int user_id,
       @required File file,
       @required String employee_id,
@@ -481,24 +479,28 @@ class AllNetworking {
     //   },
     // };
     InsertEmployeeVisitPhotosJson data;
-    FormData formData =    FormData.fromMap({
+    FormData formData = FormData.fromMap({
       // "mode": "formdata",
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id.toString(),
       "visit_id": 1.toString(),
       "employee_id": employee_id,
+      "battery_life": "10",
       "customer_id": customer_id,
+      "app_version": "1",
+      "android_version": "10",
+      "latitude": "10",
+      "longitude": "10",
       "file": await MultipartFile.fromFile(file.path,
           filename: fileName, contentType: new MediaType('image', 'png')),
-    })   ;
+    });
     await dio
         .post('http://18.220.206.74/van/user_api/insert_employee_visit_photos',
             data: formData)
         .then((value) {
-
-      data = InsertEmployeeVisitPhotosJson.fromJson( value.data);
-          print(value.data);
+      data = InsertEmployeeVisitPhotosJson.fromJson(value.data);
+      print(value.data);
     });
     // var url = Uri.parse('http://18.220.206.74/van/user_api/insert_employee_visit_photos');
     // await http.post(url,body: formData).then((value) {
@@ -508,21 +510,13 @@ class AllNetworking {
     return data;
   }
 
-
-
-
-
-
-  Future<GetTimelinesJson> get_timelines({
-    @required int user_id,@required String date2
-
-  }) async {
-
+  Future<GetTimelinesJson> get_timelines(
+      {@required int user_id, @required String date2}) async {
     final formData = {
       "mode": "formdata",
-      "key": "1234567890","from_date":date2,
+      "key": "1234567890",
+      "from_date": date2,
       "user_id": user_id.toString(),
-
     };
     GetTimelinesJson data;
 
@@ -537,65 +531,47 @@ class AllNetworking {
     return data;
   }
 
+  Future insert_visit_photo_comments(
+      {@required int user_id,
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  Future  insert_visit_photo_comments({
-    @required int user_id,
-    @required String employee_id,
-    @required String customer_id
-    ,
-    @required String comment,
-    @required String commented_by
-   , @required String visit_id,
-    @required String photo_id
-  }) async {
-
+      @required String customer_id,
+      @required String comment,
+      @required int commented_by,
+      @required int visit_id,
+      @required int photo_id}) async {
+    print("customer_id    $customer_id");
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
-      "user_id": user_id.toString(),
-      "employee_id":  employee_id ,
-      "customer_id": customer_id,
-      "comment": comment,
+      "user_id": user_id.toString() ,
+      "employee_id": user_id.toString(),
+     // "battery_life":  10 ,
+      "customer_id":  customer_id ,
+     // "app_version":   1 ,
+     //  "android_version":  10 ,
+     // "latitude":  10 ,
+     // "longitude":  10 ,
+      "comment": comment, "commented_by": 1.toString(),//commented_by,
+   "photo_id": photo_id.toString(),"visit_id": visit_id.toString(),
 
-    "commented_by": commented_by,
-    "visit_id": visit_id, "photo_id": photo_id
     };
 
+    var url = Uri.parse(
+        'http://18.220.206.74/van/user_api/insert_visit_photo_comments');
 
-    var url = Uri.parse('http://18.220.206.74/van/user_api/insert_visit_photo_comments');
-    await http.post(url, body: formData).then((value) {
-      print(value.body);
-
+    await http.post(url, body:   formData).then((value) {
+       print(value.body);
     }).catchError((e) {
-      print(e.toString());
+      print(e);
     });
-
-
   }
 
-
-
-
-
-
-  Future <InsertEmployeeVisitPhotosJson>insert_visit_before_after_photos(
+  Future<InsertEmployeeVisitPhotosJson> insert_visit_before_after_photos(
       {@required int user_id,
-        @required File file,  @required File file2,
-        @required String employee_id,
-        @required String customer_id}) async {
+      @required File file,
+      @required File file2,@required String employee_id,
+      @required String visit_id,
+      @required String customer_id}) async {
     String fileName = file.path.split('/').last;
     String fileName2 = file2.path.split('/').last;
     // final formData = {
@@ -611,25 +587,38 @@ class AllNetworking {
     //   },
     // };
     InsertEmployeeVisitPhotosJson data;
-    FormData formData =    FormData.fromMap({
+    FormData formData = FormData.fromMap({
       // "mode": "formdata",
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id.toString(),
       "visit_id": 1.toString(),
       "employee_id": employee_id,
-      "customer_id": customer_id,"visit_id":1,
+      "customer_id": customer_id,
+
+
+      "battery_life": "10",
+
+      "app_version": "1",
+      "android_version": "10",
+      "latitude": "10",
+      "longitude": "10",
+
+
+
+
+
       "before_image": await MultipartFile.fromFile(file.path,
           filename: fileName, contentType: new MediaType('image', 'png')),
       "after_image": await MultipartFile.fromFile(file2.path,
           filename: fileName, contentType: new MediaType('image', 'png')),
-    })   ;
+    });
     await dio
-        .post('http://18.220.206.74/van/user_api/insert_visit_before_after_photos',
-        data: formData)
+        .post(
+            'http://18.220.206.74/van/user_api/insert_visit_before_after_photos',
+            data: formData)
         .then((value) {
-
-      data = InsertEmployeeVisitPhotosJson.fromJson( value.data);
+      data = InsertEmployeeVisitPhotosJson.fromJson(value.data);
       print(value.data);
     });
     // var url = Uri.parse('http://18.220.206.74/van/user_api/insert_employee_visit_photos');
@@ -639,39 +628,43 @@ class AllNetworking {
     // }).catchError((e){print(e.toString());});
     return data;
   }
-  Future  insert_visit_before_after_photo_comments({
-    @required int user_id,
-    @required String employee_id,
-    @required String customer_id
-    ,
-    @required String comment,
-    @required String commented_by
-    , @required String visit_id,
-    @required String photo_id
-  }) async {
 
+  Future insert_visit_before_after_photo_comments(
+      {@required int user_id,
+      @required String employee_id,
+      @required String customer_id,
+      @required String comment,
+      @required String commented_by,
+      @required String visit_id,
+      @required String photo_id}) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id.toString(),
-      "employee_id":  employee_id ,
+      "employee_id": employee_id,
       "customer_id": customer_id,
       "comment": comment,
+      "commented_by": 1.toString(),
+      "visit_id": visit_id,
+      "photo_id": photo_id,
 
-      "commented_by": commented_by,
-      "visit_id": visit_id, "photo_id": photo_id
+
+      "battery_life": "10",
+
+      "app_version": "1",
+      "android_version": "10",
+      "latitude": "10",
+      "longitude": "10",
+
     };
 
-
-    var url = Uri.parse('http://18.220.206.74/van/user_api/insert_visit_before_after_photo_comments');
+    var url = Uri.parse(
+        'http://18.220.206.74/van/user_api/insert_visit_before_after_photo_comments');
     await http.post(url, body: formData).then((value) {
-      print(value.body);
 
+      print(value.body);
     }).catchError((e) {
       print(e.toString());
     });
-
-
   }
-
 }
