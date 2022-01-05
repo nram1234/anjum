@@ -4,6 +4,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/networkReq.dart';
 import 'package:anjum/utilitie/utilities.dart';
+import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,13 +29,17 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
 
   PermissionStatus _permissionGranted;
   LocationData _locationData;
-
+  var _battery;
   @override
   void initState() {
     super.initState();
     loctionuser();
     print(
         "_locationData_locationData_locationData_locationData_locationData $_locationData");
+      _battery = Battery();
+
+// Access current battery level
+
   }
 
   @override
@@ -241,16 +246,12 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                   _allNetworking
                                       .insert_visit_before_after_photos(
                                           user_id:
-                                              _userAndPermissions.user.userId,
+                                              _userAndPermissions.user.userId,batteryLevel:   _battery.batteryLevel.toString(),
                                           customer_id:
-                                              Get.find<AllChequesController>()
-                                                  .customer
-                                                  .id,
+                                          _userAndPermissions.user.id.toString(),
                                           latitude: _locationData.latitude,
                                           longitude: _locationData.longitude,
-                                          employee_id: _userAndPermissions
-                                              .user.id
-                                              .toString(),
+                                          employee_id: _userAndPermissions.user.id.toString(),
                                           file: _image1,
                                           file2: _image2)
                                       .then((value) {
@@ -261,7 +262,7 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                             user_id:
                                                 Get.find<AllChequesController>()
                                                     .customer
-                                                    .userId,
+                                                    .userId,batteryLevel:   _battery.batteryLevel.toString(),
                                             latitude: _locationData.latitude
                                                 .toString(),
                                             longitude: _locationData.longitude

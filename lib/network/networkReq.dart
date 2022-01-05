@@ -31,6 +31,7 @@ import 'newjosomnLast/get_second_step1_json.dart';
 import 'newjosomnLast/get_second_step2_json.dart';
 import 'newjosomnLast/get_second_step3_json.dart';
 import 'package:device_info/device_info.dart';
+import 'package:battery/battery.dart';
 
 class AllNetworking {
   static var paseurl =
@@ -461,7 +462,7 @@ class AllNetworking {
   }
 
   Future<InsertEmployeeVisitPhotosJson> insert_employee_visit_photos(
-      {@required int user_id,
+      {@required int user_id,String batteryLevel,
       @required File file,
       @required String employee_id,
       @required String customer_id}) async {
@@ -534,7 +535,7 @@ class AllNetworking {
 
   Future insert_visit_photo_comments(
       {@required int user_id,
-
+        String batteryLevel,
       @required String customer_id,
       @required String comment,
       @required int commented_by,double latitude,double longitude,
@@ -579,7 +580,7 @@ class AllNetworking {
 
   Future<InsertEmployeeVisitPhotosJson> insert_visit_before_after_photos(
       {@required int user_id,
-      @required File file,
+      @required File file,String batteryLevel,
       @required File file2,@required String employee_id,double latitude,double longitude,
       @required String visit_id,
       @required String customer_id}) async {
@@ -649,7 +650,7 @@ class AllNetworking {
   Future insert_visit_before_after_photo_comments(
       {@required String user_id,
       @required String employee_id,
-      @required String customer_id,
+      @required String customer_id,String batteryLevel,
       @required String comment,
       @required String commented_by,String latitude,String longitude,
       @required String visit_id,

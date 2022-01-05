@@ -4,6 +4,7 @@ import 'package:anjum/controllers/allChequesController.dart';
 import 'package:anjum/controllers/userAndpermissions.dart';
 import 'package:anjum/network/json/insert_photos_json.dart';
 import 'package:anjum/network/networkReq.dart';
+import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,10 +30,11 @@ class _PhotoScreenState extends State<PhotoScreen> {
   bool sendpic = false;
   File _image;
   final picker = ImagePicker();
-
+  var _battery;
   @override
   void initState() {
     super.initState();
+    _battery = Battery();
     loctionuser();
   }
 
@@ -172,7 +174,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                 customer_id:_userAndPermissions.user.id.toString()
                                     ,
                                 employee_id:
-                                    _userAndPermissions.user.id.toString(),
+                                    _userAndPermissions.user.id.toString(),batteryLevel:  _battery.batteryLevel.toString(),
                                 file: _image)
                             .then((value) {
                               print(value.visitId);
@@ -187,7 +189,7 @@ print(_locationData);
                                   .id ,
                               comment: "comment",
                               commented_by: 1 ,//  int.parse( _userAndPermissions.user.customerId) ,
-                              visit_id: value.visitId ,
+                              visit_id: value.visitId ,batteryLevel:  _battery.batteryLevel.toString(),
                               photo_id: value.visitId ).then((value) {
                                  print("valuevaluevaluevalue $value");
                                 sendpic=false;
