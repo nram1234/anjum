@@ -490,7 +490,7 @@ class AllNetworking {
       "employee_id": employee_id,
       "battery_life": "10",
       "customer_id": customer_id,
-      "app_version": "1",
+      "app_version": "22",
       "android_version": "10",
       "latitude": "10",
       "longitude": "10",
