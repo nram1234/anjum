@@ -30,6 +30,7 @@ import 'jsonofnwetry/get_third_step_json.dart';
 import 'newjosomnLast/get_second_step1_json.dart';
 import 'newjosomnLast/get_second_step2_json.dart';
 import 'newjosomnLast/get_second_step3_json.dart';
+import 'package:device_info/device_info.dart';
 
 class AllNetworking {
   static var paseurl =
@@ -536,23 +537,33 @@ class AllNetworking {
 
       @required String customer_id,
       @required String comment,
-      @required int commented_by,
+      @required int commented_by,double latitude,double longitude,
       @required int visit_id,
       @required int photo_id}) async {
     print("customer_id    $customer_id");
+
+
+
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var release = androidInfo.version.release;
+    var sdkInt = androidInfo.version.sdkInt;
+    var manufacturer = androidInfo.manufacturer;
+    var model = androidInfo.model;
+
+
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
-      "user_id": user_id.toString() ,
-      "employee_id": user_id.toString(),
-     // "battery_life":  10 ,
-      "customer_id":  customer_id ,
-     // "app_version":   1 ,
-     //  "android_version":  10 ,
-     // "latitude":  10 ,
-     // "longitude":  10 ,
-      "comment": comment, "commented_by": 1.toString(),//commented_by,
-   "photo_id": photo_id.toString(),"visit_id": visit_id.toString(),
+      "user_id": user_id .toString() ,
+      "employee_id": user_id .toString(),
+     "battery_life":  60.toString() ,
+      "customer_id":  customer_id .toString(),
+    "app_version":   1.toString() ,
+      "android_version":  sdkInt .toString(),
+     "latitude":  latitude .toString(),
+     "longitude":  longitude.toString() ,
+      "comment": comment, "commented_by":"emp",// commented_by,
+   "photo_id": visit_id .toString(),"visit_id": visit_id .toString(),
 
     };
 
@@ -569,7 +580,7 @@ class AllNetworking {
   Future<InsertEmployeeVisitPhotosJson> insert_visit_before_after_photos(
       {@required int user_id,
       @required File file,
-      @required File file2,@required String employee_id,
+      @required File file2,@required String employee_id,double latitude,double longitude,
       @required String visit_id,
       @required String customer_id}) async {
     String fileName = file.path.split('/').last;
@@ -586,6 +597,14 @@ class AllNetworking {
     //         filename: fileName, contentType: new MediaType('image', 'png')),
     //   },
     // };
+
+
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var release = androidInfo.version.release;
+    var sdkInt = androidInfo.version.sdkInt;
+    var manufacturer = androidInfo.manufacturer;
+    var model = androidInfo.model;
+
     InsertEmployeeVisitPhotosJson data;
     FormData formData = FormData.fromMap({
       // "mode": "formdata",
@@ -598,12 +617,10 @@ class AllNetworking {
 
 
       "battery_life": "10",
-
-      "app_version": "1",
-      "android_version": "10",
-      "latitude": "10",
-      "longitude": "10",
-
+      "app_version":   release ,
+      "android_version":  sdkInt ,
+      "latitude":  latitude ,
+      "longitude":  longitude ,
 
 
 
@@ -630,31 +647,37 @@ class AllNetworking {
   }
 
   Future insert_visit_before_after_photo_comments(
-      {@required int user_id,
+      {@required String user_id,
       @required String employee_id,
       @required String customer_id,
       @required String comment,
-      @required String commented_by,
+      @required String commented_by,String latitude,String longitude,
       @required String visit_id,
       @required String photo_id}) async {
+
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var release = androidInfo.version.release;
+    var sdkInt = androidInfo.version.sdkInt;
+    var manufacturer = androidInfo.manufacturer;
+    var model = androidInfo.model;
+
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
-      "user_id": user_id.toString(),
-      "employee_id": employee_id,
-      "customer_id": customer_id,
+      "user_id": user_id ,
+      "employee_id": employee_id ,
+      "customer_id": customer_id ,
       "comment": comment,
       "commented_by": 1.toString(),
-      "visit_id": visit_id,
-      "photo_id": photo_id,
+      "visit_id": visit_id ,
+      "photo_id": photo_id ,
 
 
-      "battery_life": "10",
-
-      "app_version": "1",
-      "android_version": "10",
-      "latitude": "10",
-      "longitude": "10",
+      "battery_life": "80",
+      "app_version":   release .toString(),
+      "android_version":  sdkInt .toString(),
+      "latitude":  latitude ,
+      "longitude":  longitude  ,
 
     };
 

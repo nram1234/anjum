@@ -51,7 +51,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     final pickedFile =
-                        await picker.getImage(source: ImageSource.camera);
+                        await picker.getImage(source: ImageSource.camera,maxHeight: 1200,maxWidth: 800);
 
                     setState(() {
                       if (pickedFile != null) {
@@ -175,19 +175,21 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                     _userAndPermissions.user.id.toString(),
                                 file: _image)
                             .then((value) {
-                             // print("valuevaluevaluevalue${value.visitId.toString()}");
+                              print(value.visitId);
+                           print("valuevaluevaluevalue${value.visitId.toString()}");
+print(_locationData);
                           _allNetworking.insert_visit_photo_comments(
-                              user_id: _userAndPermissions.user.userId,
+                              user_id: _userAndPermissions.user.userId,latitude: _locationData.latitude,longitude: _locationData.longitude,
 
                               customer_id:     Get.find<AllChequesController>()
                                   .customer
 
                                   .id ,
                               comment: "comment",
-                              commented_by:  1,//  int.parse( _userAndPermissions.user.customerId) ,
+                              commented_by: 1 ,//  int.parse( _userAndPermissions.user.customerId) ,
                               visit_id: value.visitId ,
                               photo_id: value.visitId ).then((value) {
-                                 print(value);
+                                 print("valuevaluevaluevalue $value");
                                 sendpic=false;
                                  int count =
                                  0;
