@@ -404,6 +404,7 @@ bool getdata=false;
                         await    _allNetworking
                             .get_third_step(user_id: userId)
                             .then((value) async {
+
                           Get.find<AllItemsController>()
                               .updateallItemsData(value.result.allItems);
                           Get.find<AllCategoriesController>()
@@ -441,7 +442,8 @@ bool getdata=false;
                             .then((value) async {
                           value.result.allPromotions;
                           value.result.allStockItems;
-
+print( value.result.allStockItems);
+                          print( value.result.allPromotions);
                           Get.find<All_PromotionsController>()
                               .allPromotionsUpdat(value.result.allPromotions);
                           Get.find<AllStockItemsController>()

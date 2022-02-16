@@ -16,23 +16,24 @@ import 'allChequesController.dart';
 import 'allStockItemsController.dart';
 
 class MyProdectListController extends GetxController {
-Map<int,Map<String,TextEditingController>>mapofcontrpoler={};
+  Map<int,Map<String,TextEditingController>>mapofcontrpoler={};
   List<Widget> liPro = [];
   Map<String, int> mapofpounce = {};
-   Map<String, Rx<TheItemInList>> myitemPro = {};
+  Map<String, Rx<TheItemInList>> myitemPro = {};
   List<Map<String, AllInQuantityPromotionItems>> itemInPro = [];
   final All_PromotionsController _all_promotionsController =
-      Get.find<All_PromotionsController>();
+  Get.find<All_PromotionsController>();
 
   bool issearch = false;
   String searchWord = "";
   Map<String, Rx<TheItemInList>> item = Map<String, Rx<TheItemInList>>();
-Map<String, Rx<TheItemInList>> itemprodecttest = Map<String, Rx<TheItemInList>>();
+
+  Map<String, Rx<TheItemInList>> itemprodecttest = Map<String, Rx<TheItemInList>>();
   final AllItemsController bata = Get.find<AllItemsController>();
   RxDouble grandTotal = 0.0.obs;
   RxDouble totalTax = 0.0.obs;
   final AllStockItemsController _allStockItemsController =
-      Get.find<AllStockItemsController>();
+  Get.find<AllStockItemsController>();
 
   RxDouble totalpriceincart = 0.0.obs;
   RxDouble totalTaxincart = 0.0.obs;
@@ -80,7 +81,7 @@ Map<String, Rx<TheItemInList>> itemprodecttest = Map<String, Rx<TheItemInList>>(
             value.value.afterdes * totalDiscountincart.value;
 
         totalTaxincart.value += (((value.value.afterdes) -
-                ((value.value.afterdes) * totalDiscountincart.value)) *
+            ((value.value.afterdes) * totalDiscountincart.value)) *
             value.value.tex /
             100);
       }
@@ -129,61 +130,94 @@ Map<String, Rx<TheItemInList>> itemprodecttest = Map<String, Rx<TheItemInList>>(
     //   listofPro.add(myWidgets);
     // });
   }
-newItemForTestprod(){
+  newItemForTestprod(){
 
-}
-myoninit(){
-  if (item.length == 0) {
-    for (int i = 0; i < bata.allItems.length; i++) {
+  }
+  myoninit(){
+    print("77777777777777777777777777  $item");
+    print("779999  $itemprodecttest");
+    if (_allStockItemsController.allStockItems.length!= 0) {
+      for (int i = 0; i < bata.allItems.length; i++) {
 
 
 
 
 
-      // print('allStockItems ${_allStockItemsController.allStockItems[i]}');
-      for (int p = 0;
-      p < _allStockItemsController.allStockItems.length;
-      p++) {
-        if (bata.allItems[i].itemId ==
-            _allStockItemsController.allStockItems[p].itemId) {
+        // print('allStockItems ${_allStockItemsController.allStockItems[i]}');
+        for (int p = 0;
+        p < _allStockItemsController.allStockItems.length;
+        p++) {
+          if (bata.allItems[i].itemId ==
+              _allStockItemsController.allStockItems[p].itemId) {
 //print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
-          if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) >Get.find<AllCategoriesController>().maxRang){
-            Get.find<AllCategoriesController>().updatamaxRangVal(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
+            if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) >Get.find<AllCategoriesController>().maxRang){
+              Get.find<AllCategoriesController>().updatamaxRangVal(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
+            }
+            if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) <Get.find<AllCategoriesController>().minRang){
+              Get.find<AllCategoriesController>().updatamaxRangVal (double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
+            }
+            item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
+                totalPriceForItem: 0,
+                totalTaxForItem: 0,subCategoryId: bata.allItems[i].itemDetails[0].subCategoryId,shoow: true,
+                quantity_in_store: double.parse(
+                    _allStockItemsController.allStockItems[p].quantity),
+                count: 0,
+                measurementUnitId: int.parse(_allStockItemsController
+                    .allStockItems[p].measurementUnitId),
+                id: bata.allItems[i].itemId,
+                tex: double.parse(bata.allItems[i].itemDetails[0].tax),
+                befordes: double.parse(
+                    bata.allItems[i].itemDetails[0].sellingPrice),
+                price: double.parse(
+                    bata.allItems[i].itemDetails[0].sellingPrice),
+                enName: bata.allItems[i].itemDetails[0].itemNameEn,
+                afterdes: double.parse(
+                    bata.allItems[i].itemDetails[0].sellingPrice),
+                itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
+                minimumQuantity:
+                bata.allItems[i].itemDetails[0].minimumQuantity,
+                pic: bata.allItems[i].itemDetails[0].image,
+                bonce: 0,
+                categoryId:
+                int.parse(bata.allItems[i].itemDetails[0].categoryId),
+                diescount: 0)
+                .obs;
           }
-          if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) <Get.find<AllCategoriesController>().minRang){
-            Get.find<AllCategoriesController>().updatamaxRangVal (double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
-          }
-          item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
-              totalPriceForItem: 0,
-              totalTaxForItem: 0,subCategoryId: bata.allItems[i].itemDetails[0].subCategoryId,shoow: true,
-              quantity_in_store: double.parse(
-                  _allStockItemsController.allStockItems[p].quantity),
-              count: 0,
-              measurementUnitId: int.parse(_allStockItemsController
-                  .allStockItems[p].measurementUnitId),
-              id: bata.allItems[i].itemId,
-              tex: double.parse(bata.allItems[i].itemDetails[0].tax),
-              befordes: double.parse(
-                  bata.allItems[i].itemDetails[0].sellingPrice),
-              price: double.parse(
-                  bata.allItems[i].itemDetails[0].sellingPrice),
-              enName: bata.allItems[i].itemDetails[0].itemNameEn,
-              afterdes: double.parse(
-                  bata.allItems[i].itemDetails[0].sellingPrice),
-              itemNumber: bata.allItems[i].itemDetails[0].itemNumber,
-              minimumQuantity:
-              bata.allItems[i].itemDetails[0].minimumQuantity,
-              pic: bata.allItems[i].itemDetails[0].image,
-              bonce: 0,
-              categoryId:
-              int.parse(bata.allItems[i].itemDetails[0].categoryId),
-              diescount: 0)
-              .obs;
         }
+      }
+    }else{
+      for (int ii = 0; ii < bata.allItems.length; ii++) {
+
+        item[bata.allItems[ii].itemId] = TheItemInList(arName: bata.allItems[ii].itemDetails[0].itemNameAr,
+            totalPriceForItem: 0,
+            totalTaxForItem: 0,subCategoryId: bata.allItems[ii].itemDetails[0].subCategoryId,shoow: true,
+            quantity_in_store:100000,
+            count: 0,
+            measurementUnitId: 10,
+            id: bata.allItems[ii].itemId,
+            tex: double.parse(bata.allItems[ii].itemDetails[0].tax),
+            befordes: double.parse(
+                bata.allItems[ii].itemDetails[0].sellingPrice),
+            price: double.parse(
+                bata.allItems[ii].itemDetails[0].sellingPrice),
+            enName: bata.allItems[ii].itemDetails[0].itemNameEn,
+            afterdes: double.parse(
+                bata.allItems[ii].itemDetails[0].sellingPrice),
+            itemNumber: bata.allItems[ii].itemDetails[0].itemNumber,
+            minimumQuantity:
+            bata.allItems[ii].itemDetails[0].minimumQuantity,
+            pic: bata.allItems[ii].itemDetails[0].image,
+            bonce: 0,
+            categoryId:
+            int.parse(bata.allItems[ii].itemDetails[0].categoryId),
+            diescount: 0)
+            .obs;
+
+
+
       }
     }
   }
-}
   @override
   void onInit() {
 
@@ -246,42 +280,52 @@ myoninit(){
   }
 
   setCount({String id, double count}) {
+    print("1111111111111111111111111111111111111111111111111");
+    print(id);
+    print(item);
+    print("1111111111111111111111111111111111111111111111111");
     item[id].value.count = count;
     item[id].value.befordes = item[id].value.price * item[id].value.count;
     item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
         ((item[id].value.price * item[id].value.count) *
             (item[id].value.diescount / 100));
 
+
+
     setTotalPriceAndTotalTex(id: id);
 
     getTotalTax();
     netprice();
-     gettotalpriceincart();
+    gettotalpriceincart();
 
     update();
   }
-setcountinstore({String id, double count}){
+  setcountinstore({String id, double count}){
     // print('999999999999999999999999999');
     // print (id);
     // print (count);
     //
     // print(item[id].value.quantity_in_store-count);
-if(isinvoiceOrSalesOrderOrReturnInvoice=='invoice'){
-  item[id].value.quantity_in_store=item[id].value.quantity_in_store-count;
-}
-if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
-  item[id].value.quantity_in_store=item[id].value.quantity_in_store+count;
-}
-   // print (item[id].value.quantity_in_store);
+    if(isinvoiceOrSalesOrderOrReturnInvoice=='invoice'){
+      item[id].value.quantity_in_store=item[id].value.quantity_in_store-count;
+    }
+    if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
+      item[id].value.quantity_in_store=item[id].value.quantity_in_store+count;
+    }
+    // print (item[id].value.quantity_in_store);
 
     update();
-}
+  }
   setTotalPriceAndTotalTex({String id}) {
+    print(id);
+
     item[id].value.totalTaxForItem =
         item[id].value.afterdes * (item[id].value.tex / 100);
     item[id].value.totalPriceForItem =
         item[id].value.afterdes + item[id].value.totalTaxForItem;
-   //  update();
+
+
+    //  update();
   }
 
   setprice({String id, String val}) {
@@ -294,30 +338,33 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
     setTotalPriceAndTotalTex(id: id);
     getTotalTax();
     netprice();
-      gettotalpriceincart();
-      //update();
+    gettotalpriceincart();
+    //update();
   }
 
   setbonce({String id, String val}) {
     item[id].value.bonce = double.parse(val);
-   //  update();
+    //  update();
   }
 
   setdiscount({String id, String val}) {
-       if (val != null && val.isNotEmpty) {
-    item[id].value.diescount = double.parse(val);
-    item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
-        ((item[id].value.price * item[id].value.count) *
-            (double.parse(val) / 100));
+    if (val != null && val.isNotEmpty) {
+      if(item[id]!=null){
+        item[id].value.diescount = double.parse(val);
+        item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
+            ((item[id].value.price * item[id].value.count) *
+                (double.parse(val) / 100));
 
-    totalTax.value = item[id].value.afterdes * item[id].value.tex;
-    setTotalPriceAndTotalTex(id: id);
-    getTotalTax();
-    netprice();
-    //  gettotalpriceincart();
-   // update();
+        totalTax.value = item[id].value.afterdes * item[id].value.tex;
+      }
 
-       }
+      setTotalPriceAndTotalTex(id: id);
+      getTotalTax();
+      netprice();
+      //  gettotalpriceincart();
+      // update();
+
+    }
   }
 
   netprice() {
@@ -351,13 +398,13 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
   countInCart() {
     itemInCart.value =
         item.entries.where((element) => element.value.value.count > 0).length;
- update();
+    update();
   }
 
   mytray() {
     liPro.clear();
     DateTime now = new DateTime.now();
-   Map<String,double> pouncemap={};
+    Map<String,double> pouncemap={};
     Map<int, Map<String, dynamic>> mapofall = {};
     for (int i = 0; i < _all_promotionsController.allPromotionss.length; i++) {
       bool indate;
@@ -418,7 +465,7 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
       List<Rx<TheItemInList>> itemm = [];
       double ii = 0;
       item.forEach((key, value) {
-   Map<String,List<TextEditingController>>     textcontrol={};
+        Map<String,List<TextEditingController>>     textcontrol={};
         _all_promotionsController.allPromotionss[i].allOutQuantityPromotionItems
             .forEach((el) {
 
@@ -521,7 +568,7 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
                               //   // }
                               // },
                               onSubmitted: (v){   if (v != null) {
-                              if (int.parse(v) <= youget) {
+                                if (int.parse(v) <= youget) {
 
 
 
@@ -532,10 +579,10 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
                                   //         int.parse(v))
                                   //         .toString());
 
-                              } else {
-                                Get.snackbar('', 'تاكد من الرقم الصحيح');
-                              }
-                            }},
+                                } else {
+                                  Get.snackbar('', 'تاكد من الرقم الصحيح');
+                                }
+                              }},
                             ),
                           )
                         ],
@@ -550,7 +597,7 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
             });
           } else {
             List<AllOutQuantityPromotionItems> _allitemout =
-                value['AllOutQuantityPromotionItems'];
+            value['AllOutQuantityPromotionItems'];
 
             _allitemout.forEach((elll) {
               item.forEach((key, vll) {
@@ -562,7 +609,7 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
 
                     mapofpounce[vll.value.id] = youget;
                   } else {
-                      mapofpounce[vll.value.id]=mapofpounce[vll.value.id]+ youget;
+                    mapofpounce[vll.value.id]=mapofpounce[vll.value.id]+ youget;
                   }
 
                   liPro.add(Card(
@@ -581,7 +628,7 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
                                 padding: const EdgeInsets.all(3.0),
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Colors.blueAccent),
+                                    Border.all(color: Colors.blueAccent),
                                     borderRadius: BorderRadius.circular(4)),
                                 width: 50,
                                 height: 25,
@@ -592,12 +639,12 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
                                       if (int.parse(v) <= youget) {
 
 
-                                          pouncemap[vll.value.id]=vll.value.bonce + double.parse(v);
-                                          // setbonce(
-                                          //     id: vll.value.id,
-                                          //     val: (vll.value.bonce +
-                                          //         int.parse(v))
-                                          //         .toString());
+                                        pouncemap[vll.value.id]=vll.value.bonce + double.parse(v);
+                                        // setbonce(
+                                        //     id: vll.value.id,
+                                        //     val: (vll.value.bonce +
+                                        //         int.parse(v))
+                                        //         .toString());
 
                                         //  setbonce(id: vll.value.id,val: v);
                                       } else {
@@ -661,12 +708,12 @@ if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
             ),
             child: Center(
                 child: Text(
-              'Ok',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            )),
+                  'Ok',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                )),
           ),
         ),
       ),
@@ -707,22 +754,22 @@ class TheItemInList {
 
   TheItemInList(
       {this.id,this.arName,this.subCategoryId,this.shoow,
-      this.diescount,
-      this.quantity_in_store,
-      this.bonce,
-      this.enName,
-      this.price,
-      this.tex,
-      this.count,
-      this.afterdes,
-      this.befordes,
-      this.totalPriceForItem,
-      this.totalTaxForItem,
-      this.pic,
-      this.itemNumber,
-      this.minimumQuantity,
-      this.categoryId,
-      this.measurementUnitId});
+        this.diescount,
+        this.quantity_in_store,
+        this.bonce,
+        this.enName,
+        this.price,
+        this.tex,
+        this.count,
+        this.afterdes,
+        this.befordes,
+        this.totalPriceForItem,
+        this.totalTaxForItem,
+        this.pic,
+        this.itemNumber,
+        this.minimumQuantity,
+        this.categoryId,
+        this.measurementUnitId});
 }
 
 // TheItemInList(

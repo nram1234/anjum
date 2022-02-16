@@ -443,6 +443,10 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                             .item[keysOfMap[pos]].value
                                             .enName
                                             .contains(_myProdectListController
+                                            .searchWord)||_myProdectListController
+                                            .item[keysOfMap[pos]].value
+                                            .itemNumber
+                                            .contains(_myProdectListController
                                             .searchWord)) {
                                           // filterCategories.where((element) => element.id==categorie.id).length>0
 

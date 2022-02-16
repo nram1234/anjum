@@ -553,42 +553,46 @@ class _ChequePayState extends State<ChequePay> {
                                         );
                                       },
                                     );
+                                  }).catchError((e){
+
+                                    DatabaseHelper()
+                                        .insert_insert_cheque(
+                                            item: Insert_cheque_DB(
+                                                user_id: _userAndPermissions
+                                                    .user.userId,
+                                                employee_id:
+                                                    _userAndPermissions.user.id,
+                                                customer_id: int.parse(
+                                                    Get.find<AllChequesController>()
+                                                        .customer_id),
+                                                amount: double.tryParse(
+                                                    chechamount.text),
+                                                bank_id: int.tryParse(
+                                                    dropdownValueAllBanks.id),
+                                                branch_id: int.tryParse(
+                                                    dropdownValueAllBankBranches
+                                                        .id),
+                                                cheque_no:
+                                                    int.tryParse(cheqnumber.text),
+                                                customer_name: allCheques.customer
+                                                    .customerNameEn,
+                                                note: addnote.text,
+                                                payment_date: Chequetime,
+                                                payment_no: chechamount.text,
+                                                payment_type: "cheque",
+                                                reference_no: allCheques.customer.refId,
+                                                supervisor_id: _userAndPermissions.user.supervisorId,
+                                                salesmanager_id: _userAndPermissions.user.salesmanagerId,
+                                                due_date: Chequetime,
+                                                drawer_name: drawerName))
+                                        .then((value) {
+                                      print(
+                                          '999999999999999999999999999999999999999999');
+                                      print(value);
+                                    });
+
                                   });
-                                  // DatabaseHelper()
-                                  //     .insert_insert_cheque(
-                                  //         item: Insert_cheque_DB(
-                                  //             user_id: _userAndPermissions
-                                  //                 .user.userId,
-                                  //             employee_id:
-                                  //                 _userAndPermissions.user.id,
-                                  //             customer_id: int.parse(
-                                  //                 Get.find<AllChequesController>()
-                                  //                     .customer_id),
-                                  //             amount: double.tryParse(
-                                  //                 chechamount.text),
-                                  //             bank_id: int.tryParse(
-                                  //                 dropdownValueAllBanks.id),
-                                  //             branch_id: int.tryParse(
-                                  //                 dropdownValueAllBankBranches
-                                  //                     .id),
-                                  //             cheque_no:
-                                  //                 int.tryParse(cheqnumber.text),
-                                  //             customer_name: allCheques.customer
-                                  //                 .customerInfo.customerNameEn,
-                                  //             note: addnote.text,
-                                  //             payment_date: Chequetime,
-                                  //             payment_no: chechamount.text,
-                                  //             payment_type: "cheque",
-                                  //             reference_no: allCheques.customer.customerInfo.refId,
-                                  //             supervisor_id: _userAndPermissions.user.supervisorId,
-                                  //             salesmanager_id: _userAndPermissions.user.salesmanagerId,
-                                  //             due_date: Chequetime,
-                                  //             drawer_name: drawerName))
-                                  //     .then((value) {
-                                  //   print(
-                                  //       '999999999999999999999999999999999999999999');
-                                  //   print(value);
-                                  // });
+
 
                                 },
                                 child: Container(

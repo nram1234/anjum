@@ -1,15 +1,13 @@
 class Login_json {
-  User user;
-  Permissions permissions;
-  String token;
+  User  user;
+  Permissions  permissions;
+  String  token;
 
   Login_json({this.user, this.permissions, this.token});
 
   Login_json.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    permissions = json['permissions'] != null
-        ? new Permissions.fromJson(json['permissions'])
-        : null;
+    user =   User.fromJson(json['user']) ;
+    permissions =  Permissions.fromJson(json['permissions']);
     token = json['token'];
   }
 
@@ -57,8 +55,6 @@ class User {
   String image;
   String status;
   String onlineStatus;
-  String createdAt;
-  String updatedAt;
 
   User(
       {this.id,
@@ -90,43 +86,39 @@ class User {
         this.address,
         this.image,
         this.status,
-        this.onlineStatus,
-        this.createdAt,
-        this.updatedAt});
+        this.onlineStatus});
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id']??"";
-    userId = json['user_id']??"";
-    refId = json['ref_id']??"";
-    employeeNameEn = json['employee_name_en']??"";
-    employeeNameAr = json['employee_name_ar']??"";
-    phoneNo = json['phone_no']??"";
-    username = json['username']??"";
-    password = json['password']??"";
-    email = json['email']??"";
-    type = json['type']??"";
-    customerId = json['customer_id']??"";
-    businessUnitId = json['business_unit_id']??"";
-    appDeviceId = json['app_device_id']??"";
-    groupType = json['group_type']??"";
-    reference = json['reference']??"";
-    vehicle = json['vehicle']??"";
-    collectPercent = json['collect_percent']??"";
-    salesCommission = json['sales_commission']??"";
-    salary = json['salary']??"";
-    insurance = json['insurance']??"";
-    socialSecurity = json['social_security']??"";
-    cashBoxAccount = json['cash_box_account']??"";
-    debitAmount = json['debit_amount']??"";
-    storeId = json['store_id']??"";
-    supervisorId = json['supervisor_id']??"";
-    salesmanagerId = json['salesmanager_id']??"";
-    address = json['address']??"";
-    image = json['image']??"";
-    status = json['status']??"";
-    onlineStatus = json['online_status']??"";
-    createdAt = json['created_at']??"";
-    updatedAt = json['updated_at']??"";
+    id = json['id'];
+    userId = json['user_id'];
+    refId = json['ref_id'];
+    employeeNameEn = json['employee_name_en'];
+    employeeNameAr = json['employee_name_ar'];
+    phoneNo = json['phone_no'];
+    username = json['username'];
+    password = json['password'];
+    email = json['email'];
+    type = json['type'];
+    customerId = json['customer_id'];
+    businessUnitId = json['business_unit_id'];
+    appDeviceId = json['app_device_id'];
+    groupType = json['group_type'];
+    reference = json['reference'];
+    vehicle = json['vehicle'];
+    collectPercent = json['collect_percent'];
+    salesCommission = json['sales_commission'];
+    salary = json['salary'];
+    insurance = json['insurance'];
+    socialSecurity = json['social_security'];
+    cashBoxAccount = json['cash_box_account'];
+    debitAmount = json['debit_amount'];
+    storeId = json['store_id'];
+    supervisorId = json['supervisor_id'];
+    salesmanagerId = json['salesmanager_id'];
+    address = json['address'];
+    image = json['image'];
+    status = json['status'];
+    onlineStatus = json['online_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -161,8 +153,6 @@ class User {
     data['image'] = this.image;
     data['status'] = this.status;
     data['online_status'] = this.onlineStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
@@ -197,6 +187,7 @@ class Permissions {
   String addVoucherDiscount;
   String addCustomer;
   String displayProductQuantity;
+  String displayStores;
 
   Permissions(
       {this.invoice,
@@ -227,7 +218,8 @@ class Permissions {
         this.addItemDiscount,
         this.addVoucherDiscount,
         this.addCustomer,
-        this.displayProductQuantity});
+        this.displayProductQuantity,
+        this.displayStores});
 
   Permissions.fromJson(Map<String, dynamic> json) {
     invoice = json['invoice'];
@@ -265,6 +257,7 @@ class Permissions {
     addVoucherDiscount = json['add_voucher_discount'];
     addCustomer = json['add_customer'];
     displayProductQuantity = json['display_product_quantity'];
+    displayStores = json['Display Stores'];
   }
 
   Map<String, dynamic> toJson() {
@@ -305,6 +298,7 @@ class Permissions {
     data['add_voucher_discount'] = this.addVoucherDiscount;
     data['add_customer'] = this.addCustomer;
     data['display_product_quantity'] = this.displayProductQuantity;
+    data['Display Stores'] = this.displayStores;
     return data;
   }
 }
