@@ -35,10 +35,10 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    var lan = box.read('lan');
-    name.text  = box.read('user');
-    password.text = box.read('password');
-    user_Id.text = box.read('id');
+    var lan = box.read('lan')??"en";
+    name.text  = box.read('user')??"";
+    password.text = box.read('password')??"";
+    user_Id.text = box.read('id')??"";
 
 
 
