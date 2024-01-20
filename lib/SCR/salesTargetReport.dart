@@ -109,7 +109,7 @@ class _SalesTargetReportState extends State<SalesTargetReport> {
                               Expanded(flex: 1,
                                 child: InkWell(
                                     onTap: () async {
-                                      final DateTime selected =
+                                      final DateTime? selected =
                                       await showDatePicker(
                                         context: context,
                                         initialDate: selectedfromDate,
@@ -136,7 +136,7 @@ class _SalesTargetReportState extends State<SalesTargetReport> {
                               Expanded(flex: 1,
                                 child: InkWell(
                                     onTap: () async {
-                                      final DateTime selected =
+                                      final DateTime? selected =
                                       await showDatePicker(
                                         context: context,
                                         initialDate: selectedfromDate,

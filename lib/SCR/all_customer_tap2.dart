@@ -13,7 +13,7 @@ import 'dashboard.dart';
 import 'myMapScr.dart';
 
 class All_customer_tap2 extends StatefulWidget {
-  const All_customer_tap2({Key key}) : super(key: key);
+  const All_customer_tap2()  ;
 
   @override
   _All_customer_tap2State createState() => _All_customer_tap2State();
@@ -42,16 +42,16 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                // print(" allRoutes[pos].name    ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]].name}");
                 return ExpansionTile(
                   title: Text(
-                      " Route Name : ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]].name}"),
+                      " Route Name : ${logic.routMaptoshw[logic.routMaptoshwkeys[pos]]?.name}"),
                   children: logic
-                      .routMaptoshw[logic.routMaptoshwkeys[pos]].listRoutesInfo
+                      .routMaptoshw[logic.routMaptoshwkeys[pos]]!.listRoutesInfo
                       .map((e) {
                     return InkWell(
                       onTap: () {
                         if (Get.find<AllChequesController>().customer == null ||
                             !c.startswatch.value) {
                           Get.find<AllChequesController>()
-                              .setcustomer(logic.mapOfCustomar[e.customerId]);
+                              .setcustomer(logic.mapOfCustomar[e.customerId]!);
 
                           Get.find<AllChequesController>()
                               .setcustomerID(e.customerId);
@@ -72,7 +72,7 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                       },
                     //  child: Text("jjj"),
                       child: item(
-                          data: logic.mapOfCustomar[e.customerId], size: _size),
+                          data: logic.mapOfCustomar[e.customerId]!, size: _size),
                     );
                   }).toList(),
                 ); //item(data: logic.allCustomarInRouts()[pos], size: _size);
@@ -90,8 +90,8 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
     }
   }
 
-  Widget item({size, AllCustomers data}) {
-    print(data);
+  Widget item({size,required AllCustomers data}) {
+
    // return Text('ppppp');
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -362,8 +362,8 @@ class _All_customer_tap2State extends State<All_customer_tap2> {
                               // var lat=double.tryParse(l[0].trim());
                               // var Lng=double.tryParse(l[1].trim());
 
-                              LatLng loc = LatLng(double.tryParse(l[0].trim()),
-                                  double.tryParse(l[1].trim()));
+                              LatLng loc = LatLng(double.tryParse(l[0].trim())??0,
+                                  double.tryParse(l[1].trim())??0);
                               Get.to(() => MyMapScr(
                                     loc: loc,
                                     name: data.customerNameEn,

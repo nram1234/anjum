@@ -18,17 +18,17 @@ class BeforeAndAfter extends StatefulWidget {
 class _BeforeAndAfterState extends State<BeforeAndAfter> {
   AllNetworking _allNetworking = AllNetworking();
 
-  File _image1, _image2;
+ late File _image1, _image2;
   final picker = ImagePicker();
-  LocationData locationData;
+ late LocationData locationData;
   bool sendpic = false;
-  bool _serviceEnabled;
+  bool _serviceEnabled=false;
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
 
   Location location = new Location();
 
-  PermissionStatus _permissionGranted;
-  LocationData _locationData;
+late  PermissionStatus _permissionGranted;
+ late LocationData _locationData;
   var _battery;
   @override
   void initState() {
@@ -126,18 +126,18 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      final pickedFile = await picker.getImage(
-                                          source: ImageSource.camera,
-                                          maxHeight: 1200,
-                                          maxWidth: 800);
-
-                                      setState(() {
-                                        if (pickedFile != null) {
-                                          _image1 = File(pickedFile.path);
-                                        } else {
-                                          print('No image selected.');
-                                        }
-                                      });
+                                      // final pickedFile = await picker.getImage(
+                                      //     source: ImageSource.camera,
+                                      //     maxHeight: 1200,
+                                      //     maxWidth: 800);
+                                      //
+                                      // setState(() {
+                                      //   if (pickedFile != null) {
+                                      //     _image1 = File(pickedFile.path);
+                                      //   } else {
+                                      //     print('No image selected.');
+                                      //   }
+                                      // });
                                     },
                                     child: Container(
                                       height: size.width * .4,
@@ -172,18 +172,18 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      final pickedFile = await picker.getImage(
-                                          source: ImageSource.camera,
-                                          maxHeight: 1200,
-                                          maxWidth: 800);
-
-                                      setState(() {
-                                        if (pickedFile != null) {
-                                          _image2 = File(pickedFile.path);
-                                        } else {
-                                          print('No image selected.');
-                                        }
-                                      });
+                                      // final pickedFile = await picker.getImage(
+                                      //     source: ImageSource.camera,
+                                      //     maxHeight: 1200,
+                                      //     maxWidth: 800);
+                                      //
+                                      // setState(() {
+                                      //   if (pickedFile != null) {
+                                      //     _image2 = File(pickedFile.path);
+                                      //   } else {
+                                      //     print('No image selected.');
+                                      //   }
+                                      // });
                                     },
                                     child: Container(
                                       height: size.width * .4,
@@ -238,7 +238,7 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : RaisedButton(
+                            : TextButton(
                                 onPressed: () {
                                   sendpic = true;
                                   setState(() {});
@@ -249,11 +249,11 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                               _userAndPermissions.user.userId,batteryLevel:   _battery.batteryLevel.toString(),
                                           customer_id:
                                           _userAndPermissions.user.id.toString(),
-                                          latitude: _locationData.latitude,
-                                          longitude: _locationData.longitude,
+                                          latitude: _locationData.latitude!,
+                                          longitude: _locationData.longitude!,
                                           employee_id: _userAndPermissions.user.id.toString(),
                                           file: _image1,
-                                          file2: _image2)
+                                          file2: _image2, visit_id:  '')
                                       .then((value) {
                                     print(
                                         "_locationData_locationData_locationData_locationData_locationData $_locationData  ${_locationData.latitude}     ${_locationData.longitude}");
@@ -288,7 +288,7 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
                                     print(value.visitId);
                                   });
                                 },
-                                color: Color(0xff2C4B89),
+
                                 child: Text(
                                   "Submit",
                                   style: TextStyle(color: Colors.white),
@@ -314,9 +314,9 @@ class _BeforeAndAfterState extends State<BeforeAndAfter> {
     }
 
     _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.DENIED) {
+    if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.GRANTED) {
+      if (_permissionGranted != PermissionStatus.granted) {
         return;
       }
     }

@@ -78,7 +78,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                               .id) {
                         Get.to(() => Dashboard());
                       } else {
-                        Get.snackbar(  'stopvisitingfirst'.tr, Get.locale.languageCode =="ar"?    Get.find<AllChequesController>().customer.customerNameAr:    Get.find<AllChequesController>().customer.customerNameEn);
+                        Get.snackbar(  'stopvisitingfirst'.tr, Get.locale?.languageCode =="ar"?    Get.find<AllChequesController>().customer.customerNameAr:    Get.find<AllChequesController>().customer.customerNameEn);
                       }
                     }
                   },
@@ -101,8 +101,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
     }
   }
 
-  Widget item({size, AllCustomers data}) {
-    print(data.image);
+  Widget item({size, AllCustomers? data}) {
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -149,7 +149,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                     height: 8,
                   ),
                   Text(
-                    data.customerNameEn,
+                    data?.customerNameEn??"",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
@@ -166,9 +166,9 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                       //+"\n"+data.customerInfo.area2??
                       children: [
                         Icon(Icons.add_location),
-                        Text(data.phoneNo ?? ""),
+                        Text(data?.phoneNo ?? ""),
                         Expanded(child: Container()),
-                        if (iscust(data)) Image.asset('assets/images/fast.png')
+                        if (iscust(data!)) Image.asset('assets/images/fast.png')
                       ],
                     ),
                   ),
@@ -229,7 +229,7 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                                             Text(
                                               'customername'.tr +
                                                   ' : ' +
-                                                  '${Get.locale.languageCode =="en" ?data.customerNameEn:data.customerNameAr}',
+                                                  '${Get.locale?.languageCode =="en" ?data.customerNameEn:data.customerNameAr}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -368,8 +368,8 @@ class _All_customer_tap1State extends State<All_customer_tap1> {
                               // var lat=double.tryParse(l[0].trim());
                               // var Lng=double.tryParse(l[1].trim());
 
-                              LatLng loc = LatLng(double.tryParse(l[0].trim()),
-                                  double.tryParse(l[1].trim()));
+                              LatLng loc = LatLng(double.tryParse(l[0].trim())??0,
+                                  double.tryParse(l[1].trim())??0);
                               Get.to(() => MyMapScr(
                                     loc: loc,
                                     name: data.customerNameEn,

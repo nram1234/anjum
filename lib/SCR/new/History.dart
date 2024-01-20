@@ -242,12 +242,8 @@ class _HistoryState extends State<History> {
                         Spacer(),
                         Container(
                           alignment: Alignment.center,
-                          child: RaisedButton(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            color: Color(0xff2C4B89),
+                          child: TextButton(
+
                             onPressed: (){},
                             child: Text("Details",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                           ),

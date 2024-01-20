@@ -52,13 +52,13 @@ class MyProdectListController extends GetxController {
     update();
   }
 
-  settotalDiscountincart({String v}) {
+  settotalDiscountincart({required String v}) {
     totalDiscountincart.value = double.parse(v) / 100;
     gettotalpriceincart();
     update();
   }
 
-  String totalDiscount() {
+    totalDiscount() {
     double totoal = 0;
     item.forEach((key, value) {
       if (value.value.count > 0) {
@@ -150,10 +150,10 @@ class MyProdectListController extends GetxController {
           if (bata.allItems[i].itemId ==
               _allStockItemsController.allStockItems[p].itemId) {
 //print("itemNameAr  ${bata.allItems[i].itemDetails[0].itemNameAr}");
-            if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) >Get.find<AllCategoriesController>().maxRang){
+            if(double.parse(bata.allItems[i].itemDetails[0].sellingPrice)>Get.find<AllCategoriesController>().maxRang){
               Get.find<AllCategoriesController>().updatamaxRangVal(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
             }
-            if(double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice) <Get.find<AllCategoriesController>().minRang){
+            if(double.parse(bata.allItems[i].itemDetails[0].sellingPrice) <Get.find<AllCategoriesController>().minRang){
               Get.find<AllCategoriesController>().updatamaxRangVal (double.tryParse(bata.allItems[i].itemDetails[0].sellingPrice));
             }
             item[bata.allItems[i].itemId] = TheItemInList(arName: bata.allItems[i].itemDetails[0].itemNameAr,
@@ -279,16 +279,16 @@ class MyProdectListController extends GetxController {
     update();
   }
 
-  setCount({String id, double count}) {
-    print("1111111111111111111111111111111111111111111111111");
-    print(id);
-    print(item);
-    print("1111111111111111111111111111111111111111111111111");
-    item[id].value.count = count;
-    item[id].value.befordes = item[id].value.price * item[id].value.count;
-    item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
-        ((item[id].value.price * item[id].value.count) *
-            (item[id].value.diescount / 100));
+  setCount({required String id,required double count}) {
+
+
+
+
+    item[id]!.value.count = count;
+    item[id]!.value.befordes = item[id]!.value.price * item[id]!.value.count;
+    item[id]!.value.afterdes = (item[id]!.value.price * item[id]!.value.count) -
+        ((item[id]!.value.price * item[id]!.value.count) *
+            (item[id]!.value.diescount / 100));
 
 
 
@@ -300,41 +300,41 @@ class MyProdectListController extends GetxController {
 
     update();
   }
-  setcountinstore({String id, double count}){
+  setcountinstore({required String id,required double count}){
     // print('999999999999999999999999999');
     // print (id);
     // print (count);
     //
     // print(item[id].value.quantity_in_store-count);
     if(isinvoiceOrSalesOrderOrReturnInvoice=='invoice'){
-      item[id].value.quantity_in_store=item[id].value.quantity_in_store-count;
+      item[id]!.value.quantity_in_store=item[id]!.value.quantity_in_store-count;
     }
     if(isinvoiceOrSalesOrderOrReturnInvoice=='return_invoice'){
-      item[id].value.quantity_in_store=item[id].value.quantity_in_store+count;
+      item[id]!.value.quantity_in_store=item[id]!.value.quantity_in_store+count;
     }
     // print (item[id].value.quantity_in_store);
 
     update();
   }
-  setTotalPriceAndTotalTex({String id}) {
+  setTotalPriceAndTotalTex({required String id}) {
     print(id);
 
-    item[id].value.totalTaxForItem =
-        item[id].value.afterdes * (item[id].value.tex / 100);
-    item[id].value.totalPriceForItem =
-        item[id].value.afterdes + item[id].value.totalTaxForItem;
+    item[id]!.value.totalTaxForItem =
+        item[id]!.value.afterdes * (item[id]!.value.tex / 100);
+    item[id]!.value.totalPriceForItem =
+        item[id]!.value.afterdes + item[id]!.value.totalTaxForItem;
 
 
     //  update();
   }
 
-  setprice({String id, String val}) {
-    item[id].value.price = double.parse(val);
+  setprice({required String id,required String val}) {
+    item[id]?.value.price = double.parse(val);
 
-    item[id].value.befordes = item[id].value.price * item[id].value.count;
-    item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
-        ((item[id].value.price * item[id].value.count) *
-            (item[id].value.diescount / 100));
+    item[id]!.value.befordes = item[id]!.value.price * item[id]!.value.count;
+    item[id]?.value.afterdes = (item[id]!.value.price * item[id]!.value.count) -
+        ((item[id]!.value.price * item[id]!.value.count) *
+            (item[id]!.value.diescount / 100));
     setTotalPriceAndTotalTex(id: id);
     getTotalTax();
     netprice();
@@ -342,20 +342,20 @@ class MyProdectListController extends GetxController {
     //update();
   }
 
-  setbonce({String id, String val}) {
-    item[id].value.bonce = double.parse(val);
+  setbonce({required String id,required String val}) {
+    item[id]!.value.bonce = double.parse(val);
     //  update();
   }
 
-  setdiscount({String id, String val}) {
+  setdiscount({required String id,required String val}) {
     if (val != null && val.isNotEmpty) {
       if(item[id]!=null){
-        item[id].value.diescount = double.parse(val);
-        item[id].value.afterdes = (item[id].value.price * item[id].value.count) -
-            ((item[id].value.price * item[id].value.count) *
+        item[id]!.value.diescount = double.parse(val);
+        item[id]!.value.afterdes = (item[id]!.value.price * item[id]!.value.count) -
+            ((item[id]!.value.price * item[id]!.value.count) *
                 (double.parse(val) / 100));
 
-        totalTax.value = item[id].value.afterdes * item[id].value.tex;
+        totalTax.value = item[id]!.value.afterdes * item[id]!.value.tex;
       }
 
       setTotalPriceAndTotalTex(id: id);
@@ -522,7 +522,7 @@ class MyProdectListController extends GetxController {
                 mapofpounce[element.value.id] = youget;
 
               } else {
-                mapofpounce[element.value.id]  =mapofpounce[element.value.id]+ youget;
+                mapofpounce[element.value.id]  =mapofpounce[element.value.id]!+ youget;
               }
               liPro.add(Card(
                 elevation: 8,
@@ -572,7 +572,7 @@ class MyProdectListController extends GetxController {
 
 
 
-                                  pouncemap[element.value.id]=pouncemap[element.value.id] + int.parse(v);
+                                  pouncemap[element.value.id]=pouncemap[element.value.id] !+ int.parse(v);
                                   // setbonce(
                                   //     id: element.value.id,
                                   //     val: (element.value.bonce +
@@ -609,7 +609,7 @@ class MyProdectListController extends GetxController {
 
                     mapofpounce[vll.value.id] = youget;
                   } else {
-                    mapofpounce[vll.value.id]=mapofpounce[vll.value.id]+ youget;
+                    mapofpounce[vll.value.id]=mapofpounce[vll.value.id]!+ youget;
                   }
 
                   liPro.add(Card(
@@ -727,7 +727,7 @@ class MytrayItem {
   String name;
   int count;
 
-  MytrayItem({this.id, this.name, this.count});
+  MytrayItem({required this.id,required this.name,required this.count});
 }
 
 class TheItemInList {
@@ -753,23 +753,23 @@ class TheItemInList {
   int measurementUnitId;
 
   TheItemInList(
-      {this.id,this.arName,this.subCategoryId,this.shoow,
-        this.diescount,
-        this.quantity_in_store,
-        this.bonce,
-        this.enName,
-        this.price,
-        this.tex,
-        this.count,
-        this.afterdes,
-        this.befordes,
-        this.totalPriceForItem,
-        this.totalTaxForItem,
-        this.pic,
-        this.itemNumber,
-        this.minimumQuantity,
-        this.categoryId,
-        this.measurementUnitId});
+      {required this.id,required this.arName,required this.subCategoryId,required this.shoow,
+       required  this.diescount,
+       required  this.quantity_in_store,
+       required  this.bonce,
+       required  this.enName,
+       required  this.price,
+       required  this.tex,
+       required  this.count,
+       required  this.afterdes,
+       required  this.befordes,
+       required  this.totalPriceForItem,
+       required  this.totalTaxForItem,
+       required  this.pic,
+       required  this.itemNumber,
+       required  this.minimumQuantity,
+       required  this.categoryId,
+       required  this.measurementUnitId});
 }
 
 // TheItemInList(

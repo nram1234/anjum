@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TtryHive extends StatefulWidget {
-  const TtryHive({Key  key}) : super(key: key);
+
 
   @override
   _TtryHiveState createState() => _TtryHiveState();

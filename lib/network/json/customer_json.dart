@@ -1,7 +1,7 @@
 class Customer_json {
-  List<Customers> customers;
+late  List<Customers> customers;
 
-  Customer_json({this.customers});
+  Customer_json({required this.customers});
 
   Customer_json.fromJson(Map<String, dynamic> json) {
     if (json['customers'] != null) {
@@ -22,13 +22,13 @@ class Customer_json {
 }
 
 class Customers {
-  String customerNameEn;
-  String customerNameAr;
-  String location;
-  String image;
+ late String customerNameEn;
+ late String customerNameAr;
+ late String location;
+ late String image;
 
   Customers(
-      {this.customerNameEn, this.customerNameAr, this.location, this.image});
+      {required this.customerNameEn,required this.customerNameAr,required this.location,required this.image});
 
   Customers.fromJson(Map<String, dynamic> json) {
     customerNameEn = json['customer_name_en'];

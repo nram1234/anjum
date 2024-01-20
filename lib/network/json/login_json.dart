@@ -1,9 +1,9 @@
 class Login_json {
-  User  user;
-  Permissions  permissions;
-  String  token;
+late  User  user;
+late  Permissions  permissions;
+late  String  token;
 
-  Login_json({this.user, this.permissions, this.token});
+  Login_json({required this.user,required this.permissions,required this.token});
 
   Login_json.fromJson(Map<String, dynamic> json) {
     user =   User.fromJson(json['user']) ;
@@ -25,68 +25,68 @@ class Login_json {
 }
 
 class User {
-  int id;
-  int userId;
-  String refId;
-  String employeeNameEn;
-  String employeeNameAr;
-  String phoneNo;
-  String username;
-  String password;
-  String email;
-  int type;
-  String customerId;
-  int businessUnitId;
-  String appDeviceId;
-  String groupType;
-  String reference;
-  String vehicle;
-  String collectPercent;
-  String salesCommission;
-  String salary;
-  String insurance;
-  String socialSecurity;
-  String cashBoxAccount;
-  String debitAmount;
-  String storeId;
-  int supervisorId;
-  int salesmanagerId;
-  String address;
-  String image;
-  String status;
-  String onlineStatus;
+late  int id;
+late  int userId;
+late  String refId;
+late  String employeeNameEn;
+late  String employeeNameAr;
+late  String phoneNo;
+late  String username;
+late  String password;
+late  String email;
+late  int type;
+late  String customerId;
+late  int businessUnitId;
+late  String appDeviceId;
+late  String groupType;
+late  String reference;
+late  String vehicle;
+late  String collectPercent;
+late  String salesCommission;
+late  String salary;
+late  String insurance;
+late  String socialSecurity;
+late  String cashBoxAccount;
+late  String debitAmount;
+late  String storeId;
+late  int supervisorId;
+late  int salesmanagerId;
+late  String address;
+late  String image;
+late  String status;
+late  String onlineStatus;
 
   User(
-      {this.id,
-        this.userId,
-        this.refId,
-        this.employeeNameEn,
-        this.employeeNameAr,
-        this.phoneNo,
-        this.username,
-        this.password,
-        this.email,
-        this.type,
-        this.customerId,
-        this.businessUnitId,
-        this.appDeviceId,
-        this.groupType,
-        this.reference,
-        this.vehicle,
-        this.collectPercent,
-        this.salesCommission,
-        this.salary,
-        this.insurance,
-        this.socialSecurity,
-        this.cashBoxAccount,
-        this.debitAmount,
-        this.storeId,
-        this.supervisorId,
-        this.salesmanagerId,
-        this.address,
-        this.image,
-        this.status,
-        this.onlineStatus});
+      {required this.id,
+       required this.userId,
+       required this.refId,
+       required this.employeeNameEn,
+       required this.employeeNameAr,
+       required this.phoneNo,
+       required this.username,
+       required this.password,
+       required this.email,
+       required this.type,
+       required this.customerId,
+       required this.businessUnitId,
+       required this.appDeviceId,
+       required this.groupType,
+       required this.reference,
+       required this.vehicle,
+       required this.collectPercent,
+       required this.salesCommission,
+       required this.salary,
+       required this.insurance,
+       required this.socialSecurity,
+       required this.cashBoxAccount,
+       required this.debitAmount,
+       required this.storeId,
+       required this.supervisorId,
+       required this.salesmanagerId,
+       required this.address,
+       required this.image,
+       required this.status,
+       required this.onlineStatus});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -158,70 +158,70 @@ class User {
 }
 
 class Permissions {
-  String invoice;
-  String returnInvoice;
-  String order;
-  String payment;
-  String stockTaking;
-  String loadItems;
-  String unloadItems;
-  String takePhoto;
-  String beforeAfterPhoto;
-  String note;
-  String survey;
-  String loadRequestAcceptReject;
-  String unloadRequestAcceptReject;
-  String salesOrderRequestAcceptReject;
-  String salesOrderToPrice;
-  String requestToExceedCustomerCreditLimit;
-  String requestToExceedChequeDueDateLimit;
-  String requestToReturnInvoice;
-  String requestToOrdersApproval;
-  String requestToChangeInvoicePaymentType;
-  String requestToExceedCustomerInvoiceNumber;
-  String requestToVisitCustomerNotInRoute;
-  String requestForCustomerLoginWithoutVerification;
-  String employeeAddDrawersFromApp;
-  String addBonus;
-  String addItemDiscount;
-  String addVoucherDiscount;
-  String addCustomer;
-  String displayProductQuantity;
-  String displayStores;
+late String invoice;
+late String returnInvoice;
+late String order;
+late String payment;
+late String stockTaking;
+late String loadItems;
+late String unloadItems;
+late String takePhoto;
+late String beforeAfterPhoto;
+late String note;
+late String survey;
+late String loadRequestAcceptReject;
+late String unloadRequestAcceptReject;
+late String salesOrderRequestAcceptReject;
+late String salesOrderToPrice;
+late String requestToExceedCustomerCreditLimit;
+late String requestToExceedChequeDueDateLimit;
+late String requestToReturnInvoice;
+late String requestToOrdersApproval;
+late String requestToChangeInvoicePaymentType;
+late String requestToExceedCustomerInvoiceNumber;
+late String requestToVisitCustomerNotInRoute;
+late String requestForCustomerLoginWithoutVerification;
+late String employeeAddDrawersFromApp;
+late String addBonus;
+late String addItemDiscount;
+late String addVoucherDiscount;
+late String addCustomer;
+late String displayProductQuantity;
+late String displayStores;
 
   Permissions(
-      {this.invoice,
-        this.returnInvoice,
-        this.order,
-        this.payment,
-        this.stockTaking,
-        this.loadItems,
-        this.unloadItems,
-        this.takePhoto,
-        this.beforeAfterPhoto,
-        this.note,
-        this.survey,
-        this.loadRequestAcceptReject,
-        this.unloadRequestAcceptReject,
-        this.salesOrderRequestAcceptReject,
-        this.salesOrderToPrice,
-        this.requestToExceedCustomerCreditLimit,
-        this.requestToExceedChequeDueDateLimit,
-        this.requestToReturnInvoice,
-        this.requestToOrdersApproval,
-        this.requestToChangeInvoicePaymentType,
-        this.requestToExceedCustomerInvoiceNumber,
-        this.requestToVisitCustomerNotInRoute,
-        this.requestForCustomerLoginWithoutVerification,
-        this.employeeAddDrawersFromApp,
-        this.addBonus,
-        this.addItemDiscount,
-        this.addVoucherDiscount,
-        this.addCustomer,
-        this.displayProductQuantity,
-        this.displayStores});
+      {required this.invoice,
+       required  this.returnInvoice,
+       required  this.order,
+       required  this.payment,
+       required  this.stockTaking,
+       required  this.loadItems,
+       required  this.unloadItems,
+       required  this.takePhoto,
+       required  this.beforeAfterPhoto,
+       required  this.note,
+       required  this.survey,
+       required  this.loadRequestAcceptReject,
+       required  this.unloadRequestAcceptReject,
+       required  this.salesOrderRequestAcceptReject,
+       required  this.salesOrderToPrice,
+       required  this.requestToExceedCustomerCreditLimit,
+       required  this.requestToExceedChequeDueDateLimit,
+       required  this.requestToReturnInvoice,
+       required  this.requestToOrdersApproval,
+       required  this.requestToChangeInvoicePaymentType,
+       required  this.requestToExceedCustomerInvoiceNumber,
+       required  this.requestToVisitCustomerNotInRoute,
+       required  this.requestForCustomerLoginWithoutVerification,
+       required  this.employeeAddDrawersFromApp,
+       required  this.addBonus,
+       required  this.addItemDiscount,
+       required  this.addVoucherDiscount,
+       required  this.addCustomer,
+       required  this.displayProductQuantity,
+       required  this.displayStores});
 
-  Permissions.fromJson(Map<String, dynamic> json) {
+  Permissions.fromJson(Map<dynamic, dynamic> json) {
     invoice = json['invoice'];
     returnInvoice = json['return_invoice'];
     order = json['order'];

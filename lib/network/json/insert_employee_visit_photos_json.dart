@@ -1,11 +1,11 @@
 class InsertEmployeeVisitPhotosJson {
-  String message;
-  int codenum;
-  bool status;
-  int visitId;
+late  String message;
+late  int codenum;
+late  bool status;
+late  int visitId;
 
   InsertEmployeeVisitPhotosJson(
-      {this.message, this.codenum, this.status, this.visitId});
+      {required this.message,required this.codenum,required this.status,required this.visitId});
 
   InsertEmployeeVisitPhotosJson.fromJson(Map<String, dynamic> json) {
     message = json['message'];

@@ -29,7 +29,7 @@ import 'cart.dart';
 import 'filter.dart';
 
 class ProdectTestt extends StatefulWidget {
-  ProdectTestt({Key key}) : super(key: key);
+
 
   @override
   _ProdectTesttState createState() => _ProdectTesttState();
@@ -48,7 +48,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
   Get.put(CartItemController(), permanent: true);
   AllCategoriesController filter = Get.find<AllCategoriesController>();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  Box<dynamic> notComorder;
+  late Box<dynamic> notComorder;
 
   List<NotComplete_order> listofnotcomplet = [];
   Map<String, NotComplete_order> mapofnotcompletitem = {};
@@ -316,7 +316,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                       if (_myProdectListController
                                           .issearch) {
                                         if (_myProdectListController
-                                            .item[keysOfMap[pos]].value
+                                            .item[keysOfMap[pos]]!.value
                                             .enName
                                             .contains(_myProdectListController
                                             .searchWord)) {
@@ -329,18 +329,18 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                                   .item[
                                               keysOfMap[
                                               pos]]
-                                                  .value
+                                                  !.value
                                                   .subCategoryId)
                                               .length >
                                               0 &&
                                               _myProdectListController
                                                   .item[keysOfMap[pos]]
-                                                  .value
+                                                  !.value
                                                   .price >
                                                   filter.minRang &&
                                               _myProdectListController
                                                   .item[keysOfMap[pos]]
-                                                  .value
+                                                  !.value
                                                   .price <
                                                   filter.maxRang) {
                                             return iteminthelist(
@@ -350,16 +350,16 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                                   .priceList[
                                               _myProdectListController
                                                   .item[keysOfMap[pos]]
-                                                  .value
-                                                  .id],
+                                                  !.value
+                                                  .id]!,
                                               pos: pos,
                                               discountController:
                                               textEditingControllerDiscount[
                                               pos],
                                               products:
                                               _myProdectListController
-                                                  .item[keysOfMap[pos]],
-                                              size: size,
+                                                  !.item[keysOfMap[pos] ]!,
+                                              size: size, list: [],
                                             );
                                           } else {
                                             return const SizedBox();
@@ -382,18 +382,18 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                             _myProdectListController
                                                 .item[keysOfMap[
                                             pos]]
-                                                .value
+                                               ! .value
                                                 .subCategoryId)
                                             .length >
                                             0 &&
                                             _myProdectListController
                                                 .item[keysOfMap[pos]]
-                                                .value
+                                                !.value
                                                 .price >
                                                 filter.minRang &&
                                             _myProdectListController
                                                 .item[keysOfMap[pos]]
-                                                .value
+                                                !.value
                                                 .price <
                                                 filter.maxRang) {
                                           return iteminthelist(
@@ -403,16 +403,16 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                                 .priceList[
                                             _myProdectListController
                                                 .item[keysOfMap[pos]]
-                                                .value
-                                                .id],
+                                                !.value
+                                                .id]!,
                                             pos: pos,
                                             discountController:
                                             textEditingControllerDiscount[
                                             pos],
                                             products:
                                             _myProdectListController
-                                                .item[keysOfMap[pos]],
-                                            size: size,
+                                                .item[keysOfMap[pos]]!,
+                                            size: size, list: [],
                                           );
                                           /////////////////////////////////////////////////////
                                         } else {
@@ -440,11 +440,11 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                       if (_myProdectListController
                                           .issearch) {
                                         if (_myProdectListController
-                                            .item[keysOfMap[pos]].value
+                                            .item[keysOfMap[pos]]!.value
                                             .enName
                                             .contains(_myProdectListController
                                             .searchWord)||_myProdectListController
-                                            .item[keysOfMap[pos]].value
+                                            .item[keysOfMap[pos]]!.value
                                             .itemNumber
                                             .contains(_myProdectListController
                                             .searchWord)) {
@@ -457,16 +457,16 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                                 .priceList[
                                             _myProdectListController
                                                 .item[keysOfMap[pos]]
-                                                .value
-                                                .id],
+                                                !.value
+                                                .id]!,
                                             pos: pos,
                                             discountController:
                                             textEditingControllerDiscount[
                                             pos],
                                             products:
                                             _myProdectListController
-                                                .item[keysOfMap[pos]],
-                                            size: size,
+                                                .item[keysOfMap[pos]]!,
+                                            size: size, list: [],
                                           );
                                         } else {
                                           return const SizedBox();
@@ -480,16 +480,16 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                               .priceList[
                                           _myProdectListController
                                               .item[keysOfMap[pos]]
-                                              .value
-                                              .id],
+                                             ! .value
+                                              .id]!,
                                           pos: pos,
                                           discountController:
                                           textEditingControllerDiscount[
                                           pos],
                                           products:
                                           _myProdectListController
-                                              .item[keysOfMap[pos]],
-                                          size: size,
+                                              !.item[keysOfMap[pos]]!,
+                                          size: size, list: [],
                                         );
                                         /////////////////////////////////////////////////////
                                       }
@@ -537,7 +537,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                 child: GestureDetector(
                                   onTap: () async {
                                     if (!c.swatch.isRunning) {
-                                      getMyLoction(firesvisittlocation);
+                                      getMyLoction(firesvisittlocation!);
 
                                       c.startjor();
                                     } else {
@@ -557,7 +557,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                         // }
                                       });
 
-                                      getMyLoction(endvisittlocation);
+                                      getMyLoction(endvisittlocation!);
                                       DatabaseHelper()
                                           .insert_insert_visit(Insert_visit_DB(
                                         customer_id:
@@ -565,14 +565,13 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                             .find<AllChequesController>()
                                             .customer
                                             .id,
-                                        user_id:
-                                        _userAndPermissions.user.id.toString(),
+                                        user_id:_userAndPermissions.user.id.toString(), employ_id: '', start_lat: '', start_lang: '', end_lat: '', end_lang: '', start_date: '', end_date: '', current_visit_status: '', visit_type: '',
                                       ))
                                           .then((value) {
-                                        Get
-                                            .find<AllChequesController>()
-                                            .customer =
-                                        null;
+                                        // Get
+                                        //     .find<AllChequesController>()
+                                        //     .customer =
+                                        // null;
 
                                         Get.off(() => All_Customer());
                                       });
@@ -610,12 +609,12 @@ class _ProdectTesttState extends State<ProdectTestt> {
   }
 
   Widget iteminthelist({
-    List<PriceListsInfo> unitslist,
-    list,
-    Size size,
-    int pos,
-    Rx<TheItemInList> products,
-    TextEditingController discountController,
+  required List<PriceListsInfo> unitslist,
+  required list,
+  required Size size,
+  required int pos,
+  required Rx<TheItemInList> products,
+  required TextEditingController discountController,
   }) {
     bool showdropdowen = (unitslist.length > 1);
     if (showdropdowen) {
@@ -633,7 +632,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
         //  }
       }
     }
-    NotComplete_order d = mapofnotcompletitem[products.value.id];
+    NotComplete_order? d = mapofnotcompletitem[products.value.id];
 // TextEditingController counnttee=TextEditingController();
     //  discountController.text = products.value.diescount.toString();
     // print('0000000000000000000000000000000000000000000');
@@ -689,7 +688,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                           height: 8,
                         ),
                         Text(
-                          Get.locale.languageCode == "en"
+                          Get.locale!.languageCode == "en"
                               ? products.value.enName
                               : products.value.arName,
                           maxLines: 2,
@@ -709,7 +708,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                     ': ' +
                                     '${(_myProdectListController
                                         .item[keysOfMap[pos]]
-                                        .value.price * double.parse(
+                                        !.value.price * double.parse(
                                         _curenceController.defultCurrencies
                                             .currencyRate)).toStringAsFixed(
                                         3)}');
@@ -764,11 +763,11 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                       if (int.parse(v) <=
                                           _myProdectListController
                                               .item[keysOfMap[pos]]
-                                              .value
+                                              !.value
                                               .quantity_in_store) {
                                         _myProdectListController.setCount(
                                             id: _myProdectListController
-                                                .item[keysOfMap[pos]].value.id,
+                                                .item[keysOfMap[pos]]!.value.id,
                                             count: double.parse(v));
                                       } else {
                                         Get.snackbar('',
@@ -778,7 +777,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
 
                                     _myProdectListController.setCount(
                                         id: _myProdectListController
-                                            .item[keysOfMap[pos]].value.id,
+                                            .item[keysOfMap[pos]]!.value.id,
                                         count: double.parse(v));
                                   }
                                 },
@@ -1011,7 +1010,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                               Colors.deepPurpleAccent,
                                             ),
                                             onChanged:
-                                                (PriceListsInfo newValue) {
+                                                (PriceListsInfo? newValue) {
                                               // Get
                                               //     .find<
                                               //     PriceListsInfoController>()
@@ -1030,7 +1029,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                                   .find<
                                                   PriceListsInfoController>()
                                                   .setvalofdrob(
-                                                  val: newValue, id: products
+                                                  val: newValue!, id: products
                                                   .value.id);
 
 
@@ -1080,7 +1079,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                     child: Obx(() {
 
                                       return Text(_myProdectListController
-                                          .item[products.value.id].value.quantity_in_store.toString()
+                                          .item[products.value.id]!.value.quantity_in_store.toString()
                                           // products.value.quantity_in_store
                                           //     .toString()
                                       );
@@ -1121,7 +1120,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                         if (v != null) {
                                           if (!v.isEmpty) {
                                             _myProdectListController.setbonce(
-                                                id: d.itemId, val: v);
+                                                id: d!. itemId!, val: v);
                                           }
                                         }
                                       },)
@@ -1207,7 +1206,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                         builder: (logic) {
                                           return Text(logic
                                               .item[products.value.id]
-                                              .value
+                                              !.value
                                               .count
                                               .toString());
                                         },
@@ -1233,7 +1232,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                       builder: (logic) {
                                         return Text((logic
                                             .item[products.value.id]
-                                            .value
+                                            !.value
                                             .befordes *
                                             double.parse(_curenceController
                                                 .defultCurrencies
@@ -1270,7 +1269,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                   builder: (logic) {
                                     return Text((logic
                                         .item[products.value.id]
-                                        .value
+                                        !.value
                                         .afterdes *
                                         double.parse(_curenceController
                                             .defultCurrencies
@@ -1326,7 +1325,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                   GetBuilder<MyProdectListController>(
                                     builder: (logic) {
                                       return Text((logic.item[products.value.id]
-                                          .value.totalPriceForItem *
+                                          !.value.totalPriceForItem *
                                           double.parse(_curenceController
                                               .defultCurrencies
                                               .currencyRate))
@@ -1365,7 +1364,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                         builder: (logic) {
                                           return Text((logic
                                               .item[products.value.id]
-                                              .value
+                                              !.value
                                               .totalTaxForItem*double.parse(_curenceController.defultCurrencies.currencyRate))
                                               .toStringAsFixed(3));
                                         },
@@ -1390,7 +1389,7 @@ class _ProdectTesttState extends State<ProdectTestt> {
                                       GetBuilder<MyProdectListController>(
                                     builder: (logic) {
                                       return Text((logic.item[products.value.id]
-                                          .value.totalPriceForItem*double.parse(_curenceController.defultCurrencies.currencyRate))
+                                          !.value.totalPriceForItem*double.parse(_curenceController.defultCurrencies.currencyRate))
                                           .toStringAsFixed(3));
                                     },
                                   )),

@@ -14,7 +14,7 @@ class SalesOrderDetails extends StatefulWidget {
 
 //get_sales_order_requests
 class _SalesOrderDetailsState extends State<SalesOrderDetails> {
-  Sales_Order_Requests_Model _sales_order_requests_model;
+ late Sales_Order_Requests_Model _sales_order_requests_model;
   bool getdata = true;
 
   @override
@@ -97,7 +97,7 @@ class _SalesOrderDetailsState extends State<SalesOrderDetails> {
                           .asStream(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          _sales_order_requests_model=snapshot.data;
+                          _sales_order_requests_model=snapshot.data!;
                           return Column(
                             children: [
                               Container(
@@ -211,7 +211,7 @@ class _SalesOrderDetailsState extends State<SalesOrderDetails> {
     ));
   }
 
-  Widget item({String lab, String mydata}) {
+  Widget item({required String lab,required String mydata}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(

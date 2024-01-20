@@ -41,9 +41,6 @@ import 'dart:ui' as ui;
 import 'new/bluetooth_printer_scr.dart';
 import 'new/newtrybluth.dart';
 
-
-
-
 class Cart extends StatefulWidget {
   @override
   _CartEditProductState createState() => _CartEditProductState();
@@ -53,7 +50,7 @@ class _CartEditProductState extends State<Cart> {
   GlobalKey printcart = GlobalKey();
   var box = GetStorage();
   List<Widget> wawawa = [];
-  int orderid;
+  late int orderid;
   AllNetworking _allNetworking = AllNetworking();
   var keysOfMap;
   String Chequetime = "choose date";
@@ -66,15 +63,16 @@ class _CartEditProductState extends State<Cart> {
       Get.find<EmployeePermissionsController>();
   AllChequesController customer = Get.find<AllChequesController>();
   UserDataController _userDataController = Get.find<UserDataController>();
-  Box<dynamic> notComorder ;
-  String dropdownvalue;
+  late Box<dynamic> notComorder;
+
+  late String dropdownvalue;
 
   var items = ['Cash', 'Cheque'];
   bool isCash = true;
   List<AllItems> listtoshow = [];
   Map<String, AllItems> getTaxItemMap = {};
   bool canApply = true;
-  bool requestToChangeInvoicePaymentType;
+  late bool requestToChangeInvoicePaymentType;
 
   final MyProdectListController _myProdectListController =
       Get.find<MyProdectListController>();
@@ -85,15 +83,14 @@ class _CartEditProductState extends State<Cart> {
 
   @override
   void initState() {
-
     super.initState();
 
-    orderid = box.read( isinvoiceOrSalesOrderOrReturnInvoice);
+    orderid = box.read(isinvoiceOrSalesOrderOrReturnInvoice);
     if (orderid == null) {
-      orderid =    int.parse(_userAndPermissions.user.id.toString()+"001");
+      orderid = int.parse(_userAndPermissions.user.id.toString() + "001");
       print("orderidorderidorderidorderid      ${orderid}");
       box.write(isinvoiceOrSalesOrderOrReturnInvoice, orderid);
-    }else{
+    } else {
       orderid++;
       box.write(isinvoiceOrSalesOrderOrReturnInvoice, orderid);
     }
@@ -121,13 +118,14 @@ class _CartEditProductState extends State<Cart> {
               bonus_qty: int.parse(element.bonusQty),
               is_bonus_duplicate: element.isBonusDuplicate,
               itemid: item.itemId,
-              minimum_quantity_value: int.parse(element.minimumQuantityValue));
+              minimum_quantity_value: int.parse(element.minimumQuantityValue), strictly_listed_item: '');
           _all_promotionsController.promitem[item.itemId] = i;
         });
       }
     });
     yitem();
-    print("orderidorderidorderidorderid   $isinvoiceOrSalesOrderOrReturnInvoice      ${orderid}");
+    print(
+        "orderidorderidorderidorderid   $isinvoiceOrSalesOrderOrReturnInvoice      ${orderid}");
   }
 
   int vv = 1;
@@ -296,7 +294,7 @@ class _CartEditProductState extends State<Cart> {
     String date2 = "";
 
     Future<String> pickdate() async {
-      DateTime time = await showDatePicker(
+      DateTime? time = await showDatePicker(
           initialDate: DateTime.now(),
           firstDate: DateTime(1900),
           lastDate: DateTime(2050),
@@ -428,7 +426,7 @@ class _CartEditProductState extends State<Cart> {
                             ),
                           ),
 
-                                   Padding(
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                               child: Container(
@@ -448,7 +446,7 @@ class _CartEditProductState extends State<Cart> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10))),
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       // _myProdectListController
                                       //     .getlistpromiision();
                                       _myProdectListController.mytray();
@@ -505,86 +503,23 @@ class _CartEditProductState extends State<Cart> {
                           //   padding: const EdgeInsets.only(left: 16, right: 16),
                           //   child: Text('Discount'),
                           // ),
-                          if( employeePermissionsController.employeePermissions[0].addVoucherDiscount=='yes' )          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  'discount'.tr,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  width: size.width * .4,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     color: Colors.grey.withOpacity(0.5),
-                                    //     spreadRadius: 5,
-                                    //     blurRadius: 7,
-                                    //     offset: Offset(
-                                    //         0, 3), // changes position of shadow
-                                    //   ),
-                                    // ],
+                          if (employeePermissionsController
+                                  .employeePermissions[0].addVoucherDiscount ==
+                              'yes')
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'discount'.tr,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  child: TextField(
-                                    onChanged: (v) {
-                                      if (v != null && v.isNotEmpty) {
-                                        _myProdectListController
-                                            .settotalDiscountincart(v: v);
-                                      }
-                                    },
-                                    controller: _textEditingController,
-                                    keyboardType: TextInputType.number,
-                                    textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: '  5%  ',
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: canApply
-                                      ? () {
-                                          canApply = false;
-
-                                          //    _myProdectListController.settotalpriceincart(double.parse(_textEditingController.text));
-
-                                          // getTaxItemMap.forEach((key, value) {
-                                          //   print(
-                                          //       'PriceafterDes befor any thing${bata.PriceafterDes[key]}');
-                                          //
-                                          //   bata.PriceafterDes[key] =
-                                          //       bata.PriceafterDes[key] -
-                                          //           (bata.PriceafterDes[key] *
-                                          //               double.parse(
-                                          //                   _textEditingController
-                                          //                       .text) /
-                                          //               100);
-                                          //   bata.total_Tax[key] = bata
-                                          //           .PriceafterDes[key] *
-                                          //       (double.parse(getTaxItemMap[key]
-                                          //               .itemDetails[0]
-                                          //               .tax) /
-                                          //           100);
-                                          //   ;
-                                          //   print(
-                                          //       'PriceafterDes after   thing${bata.PriceafterDes[key]}');
-                                          // });
-                                          //
-                                          // setState(() {});
-                                        }
-                                      : null,
-                                  child: Container(
-                                    width: size.width * .3,
+                                  Container(
+                                    width: size.width * .4,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white,
@@ -598,28 +533,96 @@ class _CartEditProductState extends State<Cart> {
                                       //   ),
                                       // ],
                                     ),
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: canApply
-                                            ? Color(0xff2C4B89)
-                                            : Colors.grey,
-                                        borderRadius: BorderRadius.circular(10),
+                                    child: TextField(
+                                      onChanged: (v) {
+                                        if (v != null && v.isNotEmpty) {
+                                          _myProdectListController
+                                              .settotalDiscountincart(v: v);
+                                        }
+                                      },
+                                      controller: _textEditingController,
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: '  5%  ',
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
                                       ),
-                                      child: Center(
-                                          child: Text(
-                                        'Apply',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      )),
                                     ),
                                   ),
-                                )
-                              ],
+                                  GestureDetector(
+                                    onTap: canApply
+                                        ? () {
+                                            canApply = false;
+
+                                            //    _myProdectListController.settotalpriceincart(double.parse(_textEditingController.text));
+
+                                            // getTaxItemMap.forEach((key, value) {
+                                            //   print(
+                                            //       'PriceafterDes befor any thing${bata.PriceafterDes[key]}');
+                                            //
+                                            //   bata.PriceafterDes[key] =
+                                            //       bata.PriceafterDes[key] -
+                                            //           (bata.PriceafterDes[key] *
+                                            //               double.parse(
+                                            //                   _textEditingController
+                                            //                       .text) /
+                                            //               100);
+                                            //   bata.total_Tax[key] = bata
+                                            //           .PriceafterDes[key] *
+                                            //       (double.parse(getTaxItemMap[key]
+                                            //               .itemDetails[0]
+                                            //               .tax) /
+                                            //           100);
+                                            //   ;
+                                            //   print(
+                                            //       'PriceafterDes after   thing${bata.PriceafterDes[key]}');
+                                            // });
+                                            //
+                                            // setState(() {});
+                                          }
+                                        : null,
+                                    child: Container(
+                                      width: size.width * .3,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //     color: Colors.grey.withOpacity(0.5),
+                                        //     spreadRadius: 5,
+                                        //     blurRadius: 7,
+                                        //     offset: Offset(
+                                        //         0, 3), // changes position of shadow
+                                        //   ),
+                                        // ],
+                                      ),
+                                      child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: canApply
+                                              ? Color(0xff2C4B89)
+                                              : Colors.grey,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                            child: Text(
+                                          'Apply',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                        )),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
                           Padding(
                             padding: EdgeInsets.only(
                                 top: 8, right: 16, left: 16, bottom: 8),
@@ -678,19 +681,30 @@ class _CartEditProductState extends State<Cart> {
                                 height: 1,
                                 color: Colors.teal,
                               )),
-                          if(  Get.find<AllChequesController>()
-                              .customer.taxStatus=="yes")       Padding(
-                            padding: EdgeInsets.only(
-                                top: 8, right: 16, left: 16, bottom: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('totaltax'.tr),
-                                Text(" ${_curenceController.defultCurrencies.currencySymbol} "+(_myProdectListController.totalTaxincart.value*double.parse(_curenceController.defultCurrencies.currencyRate))
-                                    .toStringAsFixed(3)),
-                              ],
+                          if (Get.find<AllChequesController>()
+                                  .customer
+                                  .taxStatus ==
+                              "yes")
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 8, right: 16, left: 16, bottom: 8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('totaltax'.tr),
+                                  Text(
+                                      " ${_curenceController.defultCurrencies.currencySymbol} " +
+                                          (_myProdectListController
+                                                      .totalTaxincart.value *
+                                                  double.parse(
+                                                      _curenceController
+                                                          .defultCurrencies
+                                                          .currencyRate))
+                                              .toStringAsFixed(3)),
+                                ],
+                              ),
                             ),
-                          ),
                           Padding(
                               padding: EdgeInsets.only(
                                   top: 8, right: 16, left: 16, bottom: 8),
@@ -993,13 +1007,7 @@ class _CartEditProductState extends State<Cart> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-
-
                                       getdtatafromdatabaseanddelet();
-
-
-
-
 
                                       final doc = pw.Document();
 
@@ -1015,15 +1023,15 @@ class _CartEditProductState extends State<Cart> {
                                       if (_myProdectListController.item.length >
                                           0) {
                                         var data =
-                                            Insert_invoice_salesorder_json()
-                                                .toJson();
+                                            Insert_invoice_salesorder_json(
+                                                listInvoice: []).toJson();
                                         List<ListInvoice> list = [];
                                         int noOfItems = 0;
                                         _myProdectListController.item
                                             .forEach((key, value) {
                                           if (value.value.count > 0) {
                                             noOfItems++;
-                                         //   value.value.quantity_in_store-value.value.count;
+                                            //   value.value.quantity_in_store-value.value.count;
                                           }
                                         });
                                         for (int itmeinlast = 0;
@@ -1032,26 +1040,26 @@ class _CartEditProductState extends State<Cart> {
                                                     .item.length;
                                             itmeinlast++) {
                                           if (_myProdectListController
-                                                      .item[
-                                                          keysOfMap[itmeinlast]]
+                                                      .item[keysOfMap[
+                                                          itmeinlast]]!
                                                       .value
                                                       .count >
                                                   0 ||
                                               _myProdectListController
-                                                      .item[
-                                                          keysOfMap[itmeinlast]]
+                                                      .item[keysOfMap[
+                                                          itmeinlast]]!
                                                       .value
                                                       .bonce >
                                                   0) {
                                             double onleyprice =
                                                 (_myProdectListController
                                                         .item[keysOfMap[
-                                                            itmeinlast]]
+                                                            itmeinlast]]!
                                                         .value
                                                         .afterdes -
                                                     (_myProdectListController
                                                             .item[keysOfMap[
-                                                                itmeinlast]]
+                                                                itmeinlast]]!
                                                             .value
                                                             .afterdes *
                                                         _myProdectListController
@@ -1063,36 +1071,43 @@ class _CartEditProductState extends State<Cart> {
                                                     (onleyprice *
                                                         (_myProdectListController
                                                                 .item[keysOfMap[
-                                                                    itmeinlast]]
-                                                                .value
+                                                                    itmeinlast]]!
+                                                                .value!
                                                                 .tex /
                                                             100));
 
-
-
-                                            _myProdectListController.setcountinstore(id: _myProdectListController
-                                                .item[keysOfMap[itmeinlast]]
-                                                .value
-                                                .id,count: _myProdectListController
-                                                .item[keysOfMap[itmeinlast]]
-                                                .value
-                                                .count);
-                                            ListInvoice i = ListInvoice(no_invoice: orderid,
-                                                order_id:  orderid,
+                                            _myProdectListController
+                                                .setcountinstore(
+                                                    id: _myProdectListController
+                                                        .item[keysOfMap[
+                                                            itmeinlast]]!
+                                                        .value
+                                                        .id,
+                                                    count:
+                                                        _myProdectListController
+                                                            .item[keysOfMap[
+                                                                itmeinlast]]!
+                                                            .value
+                                                            .count);
+                                            ListInvoice i = ListInvoice(
+                                                no_invoice: orderid,
+                                                order_id: orderid,
                                                 user_id: _userAndPermissions
                                                     .user.userId,
                                                 request_level: 2.toString(),
                                                 salesmanagerNote: " ",
                                                 supervisorNote: " ",
                                                 totalTax: onleyprice *
-                                                    (_myProdectListController.item[keysOfMap[itmeinlast]].value.tex /
+                                                    (_myProdectListController.item[keysOfMap[itmeinlast]]!.value.tex /
                                                         100),
                                                 quantity: _myProdectListController
-                                                    .item[keysOfMap[itmeinlast]]
+                                                    .item[
+                                                        keysOfMap[itmeinlast]]!
                                                     .value
                                                     .count,
                                                 itemId: int.parse(_myProdectListController
-                                                    .item[keysOfMap[itmeinlast]]
+                                                    .item[
+                                                        keysOfMap[itmeinlast]]!
                                                     .value
                                                     .id),
                                                 noOfItems: noOfItems,
@@ -1104,25 +1119,20 @@ class _CartEditProductState extends State<Cart> {
                                                         .customer
                                                         .id),
                                                 bonus: _myProdectListController
-                                                    .item[keysOfMap[itmeinlast]]
+                                                    .item[keysOfMap[itmeinlast]]!
                                                     .value
                                                     .bonce,
-                                                supervisorId: _userAndPermissions
-                                                    .user.supervisorId,
-                                                salesmanagerId: _userAndPermissions
-                                                    .user.salesmanagerId,
-                                                basePricePerUnit: _myProdectListController
-                                                    .item[keysOfMap[itmeinlast]]
-                                                    .value
-                                                    .price,
+                                                supervisorId: _userAndPermissions.user.supervisorId,
+                                                salesmanagerId: _userAndPermissions.user.salesmanagerId,
+                                                basePricePerUnit: _myProdectListController.item[keysOfMap[itmeinlast]]!.value.price,
                                                 storeId: int.parse(_userAndPermissions.user.storeId),
-                                                measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]].value.measurementUnitId,
+                                                measurementUnitId: _myProdectListController.item[keysOfMap[itmeinlast]]!.value.measurementUnitId,
                                                 totalPrice: onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate),
                                                 totalPriceWithTax: onleypricewithtax * double.parse(_curenceController.defultCurrencies.currencyRate),
                                                 totalPriceBeforeTax: onleyprice * double.parse(_curenceController.defultCurrencies.currencyRate),
-                                                totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count) * double.parse(_curenceController.defultCurrencies.currencyRate),
-                                                totalDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.item[keysOfMap[itmeinlast]].value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]].value.price * _myProdectListController.item[keysOfMap[itmeinlast]].value.count * (_myProdectListController.totalDiscountincart / 100))) * double.parse(_curenceController.defultCurrencies.currencyRate),
-                                                categoryId: _myProdectListController.item[keysOfMap[itmeinlast]].value.categoryId,
+                                                totalPriceWithoutTaxDiscount: (_myProdectListController.item[keysOfMap[itmeinlast]]!.value.price * _myProdectListController.item[keysOfMap[itmeinlast]]!.value.count) * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                                totalDiscount: ((_myProdectListController.item[keysOfMap[itmeinlast]]!.value.price * _myProdectListController.item[keysOfMap[itmeinlast]]!.value.count * (_myProdectListController.item[keysOfMap[itmeinlast]]!.value.diescount / 100)) + (_myProdectListController.item[keysOfMap[itmeinlast]]!.value.price * _myProdectListController.item[keysOfMap[itmeinlast]]!.value.count * (_myProdectListController.totalDiscountincart / 100))) * double.parse(_curenceController.defultCurrencies.currencyRate),
+                                                categoryId: _myProdectListController.item[keysOfMap[itmeinlast]]!.value.categoryId,
                                                 request_type: isinvoiceOrSalesOrderOrReturnInvoice,
                                                 taxType: "percentage");
 
@@ -1225,20 +1235,17 @@ class _CartEditProductState extends State<Cart> {
                                                                                   ),
                                                                                   Text('Print')
                                                                                 ],
+                                                                              )),
+                                                                          TextButton(
+                                                                              onPressed: () {
+                                                                                bluetoothPrinter();
+                                                                              },
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  Text('Bluetooth')
+                                                                                ],
                                                                               ))
-                                                                     ,   TextButton(
-                                                    onPressed:
-                                                    () {
-                                                  bluetoothPrinter();
-
-                                                },
-                                                child:
-                                                Row(
-                                                children: [
-
-                                                Text('Bluetooth')
-                                                ],
-                                                ))   ],
+                                                                        ],
                                                                       )
                                                                     ],
                                                                   ))
@@ -1253,7 +1260,7 @@ class _CartEditProductState extends State<Cart> {
                                             );
                                           });
                                         } else {
-                                          await list.forEach((element) {
+                                          list.forEach((element) {
                                             _databaseHelper
                                                 .insert_Sales_Order_Request_Details(
                                                     element)
@@ -1301,7 +1308,7 @@ class _CartEditProductState extends State<Cart> {
                                                             TextButton(
                                                                 onPressed: () {
                                                                   // Navigator.pop(context);
-                                                                 // Get.off(() => All_Customer());
+                                                                  // Get.off(() => All_Customer());
                                                                   int count = 0;
                                                                   Navigator.popUntil(
                                                                       context,
@@ -1339,15 +1346,14 @@ class _CartEditProductState extends State<Cart> {
                                                                                 ),
                                                                                 Text('Print')
                                                                               ],
-                                                                            ))
-                                                                     ,   TextButton(
+                                                                            )),
+                                                                        TextButton(
                                                                             onPressed:
                                                                                 () {
-                                                                                  bluetoothPrinter();
-
-                                                                                },
+                                                                              bluetoothPrinter();
+                                                                            },
                                                                             child:
-                                                                            Row(
+                                                                                Row(
                                                                               children: [
                                                                                 Icon(Icons.print),
                                                                                 SizedBox(
@@ -1355,7 +1361,8 @@ class _CartEditProductState extends State<Cart> {
                                                                                 ),
                                                                                 Text('Bluetooth')
                                                                               ],
-                                                                            ))     ],
+                                                                            ))
+                                                                      ],
                                                                     )
                                                                   ],
                                                                 ))
@@ -1447,7 +1454,7 @@ class _CartEditProductState extends State<Cart> {
     );
   }
 
-  Widget item({size, Rx<TheItemInList> products}) {
+  Widget item({size, required Rx<TheItemInList> products}) {
     int numberofitem = 0;
     for (int i = 0; i < bata.cartlist.length; i++) {
       if (bata.cartlist[i] == products) {
@@ -1564,10 +1571,10 @@ class _CartEditProductState extends State<Cart> {
                     InkWell(
                       onTap: () {
                         if (_myProdectListController
-                                .item[products.value.id].value.count >
+                                .item[products.value.id]!.value.count >
                             0) {
                           double v = _myProdectListController
-                                  .item[products.value.id].value.count -
+                                  .item[products.value.id]!.value.count -
                               1;
                           print(products.value.count);
                           _myProdectListController.setCount(
@@ -1610,7 +1617,7 @@ class _CartEditProductState extends State<Cart> {
                       child: Center(child: GetBuilder<MyProdectListController>(
                         builder: (logic) {
                           textEditingController.text = logic
-                              .item[products.value.id].value.count
+                              .item[products.value.id]!.value.count
                               .toString();
 
                           return TextField(
@@ -1637,8 +1644,8 @@ class _CartEditProductState extends State<Cart> {
                         //  bata.addToCart(item: data);
 
                         double v = _myProdectListController
-                                .item[products.value.id].value.count +
-                            1;
+                                .item[products.value.id]?.value.count ??
+                            0 + 1;
                         print(products.value.count);
                         _myProdectListController.setCount(
                             id: products.value.id, count: v);
@@ -1928,7 +1935,7 @@ class _CartEditProductState extends State<Cart> {
         bata.itemcount[bata.cartlist[oo].itemId] = 1;
         //  bata.itemInCart.value++;
       } else {
-        bata.itemcount[bata.cartlist[oo].itemId] += 1;
+        bata!.itemcount[bata!.cartlist[oo]!.itemId]! +10;
       }
     }
     // bata.additemInitemInCart(item: bata.cartlist[oo]);
@@ -1936,13 +1943,15 @@ class _CartEditProductState extends State<Cart> {
       await DatabaseHelper()
           .insert_item_tabel(Item_Database(
               olderId: i,
-              itemId: int.tryParse(key),
-              // categoryId:
-              //     int.parse(bata.cartlist[oo].itemDetails[0].categoryId), //
-
-              // basePricePerUnit: double.parse(
-              //     bata.cartlist[oo].itemDetails[0].itemCost ?? "1")
-              quantity: value))
+              itemId: int.tryParse(key ?? "0") ?? 0,
+              quantity: value,
+              categoryId: 0,
+              measurementUnitId: 0,
+              basePricePerUnit: 0,
+              bonus: 1,
+              taxType: '',
+              totalTax: 10,
+              totalPriceBeforeTax: 10, totalPriceWithTax: 5, totalPrice: 55))
           .then((value) {
         print('تم اضافه');
       }).catchError((e) {
@@ -1958,7 +1967,7 @@ class _CartEditProductState extends State<Cart> {
       List<ListInvoice> aaa =
           await _databaseHelper.get_All_Sales_Order_Request_Details(i);
       if (aaa.length > 0) {
-        var data = Insert_invoice_salesorder_json().toJson();
+        var data = Insert_invoice_salesorder_json(listInvoice: []).toJson();
         data['key'] = '1234567890';
 
         data['list_invoice'] = aaa;
@@ -1977,16 +1986,16 @@ class _CartEditProductState extends State<Cart> {
     try {
       print('1111111111111111111oo');
 
-      RenderRepaintBoundary bounddary =
-          printcart.currentContext.findRenderObject();
-      ui.Image image = await bounddary.toImage(pixelRatio: 5);
-      ByteData byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      var pngBytes = byteData.buffer.asUint8List();
+      RenderRepaintBoundary? bounddary = printcart.currentContext
+          ?.findRenderObject() as RenderRepaintBoundary?;
+      ui.Image? image = await bounddary?.toImage(pixelRatio: 5);
+      ByteData? byteData =
+          await image?.toByteData(format: ui.ImageByteFormat.png);
+      var pngBytes = byteData?.buffer.asUint8List();
       String dir = (await getApplicationDocumentsDirectory()).path;
       File file = File(
           '$dir/' + DateTime.now().millisecondsSinceEpoch.toString() + ".png");
-      await file.writeAsBytes(pngBytes);
+      await file.writeAsBytes(pngBytes!);
 
       print('222222222222222222222222222222222222222222222222222222222222222');
       return showDialog(
@@ -2006,7 +2015,6 @@ class _CartEditProductState extends State<Cart> {
   }
 
   void _printPDF(context) async {
-
     List<Rx<TheItemInList>> item = _myProdectListController.item.values
         .where((element) => element.value.count > 0)
         .toList();
@@ -2017,52 +2025,54 @@ class _CartEditProductState extends State<Cart> {
     final ttf = pw.Font.ttf(font);
 
     //var myTheme  =pw.PageTheme(theme:pw. Theme(  data: pw.ThemeData( defaultTextStyle: pw.TextStyle(font: ttf,  ) ),   ) );
-List<pw.Widget>listsss=[];
- await   item.forEach((e) {
+    List<pw.Widget> listsss = [];
+      item.forEach((e) {
+      double total = e.value.count * e.value.afterdes;
+      listsss.add(pw.Container(
+          alignment: pw.Alignment.centerRight,
+          width: double.infinity,
+          child: pw.Text("${e.value.enName} ",
+              textDirection: pw.TextDirection.rtl,
+              textAlign: pw.TextAlign.right,
+              style: pw.TextStyle(
+                font: ttf,
+              ))));
+      listsss.add(pw.Row(children: [
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(e.value.afterdes.toStringAsFixed(2),
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(font: ttf))),
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(e.value.count.toString(),
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(font: ttf))),
 
-      double total=e.value.count*e.value.afterdes ;
-      listsss.add(
-        pw.Container(alignment: pw.Alignment.centerRight, width: double.infinity,child:   pw.Text(
-            "${e.value.enName} ",
-
-            textDirection: pw.TextDirection.rtl,textAlign: pw.TextAlign.right,
-            style: pw.TextStyle(
-              font: ttf,
-            )))
-          );
-      listsss.add(    pw.Row(
-
-          children: [
-              pw.Expanded(flex: 1,child: pw.Text(e.value.afterdes .toStringAsFixed(2),
-                  textDirection: pw.TextDirection.rtl,
-                  style: pw.TextStyle(font: ttf))),
-            pw.Expanded(flex: 1,child:pw.Text(e.value.count.toString(),
-                  textDirection: pw.TextDirection.rtl,
-                  style: pw.TextStyle(font: ttf))),
-
-            pw.Expanded(flex: 1,child:  pw.Text(e.value.price.toString(),
-                  textDirection: pw.TextDirection.rtl,
-                  style: pw.TextStyle(font: ttf))),
-            pw.Expanded(
-                flex: 1,
-                child: pw.Text(
-                    " ",
-
-                    textDirection: pw.TextDirection.rtl,
-                    style: pw.TextStyle(
-                      font: ttf,
-                    )))
-            // pw.Expanded(
-            //     flex: 1,
-            //     child: pw.Text(
-            //         "${e.value.name} ",
-            //
-            //         textDirection: pw.TextDirection.rtl,
-            //         style: pw.TextStyle(
-            //           font: ttf,
-            //         )))
-          ]));
-   listsss.add(pw.SizedBox(height: 3)) ;});
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(e.value.price.toString(),
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(font: ttf))),
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(" ",
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(
+                  font: ttf,
+                )))
+        // pw.Expanded(
+        //     flex: 1,
+        //     child: pw.Text(
+        //         "${e.value.name} ",
+        //
+        //         textDirection: pw.TextDirection.rtl,
+        //         style: pw.TextStyle(
+        //           font: ttf,
+        //         )))
+      ]));
+      listsss.add(pw.SizedBox(height: 3));
+    });
     doc.addPage(pw.Page(
         textDirection: pw.TextDirection.rtl,
         pageFormat: PdfPageFormat.roll80,
@@ -2134,27 +2144,28 @@ List<pw.Widget>listsss=[];
             //         ])
             //   ],
             // ),
-pw.Row(children:[ pw.Expanded(
-    flex: 1,
-    child: pw.Text('الاجمالي',
-        textDirection: pw.TextDirection.rtl,
-        style: pw.TextStyle(font: ttf))),
-  pw.Expanded(
-      flex: 1,
-      child: pw.Text('الكميه',
-          textDirection: pw.TextDirection.rtl,
-          style: pw.TextStyle(font: ttf))),
-
-  pw.Expanded(
-      flex: 1,
-      child: pw.Text('السعر',
-          textDirection: pw.TextDirection.rtl,
-          style: pw.TextStyle(font: ttf))),
-  pw.Expanded(
-      flex: 1,
-      child: pw.Text('المنتج',
-          textDirection: pw.TextDirection.rtl,
-          style: pw.TextStyle(font: ttf)))] )
+            pw.Row(children: [
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('الاجمالي',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf))),
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('الكميه',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf))),
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('السعر',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf))),
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('المنتج',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf)))
+            ])
             //
             // pw.Table(
             //   children: [
@@ -2181,8 +2192,8 @@ pw.Row(children:[ pw.Expanded(
             //         ])
             //   ],
             // ),
-,pw.Column(children: listsss)
-
+            ,
+            pw.Column(children: listsss)
           ]); // Center
         })); // Page
     print(listsss);
@@ -2206,11 +2217,10 @@ pw.Row(children:[ pw.Expanded(
       build: (format) => doc.save(),
     );
 
-   // _getimagetoprint();
+    // _getimagetoprint();
   }
 
-  void bluetoothPrinter() async{
-
+  void bluetoothPrinter() async {
     List<Rx<TheItemInList>> item = _myProdectListController.item.values
         .where((element) => element.value.count > 0)
         .toList();
@@ -2221,44 +2231,44 @@ pw.Row(children:[ pw.Expanded(
     final ttf = pw.Font.ttf(font);
 
     //var myTheme  =pw.PageTheme(theme:pw. Theme(  data: pw.ThemeData( defaultTextStyle: pw.TextStyle(font: ttf,  ) ),   ) );
-    List<pw.Widget>listsss=[];
-    await   item.forEach((e) {
-
-      double total=e.value.count*e.value.afterdes ;
-      listsss.add(
-          pw.Container(alignment: pw.Alignment.centerRight, width: double.infinity,child:   pw.Text(
-              "${e.value.enName} ",
-
-              textDirection: pw.TextDirection.rtl,textAlign: pw.TextAlign.right,
+    List<pw.Widget> listsss = [];
+      item.forEach((e) {
+      double total = e.value.count * e.value.afterdes;
+      listsss.add(pw.Container(
+          alignment: pw.Alignment.centerRight,
+          width: double.infinity,
+          child: pw.Text("${e.value.enName} ",
+              textDirection: pw.TextDirection.rtl,
+              textAlign: pw.TextAlign.right,
               style: pw.TextStyle(
                 font: ttf,
-              )))
-      );
-      listsss.add(    pw.Row(
-
-          children: [
-            pw.Expanded(flex: 1,child: pw.Text(e.value.afterdes .toStringAsFixed(2),
+              ))));
+      listsss.add(pw.Row(children: [
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(e.value.afterdes.toStringAsFixed(2),
                 textDirection: pw.TextDirection.rtl,
                 style: pw.TextStyle(font: ttf))),
-            pw.Expanded(flex: 1,child:pw.Text(e.value.count.toString(),
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(e.value.count.toString(),
                 textDirection: pw.TextDirection.rtl,
                 style: pw.TextStyle(font: ttf))),
-
-            pw.Expanded(flex: 1,child:  pw.Text(e.value.price.toString(),
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(e.value.price.toString(),
                 textDirection: pw.TextDirection.rtl,
                 style: pw.TextStyle(font: ttf))),
-            pw.Expanded(
-                flex: 1,
-                child: pw.Text(
-                    " ",
-
-                    textDirection: pw.TextDirection.rtl,
-                    style: pw.TextStyle(
-                      font: ttf,
-                    )))
-
-          ]));
-      listsss.add(pw.SizedBox(height: 3)) ;});
+        pw.Expanded(
+            flex: 1,
+            child: pw.Text(" ",
+                textDirection: pw.TextDirection.rtl,
+                style: pw.TextStyle(
+                  font: ttf,
+                )))
+      ]));
+      listsss.add(pw.SizedBox(height: 3));
+    });
     doc.addPage(pw.Page(
         textDirection: pw.TextDirection.rtl,
         pageFormat: PdfPageFormat.roll80,
@@ -2282,20 +2292,18 @@ pw.Row(children:[ pw.Expanded(
             pw.Text('${_userDataController.userData.area1}',
                 style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
                 textDirection: pw.TextDirection.rtl),
-
             pw.SizedBox(height: 10),
-
-            pw.Row(children:[ pw.Expanded(
-                flex: 1,
-                child: pw.Text('الاجمالي',
-                    textDirection: pw.TextDirection.rtl,
-                    style: pw.TextStyle(font: ttf))),
+            pw.Row(children: [
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Text('الاجمالي',
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(font: ttf))),
               pw.Expanded(
                   flex: 1,
                   child: pw.Text('الكميه',
                       textDirection: pw.TextDirection.rtl,
                       style: pw.TextStyle(font: ttf))),
-
               pw.Expanded(
                   flex: 1,
                   child: pw.Text('السعر',
@@ -2305,15 +2313,13 @@ pw.Row(children:[ pw.Expanded(
                   flex: 1,
                   child: pw.Text('المنتج',
                       textDirection: pw.TextDirection.rtl,
-                      style: pw.TextStyle(font: ttf)))] )
-
-            ,pw.Column(children: listsss)
-
+                      style: pw.TextStyle(font: ttf)))
+            ]),
+            pw.Column(children: listsss)
           ]); // Center
         })); // Page
     print(listsss);
     final date = DateTime.now();
-
 
     final output = await getTemporaryDirectory();
     final file = File('${output.path}/example.pdf');
@@ -2334,12 +2340,13 @@ pw.Row(children:[ pw.Expanded(
     // print('000000000000000000000000000000000000000000000000000');
     // }
 
-    Get.to(()=>NewTryBluth( ));
+   // Get.to(() => NewTryBluth());
 
- //Get.to(()=>BluetoothPrinterScr(file));
+    //Get.to(()=>BluetoothPrinterScr(file));
   }
-  getdtatafromdatabaseanddelet()async{
-    notComorder=await Hive.openBox<NotComplete_order>('NotCompleteorder');
+
+  getdtatafromdatabaseanddelet() async {
+    notComorder = await Hive.openBox<NotComplete_order>('NotCompleteorder');
     // print ( "notComorder  ${notComorder.values}");
     // notComorder.values.forEach((element) {
     //   NotComplete_order s=element as NotComplete_order;
@@ -2357,30 +2364,19 @@ pw.Row(children:[ pw.Expanded(
     //
     //       .id==s.customerId){
 
-        notComorder.keys.forEach((element) {
-          NotComplete_order s=notComorder.get(element) as NotComplete_order;
-  print(Get.find<AllChequesController>()
-                .customer
+    notComorder.keys.forEach((element) {
+      NotComplete_order s = notComorder.get(element) as NotComplete_order;
+      print(Get.find<AllChequesController>().customer.id);
+      print(s.customerId);
+      print(element);
+      print(Get.find<AllChequesController>().customer.id == s.customerId);
+      if (Get.find<AllChequesController>().customer.id == s.customerId) {
+        notComorder.delete(element);
+      }
+    });
+    // }
 
-                .id);
-            print(s.customerId);
-          print(element);
-            print(Get.find<AllChequesController>()
-                .customer
-
-                .id==s.customerId);
-          if(Get.find<AllChequesController>()
-                .customer
-
-                .id==s.customerId){
-            notComorder.delete(element);
-          }
-
-        });
-     // }
-
-
- //   }
+    //   }
     //) ;
 // notComorder.keys.forEach((element) {
 //   NotComplete_order s=notComorder.get(element) as NotComplete_order;
@@ -2397,13 +2393,9 @@ pw.Row(children:[ pw.Expanded(
 //     notComorder.delete(element);
 //   }
 // });
-    _myProdectListController
-        .item.forEach((key, value) {
-      _myProdectListController.setCount(
-          id:value.value.id,
-          count: 0);
+    _myProdectListController.item.forEach((key, value) {
+      _myProdectListController.setCount(id: value.value.id, count: 0);
     });
     _myProdectListController.countInCart();
-
   }
 }

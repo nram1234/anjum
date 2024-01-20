@@ -1,17 +1,17 @@
 class Get_second_step1_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+late  String message;
+late  int codenum;
+late  bool status;
+late  Result result;
 
-  Get_second_step1_json({this.message, this.codenum, this.status, this.result});
+  Get_second_step1_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_second_step1_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,13 +27,13 @@ class Get_second_step1_json {
 }
 
 class Result {
-  List<AllCustomers> allCustomers;
+late  List<AllCustomers> allCustomers;
 
-  Result({this.allCustomers});
+  Result({required this.allCustomers});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['all_customers'] != null) {
-      allCustomers = new List<AllCustomers>();
+      allCustomers = [];
       json['all_customers'].forEach((v) {
         allCustomers.add(new AllCustomers.fromJson(v));
       });
@@ -50,60 +50,60 @@ class Result {
 }
 
 class AllCustomers {
-  String id;
-  String userId;
-  String appEmployeeId;
-  String refId;
-  String priceListId;
-  String customerId;
-  String customerNameEn;
-  String customerNameAr;
-  String customerTypeId;
-  String email;
-  String phoneNo;
-  String fax;
-  String taxStatus;
-  String image;
-  String creditLimit;
-  String chequeDueDate;
-  String discount;
-  String balance;
-  String paymentType;
-  String stateId;
-  String cityId;
-  String area1;
-  String area2;
-  String location;
-  String latitude;
-  String longitude;
+late String id;
+late String userId;
+late String appEmployeeId;
+late String refId;
+late String priceListId;
+late String customerId;
+late String customerNameEn;
+late String customerNameAr;
+late String customerTypeId;
+late String email;
+late String phoneNo;
+late String fax;
+late String taxStatus;
+late String image;
+late String creditLimit;
+late String chequeDueDate;
+late String discount;
+late String balance;
+late String paymentType;
+late String stateId;
+late String cityId;
+late String area1;
+late String area2;
+late String location;
+late String latitude;
+late String longitude;
 
   AllCustomers(
-      {this.id,
-        this.userId,
-        this.appEmployeeId,
-        this.refId,
-        this.priceListId,
-        this.customerId,
-        this.customerNameEn,
-        this.customerNameAr,
-        this.customerTypeId,
-        this.email,
-        this.phoneNo,
-        this.fax,
-        this.taxStatus,
-        this.image,
-        this.creditLimit,
-        this.chequeDueDate,
-        this.discount,
-        this.balance,
-        this.paymentType,
-        this.stateId,
-        this.cityId,
-        this.area1,
-        this.area2,
-        this.location,
-        this.latitude,
-        this.longitude});
+      {required this.id,
+       required  this.userId,
+       required  this.appEmployeeId,
+       required  this.refId,
+       required  this.priceListId,
+       required  this.customerId,
+       required  this.customerNameEn,
+       required  this.customerNameAr,
+       required  this.customerTypeId,
+       required  this.email,
+       required  this.phoneNo,
+       required  this.fax,
+       required  this.taxStatus,
+       required  this.image,
+       required  this.creditLimit,
+       required  this.chequeDueDate,
+       required  this.discount,
+       required  this.balance,
+       required  this.paymentType,
+       required  this.stateId,
+       required  this.cityId,
+       required  this.area1,
+       required  this.area2,
+       required  this.location,
+       required  this.latitude,
+       required  this.longitude});
 
   AllCustomers.fromJson(Map<String, dynamic> json) {
     id = json['id'];

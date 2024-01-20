@@ -8,7 +8,7 @@ class ItemUnitsController extends GetxController{
 // updateitemUnits({List<ItemUnits> list} ){
 //   itemUnits=list;
 // }
-  updateitemUnitstMap({List<ItemUnits> list}){
+  updateitemUnitstMap({required List<ItemUnits> list}){
   list.forEach((element) {
     if(itemUnitsmap[element.itemId]==null){
       List<ItemUnits>a=[];
@@ -16,7 +16,7 @@ class ItemUnitsController extends GetxController{
       itemUnitsmap[element.itemId]=a;
 
     }else{
-      itemUnitsmap[element.itemId].add(element );
+      itemUnitsmap[element.itemId]?.add(element );
     }
   });
  update();

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class LangController extends GetxController{
 
  var lan='en';
-updatelang({String lang}){
+updatelang({required String lang}){
   lan=lang;
   update();
 }

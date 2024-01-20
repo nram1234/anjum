@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class SalesOrderController extends GetxController{
 
-  SalesOrder salesOrder;
+late  SalesOrder salesOrder;
   void updatesalesOrderData( SalesOrder salesOrder){
     this.salesOrder=salesOrder;
     update();

@@ -16,7 +16,7 @@ class Dialogpay extends StatefulWidget {
 }
 
 class _DialogpayState extends State<Dialogpay> {
-  String getDate, date2;
+late  String getDate, date2;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 

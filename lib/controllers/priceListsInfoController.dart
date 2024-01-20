@@ -10,7 +10,7 @@ class PriceListsInfoController extends GetxController {
 Map<String,List<PriceListsInfo>>priceList= {};
 Map<String,PriceListsInfo>val_Of_PriceListsInfo_map={};
 Map<String,List<PriceBarUint>>priceparunit={};
-updatepriceListMap({List<PriceListsInfo> priceListsInfo}){
+updatepriceListMap({required List<PriceListsInfo> priceListsInfo}){
    priceListsInfo.forEach((element) {
 
      if(priceList[element.itemId]==null){
@@ -19,9 +19,9 @@ updatepriceListMap({List<PriceListsInfo> priceListsInfo}){
        priceList[element.itemId]=a;
 
      }if(priceList[element.itemId]!=null){
-   List<String>pp=    priceList[element.itemId].map((e) => e.unit).toList();
+   List<String>pp=    priceList[element.itemId]!.map((e) => e.unit).toList();
    if(!pp.contains(element.unit)){
-       priceList[element.itemId].add(element);
+       priceList[element.itemId]?.add(element);
 
      }}
    });
@@ -100,7 +100,7 @@ for(int o=0;o<allItemController.allItems.length;o++){
 //
 //
 //   }
-setvalofdrob({id,PriceListsInfo val}){
+setvalofdrob({id,required PriceListsInfo val}){
 print('11111111');
   val_Of_PriceListsInfo_map[id]=val;
  // Get.find<MyProdectListController>().item[id].value.price=double.parse(val.sellingPrice);
@@ -114,6 +114,6 @@ class PriceBarUint {
   String unit;
   double price;
 
-  PriceBarUint({this.unit, this.price});
+  PriceBarUint({required this.unit,required this.price});
 
 }

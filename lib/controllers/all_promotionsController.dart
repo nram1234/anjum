@@ -6,9 +6,9 @@ class All_PromotionsController extends GetxController {
   List<AllPromotions> allPromotionss = [];
   Map<String, ItemInProm> promitem = {};
   DateTime today = DateTime.now(); //  DateTime.parse(element.endDate);
-  DateTime from;
+  late DateTime from;
 
-  DateTime todate;
+  late  DateTime todate;
 
   allPromotionsUpdat(List<AllPromotions> allPromotionsw) {
      allPromotionss = allPromotionsw;
@@ -21,7 +21,7 @@ class All_PromotionsController extends GetxController {
     return today.isAfter(from) && today.isBefore(todate);
   }
 
-  bool isInall_group_salesmans({List<AllGroupSalesmans> list, int userID}) {
+  bool isInall_group_salesmans({required List<AllGroupSalesmans> list,required int userID}) {
     List<int> ids = [];
     list.forEach((element) {
       ids.add(int.parse(element.employeeId));
@@ -30,7 +30,7 @@ class All_PromotionsController extends GetxController {
     return ids.contains(userID);
   }
 
-  bool isInall_group_customers({List<AllGroupCustomers> list, int customerId}) {
+  bool isInall_group_customers({required List<AllGroupCustomers> list,required int customerId}) {
     List<int> ids = [];
 
     list.forEach((element) {
@@ -55,8 +55,8 @@ class ItemInProm {
   String is_bonus_duplicate;
   String strictly_listed_item;
   ItemInProm(
-      {this.itemid,this.strictly_listed_item,
-      this.bonus_qty,
-      this.minimum_quantity_value,
-      this.is_bonus_duplicate});
+      {required this.itemid,required this.strictly_listed_item,
+       required this.bonus_qty,
+       required this.minimum_quantity_value,
+       required   this.is_bonus_duplicate});
 }

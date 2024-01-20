@@ -1,11 +1,11 @@
 class Products_json {
-  List<Products> products;
+late  List<Products> products;
 
-  Products_json({this.products});
+  Products_json({required this.products});
 
   Products_json.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
-      products = new List<Products>();
+      products =[];
       json['products'].forEach((v) {
         products.add(new Products.fromJson(v));
       });
@@ -22,50 +22,50 @@ class Products_json {
 }
 
 class Products {
-  int id;
-  int userId;
-  String itemNameEn;
-  String itemNameAr;
-  String itemNumber;
-  int categoryId;
-  int subCategoryId;
-  int subCategory2Id;
-  int inventoryId;
-  String sellingPrice;
-  String minimumQuantity;
-  String reference;
-  String image;
-  String itemCost;
-  String tax;
-  String status;
-  String stockStatus;
-  String taxStatus;
-  String taxType;
-  String createdAt;
-  String updatedAt;
+late  int id;
+late  int userId;
+late  String itemNameEn;
+late  String itemNameAr;
+late  String itemNumber;
+late  int categoryId;
+late  int subCategoryId;
+late  int subCategory2Id;
+late  int inventoryId;
+late  String sellingPrice;
+late  String minimumQuantity;
+late  String reference;
+late  String image;
+late  String itemCost;
+late  String tax;
+late  String status;
+late  String stockStatus;
+late  String taxStatus;
+late  String taxType;
+late  String createdAt;
+late  String updatedAt;
 
   Products(
-      {this.id,
-        this.userId,
-        this.itemNameEn,
-        this.itemNameAr,
-        this.itemNumber,
-        this.categoryId,
-        this.subCategoryId,
-        this.subCategory2Id,
-        this.inventoryId,
-        this.sellingPrice,
-        this.minimumQuantity,
-        this.reference,
-        this.image,
-        this.itemCost,
-        this.tax,
-        this.status,
-        this.stockStatus,
-        this.taxStatus,
-        this.taxType,
-        this.createdAt,
-        this.updatedAt});
+      {required this.id,
+       required this.userId,
+       required this.itemNameEn,
+       required this.itemNameAr,
+       required this.itemNumber,
+       required this.categoryId,
+       required this.subCategoryId,
+       required this.subCategory2Id,
+       required this.inventoryId,
+       required this.sellingPrice,
+       required this.minimumQuantity,
+       required this.reference,
+       required this.image,
+       required this.itemCost,
+       required this.tax,
+       required this.status,
+       required this.stockStatus,
+       required this.taxStatus,
+       required this.taxType,
+       required this.createdAt,
+       required this.updatedAt});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];

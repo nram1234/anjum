@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'allCustomersControllers.dart';
 
 class All_routesController extends GetxController {
-  List<AllRoutes> allRoutes;
+  late List<AllRoutes> allRoutes;
   Map<String, AllCustomers> mapOfCustomar = {};
   Map<int, AllRoutes> routMap = {};
   Map<int, AllRoutes> routMaptoshw = {};
@@ -92,12 +92,12 @@ print("will add $element for key $key");
             }
            // print('key  $key');
             if (routMaptoshw[key] != null) {
-              routMaptoshw[key].listRoutesInfo.add(element);
+              routMaptoshw[key]?.listRoutesInfo.add(element);
             } else {
 
               routMaptoshw[key]  = value;
-              routMaptoshw[key].listRoutesInfo=[];
-              routMaptoshw[key].listRoutesInfo.add(element);
+              routMaptoshw[key]?.listRoutesInfo=[];
+              routMaptoshw[key]?.listRoutesInfo.add(element);
             }
           }
           if(element.schedule=="monthly"){
@@ -141,12 +141,12 @@ print(valueee=="yes"&&int.parse(keye[0])==thisweek);
                   }
                   // print('key  $key');
                   if (routMaptoshw[key] != null) {
-                    routMaptoshw[key].listRoutesInfo.add(element);
+                    routMaptoshw[key]?.listRoutesInfo.add(element);
                   } else {
 
                     routMaptoshw[key]  = value;
-                    routMaptoshw[key].listRoutesInfo=[];
-                    routMaptoshw[key].listRoutesInfo.add(element);
+                    routMaptoshw[key]?.listRoutesInfo=[];
+                    routMaptoshw[key]?.listRoutesInfo.add(element);
                   }
                 }
 

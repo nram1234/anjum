@@ -1,17 +1,17 @@
 class Get_second_step3_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+late String message;
+late int codenum;
+late bool status;
+late Result result;
 
-  Get_second_step3_json({this.message, this.codenum, this.status, this.result});
+  Get_second_step3_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_second_step3_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,13 +27,13 @@ class Get_second_step3_json {
 }
 
 class Result {
-  List<ItemUnits> itemUnits;
+late List<ItemUnits> itemUnits;
 
-  Result({this.itemUnits});
+  Result({required this.itemUnits});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['item_units'] != null) {
-      itemUnits = new List<ItemUnits>();
+      itemUnits =[];
       json['item_units'].forEach((v) {
         itemUnits.add(new ItemUnits.fromJson(v));
       });
@@ -50,28 +50,28 @@ class Result {
 }
 
 class ItemUnits {
-  String id;
-  String userId;
-  String itemId;
-  String itemBarcodes;
-  String itemMeasurementUnits;
-  String unitTypeId;
-  String noOfPiece;
-  String defaultValue;
-  String createdAt;
-  String updatedAt;
+late String id;
+late String userId;
+late String itemId;
+late String itemBarcodes;
+late String itemMeasurementUnits;
+late String unitTypeId;
+late String noOfPiece;
+late String defaultValue;
+late String createdAt;
+late String updatedAt;
 
   ItemUnits(
-      {this.id,
-        this.userId,
-        this.itemId,
-        this.itemBarcodes,
-        this.itemMeasurementUnits,
-        this.unitTypeId,
-        this.noOfPiece,
-        this.defaultValue,
-        this.createdAt,
-        this.updatedAt});
+      {required this.id,
+       required  this.userId,
+       required  this.itemId,
+       required  this.itemBarcodes,
+       required  this.itemMeasurementUnits,
+       required  this.unitTypeId,
+       required  this.noOfPiece,
+       required  this.defaultValue,
+       required  this.createdAt,
+       required  this.updatedAt});
 
   ItemUnits.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -156,7 +156,7 @@ class _DashboardState extends State<Dashboard> {
 
                                                 },
                                                 child: item(
-                                                    color: Colors.orange[200],
+                                                    color: Colors.orange[200]!,
                                                     size: size,
                                                     name: 'salesorder'.tr,
                                                     path:
@@ -308,7 +308,7 @@ class _DashboardState extends State<Dashboard> {
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: item(
-                                                    color: Colors.pink[200],
+                                                    color: Colors.pink[200]!,
                                                     size: size,
                                                     name: 'payment'.tr,
                                                     path:
@@ -335,7 +335,7 @@ class _DashboardState extends State<Dashboard> {
                                                   // Get.to(ProductsScr());
                                                 },
                                                 child: item(
-                                                    color: Colors.pink[200],
+                                                    color: Colors.pink[200]!,
                                                     size: size,
                                                     name: 'returninvoice'.tr,
                                                     path:
@@ -364,7 +364,7 @@ class _DashboardState extends State<Dashboard> {
                                                   },
                                                 child: item(
                                                     color: Colors
-                                                        .purpleAccent[200],
+                                                        .purpleAccent[200]!,
                                                     size: size,
                                                     name: 'invoice'.tr,
                                                     path:
@@ -374,7 +374,7 @@ class _DashboardState extends State<Dashboard> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: item(
-                                                color: Colors.purple[200],
+                                                color: Colors.purple[200]!,
                                                 size: size,
                                                 name: 'history'.tr,
                                                 path:
@@ -383,7 +383,7 @@ class _DashboardState extends State<Dashboard> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: item(
-                                                color: Colors.lightGreen[200],
+                                                color: Colors.lightGreen[200]!,
                                                 size: size,
                                                 name: 'SOA',
                                                 path: 'assets/images/soaa.png'),
@@ -399,7 +399,7 @@ class _DashboardState extends State<Dashboard> {
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: item(
-                                                    color: Colors.green[200],
+                                                    color: Colors.green[200]!,
                                                     size: size,
                                                     name: 'beforeafter'.tr,
                                                     path:
@@ -416,7 +416,7 @@ class _DashboardState extends State<Dashboard> {
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: item(
-                                                    color: Colors.orange[200],
+                                                    color: Colors.orange[200]!,
                                                     size: size,
                                                     name: 'photo'.tr,
                                                     path:
@@ -490,11 +490,11 @@ class _DashboardState extends State<Dashboard> {
                             child: GestureDetector(
                               onTap: () {
                                 if (!c.swatch.isRunning) {
-                                  getMyLoction(firesvisittlocation);
+                                  getMyLoction(firesvisittlocation!);
 
                                   c.startjor();
                                 } else {
-                                  getMyLoction(endvisittlocation);
+                                  getMyLoction(endvisittlocation!);
                                   DatabaseHelper()
                                       .insert_insert_visit(Insert_visit_DB(
                                     customer_id:
@@ -503,11 +503,11 @@ class _DashboardState extends State<Dashboard> {
 
                                             .id,
                                     user_id:
-                                        _user.user.id.toString(),
+                                        _user.user.id.toString(), employ_id: '', start_lat: '', start_lang: '', end_lat: '', end_lang: '', start_date: '', end_date: '', current_visit_status: '', visit_type: '',
                                   ))
                                       .then((value) {
-                                    Get.find<AllChequesController>().customer =
-                                        null;
+                                    // Get.find<AllChequesController>().customer =
+                                    //     null;
                                   });
                                   c.stopjor();
                                   Get.off( ()=> All_Customer() );
@@ -539,7 +539,7 @@ class _DashboardState extends State<Dashboard> {
             )));
   }
 
-  Widget item({String path, String name, size, Color color}) {
+  Widget item({required String path, required String name, size,required Color color}) {
     return Container(
       padding: EdgeInsets.all(4),
       decoration: BoxDecoration(

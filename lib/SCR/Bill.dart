@@ -180,7 +180,7 @@ double totalprice=0;
   }
 
   Widget item({
-    AllItems data
+   required AllItems data
   }) {
     int qty=0;
    double tprice=0;

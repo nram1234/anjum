@@ -41,11 +41,11 @@ class AllNetworking {
   Dio dio = new Dio();
 
   Future<Login_json> login({
-    @required String user_name,
-    @required String password,
-    @required int user_id,
+    required String user_name,
+     required String password,
+    required int user_id,
   }) async {
-    Login_json data;
+  late  Login_json data;
     await dio //http://18.220.206.74/van/user_api/login//http://18.220.206.74/API/api/auth/login
         .post(
       "http://18.220.206.74/API/api/auth/login",
@@ -60,7 +60,7 @@ class AllNetworking {
       print(value.data);
       if (value.data['error_message'] != null) {
         //Get.snackbar('', value.data['error_message']);
-        data = null;
+
       } else {
         data = Login_json.fromJson(value.data);
       }
@@ -72,15 +72,15 @@ class AllNetworking {
   }
 
   Future<Invoice_json> invoice({
-    @required String employee_id,
-    @required String return_type,
+    required String employee_id,
+    required String return_type,
   }) async {
     final formData = {
       "mode": "formdata",
       "employee_id": employee_id,
       "return_type": return_type,
     };
-    Invoice_json data;
+  late  Invoice_json data;
     await dio
         .post(paseurl + "API/api/orders/invoice", queryParameters: formData)
         .then((value) {
@@ -91,13 +91,13 @@ class AllNetworking {
   }
 
   Future<Customer_json> customer({
-    @required String employee_id,
+     required String employee_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "employee_id": employee_id,
     };
-    Customer_json data;
+  late  Customer_json data;
     await dio
         .post(paseurl + "API/api/customer", queryParameters: formData)
         .then((value) {
@@ -108,13 +108,13 @@ class AllNetworking {
   }
 
   Future<Products_json> products({
-    @required String employee_id,
+    required String employee_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "employee_id": employee_id,
     };
-    Products_json data;
+  late  Products_json data;
     await dio
         .post(paseurl + "API/api/products", queryParameters: formData)
         .then((value) {
@@ -125,14 +125,14 @@ class AllNetworking {
   }
 
   Future<Get_first_step_json> get_first_step({
-    @required int user_id,
+     required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_first_step_json data;
+   late Get_first_step_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_first_step');
     await http.post(url, body: {
@@ -149,14 +149,14 @@ class AllNetworking {
   }
 
   Future<Get_second_step1_json> get_second_step1({
-    @required int user_id,
+     required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_second_step1_json data;
+  late  Get_second_step1_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_second_step1');
     await http.post(url, body: {
@@ -172,14 +172,14 @@ class AllNetworking {
   }
 
   Future<Get_second_step2_json> get_second_step2({
-    @required int user_id,
+    required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_second_step2_json data;
+   late Get_second_step2_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_second_step2');
     await http.post(url, body: {
@@ -195,14 +195,14 @@ class AllNetworking {
   }
 
   Future<Get_second_step3_json> get_second_step3({
-    @required int user_id,
+     required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_second_step3_json data;
+  late  Get_second_step3_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_second_step3');
     await http.post(url, body: {
@@ -218,14 +218,14 @@ class AllNetworking {
   }
 
   Future<Get_third_step_json> get_third_step({
-    @required int user_id,
+     required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_third_step_json data;
+  late  Get_third_step_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_third_step');
     await http.post(url, body: {
@@ -241,14 +241,14 @@ class AllNetworking {
   }
 
   Future<Get_fourth_step_json> get_fourth_step({
-    @required int user_id,
+    required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_fourth_step_json data;
+   late  Get_fourth_step_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_fourth_step');
     await http.post(url, body: {
@@ -264,14 +264,14 @@ class AllNetworking {
   }
 
   Future<Get_Fifth_step_json> get_Fifth_step({
-    @required int user_id,
+     required int user_id,
   }) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "user_id": user_id
     };
-    Get_Fifth_step_json data;
+   late Get_Fifth_step_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_Fifth_step');
     await http.post(url, body: {
@@ -409,12 +409,11 @@ class AllNetworking {
   }
 
   Future<Get_Order_Status_json> get_order_status({
-    @required int user_id,
+     required int user_id,
     String from = "",
     String to = "",
   }) async {
-    print(from);
-    print(to);
+
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
@@ -422,7 +421,7 @@ class AllNetworking {
       "from_date": from,
       "to_date": to
     };
-    Get_Order_Status_json data;
+    late Get_Order_Status_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_order_status');
     await http.post(url, body: formData).then((value) {
@@ -436,7 +435,7 @@ class AllNetworking {
   }
 
   Future<Get_Reports_json> get_reports({
-    @required int user_id,
+     required int user_id,
     String from = "",
     String to = "",
   }) async {
@@ -448,7 +447,7 @@ class AllNetworking {
       "from_date": from,
       "to_date": to
     };
-    Get_Reports_json data;
+    late Get_Reports_json data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_reports');
     await http.post(url, body: formData).then((value) {
@@ -462,10 +461,10 @@ class AllNetworking {
   }
 
   Future<InsertEmployeeVisitPhotosJson> insert_employee_visit_photos(
-      {@required int user_id,String batteryLevel,
-      @required File file,
-      @required String employee_id,
-      @required String customer_id}) async {
+      { required int user_id,required String batteryLevel,
+       required File file,
+       required String employee_id,
+       required String customer_id}) async {
     String fileName = file.path.split('/').last;
 
     // final formData = {
@@ -480,7 +479,7 @@ class AllNetworking {
     //         filename: fileName, contentType: new MediaType('image', 'png')),
     //   },
     // };
-    InsertEmployeeVisitPhotosJson data;
+   late InsertEmployeeVisitPhotosJson data;
     FormData formData = FormData.fromMap({
       // "mode": "formdata",
       "mode": "formdata",
@@ -513,14 +512,14 @@ class AllNetworking {
   }
 
   Future<GetTimelinesJson> get_timelines(
-      {@required int user_id, @required String date2}) async {
+      { required int user_id,  required String date2}) async {
     final formData = {
       "mode": "formdata",
       "key": "1234567890",
       "from_date": date2,
       "user_id": user_id.toString(),
     };
-    GetTimelinesJson data;
+    late  GetTimelinesJson data;
 
     var url = Uri.parse('http://18.220.206.74/van/user_api/get_timelines');
     await http.post(url, body: formData).then((value) {
@@ -534,13 +533,13 @@ class AllNetworking {
   }
 
   Future insert_visit_photo_comments(
-      {@required int user_id,
-        String batteryLevel,
-      @required String customer_id,
-      @required String comment,
-      @required int commented_by,double latitude,double longitude,
-      @required int visit_id,
-      @required int photo_id}) async {
+      { required int user_id,
+       required String batteryLevel,
+       required String customer_id,
+       required String comment,
+       required int commented_by,required double latitude,required double longitude,
+       required int visit_id,
+       required int photo_id}) async {
     print("customer_id    $customer_id");
 
 
@@ -579,11 +578,11 @@ class AllNetworking {
   }
 
   Future<InsertEmployeeVisitPhotosJson> insert_visit_before_after_photos(
-      {@required int user_id,
-      @required File file,String batteryLevel,
-      @required File file2,@required String employee_id,double latitude,double longitude,
-      @required String visit_id,
-      @required String customer_id}) async {
+      { required int user_id,
+       required File file,required String batteryLevel,
+       required File file2, required String employee_id,required double latitude,required double longitude,
+       required String visit_id,
+       required String customer_id}) async {
     String fileName = file.path.split('/').last;
     String fileName2 = file2.path.split('/').last;
     // final formData = {
@@ -606,7 +605,7 @@ class AllNetworking {
     var manufacturer = androidInfo.manufacturer;
     var model = androidInfo.model;
 
-    InsertEmployeeVisitPhotosJson data;
+ late   InsertEmployeeVisitPhotosJson data;
     FormData formData = FormData.fromMap({
       // "mode": "formdata",
       "mode": "formdata",
@@ -648,13 +647,13 @@ class AllNetworking {
   }
 
   Future insert_visit_before_after_photo_comments(
-      {@required String user_id,
-      @required String employee_id,
-      @required String customer_id,String batteryLevel,
-      @required String comment,
-      @required String commented_by,String latitude,String longitude,
-      @required String visit_id,
-      @required String photo_id}) async {
+      { required String user_id,
+      required String employee_id,
+      required String customer_id,required String batteryLevel,
+      required String comment,
+      required String commented_by,required String latitude,required String longitude,
+      required String visit_id,
+      required String photo_id}) async {
 
     var androidInfo = await DeviceInfoPlugin().androidInfo;
     var release = androidInfo.version.release;

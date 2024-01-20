@@ -1,17 +1,17 @@
 class Get_first_step_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+ late String message;
+ late int codenum;
+ late bool status;
+ late Result result;
 
-  Get_first_step_json({this.message, this.codenum, this.status, this.result});
+  Get_first_step_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_first_step_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,24 +27,24 @@ class Get_first_step_json {
 }
 
 class Result {
-  EmployeData employeData;
-  List<EmployeePermissions> employeePermissions;
-  List<AllRoutes> allRoutes;
+late EmployeData employeData;
+late List<EmployeePermissions> employeePermissions;
+late List<AllRoutes> allRoutes;
 
-  Result({this.employeData, this.employeePermissions, this.allRoutes});
+  Result({required this.employeData,required this.employeePermissions,required this.allRoutes});
 
   Result.fromJson(Map<String, dynamic> json) {
-    employeData = json['employe_data'] != null
+    employeData = (json['employe_data'] != null
         ? new EmployeData.fromJson(json['employe_data'])
-        : null;
+        : null)!;
     if (json['employee_permissions'] != null) {
-      employeePermissions = new List<EmployeePermissions>();
+      employeePermissions = [];
       json['employee_permissions'].forEach((v) {
         employeePermissions.add(new EmployeePermissions.fromJson(v));
       });
     }
     if (json['all_routes'] != null) {
-      allRoutes = new List<AllRoutes>();
+      allRoutes = [];
       json['all_routes'].forEach((v) {
         allRoutes.add(new AllRoutes.fromJson(v));
       });
@@ -68,60 +68,60 @@ class Result {
 }
 
 class EmployeData {
-  String id;
-  String userId;
-  String refId;
-  String employeeNameEn;
-  String employeeNameAr;
-  String phoneNo;
-  String username;
-  String userid;
-  String customerId;
-  String businessUnitId;
-  String appDeviceId;
-  String groupType;
-  String reference;
-  String vehicle;
-  String salesCommission;
-  String salary;
-  String insurance;
-  String socialSecurity;
-  String cashBoxAccount;
-  String debitAmount;
-  String storeId;
-  String supervisorId;
-  String salesmanagerId;
-  String address;
-  String img;
-  String status;
+late  String id;
+late  String userId;
+late  String refId;
+late  String employeeNameEn;
+late  String employeeNameAr;
+late  String phoneNo;
+late  String username;
+late  String userid;
+late  String customerId;
+late  String businessUnitId;
+late  String appDeviceId;
+late  String groupType;
+late  String reference;
+late  String vehicle;
+late  String salesCommission;
+late  String salary;
+late  String insurance;
+late  String socialSecurity;
+late  String cashBoxAccount;
+late  String debitAmount;
+late  String storeId;
+late  String supervisorId;
+late  String salesmanagerId;
+late  String address;
+late  String img;
+late  String status;
 
   EmployeData(
-      {this.id,
-        this.userId,
-        this.refId,
-        this.employeeNameEn,
-        this.employeeNameAr,
-        this.phoneNo,
-        this.username,
-        this.userid,
-        this.customerId,
-        this.businessUnitId,
-        this.appDeviceId,
-        this.groupType,
-        this.reference,
-        this.vehicle,
-        this.salesCommission,
-        this.salary,
-        this.insurance,
-        this.socialSecurity,
-        this.cashBoxAccount,
-        this.debitAmount,
-        this.storeId,
-        this.supervisorId,
-        this.salesmanagerId,
-        this.address,
-        this.img,
-        this.status});
+      {required this.id,
+       required this.userId,
+       required this.refId,
+       required this.employeeNameEn,
+       required this.employeeNameAr,
+       required this.phoneNo,
+       required this.username,
+       required this.userid,
+       required this.customerId,
+       required this.businessUnitId,
+       required this.appDeviceId,
+       required this.groupType,
+       required this.reference,
+       required this.vehicle,
+       required this.salesCommission,
+       required this.salary,
+       required this.insurance,
+       required this.socialSecurity,
+       required this.cashBoxAccount,
+       required this.debitAmount,
+       required this.storeId,
+       required this.supervisorId,
+       required this.salesmanagerId,
+       required this.address,
+       required this.img,
+       required this.status});
 
   EmployeData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -185,78 +185,78 @@ class EmployeData {
 }
 
 class EmployeePermissions {
-  String id;
-  String userId;
-  String employeeId;
-  String invoice;
-  String returnInvoice;
-  String order;
-  String payment;
-  String stockTaking;
-  String loadItems;
-  String unloadItems;
-  String takePhoto;
-  String beforeAfterPhoto;
-  String note;
-  String survey;
-  String loadRequestAcceptReject;
-  String unloadRequestAcceptReject;
-  String salesOrderRequestAcceptReject;
-  String salesOrderToPrice;
-  String requestToExceedCustomerCreditLimit;
-  String requestToExceedChequeDueDateLimit;
-  String requestToReturnInvoice;
-  String requestToOrdersApproval;
-  String requestToChangeInvoicePaymentType;
-  String requestToExceedCustomerInvoiceNumber;
-  String requestToVisitCustomerNotInRoute;
-  String requestForCustomerLoginWithoutVerification;
-  String employeeAddDrawersFromApp;
-  String addBonus;
-  String addItemDiscount;
-  String addVoucherDiscount;
-  String addCustomer;
-  String displayProductQuantity;
-  String createdAt;
-  String updatedAt;
-  String displayStores;
+late  String id;
+late  String userId;
+late  String employeeId;
+late  String invoice;
+late  String returnInvoice;
+late  String order;
+late  String payment;
+late  String stockTaking;
+late  String loadItems;
+late  String unloadItems;
+late  String takePhoto;
+late  String beforeAfterPhoto;
+late  String note;
+late  String survey;
+late  String loadRequestAcceptReject;
+late  String unloadRequestAcceptReject;
+late  String salesOrderRequestAcceptReject;
+late  String salesOrderToPrice;
+late  String requestToExceedCustomerCreditLimit;
+late  String requestToExceedChequeDueDateLimit;
+late  String requestToReturnInvoice;
+late  String requestToOrdersApproval;
+late  String requestToChangeInvoicePaymentType;
+late  String requestToExceedCustomerInvoiceNumber;
+late  String requestToVisitCustomerNotInRoute;
+late  String requestForCustomerLoginWithoutVerification;
+late  String employeeAddDrawersFromApp;
+late  String addBonus;
+late  String addItemDiscount;
+late  String addVoucherDiscount;
+late  String addCustomer;
+late  String displayProductQuantity;
+late  String createdAt;
+late  String updatedAt;
+late  String displayStores;
 
   EmployeePermissions(
-      {this.id,
-        this.userId,
-        this.employeeId,
-        this.invoice,
-        this.returnInvoice,
-        this.order,
-        this.payment,
-        this.stockTaking,
-        this.loadItems,
-        this.unloadItems,
-        this.takePhoto,
-        this.beforeAfterPhoto,
-        this.note,
-        this.survey,
-        this.loadRequestAcceptReject,
-        this.unloadRequestAcceptReject,
-        this.salesOrderRequestAcceptReject,
-        this.salesOrderToPrice,
-        this.requestToExceedCustomerCreditLimit,
-        this.requestToExceedChequeDueDateLimit,
-        this.requestToReturnInvoice,
-        this.requestToOrdersApproval,
-        this.requestToChangeInvoicePaymentType,
-        this.requestToExceedCustomerInvoiceNumber,
-        this.requestToVisitCustomerNotInRoute,
-        this.requestForCustomerLoginWithoutVerification,
-        this.employeeAddDrawersFromApp,
-        this.addBonus,
-        this.addItemDiscount,
-        this.addVoucherDiscount,
-        this.addCustomer,
-        this.displayProductQuantity,
-        this.createdAt,
-        this.updatedAt,
-        this.displayStores});
+      {required this.id,
+       required this.userId,
+       required this.employeeId,
+       required this.invoice,
+       required this.returnInvoice,
+       required this.order,
+       required this.payment,
+       required this.stockTaking,
+       required this.loadItems,
+       required this.unloadItems,
+       required this.takePhoto,
+       required this.beforeAfterPhoto,
+       required this.note,
+       required this.survey,
+       required this.loadRequestAcceptReject,
+       required this.unloadRequestAcceptReject,
+       required this.salesOrderRequestAcceptReject,
+       required this.salesOrderToPrice,
+       required this.requestToExceedCustomerCreditLimit,
+       required this.requestToExceedChequeDueDateLimit,
+       required this.requestToReturnInvoice,
+       required this.requestToOrdersApproval,
+       required this.requestToChangeInvoicePaymentType,
+       required this.requestToExceedCustomerInvoiceNumber,
+       required this.requestToVisitCustomerNotInRoute,
+       required this.requestForCustomerLoginWithoutVerification,
+       required this.employeeAddDrawersFromApp,
+       required this.addBonus,
+       required this.addItemDiscount,
+       required this.addVoucherDiscount,
+       required this.addCustomer,
+       required this.displayProductQuantity,
+       required this.createdAt,
+       required this.updatedAt,
+       required this.displayStores});
 
   EmployeePermissions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -351,22 +351,22 @@ class EmployeePermissions {
 }
 
 class AllRoutes {
-  String userId;
-  String salesmanId;
-  String name;
-  String minCustomers;
-  String maxCustomers;
-  String routeId;
-  List<ListRoutesInfo> listRoutesInfo;
+ late String userId;
+ late String salesmanId;
+ late String name;
+ late String minCustomers;
+ late String maxCustomers;
+ late String routeId;
+ late List<ListRoutesInfo> listRoutesInfo;
 
   AllRoutes(
-      {this.userId,
-        this.salesmanId,
-        this.name,
-        this.minCustomers,
-        this.maxCustomers,
-        this.routeId,
-        this.listRoutesInfo});
+      {required this.userId,
+       required  this.salesmanId,
+       required  this.name,
+       required  this.minCustomers,
+       required  this.maxCustomers,
+       required  this.routeId,
+       required  this.listRoutesInfo});
 
   AllRoutes.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -376,7 +376,7 @@ class AllRoutes {
     maxCustomers = json['max_customers'];
     routeId = json['route_id'];
     if (json['list_routes_info'] != null) {
-      listRoutesInfo = new List<ListRoutesInfo>();
+      listRoutesInfo = [];
       json['list_routes_info'].forEach((v) {
         listRoutesInfo.add(new ListRoutesInfo.fromJson(v));
       });
@@ -400,50 +400,50 @@ class AllRoutes {
 }
 
 class ListRoutesInfo {
-  String userId;
-  String routeId;
-  String customerId;
-  String timeIn;
-  String timeOut;
-  String note;
-  String schedule;
-  String s1st;
-  String s2nd;
-  String s3rd;
-  String s4th;
-  String s5th;
-  String sunday;
-  String monday;
-  String tuesday;
-  String wednesday;
-  String thursday;
-  String friday;
-  String saturday;
-  String startDate;
-  String endDate;
+late  String userId;
+late  String routeId;
+late  String customerId;
+late  String timeIn;
+late  String timeOut;
+late  String note;
+late  String schedule;
+late  String s1st;
+late  String s2nd;
+late  String s3rd;
+late  String s4th;
+late  String s5th;
+late  String sunday;
+late  String monday;
+late  String tuesday;
+late  String wednesday;
+late  String thursday;
+late  String friday;
+late  String saturday;
+late  String startDate;
+late  String endDate;
 
   ListRoutesInfo(
-      {this.userId,
-        this.routeId,
-        this.customerId,
-        this.timeIn,
-        this.timeOut,
-        this.note,
-        this.schedule,
-        this.s1st,
-        this.s2nd,
-        this.s3rd,
-        this.s4th,
-        this.s5th,
-        this.sunday,
-        this.monday,
-        this.tuesday,
-        this.wednesday,
-        this.thursday,
-        this.friday,
-        this.saturday,
-        this.startDate,
-        this.endDate});
+      {required this.userId,
+       required  this.routeId,
+       required  this.customerId,
+       required  this.timeIn,
+       required  this.timeOut,
+       required  this.note,
+       required  this.schedule,
+       required  this.s1st,
+       required  this.s2nd,
+       required  this.s3rd,
+       required  this.s4th,
+       required  this.s5th,
+       required  this.sunday,
+       required  this.monday,
+       required  this.tuesday,
+       required  this.wednesday,
+       required  this.thursday,
+       required  this.friday,
+       required  this.saturday,
+       required  this.startDate,
+       required  this.endDate});
 
   ListRoutesInfo.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];

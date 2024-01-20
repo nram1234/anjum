@@ -11,11 +11,11 @@ class CartItemController extends GetxController{
 Map<int,double>discount={};
  Map<int,double>bounce={};
 var itemInCart =0.obs;
- addToCart({AllItems item}){
+ addToCart({required AllItems item}){
    cartlist.add(item);
    update();
  }
- removefromcart({AllItems item}){
+ removefromcart({required AllItems item}){
    cartlist.remove(item);
 
    update();
@@ -25,7 +25,7 @@ var itemInCart =0.obs;
    update();
  }
 
- removeAllChooseItexfromcart({AllItems item}){
+ removeAllChooseItexfromcart({required AllItems item}){
 //
 //    for(int i=0;i<cartlist.length;i++){
 // print(i);
@@ -42,7 +42,7 @@ itemInCart.value-=1;
   print(itemInCart.value);
  }
 
-additemInitemInCart({AllItems item}){
+additemInitemInCart({required AllItems item}){
   bool v= cartlist.contains(item);
 
 if(!v){
@@ -50,7 +50,7 @@ if(!v){
 
 }
 }
- removeitemInitemInCart({AllItems item}){
+ removeitemInitemInCart({required AllItems item}){
    bool v= cartlist.any((e) => e.id==item.id);
    if(!v){
      itemInCart--;

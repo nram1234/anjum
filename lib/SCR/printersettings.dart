@@ -17,7 +17,7 @@ class _PrinterSettingsState extends State<PrinterSettings> {
     var size = MediaQuery.of(context).size;
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
-    SingingCharacter1 _type = SingingCharacter1.bixlon;
+    SingingCharacter1? _type = SingingCharacter1.bixlon;
     SingingCharacter2 _label = SingingCharacter2.inches3;
     SingingCharacter3 _print = SingingCharacter3.Print_Code;
     bool _isChecked = true;
@@ -110,7 +110,7 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                 leading: Radio<SingingCharacter1>(
                                   value: SingingCharacter1.zepra,
                                   groupValue: _type,
-                                  onChanged: (SingingCharacter1 value) {
+                                  onChanged: (SingingCharacter1? value) {
                                     setState(() {
                                       _type = value;
                                     });
@@ -122,7 +122,7 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                 leading: Radio<SingingCharacter1>(
                                   value: SingingCharacter1.bixlon,
                                   groupValue: _type,
-                                  onChanged: (SingingCharacter1 value) {
+                                  onChanged: (SingingCharacter1? value) {
                                     setState(() {
                                       _type = value;
                                     });
@@ -155,9 +155,9 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                 leading: Radio<SingingCharacter2>(
                                   value: SingingCharacter2.inches3,
                                   groupValue: _label,
-                                  onChanged: (SingingCharacter2 value2) {
+                                  onChanged: (SingingCharacter2? value2) {
                                     setState(() {
-                                      _label = value2;
+                                      _label = value2!;
                                     });
                                   },
                                 ),
@@ -167,9 +167,9 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                 leading: Radio<SingingCharacter2>(
                                   value: SingingCharacter2.inches5,
                                   groupValue: _label,
-                                  onChanged: (SingingCharacter2 value) {
+                                  onChanged: (SingingCharacter2? value) {
                                     setState(() {
-                                      _label = value;
+                                      _label = value!;
                                     });
                                   },
                                 ),
@@ -200,9 +200,9 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                 leading: Radio<SingingCharacter3>(
                                   value: SingingCharacter3.Print_BarCode,
                                   groupValue: _print,
-                                  onChanged: (SingingCharacter3 value3) {
+                                  onChanged: (SingingCharacter3? value3) {
                                     setState(() {
-                                      _print = value3;
+                                      _print = value3!;
                                     });
                                   },
                                 ),
@@ -212,9 +212,9 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                 leading: Radio<SingingCharacter3>(
                                   value: SingingCharacter3.Print_Code,
                                   groupValue: _print,
-                                  onChanged: (SingingCharacter3 value) {
+                                  onChanged: (SingingCharacter3? value) {
                                     setState(() {
-                                      _print = value;
+                                      _print = value!;
                                     });
                                   },
                                 ),
@@ -248,7 +248,7 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                     value: _isChecked,
                                     onChanged: (val) {
                                       setState(() {
-                                        _isChecked = val;
+                                        _isChecked = val!;
                                         if (val == true) {
                                           _currText = t;
                                         }
@@ -286,9 +286,9 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                                     value: dropdownValue,
                                     elevation: 30,
                                     style: const TextStyle(color: Colors.grey),
-                                    onChanged: (String newValue) {
+                                    onChanged: (String? newValue) {
                                       setState(() {
-                                        dropdownValue = newValue;
+                                        dropdownValue = newValue!;
                                       });
                                     },
                                     items: <String>['1', '2', '3', '4']

@@ -1,50 +1,50 @@
 class Invoice_json {
-  int id;
-  int userId;
-  int requestLevel;
-  String requestType;
-  int employeeId;
-  int customerId;
-  int storeId;
-  int supervisorId;
-  int salesmanagerId;
-  String noOfItems;
-  String supervisorNote;
-  String salesmanagerNote;
-  double totalPriceWithoutTaxDiscount;
-  double totalTax;
-  String totalDiscount;
-  double totalPrice;
-  String requestStatus;
-  String salesmanagerStatus;
-  String supervisorStatus;
-  int isSuccessfullySubmitted;
-  String createdAt;
-  String updatedAt;
+late  int id;
+late  int userId;
+late  int requestLevel;
+late  String requestType;
+late  int employeeId;
+late  int customerId;
+late  int storeId;
+late  int supervisorId;
+late  int salesmanagerId;
+late  String noOfItems;
+late  String supervisorNote;
+late  String salesmanagerNote;
+late  double totalPriceWithoutTaxDiscount;
+late  double totalTax;
+late  String totalDiscount;
+late  double totalPrice;
+late  String requestStatus;
+late  String salesmanagerStatus;
+late  String supervisorStatus;
+late  int isSuccessfullySubmitted;
+late  String createdAt;
+late  String updatedAt;
 
   Invoice_json(
-      {this.id,
-        this.userId,
-        this.requestLevel,
-        this.requestType,
-        this.employeeId,
-        this.customerId,
-        this.storeId,
-        this.supervisorId,
-        this.salesmanagerId,
-        this.noOfItems,
-        this.supervisorNote,
-        this.salesmanagerNote,
-        this.totalPriceWithoutTaxDiscount,
-        this.totalTax,
-        this.totalDiscount,
-        this.totalPrice,
-        this.requestStatus,
-        this.salesmanagerStatus,
-        this.supervisorStatus,
-        this.isSuccessfullySubmitted,
-        this.createdAt,
-        this.updatedAt});
+      {required this.id,
+       required  this.userId,
+       required  this.requestLevel,
+       required  this.requestType,
+       required  this.employeeId,
+       required  this.customerId,
+       required  this.storeId,
+       required  this.supervisorId,
+       required  this.salesmanagerId,
+       required  this.noOfItems,
+       required  this.supervisorNote,
+       required  this.salesmanagerNote,
+       required  this.totalPriceWithoutTaxDiscount,
+       required  this.totalTax,
+       required  this.totalDiscount,
+       required  this.totalPrice,
+       required  this.requestStatus,
+       required  this.salesmanagerStatus,
+       required  this.supervisorStatus,
+       required  this.isSuccessfullySubmitted,
+       required  this.createdAt,
+       required  this.updatedAt});
 
   Invoice_json.fromJson(Map<String, dynamic> json) {
     id = json['id'];

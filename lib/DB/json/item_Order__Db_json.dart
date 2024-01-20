@@ -1,7 +1,7 @@
 class Item_Order__Db_json {
-  List<Item> item;
+ late List<Item> item;
 
-  Item_Order__Db_json({this.item});
+  Item_Order__Db_json({required this.item});
 
   Item_Order__Db_json.fromJson(Map<String, dynamic> json) {
     if (json['item'] != null) {
@@ -22,30 +22,30 @@ class Item_Order__Db_json {
 }
 
 class Item {
-  int itemId;
-  int categoryId;
-  int measurementUnitId;
-  int basePricePerUnit;
-  int bonus;
-  String quantity;
-  String taxType;
-  int totalTax;
-  int totalPriceBeforeTax;
-  int totalPriceWithTax;
-  int totalPrice;
+late  int itemId;
+late  int categoryId;
+late  int measurementUnitId;
+late  int basePricePerUnit;
+late  int bonus;
+late  String quantity;
+late  String taxType;
+late  int totalTax;
+late  int totalPriceBeforeTax;
+late  int totalPriceWithTax;
+late  int totalPrice;
 
   Item(
-      {this.itemId,
-        this.categoryId,
-        this.measurementUnitId,
-        this.basePricePerUnit,
-        this.bonus,
-        this.quantity,
-        this.taxType,
-        this.totalTax,
-        this.totalPriceBeforeTax,
-        this.totalPriceWithTax,
-        this.totalPrice});
+      {required this.itemId,
+       required  this.categoryId,
+       required  this.measurementUnitId,
+       required  this.basePricePerUnit,
+       required  this.bonus,
+       required  this.quantity,
+       required  this.taxType,
+       required  this.totalTax,
+       required  this.totalPriceBeforeTax,
+       required  this.totalPriceWithTax,
+       required  this.totalPrice});
 
   Item.fromJson(Map<String, dynamic> json) {
     itemId = json['item_id'];

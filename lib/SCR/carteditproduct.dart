@@ -47,7 +47,7 @@ class _CartEditProductState extends State<CartEditProduct> {
   double totalPriceafterDes = 0;
 
 //  AllStockItems val
-  bool showdropdowen;
+  bool showdropdowen=false;
 
   @override
   void initState() {
@@ -187,12 +187,12 @@ class _CartEditProductState extends State<CartEditProduct> {
                                   onTap: () {
                                     if (_myProdectListController
                                         .item[widget.data.value.id]
-                                        .value
+                                        !.value
                                         .count >
                                         0) {
                                       double v = _myProdectListController
                                           .item[widget.data.value.id]
-                                          .value
+                                          !.value
                                           .count -
                                           1;
                                       print(widget.data.value.count);
@@ -226,7 +226,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                     child: GetBuilder<MyProdectListController>(
                                       builder: (logic) {
                                         textEditingController.text = logic
-                                            .item[widget.data.value.id].value
+                                            .item[widget.data.value.id]!.value
                                             .count
                                             .toString();
 
@@ -254,7 +254,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                   onTap: () {
                                     double v = _myProdectListController
                                         .item[widget.data.value.id]
-                                        .value
+                                        !.value
                                         .count +
                                         1;
                                     print(widget.data.value.count);
@@ -487,13 +487,13 @@ class _CartEditProductState extends State<CartEditProduct> {
                                                 Colors.deepPurpleAccent,
                                               ),
                                               onChanged:
-                                                  (PriceListsInfo newValue) {
+                                                  (PriceListsInfo? newValue) {
                                                 Get
                                                     .find<
                                                     PriceListsInfoController>()
                                                     .val_Of_PriceListsInfo_map[
                                                 widget.data.value.id] =
-                                                    newValue;
+                                                    newValue!;
                                                 // _UnitController
                                                 //     .val_Of_PriceListsInfo_map[
                                                 // products.value.id] =
@@ -512,7 +512,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                                   PriceListsInfoController>()
                                                   .priceList[
                                               widget.data.value.id]
-                                                  .map<
+                                                  ?.map<
                                                   DropdownMenuItem<
                                                       PriceListsInfo>>(
                                                       (PriceListsInfo value) {
@@ -528,7 +528,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                                 .find<
                                                 PriceListsInfoController>()
                                                 .priceList[
-                                            widget.data.value.id][0]
+                                            widget.data.value.id]![0]
                                                 .unit)
                                           //  : Text(  _UnitController.val_Of_uint_map[widget.data.value.id]!=null?
                                           // _UnitController.val_Of_uint_map[widget.data.value.id].itemMeasurementUnits:_UnitController.MeasurementUnit_map[widget.data.value.id][0].itemMeasurementUnits ),
@@ -588,7 +588,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                                 TextEditingController t = TextEditingController();
                                                 t.text =
                                                     logic.item[widget.data.value
-                                                        .id].value.bonce
+                                                        .id]!.value.bonce
                                                         .toString();
                                                 // return Text(
                                                 //     widget.data.value.bonce
@@ -614,7 +614,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                                     }
                                                   },) : Text(
                                                     logic.item[widget.data.value
-                                                        .id].value.bonce
+                                                        .id]!.value.bonce
                                                         .toString());
                                               }),
                                         ),
@@ -687,7 +687,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                               builder: (logic) {
                                                 return Text(logic
                                                     .item[widget.data.value.id]
-                                                    .value
+                                                    !.value
                                                     .count
                                                     .toString());
                                               },
@@ -715,7 +715,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             builder: (logic) {
                                               return Text(logic
                                                   .item[widget.data.value.id]
-                                                  .value
+                                                  !.value
                                                   .befordes
                                                   .toStringAsFixed(3));
                                             },
@@ -753,7 +753,7 @@ class _CartEditProductState extends State<CartEditProduct> {
                                             builder: (logic) {
                                               return Text(logic
                                                   .item[widget.data.value.id]
-                                                  .value
+                                                  !.value
                                                   .afterdes
                                                   .toStringAsFixed(3));
                                             },

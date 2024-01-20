@@ -14,31 +14,31 @@ final String insert_journeys_DB_Column_visit_type="visit_type";
 
 
 class Insert_journeys_DB {
-  String user_id;
-  String employ_id;
-  String customer_id;
-  String start_lat;
-  String start_lang;
-  String end_lat;
-  String end_lang;
-  String start_date;
-  String end_date;
-  String current_visit_status;
+late String user_id;
+late String employ_id;
+late String customer_id;
+late String start_lat;
+late String start_lang;
+late String end_lat;
+late String end_lang;
+late String start_date;
+late String end_date;
+late String current_visit_status;
 
-  String visit_type;
+ late String visit_type;
 
   Insert_journeys_DB(
-      {this.user_id,
-        this.employ_id,
-        this.start_lat,
-        this.start_lang,
-        this.end_lat,
-        this.end_lang,
-        this.start_date,
-        this.end_date,
-        this.current_visit_status,
-        this.customer_id,
-        this.visit_type});
+      {required this.user_id,
+       required  this.employ_id,
+       required  this.start_lat,
+       required  this.start_lang,
+       required  this.end_lat,
+       required  this.end_lang,
+       required  this.start_date,
+       required  this.end_date,
+       required  this.current_visit_status,
+       required  this.customer_id,
+       required  this.visit_type});
 
   Insert_journeys_DB.fromJson(Map<String, dynamic> json) {
     user_id = json['user_id'];

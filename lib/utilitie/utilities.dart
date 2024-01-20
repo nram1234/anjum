@@ -1,14 +1,14 @@
 import 'package:location/location.dart';
 var boxsizehigh=.008;
-LocationData firesvisittlocation;
-LocationData endvisittlocation;
+LocationData? firesvisittlocation;
+LocationData? endvisittlocation;
 
-LocationData firesjornytlocation;
-LocationData endjornylocation;
+LocationData? firesjornytlocation;
+LocationData? endjornylocation;
 
 bool startJourney=false;
-DateTime jornystartTime;
-DateTime jornyEndTime;
+DateTime? jornystartTime;
+DateTime? jornyEndTime;
 
 
 
@@ -29,9 +29,9 @@ getMyLoction(LocationData locationData)async{
   }
 
   _permissionGranted = await location.hasPermission();
-  if (_permissionGranted == PermissionStatus.DENIED) {
+  if (_permissionGranted == PermissionStatus.denied) {
     _permissionGranted = await location.requestPermission();
-    if (_permissionGranted != PermissionStatus.GRANTED) {
+    if (_permissionGranted != PermissionStatus.granted) {
       return;
     }
   }

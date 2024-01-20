@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'cart.dart';
+
 class Cart_Edit_Produvt extends StatefulWidget {
   @override
   _Cart_Edit_ProduvtState createState() => _Cart_Edit_ProduvtState();
@@ -18,9 +19,10 @@ class Cart_Edit_Produvt extends StatefulWidget {
 class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
   List<Widget> alert_item = [];
   AllNetworking _allNetworking = AllNetworking();
-  UserAndPermissions _userAndPermissions=Get.put(UserAndPermissions());
-  int itemcount=0;
+  UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
+  int itemcount = 0;
   final TimeController c = Get.find();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -29,183 +31,203 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
     }
     return Scaffold(
         body: Container(
-          height: size.height,
-          width: size.width,
-          child: Stack(
-            children: [
-              Container(
-                  height: size.height * .3,
-                  width: size.width,
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        'assets/images/bk.png',
-                        width: size.width,
-                        fit: BoxFit.fill,
-                      ),
-                      Positioned(
-                          left: size.width * .1,
-                          top: size.height * .12,
-                          child: Text(
-                            'Transaction',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )),
-                      Positioned(
-                          right: size.width * .05,
-                          top: size.height * .05,
-                          child: Container(
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: GestureDetector(onTap: (){
-                                      Get.to(Cart());
-                                    },
-                                      child: Icon(
-                                        Icons.add_shopping_cart,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text('Product 3',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 18)),
-                                      Text('12 jd',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 18)),
-                                    ],
-                                  ),
-                                ],
-                              ))),
-                      Positioned(
-                          left: size.width * .05,
-                          top: size.height * .05,
-                          child: GestureDetector(onTap:(){
-                            Navigator.pop(context);
-                          } ,
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ))
-                    ],
-                  )),
-              Positioned(
-                  right: 0,
-                  left: 0,
-                  top: size.height * .2,
-                  child: Container(
-                    height: size.height * .8,
+      height: size.height,
+      width: size.width,
+      child: Stack(
+        children: [
+          Container(
+              height: size.height * .3,
+              width: size.width,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/bk.png',
                     width: size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            topLeft: Radius.circular(30))),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey[100]),
-                          width: size.width * .9,
-                          height: 50,
-                          child: TextField(
-                            onChanged: (v) {},
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              suffixIcon: Icon(Icons.search),
+                    fit: BoxFit.fill,
+                  ),
+                  Positioned(
+                      left: size.width * .1,
+                      top: size.height * .12,
+                      child: Text(
+                        'Transaction',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      )),
+                  Positioned(
+                      right: size.width * .05,
+                      top: size.height * .05,
+                      child: Container(
+                          child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(Cart());
+                              },
+                              child: Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.white,
+                                size: 30,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: FutureBuilder<Products_json>(
-                              future: _allNetworking.products(employee_id: _userAndPermissions.user.customerId),
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                    itemCount: snapshot.data.products.length,
-                                    itemBuilder: (context, pos) {
-                                      return item(size: size,);
-                                    });
-                              }
-                          ),
-                        ),
-                        Container(
-                          height: size.height * .1,
-                          child: Row(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Expanded(
-                                flex: 1,
-                                child: GestureDetector(onTap:(){
-                                  if (!c.swatch.isRunning) {
-                                    getMyLoction(firesvisittlocation);
-
-                                    c.startjor();
-                                  } else {
-                                    getMyLoction(endvisittlocation );
-                                    DatabaseHelper()
-                                        .insert_insert_visit(Insert_visit_DB(
-                                      customer_id: Get.find<AllChequesController>()
-                                          .customer
-
-                                          .id,
-                                      user_id: _userAndPermissions.user.id.toString(),
-                                    ))
-                                        .then((value) {
-                                      Get.find<AllChequesController>().customer = null;
-                                    });
-                                    c.stopjor();
-                                  }
-
-                                } ,
-                                  child: Container(
-                                    height: size.height * .1,
-                                    color: Color(0xff2C4B89),
-                                    child: Center(
-                                        child:Obx(() => Text(
-                                          c.startswatch.value?  'End Visit':'start',
-                                          style:
-                                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                        ))),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  height: size.height * .1,
-                                  child: Center(child:    GetX<TimeController>(init:TimeController() ,builder: (c){
-                                    return Text(c.stoptimedisplay.value);
-                                  },)),
-                                ),
-                              )
+                              Text('Product 3',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18)),
+                              Text('12 jd',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18)),
                             ],
                           ),
-                        )
-                      ],
+                        ],
+                      ))),
+                  Positioned(
+                      left: size.width * .05,
+                      top: size.height * .05,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ))
+                ],
+              )),
+          Positioned(
+              right: 0,
+              left: 0,
+              top: size.height * .2,
+              child: Container(
+                height: size.height * .8,
+                width: size.width,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30),
+                        topLeft: Radius.circular(30))),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey[100]),
+                      width: size.width * .9,
+                      height: 50,
+                      child: TextField(
+                        onChanged: (v) {},
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          suffixIcon: Icon(Icons.search),
+                        ),
+                      ),
                     ),
-                  )),
-            ],
-          ),
-        ));
+                    Expanded(
+                      flex: 1,
+                      child: FutureBuilder<Products_json>(
+                          future: _allNetworking.products(
+                              employee_id: _userAndPermissions.user.customerId),
+                          builder: (context, snapshot) {
+                            return ListView.builder(
+                                itemCount: snapshot.data?.products.length,
+                                itemBuilder: (context, pos) {
+                                  return item(
+                                    size: size, products: snapshot.data!.products[pos],
+                                  );
+                                });
+                          }),
+                    ),
+                    Container(
+                      height: size.height * .1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                if (!c.swatch.isRunning) {
+                                  getMyLoction(firesvisittlocation!);
+
+                                  c.startjor();
+                                } else {
+                                  getMyLoction(endvisittlocation!);
+                                  DatabaseHelper()
+                                      .insert_insert_visit(Insert_visit_DB(
+                                    customer_id:
+                                        Get.find<AllChequesController>()
+                                            .customer
+                                            .id,
+                                    user_id:
+                                        _userAndPermissions.user.id.toString(),
+                                    employ_id: '54',
+                                    start_lat: '45',
+                                    start_lang: '00',
+                                    end_lat: '45',
+                                    end_lang: '545',
+                                    start_date: '55',
+                                    end_date: '4545',
+                                    current_visit_status: '', visit_type: '',
+                                  ))
+                                      .then((value) {
+                                    // Get.find<AllChequesController>().customer =
+                                    //     null;
+                                  });
+                                  c.stopjor();
+                                }
+                              },
+                              child: Container(
+                                height: size.height * .1,
+                                color: Color(0xff2C4B89),
+                                child: Center(
+                                    child: Obx(() => Text(
+                                          c.startswatch.value
+                                              ? 'End Visit'
+                                              : 'start',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ))),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              height: size.height * .1,
+                              child: Center(
+                                  child: GetX<TimeController>(
+                                init: TimeController(),
+                                builder: (c) {
+                                  return Text(c.stoptimedisplay.value);
+                                },
+                              )),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ],
+      ),
+    ));
   }
 
-  Widget item({size,Products  products}) {
-
+  Widget item({size,required Products products}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -241,11 +263,12 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(onTap: (){
-                            setState(() {
-                              itemcount++;
-                            });
-                          },
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                itemcount++;
+                              });
+                            },
                             child: Container(
                               color: Colors.orange,
                               height: 30,
@@ -254,7 +277,8 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                                 child: Text(
                                   "+",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
                             ),
@@ -270,14 +294,14 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                           SizedBox(
                             width: 20,
                           ),
-                          InkWell(onTap: (){
-                            setState(() {
-
-                              if(itemcount>0){
-                                itemcount--;
-                              }
-                            });
-                          },
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (itemcount > 0) {
+                                  itemcount--;
+                                }
+                              });
+                            },
                             child: Container(
                               color: Colors.orange,
                               height: 30,
@@ -286,7 +310,8 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                                 child: Text(
                                   "-",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
                             ),
@@ -340,7 +365,10 @@ class _Cart_Edit_ProduvtState extends State<Cart_Edit_Produvt> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text('Item Price :${products.itemCost}'), Text('Tax:  ${products.tax}')],
+                      children: [
+                        Text('Item Price :${products.itemCost}'),
+                        Text('Tax:  ${products.tax}')
+                      ],
                     ),
                   ),
                   Container(

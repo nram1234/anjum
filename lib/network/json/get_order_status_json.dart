@@ -1,17 +1,17 @@
 class Get_Order_Status_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+ late String message;
+ late int codenum;
+ late bool status;
+ late Result result;
 
-  Get_Order_Status_json({this.message, this.codenum, this.status, this.result});
+  Get_Order_Status_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_Order_Status_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,13 +27,13 @@ class Get_Order_Status_json {
 }
 
 class Result {
-  List<AllOrderStatus> allOrderStatus;
+ late List<AllOrderStatus> allOrderStatus;
 
-  Result({this.allOrderStatus});
+  Result({required this.allOrderStatus});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['all_order_status'] != null) {
-      allOrderStatus = new List<AllOrderStatus>();
+      allOrderStatus = [];//new List<AllOrderStatus>();
       json['all_order_status'].forEach((v) {
         allOrderStatus.add(new AllOrderStatus.fromJson(v));
       });
@@ -51,26 +51,26 @@ class Result {
 }
 
 class AllOrderStatus {
-  String salesmanagerId;
-  String customerId;
-  String customerNameEn;
-  String customerNameAr;
-  String storeId;
-  String storeSalesmanagerStatusid;
-  String supervisorStatus;
-  String totalPrice;
-  String noOfItems;
+late  String salesmanagerId;
+late  String customerId;
+late  String customerNameEn;
+late  String customerNameAr;
+late  String storeId;
+late  String storeSalesmanagerStatusid;
+late  String supervisorStatus;
+late  String totalPrice;
+late  String noOfItems;
 
   AllOrderStatus(
-      {this.salesmanagerId,
-        this.customerId,
-        this.customerNameEn,
-        this.customerNameAr,
-        this.storeId,
-        this.storeSalesmanagerStatusid,
-        this.supervisorStatus,
-        this.totalPrice,
-        this.noOfItems});
+      {required this.salesmanagerId,
+       required  this.customerId,
+       required  this.customerNameEn,
+       required  this.customerNameAr,
+       required  this.storeId,
+       required  this.storeSalesmanagerStatusid,
+       required  this.supervisorStatus,
+       required  this.totalPrice,
+       required  this.noOfItems});
 
   AllOrderStatus.fromJson(Map<String, dynamic> json) {
     salesmanagerId = json['salesmanager_id'];

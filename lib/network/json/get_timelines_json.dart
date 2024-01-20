@@ -1,17 +1,17 @@
 class GetTimelinesJson {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+late  String message;
+late  int codenum;
+late  bool status;
+late  Result result;
 
-  GetTimelinesJson({this.message, this.codenum, this.status, this.result});
+  GetTimelinesJson({required this.message,required this.codenum,required this.status,required this.result});
 
   GetTimelinesJson.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,13 +27,13 @@ class GetTimelinesJson {
 }
 
 class Result {
-  List<TotalTimelines> totalTimelines;
+late  List<TotalTimelines> totalTimelines;
 
-  Result({this.totalTimelines});
+  Result({required this.totalTimelines});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['total_timelines'] != null) {
-      totalTimelines = new List<TotalTimelines>();
+      totalTimelines = [];
       json['total_timelines'].forEach((v) {
         totalTimelines.add(new TotalTimelines.fromJson(v));
       });
@@ -51,32 +51,32 @@ class Result {
 }
 
 class TotalTimelines {
-  String id;
-  String contentId;
-  String contentType;
-  String visitId;
-  String employeeId;
-  String customerId;
-  String batteryLife;
-  String androidVersion;
-  String appVersion;
-  String latitude;
-  String longitude;
-  String creationDate;
+late  String id;
+late  String contentId;
+late  String contentType;
+late  String visitId;
+late  String employeeId;
+late  String customerId;
+late  String batteryLife;
+late  String androidVersion;
+late  String appVersion;
+late  String latitude;
+late  String longitude;
+late  String creationDate;
 
   TotalTimelines(
-      {this.id,
-        this.contentId,
-        this.contentType,
-        this.visitId,
-        this.employeeId,
-        this.customerId,
-        this.batteryLife,
-        this.androidVersion,
-        this.appVersion,
-        this.latitude,
-        this.longitude,
-        this.creationDate});
+      {required this.id,
+       required  this.contentId,
+       required  this.contentType,
+       required  this.visitId,
+       required  this.employeeId,
+       required  this.customerId,
+       required  this.batteryLife,
+       required  this.androidVersion,
+       required  this.appVersion,
+       required  this.latitude,
+       required  this.longitude,
+       required  this.creationDate});
 
   TotalTimelines.fromJson(Map<String, dynamic> json) {
     id = json['id'];

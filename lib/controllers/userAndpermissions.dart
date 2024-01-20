@@ -2,8 +2,8 @@ import 'package:anjum/network/json/login_json.dart';
 import 'package:get/get.dart';
 
 class UserAndPermissions extends GetxController{
-  User user ;
-  Permissions permissions;
+ late  User user ;
+ late Permissions permissions;
 
 void setuser(User use){
   user=use;

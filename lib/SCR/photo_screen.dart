@@ -11,24 +11,24 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 
 class PhotoScreen extends StatefulWidget {
-  const PhotoScreen({Key key}) : super(key: key);
+
 
   @override
   _PhotoScreenState createState() => _PhotoScreenState();
 }
 
 class _PhotoScreenState extends State<PhotoScreen> {
-  bool _serviceEnabled;
+  bool _serviceEnabled=false;
   TextEditingController supervisor_note = TextEditingController();
   TextEditingController salesmanager_note = TextEditingController();
   AllNetworking _allNetworking = AllNetworking();
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   Location location = new Location();
 
-  PermissionStatus _permissionGranted;
-  LocationData _locationData;
+ late PermissionStatus _permissionGranted;
+late  LocationData _locationData;
   bool sendpic = false;
-  File _image;
+ late File _image;
   final picker = ImagePicker();
   var _battery;
   @override
@@ -52,16 +52,16 @@ class _PhotoScreenState extends State<PhotoScreen> {
               Center(
                 child: GestureDetector(
                   onTap: () async {
-                    final pickedFile =
-                        await picker.getImage(source: ImageSource.camera,maxHeight: 1200,maxWidth: 800);
-
-                    setState(() {
-                      if (pickedFile != null) {
-                        _image = File(pickedFile.path);
-                      } else {
-                        print('No image selected.');
-                      }
-                    });
+                    // final pickedFile =
+                    //     await picker.getImage(source: ImageSource.camera,maxHeight: 1200,maxWidth: 800);
+                    //
+                    // setState(() {
+                    //   if (pickedFile != null) {
+                    //     _image = File(pickedFile.path);
+                    //   } else {
+                    //     print('No image selected.');
+                    //   }
+                    // });
                   },
                   child: Container(
                     height: size.height * .5,
@@ -181,7 +181,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
                            print("valuevaluevaluevalue${value.visitId.toString()}");
 print(_locationData);
                           _allNetworking.insert_visit_photo_comments(
-                              user_id: _userAndPermissions.user.userId,latitude: _locationData.latitude,longitude: _locationData.longitude,
+                              user_id: _userAndPermissions.user.userId,latitude: _locationData!.latitude!,longitude: _locationData.longitude!,
 
                               customer_id:     Get.find<AllChequesController>()
                                   .customer
@@ -245,9 +245,9 @@ print(_locationData);
     }
 
     _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.DENIED) {
+    if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.GRANTED) {
+      if (_permissionGranted != PermissionStatus.granted) {
         return;
       }
     }

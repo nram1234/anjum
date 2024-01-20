@@ -60,7 +60,7 @@ class _SupCategoriesState extends State<SupCategories> {
                       ),
                     ),Positioned(bottom: 4,left: 0,right: 0,
                       child: Text(
-                        Get.locale.languageCode =="en" ? widget.categories.subCategories[pos].subCategoryNameEn:  widget.categories.subCategories[pos].subCategoryNameAr,textAlign: TextAlign.center,
+                        Get.locale?.languageCode =="en" ? widget.categories.subCategories[pos].subCategoryNameEn:  widget.categories.subCategories[pos].subCategoryNameAr,textAlign: TextAlign.center,
                         style: TextStyle(backgroundColor: Colors.white.withOpacity(.5),
                             fontWeight: FontWeight.bold,
                             fontSize: 20,color: Colors.black),

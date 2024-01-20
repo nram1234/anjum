@@ -14,9 +14,9 @@ final String item_totalPrice='total_price';
 
 //======================================
 class Item_Order__Db_json {
-  List<Item_Database> item;
+late  List<Item_Database> item;
 
-  Item_Order__Db_json({this.item});
+  Item_Order__Db_json({required this.item});
 
   Item_Order__Db_json.fromJson(Map<String, dynamic> json) {
     if (json['item'] != null) {
@@ -37,31 +37,31 @@ class Item_Order__Db_json {
 }
 
 class Item_Database {
-  int olderId;
-  int itemId;
-  int categoryId;
-  int measurementUnitId;
-  double basePricePerUnit;
-  double bonus;
-  int quantity;
-  String taxType;
-  double totalTax;
-  double totalPriceBeforeTax;
-  double totalPriceWithTax;
-  double totalPrice;
+late  int olderId;
+late  int itemId;
+late  int categoryId;
+late  int measurementUnitId;
+late  double basePricePerUnit;
+late  double bonus;
+late  int quantity;
+late  String taxType;
+late  double totalTax;
+late  double totalPriceBeforeTax;
+late  double totalPriceWithTax;
+late  double totalPrice;
 
   Item_Database(
-      {this.itemId,this.olderId,
-        this.categoryId,
-        this.measurementUnitId,
-        this.basePricePerUnit,
-        this.bonus,
-        this.quantity,
-        this.taxType,
-        this.totalTax,
-        this.totalPriceBeforeTax,
-        this.totalPriceWithTax,
-        this.totalPrice});
+      {required this.itemId,required this.olderId,
+       required  this.categoryId,
+       required  this.measurementUnitId,
+       required  this.basePricePerUnit,
+       required  this.bonus,
+       required  this.quantity,
+       required  this.taxType,
+       required  this.totalTax,
+       required  this.totalPriceBeforeTax,
+       required  this.totalPriceWithTax,
+       required  this.totalPrice});
 
   Item_Database.fromJson(Map<String, dynamic> json) {
     olderId = json['older_id'];

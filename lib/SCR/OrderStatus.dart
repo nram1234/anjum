@@ -17,9 +17,6 @@ import './home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderStatusScr extends StatefulWidget {
-  OrderStatusScr({
-    Key key,
-  }) : super(key: key);
 
   @override
   _OrderStatusScrState createState() => _OrderStatusScrState();
@@ -146,9 +143,9 @@ class _OrderStatusScrState extends State<OrderStatusScr> {
                           child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                   value: cat,
-                                  onChanged: (String newValue) {
+                                  onChanged: (String? newValue) {
                                     print(newValue);
-                                    controller.searchwordupdate(newValue);
+                                    controller.searchwordupdate(newValue??"");
                                   },
                                   items: [
                                 DropdownMenuItem(
@@ -177,7 +174,7 @@ class _OrderStatusScrState extends State<OrderStatusScr> {
                             Expanded(flex: 1,
                               child: InkWell(
                                   onTap: () async {
-                                    final DateTime selected =
+                                    final DateTime? selected =
                                         await showDatePicker(
                                       context: context,
                                       initialDate: selectedfromDate,
@@ -205,7 +202,7 @@ class _OrderStatusScrState extends State<OrderStatusScr> {
                             Expanded(flex: 1,
                               child: InkWell(
                                   onTap: () async {
-                                    final DateTime selected =
+                                    final DateTime? selected =
                                         await showDatePicker(
                                       context: context,
                                       initialDate: selectedfromDate,
@@ -335,7 +332,7 @@ class _OrderStatusScrState extends State<OrderStatusScr> {
     ));
   }
 
-  Widget listItem({size, AllOrderStatus data}) {
+  Widget listItem({size,required AllOrderStatus data}) {
     String name = '';
     String storname = '';
     List<AllCustomers> allCustomers =
@@ -382,7 +379,7 @@ class _OrderStatusScrState extends State<OrderStatusScr> {
                   Container(
                     width: size.width * .4,
                     child: Text(
-                      Get.locale.languageCode =="ar"?data.customerNameAr :     data.customerNameEn,
+                      Get.locale?.languageCode =="ar"?data.customerNameAr :     data.customerNameEn,
                       style: TextStyle(
                         fontSize: 16,
                       ),

@@ -1,17 +1,17 @@
 class Get_second_step2_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+ late String message;
+ late int codenum;
+ late bool status;
+ late Result result;
 
-  Get_second_step2_json({this.message, this.codenum, this.status, this.result});
+  Get_second_step2_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_second_step2_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,13 +27,13 @@ class Get_second_step2_json {
 }
 
 class Result {
-  List<PriceListsInfo> priceListsInfo;
+late  List<PriceListsInfo> priceListsInfo;
 
-  Result({this.priceListsInfo});
+  Result({required this.priceListsInfo});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['price_lists_info'] != null) {
-      priceListsInfo = new List<PriceListsInfo>();
+      priceListsInfo = [];
       json['price_lists_info'].forEach((v) {
         priceListsInfo.add(new PriceListsInfo.fromJson(v));
       });
@@ -51,32 +51,32 @@ class Result {
 }
 
 class PriceListsInfo {
-  String id;
-  String userId;
-  String priceListId;
-  String itemId;
-  String sellingPrice;
-  String toPrice;
-  String discount;
-  String taxStatus;
-  String useInSales;
-  String useInReturn;
-  String unit;
-  String unitID;
+late String id;
+late String userId;
+late String priceListId;
+late String itemId;
+late String sellingPrice;
+late String toPrice;
+late String discount;
+late String taxStatus;
+late String useInSales;
+late String useInReturn;
+late String unit;
+late String unitID;
 
   PriceListsInfo(
-      {this.id,
-        this.userId,
-        this.priceListId,
-        this.itemId,
-        this.sellingPrice,
-        this.toPrice,
-        this.discount,
-        this.taxStatus,
-        this.useInSales,
-        this.useInReturn,
-        this.unit,
-        this.unitID});
+      {required this.id,
+       required  this.userId,
+       required  this.priceListId,
+       required  this.itemId,
+       required  this.sellingPrice,
+       required  this.toPrice,
+       required  this.discount,
+       required  this.taxStatus,
+       required  this.useInSales,
+       required  this.useInReturn,
+       required  this.unit,
+       required  this.unitID});
 
   PriceListsInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];

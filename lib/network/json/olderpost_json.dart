@@ -1,7 +1,7 @@
 class OlderPost_json {
-  List<ListOrderToJson> listOrder;
+late  List<ListOrderToJson> listOrder;
 
-  OlderPost_json({this.listOrder});
+  OlderPost_json({required this.listOrder});
 
   OlderPost_json.fromJson(Map<String, dynamic> json) {
     if (json['list_order'] != null) {
@@ -22,42 +22,42 @@ class OlderPost_json {
 }
 
 class ListOrderToJson {
-  int userId;
-  int requestLevel;
-  String requestType;
-  int employeeId;
-  int customerId;
-  int storeId;
-  int supervisorId;
-  int salesmanagerId;
-  int noOfItems;
-  String supervisorNote;
-  String salesmanagerNote;
-  String totalPriceWithoutTaxDiscount;
-  double totalTax;
-  int totalDiscount;
-  int totalPrice;
-  String requestStatus;
-  List<Item> item;
+late  int userId;
+late  int requestLevel;
+late  String requestType;
+late  int employeeId;
+late  int customerId;
+late  int storeId;
+late  int supervisorId;
+late  int salesmanagerId;
+late  int noOfItems;
+late  String supervisorNote;
+late  String salesmanagerNote;
+late  String totalPriceWithoutTaxDiscount;
+late  double totalTax;
+late  int totalDiscount;
+late  int totalPrice;
+late  String requestStatus;
+late  List<Item> item;
 
   ListOrderToJson(
-      {this.userId,
-        this.requestLevel,
-        this.requestType,
-        this.employeeId,
-        this.customerId,
-        this.storeId,
-        this.supervisorId,
-        this.salesmanagerId,
-        this.noOfItems,
-        this.supervisorNote,
-        this.salesmanagerNote,
-        this.totalPriceWithoutTaxDiscount,
-        this.totalTax,
-        this.totalDiscount,
-        this.totalPrice,
-        this.requestStatus,
-        this.item});
+      {required this.userId,
+       required this.requestLevel,
+       required this.requestType,
+       required this.employeeId,
+       required this.customerId,
+       required this.storeId,
+       required this.supervisorId,
+       required this.salesmanagerId,
+       required this.noOfItems,
+       required this.supervisorNote,
+       required this.salesmanagerNote,
+       required this.totalPriceWithoutTaxDiscount,
+       required this.totalTax,
+       required this.totalDiscount,
+       required this.totalPrice,
+       required this.requestStatus,
+       required this.item});
 
   ListOrderToJson.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -111,30 +111,30 @@ class ListOrderToJson {
 }
 
 class Item {
-  int itemId;
-  int categoryId;
-  int measurementUnitId;
-  int basePricePerUnit;
-  int bonus;
-  String quantity;
-  String taxType;
-  int totalTax;
-  int totalPriceBeforeTax;
-  int totalPriceWithTax;
-  int totalPrice;
+late int itemId;
+late int categoryId;
+late int measurementUnitId;
+late int basePricePerUnit;
+late int bonus;
+late String quantity;
+late String taxType;
+late int totalTax;
+late int totalPriceBeforeTax;
+late int totalPriceWithTax;
+late int totalPrice;
 
   Item(
-      {this.itemId,
-        this.categoryId,
-        this.measurementUnitId,
-        this.basePricePerUnit,
-        this.bonus,
-        this.quantity,
-        this.taxType,
-        this.totalTax,
-        this.totalPriceBeforeTax,
-        this.totalPriceWithTax,
-        this.totalPrice});
+      { required this.itemId,
+       required this.categoryId,
+       required this.measurementUnitId,
+       required this.basePricePerUnit,
+       required this.bonus,
+       required this.quantity,
+       required this.taxType,
+       required this.totalTax,
+       required this.totalPriceBeforeTax,
+       required this.totalPriceWithTax,
+       required this.totalPrice});
 
   Item.fromJson(Map<String, dynamic> json) {
     itemId = json['item_id'];

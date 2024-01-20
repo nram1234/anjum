@@ -21,44 +21,44 @@ final String insert_cheque_Column_note="note";
 
 
 class Insert_cheque_DB {
-  int user_id;
-  int employee_id;
-  int customer_id;
-  int supervisor_id;
-  int salesmanager_id;
-  String payment_type;
-  double amount;
-  String customer_name;
-  String salesman_name;
-  String payment_date;
-  String payment_no;
-  String reference_no;
-  int bank_id;
-  int branch_id;
-  String drawer_name;
-  int cheque_no;
-  String due_date;
-  String note;
-  String searialno;
+late int user_id;
+late int employee_id;
+late int customer_id;
+late int supervisor_id;
+late int salesmanager_id;
+late String payment_type;
+late double amount;
+late String customer_name;
+late String salesman_name;
+late String payment_date;
+late String payment_no;
+late String reference_no;
+late int bank_id;
+late int branch_id;
+late String drawer_name;
+late int cheque_no;
+late String due_date;
+late String note;
+late String searialno;
   Insert_cheque_DB(
-      {this.user_id,
-        this.employee_id,this.searialno,
-        this.customer_id,
-        this.supervisor_id,
-        this.salesmanager_id,
-        this.payment_type,
-        this.amount,
-        this.customer_name,
-        this.salesman_name,
-        this.payment_date,
-        this.payment_no,
-        this.reference_no,
-        this.bank_id,
-        this.branch_id,
-        this.drawer_name,
-        this.cheque_no,
-        this.due_date,
-        this.note});
+      {required this.user_id,
+       required  this.employee_id,required this.searialno,
+       required  this.customer_id,
+       required  this.supervisor_id,
+       required  this.salesmanager_id,
+       required  this.payment_type,
+       required  this.amount,
+       required  this.customer_name,
+       required  this.salesman_name,
+       required  this.payment_date,
+       required  this.payment_no,
+       required  this.reference_no,
+       required  this.bank_id,
+       required  this.branch_id,
+       required  this.drawer_name,
+       required  this.cheque_no,
+       required  this.due_date,
+       required  this.note});
 
   Insert_cheque_DB.fromJson(Map<String, dynamic> json) {
     searialno = json['searialno'];

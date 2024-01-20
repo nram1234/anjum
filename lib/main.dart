@@ -3,7 +3,7 @@ import 'package:anjum/SCR/login.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts_arabic/fonts.dart';
+//import 'package:google_fonts_arabic/fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -73,7 +73,7 @@ void main() async{
 class MyApp extends StatelessWidget {
   var box = GetStorage();
   UserAndPermissions _userAndPermissions = Get.put(UserAndPermissions());
-  Get_first_step_json get_first_step_json;
+  Get_first_step_json? get_first_step_json;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ if(token!=null){
       title: 'Anjum',
       initialBinding: NetWorkBinding(),
       theme: ThemeData(
-          fontFamily: ArabicFonts.Cairo,
+         // fontFamily: ArabicFonts.Cairo,
 
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,),//TtryHive()//

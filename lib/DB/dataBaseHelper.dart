@@ -27,7 +27,7 @@ class DatabaseHelper {
   DatabaseHelper.internal();
 
   factory DatabaseHelper() => _instance;
-  static Database _db;
+  static late Database _db;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -278,7 +278,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 
   Future<int> insert_temporary_tabel_cart(
       Temporary_tabel_cart temporary_tabel_cart) async {
-    int id;
+    int id=0;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn
@@ -288,14 +288,14 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
         id = value;
       });
     });
-    return id;
+    return id ;
   }
 
 
-  Future<Temporary_tabel_cart> get_order_by_id_temporary_tabel_cart(
+  Future<Temporary_tabel_cart?> get_order_by_id_temporary_tabel_cart(
       int id) async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query(temporary_tabel_cart_tabelname,
+    List<Map<String,dynamic>> maps = await dbClient.query(temporary_tabel_cart_tabelname,
         where: '$temporary_tabel_cart_id=?', whereArgs: [id]);
     if (maps.length > 0) {
       return Temporary_tabel_cart.fromMap(maps.first);
@@ -314,7 +314,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 
   Future<int> insert_temporary_tabel_cart_item_tabelname(
       Temporary_tabel_cart_item temporary_tabel_cart_item) async {
-    int id;
+    int id=0;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn
@@ -333,7 +333,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
       int id) async {
     var dbClient = await db;
     List<Temporary_tabel_cart_item> data = [];
-    List<Map> maps = await dbClient.query(temporary_tabel_cart_item_tabelname,
+   await dbClient.query(temporary_tabel_cart_item_tabelname,
         where: '$temporary_tabel_cart_item_order_id=?',
         whereArgs: [id]).then((value) {
       print(value);
@@ -352,7 +352,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 //========================================================
   //=========================================
   Future<int> insert_insert_journeys(Insert_journeys_DB item) async {
-    int id;
+    int id=0;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn
@@ -369,14 +369,14 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
       int id) async {
     var dbClient = await db;
     List<Insert_journeys_DB> data = [];
-    List<Map> maps = await dbClient.query(insert_journeys_DB_tabelname,
+   await dbClient.query(insert_journeys_DB_tabelname,
         where: '$insert_journeys_DB_Column_user_id=?',
         whereArgs: [id]).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Insert_journeys_DB.fromJson(value[i]));
       }
     });
-    return data;
+    return data??[];
   }
 
   Future delete_item_in_insert_journeys(int id) async {
@@ -389,7 +389,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 
   //=========================================
   Future<int> insert_insert_visit(Insert_visit_DB item) async {
-    int id;
+   late int id;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn
@@ -405,7 +405,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   Future<List<Insert_visit_DB>> get_All_item_in_insert_visit(int id) async {
     var dbClient = await db;
     List<Insert_visit_DB> data = [];
-    List<Map> maps = await dbClient.query(insert_visit_DB_tabelname,
+     await dbClient.query(insert_visit_DB_tabelname,
         where: '$insert_visit_DB_Column_user_id=?',
         whereArgs: [id]).then((value) {
       for (int i = 0; i < value.length; i++) {
@@ -424,8 +424,8 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 //==============================================
 
   //=========================================
-  Future<int> insert_insert_cheque({@required Insert_cheque_DB item}) async {
-    int id;
+  Future<int> insert_insert_cheque({ required Insert_cheque_DB item}) async {
+    int id=0;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn
@@ -441,7 +441,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   Future<List<Insert_cheque_DB>> get_All_item_in_insert_cheque() async {
     var dbClient = await db;
     List<Insert_cheque_DB> data = [];
-    List<Map> maps =
+
     await dbClient.query(insert_cheque_tabelname).then((value) {
       for (int i = 0; i < value.length; i++) {
         data.add(Insert_cheque_DB.fromJson(value[i]));
@@ -458,7 +458,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 
 //==============================================
   Future <int> insert_item_tabel(Item_Database item) async {
-    int id;
+   late int id;
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       await txn.insert(item_tabelname, item.toJson(),
@@ -472,7 +472,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   Future<List<Item_Database>> get_All_item_in_olderlist_(int id) async {
     var dbClient = await db;
     List<Item_Database> data = [];
-    List<Map> maps = await dbClient
+ await dbClient
         .query(item_tabelname, where: '$item_older_id=?', whereArgs: [id])
         .then((value) {
       print(value);
@@ -582,11 +582,9 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     var dbClient = await db;
     List<Map> maps = await dbClient.query(sales_order_cart_promotions_tabelname,
         where: '$sales_order_cart_promotions_id=?', whereArgs: [id]);
-    if (maps.length > 0) {
+
       return Sales_Order_Cart_Promotions_Model.fromJson(maps.first);
-    } else {
-      return null;
-    }
+
   }
 
   Future<List<Sales_Order_Cart_Promotions_Model>>
@@ -641,7 +639,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
         whereArgs: [sales_order_invoice_request_stock_items_model.id]);
   }
 
-  Future<Sales_Order_Invoice_Request_Stock_Items_Model>
+  Future<Sales_Order_Invoice_Request_Stock_Items_Model?>
   get_sales_order_invoice_request_stock_items(int id) async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
@@ -649,7 +647,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
         where: '$sales_order_invoice_request_stock_items_id=?',
         whereArgs: [id]);
     if (maps.length > 0) {
-      return Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(maps.first);
+      return Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(maps.first    );
     } else {
       return null;
     }
@@ -694,7 +692,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
   insert_invoice_salesorder_json) async {
     var data;
     await db.then((value) {
-      value.transaction((txn) {
+      value.transaction((txn) async{
         data = txn.insert(sales_order_request_details_tabelname,
             insert_invoice_salesorder_json.toJson());
       });
@@ -739,11 +737,9 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     var dbClient = await db;
     List<Map> maps = await dbClient.query(sales_order_request_details_tabelname,
         where: '$sales_order_request_details_id=?', whereArgs: [id]);
-    if (maps.length > 0) {
+
       return Sales_Order_Request_Details_Model.fromJson(maps.first);
-    } else {
-      return null;
-    }
+
   }
 
 
@@ -753,7 +749,7 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
 //ادخل داتا في تيبول  insert_sales_order_requests
   Future<int> insert_sales_order_requests(
       Sales_Order_Requests_Model sales_order_requests_model) async {
-    int data;
+    int data=0;
     var dbClient = await db;
 
 
@@ -782,11 +778,9 @@ CREATE TABLE  $temporary_tabel_cart_item_tabelname (
     var dbClient = await db;
     List<Map> maps = await dbClient.query(sales_order_requests_tabelname,
         where: '$sales_order_requests_id=?', whereArgs: [id]);
-    if (maps.length > 0) {
+
       return Sales_Order_Requests_Model.fromJson(maps.first);
-    } else {
-      return null;
-    }
+
   }
 
   Future<List<Sales_Order_Requests_Model>>

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class NetWorkController extends GetxController{
 var connectionStatus=false.obs;
 final Connectivity _connectivity=Connectivity();
-StreamSubscription<ConnectivityResult>_connectivitysubscription;
+late StreamSubscription<ConnectivityResult>_connectivitysubscription;
 @override
   void onInit() {
 super.onInit();

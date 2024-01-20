@@ -22,10 +22,10 @@ List<DatainItem> theDatalist = [];
 AllNetworking _allNetworking = AllNetworking();
 
 class _TimeLineState extends State<TimeLine> {
-  String getDate, date2;
+ late String getDate, date2;
   var listofallcustomer = Get.find<AllCustomersControllers>().allCustomers;
   String serchword = "";
-  Filterr cat;
+ late Filterr cat;
 
   List<Filterr> drobdowenitemiss = [
     Filterr(name: "Employee Visit ", val: "employee_visit_notes"),
@@ -155,7 +155,7 @@ class _TimeLineState extends State<TimeLine> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: Colors.blue[100],
+                                  color: Colors.blue[100]!,
                                 ),
                               ),
                               width: size.width * .8,
@@ -165,8 +165,8 @@ class _TimeLineState extends State<TimeLine> {
                               child: DropdownButtonHideUnderline(
                                   child: DropdownButton<Filterr>(
                                       value: cat,
-                                      onChanged: (Filterr newValue) {
-                                        cat = newValue;
+                                      onChanged: (Filterr? newValue) {
+                                        cat = newValue!;
                                         setState(() {});
                                       },
                                       items:   drobdowenitemiss
@@ -267,7 +267,7 @@ class _TimeLineState extends State<TimeLine> {
                                                       .custormerpic,
                                                   salesOrdertybe: theDatalist[index]
                                                       .salesOrdertybe,
-                                                  time: theDatalist[index].time),
+                                                  time: theDatalist[index].time, fun: (){}),
                                             );
                                           }else{
                                             return const SizedBox();
@@ -288,7 +288,7 @@ class _TimeLineState extends State<TimeLine> {
                                                     .custormerpic,
                                                 salesOrdertybe: theDatalist[index]
                                                     .salesOrdertybe,
-                                                time: theDatalist[index].time),
+                                                time: theDatalist[index].time, fun: (){}),
                                           );
                                         }
 
@@ -308,12 +308,12 @@ class _TimeLineState extends State<TimeLine> {
   }
 
   Widget TimeLineCardUI(
-      {String time,
-      fun,
-      Size size,
-      String salesOrdertybe,
-      String custormerpic,
-      String customername}) {
+      {required String time,
+     required  fun,
+     required Size size,
+     required String salesOrdertybe,
+   required   String custormerpic,
+    required  String customername}) {
     return Row(
       children: [
         Expanded(
@@ -430,7 +430,7 @@ class _TimeLineState extends State<TimeLine> {
   }
 
   Future<String> pickdate() async {
-    DateTime time = await showDatePicker(
+    DateTime? time = await showDatePicker(
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2050),
@@ -456,20 +456,20 @@ class DatainItem {
   String customername;
 
   DatainItem(
-      {this.time,
-      this.salesOrdertybe,
-      this.custormerpic,
-      this.customername,
-      this.orderid});
+      {required this.time,
+    required  this.salesOrdertybe,
+    required  this.custormerpic,
+    required  this.customername,
+    required  this.orderid});
 }
 
 class Filterr {
-  String name;
-  String val;
+late  String name;
+late  String val;
 
   Filterr({
-    this.name,
-    this.val,
+  required this.name,
+  required this.val,
   });
 }
 

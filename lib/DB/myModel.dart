@@ -16,50 +16,50 @@ enum Promotion_Type { NA, range, package }
 //=============================================================
 
 class Sales_Order_Request_Details_Model {
- int id;
- int user_id;
- int sales_order_request_id;
- int employee_id;
- int store_id;
- int item_id;
- int category_id;
- int measurement_unit_id;
- double base_price_per_unit;
-  int bonus;
-  int quantity;
-  double total_price;
-  double total_tax;
-  String tax_type;
-  double total_price_before_tax;
-  double total_price_with_tax;
-  String request_status;
-  int created_at;
-   int updated_at;
-  double Item_Discount;
+late int id;
+late int user_id;
+late int sales_order_request_id;
+late int employee_id;
+late int store_id;
+late int item_id;
+late int category_id;
+late int measurement_unit_id;
+late double base_price_per_unit;
+late  int bonus;
+late  int quantity;
+late  double total_price;
+late  double total_tax;
+late  String tax_type;
+late  double total_price_before_tax;
+late  double total_price_with_tax;
+late  String request_status;
+late  int created_at;
+late   int updated_at;
+late  double Item_Discount;
 
   Sales_Order_Request_Details_Model({
-    @required this.id,
-    @required this.user_id,
-    @required this.sales_order_request_id,
-    @required this.employee_id,
-    @required this.store_id,
-    @required this.item_id,
-    @required this.category_id,
-    @required  this.measurement_unit_id,
-    @required this.base_price_per_unit=0,
-    this.bonus,
-    this.quantity,
-    this.total_price,
-    this.total_tax,
-    @required this.tax_type='NA',
-    this.total_price_before_tax,
-    this.total_price_with_tax,
- @required this.request_status='pending',
-    @required  this.created_at,
-    @required  this.updated_at,
-    this.Item_Discount});
+    required this.id,
+    required this.user_id,
+    required this.sales_order_request_id,
+    required this.employee_id,
+    required this.store_id,
+    required this.item_id,
+    required this.category_id,
+    required  this.measurement_unit_id,
+      this.base_price_per_unit=0,
+   required this.bonus,
+   required this.quantity,
+   required this.total_price,
+   required this.total_tax,
+      this.tax_type='NA',
+   required this.total_price_before_tax,
+   required this.total_price_with_tax,
+    this.request_status='pending',
+    required  this.created_at,
+    required  this.updated_at,
+  required  this.Item_Discount});
 
-  Sales_Order_Request_Details_Model.fromJson(Map<String, dynamic> json) {
+  Sales_Order_Request_Details_Model.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     user_id = json['user_id'];
     sales_order_request_id = json['sales_order_request_id'];
@@ -108,56 +108,56 @@ class Sales_Order_Request_Details_Model {
 }
 
 class Sales_Order_Requests_Model {
- int id;
-  int user_id;
-  int request_level;
-  String request_type;
-  int employee_id;
-  int store_id;
-  int customer_id;
-  int supervisor_id;
-  int salesmanager_id;
-  String no_of_items;
-  String salesmanager_note;
+late int id;
+late int user_id;
+late int request_level;
+late String request_type;
+late int employee_id;
+late int store_id;
+late int customer_id;
+late int supervisor_id;
+late int salesmanager_id;
+late String no_of_items;
+late String salesmanager_note;
 
-  double total_price_without_tax_discount;
-  double total_tax;
-  double total_discount;
-  double total_price;
-  String request_status;
-  String salesmanager_status;
-  String supervisor_status;
-  int is_successfully_submitted;
+late double total_price_without_tax_discount;
+late double total_tax;
+late double total_discount;
+late double total_price;
+late String request_status;
+late String salesmanager_status;
+late String supervisor_status;
+late int is_successfully_submitted;
 
 
-  String created_at;
-  int updated_at;
+late String created_at;
+late int updated_at;
 
 
   Sales_Order_Requests_Model({
-    @required this.id,
-    @required this.user_id,
-    @required  this.supervisor_id,
-    @required  this.employee_id,
-    @required  this.store_id,
-    this.salesmanager_id,
-    @required  this.customer_id,
-    this.is_successfully_submitted,
-    this.no_of_items,
-    this.request_level,
-    @required  this.request_type='salesOrder',
-    @required  this.total_price,
-    this.total_tax,
-    this.salesmanager_note,
-    @required  this.salesmanager_status='NA',
-    @required  this.supervisor_status='pending',
-    @required  this.request_status='pending',
-    @required  this.created_at,
-    @required  this.updated_at,
-    this.total_price_without_tax_discount,
-    this.total_discount});
+     required this.id,
+     required this.user_id,
+     required  this.supervisor_id,
+     required  this.employee_id,
+     required  this.store_id,
+  required  this.salesmanager_id,
+      required  this.customer_id,
+  required  this.is_successfully_submitted,
+  required  this.no_of_items,
+  required  this.request_level,
+   this.request_type='salesOrder',
+   required  this.total_price,
+  required  this.total_tax,
+  required  this.salesmanager_note,
+        this.salesmanager_status='NA',
+     this.supervisor_status='pending',
+     this.request_status='pending',
+     required  this.created_at,
+     required  this.updated_at,
+   required this.total_price_without_tax_discount,
+   required this.total_discount});
 
-  Sales_Order_Requests_Model.fromJson(Map<String, dynamic> json) {
+  Sales_Order_Requests_Model.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     user_id = json['user_id'];
     supervisor_id = json['supervisor_id'];
@@ -209,33 +209,33 @@ class Sales_Order_Requests_Model {
 }
 
 class Sales_Order_Invoice_Request_Stock_Items_Model {
-  int id;
-  int user_id;
-  int sales_order_request_id;
-  int store_id;
-  int item_id;
+ late int id;
+ late int user_id;
+ late int sales_order_request_id;
+ late int store_id;
+ late int item_id;
 
-  int measurement_unit_id;
+ late int measurement_unit_id;
 
-  String quantity;
-
-
-  int created_at;
-  int updated_at;
+ late String quantity;
 
 
-  Sales_Order_Invoice_Request_Stock_Items_Model({@required this.id,
-    this.user_id,
-    this.store_id,
-    this.item_id,
-    this.measurement_unit_id,
-    this.quantity,
-    this.sales_order_request_id,
-    this.created_at,
-    this.updated_at,
+ late int created_at;
+ late int updated_at;
+
+
+  Sales_Order_Invoice_Request_Stock_Items_Model({ required this.id,
+  required this.user_id,
+  required this.store_id,
+  required this.item_id,
+  required this.measurement_unit_id,
+  required this.quantity,
+  required this.sales_order_request_id,
+  required this.created_at,
+  required this.updated_at,
   });
 
-  Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(Map<String, dynamic> json) {
+  Sales_Order_Invoice_Request_Stock_Items_Model.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     user_id = json['user_id'];
     store_id = json['store_id'];
@@ -269,34 +269,34 @@ return data;  }
 
 
 class Sales_Order_Cart_Promotions_Model {
-  int id;
-  int sales_order_cart_id;
-  String discount_type;
-  double discount_percentage;
-  double discount_amount;
-  int promotion_id;
-  String promotion_type;
-  int promotion_bonus_item_id;
-  int promotion_bonus_quantity;
-  int created_at;
-  int updated_at;
+late int id;
+late int sales_order_cart_id;
+late String discount_type;
+late double discount_percentage;
+late double discount_amount;
+late int promotion_id;
+late String promotion_type;
+late int promotion_bonus_item_id;
+late int promotion_bonus_quantity;
+late int created_at;
+late int updated_at;
 
 
   Sales_Order_Cart_Promotions_Model({
-    @required this.id,
-    this.discount_amount,
-    @required this.promotion_type= 'NA',
-    @required this.sales_order_cart_id,
-    this.discount_percentage,
-    @required this.discount_type = 'NA',
-    this.promotion_bonus_item_id,
-    this.promotion_bonus_quantity,
-    this.promotion_id,
-    this.created_at,
-    this.updated_at,
+     required this.id,
+  required  this.discount_amount,
+      this.promotion_type= 'NA',
+     required this.sales_order_cart_id,
+ required   this.discount_percentage,
+       this.discount_type = 'NA',
+   required this.promotion_bonus_item_id,
+   required this.promotion_bonus_quantity,
+   required this.promotion_id,
+   required this.created_at,
+   required this.updated_at,
   });
 
-  Sales_Order_Cart_Promotions_Model.fromJson(Map<String, dynamic> json) {
+  Sales_Order_Cart_Promotions_Model.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     discount_amount = json['discount_amount'];
     promotion_type = json['promotion_type'];
@@ -343,32 +343,32 @@ class Sales_Order_Cart_Promotions_Model {
 
 
 class AdminsModel {
-  int id;
-  String admin_type;
-  String name;
-  String email;
-  String phone_no;
-  String image;
-  String password;
+late  int id;
+late  String admin_type;
+late  String name;
+late  String email;
+late  String phone_no;
+late  String image;
+late  String password;
 
-  String decoded_password;
-  String remember_token;
-  String status;
-  int created_at;
-  int updated_at;
+late  String decoded_password;
+late  String remember_token;
+late  String status;
+late  int created_at;
+late  int updated_at;
 
-  AdminsModel({this.id,
-    this.admin_type,
-    this.name,
-    this.email,
-    this.phone_no,
-    this.image,
-    this.password,
-    this.decoded_password,
-    this.remember_token,
-    this.status,
-    this.created_at,
-    this.updated_at});
+  AdminsModel({required this.id,
+  required  this.admin_type,
+  required  this.name,
+  required  this.email,
+  required  this.phone_no,
+  required  this.image,
+  required  this.password,
+  required  this.decoded_password,
+  required  this.remember_token,
+  required  this.status,
+  required  this.created_at,
+  required  this.updated_at});
 
   AdminsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -385,8 +385,8 @@ class AdminsModel {
     updated_at = json['updated_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
     data['id'] = this.id;
     data['admin_type'] = this.admin_type;
 
@@ -403,23 +403,23 @@ class AdminsModel {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
-  }
+  return data; }
 }
 
 class Alternate_Items_Model {
-  int id;
-  int user_id;
-  int item_id;
-  int alt_item_id;
-  int created_at;
-  int updated_at;
+ late int id;
+ late int user_id;
+ late int item_id;
+ late int alt_item_id;
+ late int created_at;
+ late int updated_at;
 
-  Alternate_Items_Model({this.id,
-    this.user_id,
-    this.item_id,
-    this.alt_item_id,
-    this.created_at,
-    this.updated_at});
+  Alternate_Items_Model({required this.id,
+  required  this.user_id,
+  required  this.item_id,
+  required  this.alt_item_id,
+  required  this.created_at,
+  required  this.updated_at});
 
   Alternate_Items_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -430,8 +430,8 @@ class Alternate_Items_Model {
     updated_at = json['updated_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.user_id;
 
@@ -439,29 +439,30 @@ class Alternate_Items_Model {
     data['alt_item_id'] = this.alt_item_id;
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
+    return data;
   }
 }
 
 class Banks_Model {
-  int id;
-  int user_id;
-  String bank_name_en;
-  String bank_name_ar;
+ late int id;
+ late int user_id;
+ late String bank_name_en;
+ late String bank_name_ar;
 
-  String note;
-  String status;
+ late String note;
+ late String status;
 
-  int updated_at;
-  String remember_token;
+ late int updated_at;
+ late String remember_token;
 
-  Banks_Model({this.id,
-    this.user_id,
-    this.bank_name_en,
-    this.bank_name_ar,
-    this.note,
-    this.status,
-    this.updated_at,
-    this.remember_token});
+  Banks_Model({required this.id,
+  required  this.user_id,
+  required  this.bank_name_en,
+  required  this.bank_name_ar,
+  required  this.note,
+  required  this.status,
+  required  this.updated_at,
+  required  this.remember_token});
 
   Banks_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -485,52 +486,53 @@ class Banks_Model {
     data['status'] = this.status;
     data['remember_token'] = this.remember_token;
     data['updated_at'] = this.updated_at;
+     return data;
   }
 }
 
 class Bank_Branches_Model {
-  int id;
-  int bank_id;
-  int user_id;
+late  int id;
+late  int bank_id;
+late  int user_id;
 
-  String branch_name_en;
-  String branch_name_ar;
+late  String branch_name_en;
+late  String branch_name_ar;
 
-  String phone_no;
-  String fax_no;
+late  String phone_no;
+late  String fax_no;
 
-  String email;
-  String area_1;
+late  String email;
+late  String area_1;
 
-  String area_2;
-  int state_id;
+late  String area_2;
+late  int state_id;
 
-  int city_id;
+late  int city_id;
 
-  String contact_person;
-  String note;
-  StatusType status;
+late  String contact_person;
+late  String note;
+late  StatusType status;
 
-  int created_at;
-  int updated_at;
+late  int created_at;
+late  int updated_at;
 
-  Bank_Branches_Model({this.id,
-    this.bank_id,
-    this.user_id,
-    this.branch_name_en,
-    this.branch_name_ar,
-    this.phone_no,
-    this.fax_no,
-    this.email,
-    this.area_1,
-    this.area_2,
-    this.state_id,
-    this.city_id,
-    this.contact_person,
-    this.note,
-    this.status,
-    this.created_at,
-    this.updated_at});
+  Bank_Branches_Model({required this.id,
+  required this.bank_id,
+  required this.user_id,
+  required this.branch_name_en,
+  required this.branch_name_ar,
+  required this.phone_no,
+  required this.fax_no,
+  required this.email,
+  required this.area_1,
+  required this.area_2,
+  required this.state_id,
+  required this.city_id,
+  required this.contact_person,
+  required this.note,
+  required this.status,
+  required this.created_at,
+  required this.updated_at});
 
   Bank_Branches_Model.fromJson(Map<String, dynamic> json) {
     note = json['note'];
@@ -553,8 +555,8 @@ class Bank_Branches_Model {
     updated_at = json['updated_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
 
     data['area_1'] = this.area_1;
     data['email'] = this.email;
@@ -580,20 +582,20 @@ class Bank_Branches_Model {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
-  }
+  return data; }
 }
 
 class Categories_Model {
-  int id;
-  int user_id;
-  String category_name_en;
-  String category_name_ar;
+late  int id;
+late  int user_id;
+late  String category_name_en;
+late  String category_name_ar;
 
-  String brand_manager;
-  String status;
+late  String brand_manager;
+late  String status;
 
-  int updated_at;
-  String remember_token;
+late  int updated_at;
+late  String remember_token;
 
   Categories_Model(this.id,
       this.user_id,
@@ -628,15 +630,16 @@ class Categories_Model {
     data['category_name_ar'] = this.category_name_ar;
     data['brand_manager'] = this.brand_manager;
     data['status'] = this.status;
+     return data;
   }
 }
 
 class Cities_Model {
-  int id;
-  int state_id;
-  String name;
+late int id;
+late int state_id;
+late String name;
 
-  String status;
+late String status;
 
   Cities_Model(this.id,
       this.state_id,
@@ -660,35 +663,35 @@ class Cities_Model {
     data['name'] = this.name;
 
     data['status'] = this.status;
-  }
+ return data; }
 }
 
 class Companies_Model {
-  int id;
+late  int id;
 
-  String company_name_en;
-  String email;
-  String phone_no;
-  String image;
-  String company_name_ar;
+late  String company_name_en;
+late  String email;
+late  String phone_no;
+late  String image;
+late  String company_name_ar;
 
-  String fax_no;
-  String vat_no;
-  String status;
-  int created_at;
-  int updated_at;
+late  String fax_no;
+late  String vat_no;
+late  String status;
+late  int created_at;
+late  int updated_at;
 
-  Companies_Model({this.id,
-    this.company_name_en,
-    this.company_name_ar,
-    this.email,
-    this.phone_no,
-    this.image,
-    this.fax_no,
-    this.vat_no,
-    this.status,
-    this.created_at,
-    this.updated_at});
+  Companies_Model({required this.id,
+   required this.company_name_en,
+   required this.company_name_ar,
+   required this.email,
+   required this.phone_no,
+   required this.image,
+   required this.fax_no,
+   required this.vat_no,
+   required this.status,
+   required this.created_at,
+   required this.updated_at});
 
   Companies_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -722,28 +725,29 @@ class Companies_Model {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
+     return data;
   }
 }
 
 class Countries_Model {
-  int id;
+late  int id;
 
-  String sortname;
-  String name;
-  String phonecode;
-  String currency;
-  String currency_short;
+late  String sortname;
+late  String name;
+late  String phonecode;
+late  String currency;
+late  String currency_short;
 
-  String status;
+late  String status;
 
   Countries_Model({
-    this.id,
-    this.sortname,
-    this.name,
-    this.phonecode,
-    this.currency,
-    this.currency_short,
-    this.status,
+  required this.id,
+  required this.sortname,
+  required this.name,
+  required this.phonecode,
+  required this.currency,
+  required this.currency_short,
+  required this.status,
   });
 
   Countries_Model.fromJson(Map<String, dynamic> json) {
@@ -768,44 +772,45 @@ class Countries_Model {
     data['currency_short'] = this.currency_short;
 
     data['status'] = this.status;
+     return data;
   }
 }
 
 class Currencies_Model {
-  int id;
+late int id;
 
-  int user_id;
+late int user_id;
 
-  double rate;
-  String name;
-  String code;
+late double rate;
+late String name;
+late String code;
 
-  String precision;
-  String symbol;
+late String precision;
+late String symbol;
 
-  String symbol_first;
-  String decimal_mark;
+late String symbol_first;
+late String decimal_mark;
 
-  String thousands_separator;
-  String enabled;
-  int created_at;
-  int deleted_at;
-  int updated_at;
+late String thousands_separator;
+late String enabled;
+late int created_at;
+late int deleted_at;
+late int updated_at;
 
-  Currencies_Model({this.id,
-    this.rate,
-    this.user_id,
-    this.name,
-    this.code,
-    this.precision,
-    this.symbol,
-    this.symbol_first,
-    this.decimal_mark,
-    this.thousands_separator,
-    this.enabled,
-    this.deleted_at,
-    this.created_at,
-    this.updated_at});
+  Currencies_Model({required this.id,
+  required  this.rate,
+  required  this.user_id,
+  required  this.name,
+  required  this.code,
+  required  this.precision,
+  required  this.symbol,
+  required  this.symbol_first,
+  required  this.decimal_mark,
+  required  this.thousands_separator,
+  required  this.enabled,
+  required  this.deleted_at,
+  required  this.created_at,
+  required  this.updated_at});
 
   Currencies_Model.fromJson(Map<String, dynamic> json) {
     rate = json['rate'];
@@ -824,8 +829,8 @@ class Currencies_Model {
     updated_at = json['updated_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
 
     data['rate'] = this.rate;
     data['name'] = this.name;
@@ -846,74 +851,76 @@ class Currencies_Model {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
+     return data;
   }
 }
 
 class Customers_Model {
-  int id;
-  int app_employee_id;
-  int user_id;
+late  int id;
+late  int app_employee_id;
+late  int user_id;
 
-  String ref_id;
-  String customer_id;
+late  String ref_id;
+late  String customer_id;
 
-  String customer_name_en;
-  String customer_name_ar;
+late  String customer_name_en;
+late  String customer_name_ar;
 
-  String email;
-  String customer_type_id;
+late  String email;
+late  String customer_type_id;
 
-  String phone_no;
-  String fax;
+late  String phone_no;
+late  String fax;
 
-  String tax_status;
+late  String tax_status;
 
-  String image;
-  String credit_limit;
-  String cheque_due_date;
-  double discount;
-  String balance;
-  String payment_type;
-  String price_list_id;
-  String state_id;
-  String city_id;
-  String area1;
-  String area2;
-  String location;
-  String latitude;
-  String longitude;
-  String status;
-  int created_at;
-  int updated_at;
+late  String image;
+late  String credit_limit;
+late  String cheque_due_date;
+late  double discount;
+late  String balance;
+late  String payment_type;
+late  String price_list_id;
+late  String state_id;
+late  String city_id;
+late  String area1;
+late  String area2;
+late  String location;
+late  String latitude;
+late  String longitude;
+late  String status;
+late  int created_at;
+late  int updated_at;
 
-  Customers_Model({this.longitude,
-    this.status,
-    this.area1,
-    this.area2,
-    this.location,
-    this.latitude,
-    this.state_id,
-    this.city_id,
-    this.credit_limit,
-    this.cheque_due_date,
-    this.discount,
-    this.balance,
-    this.payment_type,
-    this.price_list_id,
-    this.id,
-    this.app_employee_id,
-    this.user_id,
-    this.customer_id,
-    this.customer_name_en,
-    this.phone_no,
-    this.customer_name_ar,
-    this.email,
-    this.customer_type_id,
-    this.fax,
-    this.tax_status,
-    this.image,
-    this.created_at,
-    this.updated_at});
+  Customers_Model({
+  required this.longitude,
+  required this.status,
+  required this.area1,
+  required this.area2,
+  required this.location,
+  required this.latitude,
+  required this.state_id,
+  required this.city_id,
+  required this.credit_limit,
+  required this.cheque_due_date,
+  required this.discount,
+  required this.balance,
+  required this.payment_type,
+  required this.price_list_id,
+  required this.id,
+  required this.app_employee_id,
+  required this.user_id,
+  required this.customer_id,
+  required this.customer_name_en,
+  required this.phone_no,
+  required this.customer_name_ar,
+  required this.email,
+  required this.customer_type_id,
+  required this.fax,
+  required this.tax_status,
+  required this.image,
+  required this.created_at,
+  required this.updated_at});
 
   Customers_Model.fromJson(Map<String, dynamic> json) {
     app_employee_id = json['app_employee_id'];
@@ -954,8 +961,8 @@ class Customers_Model {
     updated_at = json['updated_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
 
     data['id'] = this.id;
     data['user_id'] = this.user_id;
@@ -999,27 +1006,27 @@ class Customers_Model {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
-  }
+  return data; }
 }
 
 class Customer_drawers_Model {
-  int id;
-  int customer_id;
-  String drawer_name;
-  int bank_id;
+late  int id;
+late  int customer_id;
+late  String drawer_name;
+late  int bank_id;
 
-  int branch_id;
+late  int branch_id;
 
-  int updated_at;
-  int created_at;
+late  int updated_at;
+late  int created_at;
 
-  Customer_drawers_Model({this.id,
-    this.customer_id,
-    this.drawer_name,
-    this.bank_id,
-    this.branch_id,
-    this.updated_at,
-    this.created_at});
+  Customer_drawers_Model({required this.id,
+  required  this.customer_id,
+  required  this.drawer_name,
+  required  this.bank_id,
+  required  this.branch_id,
+  required  this.updated_at,
+  required  this.created_at});
 
   Customer_drawers_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1043,61 +1050,62 @@ class Customer_drawers_Model {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
+     return data;
   }
 }
 
 class customer_payments_Model {
-  int id;
-  int employee_id;
-  int user_id;
-  int customer_id;
-  int supervisor_id;
-  int salesmanager_id;
-  int payment_date;
-  double amount;
-  String payment_type;
-  String customer_name;
+late int id;
+late int employee_id;
+late int user_id;
+late int customer_id;
+late int supervisor_id;
+late int salesmanager_id;
+late int payment_date;
+late double amount;
+late String payment_type;
+late String customer_name;
 
-  String salesman_name;
-  String payment_no;
+late String salesman_name;
+late String payment_no;
 
-  String reference_no;
-  int bank_id;
-  int branch_id;
-  String drawer_name;
-  String cheque_no;
-  int due_date;
-  String note;
-  String image;
-  String request_status;
-  int responded_date;
-  int created_at;
-  int updated_at;
+late String reference_no;
+late int bank_id;
+late int branch_id;
+late String drawer_name;
+late String cheque_no;
+late int due_date;
+late String note;
+late String image;
+late String request_status;
+late int responded_date;
+late int created_at;
+late int updated_at;
 
-  customer_payments_Model({this.id,
-    this.amount,
-    this.bank_id,
-    this.branch_id,
-    this.cheque_no,
-    this.created_at,
-    this.customer_id,
-    this.customer_name,
-    this.drawer_name,
-    this.due_date,
-    this.employee_id,
-    this.image,
-    this.note,
-    this.payment_date,
-    this.payment_no,
-    this.payment_type,
-    this.reference_no,
-    this.request_status,
-    this.responded_date,
-    this.salesman_name,
-    this.salesmanager_id,
-    this.supervisor_id,
-    this.updated_at,
-    this.user_id});
+  customer_payments_Model({required this.id,
+  required  this.amount,
+  required  this.bank_id,
+  required  this.branch_id,
+  required  this.cheque_no,
+  required  this.created_at,
+  required  this.customer_id,
+  required  this.customer_name,
+  required  this.drawer_name,
+  required  this.due_date,
+  required  this.employee_id,
+  required  this.image,
+  required  this.note,
+  required  this.payment_date,
+  required  this.payment_no,
+  required  this.payment_type,
+  required  this.reference_no,
+  required  this.request_status,
+  required  this.responded_date,
+  required  this.salesman_name,
+  required  this.salesmanager_id,
+  required  this.supervisor_id,
+  required  this.updated_at,
+  required  this.user_id});
 
   customer_payments_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1127,8 +1135,8 @@ class customer_payments_Model {
     updated_at = json['updated_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> json = new Map<dynamic, dynamic>();
 
     json['id'] = this.id;
     json['employee_id'] = this.employee_id;
@@ -1156,26 +1164,27 @@ class customer_payments_Model {
     json['responded_date'] = this.responded_date;
     json['created_at'] = this.created_at;
     json['updated_at'] = this.updated_at;
+    return json;
   }
 }
 
 class Customer_types_Model {
-  int id;
-  int user_id;
-  String customer_type_en;
-  String customer_type_ar;
-  String status;
+late int id;
+late int user_id;
+late String customer_type_en;
+late String customer_type_ar;
+late String status;
 
-  int updated_at;
-  int created_at;
+late int updated_at;
+late int created_at;
 
-  Customer_types_Model({this.id,
-    this.user_id,
-    this.customer_type_ar,
-    this.customer_type_en,
-    this.status,
-    this.updated_at,
-    this.created_at});
+  Customer_types_Model({required this.id,
+ required  this.user_id,
+ required  this.customer_type_ar,
+ required  this.customer_type_en,
+ required  this.status,
+ required  this.updated_at,
+ required  this.created_at});
 
   Customer_types_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1188,8 +1197,8 @@ class Customer_types_Model {
     created_at = json['created_at'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
     data['id'] = this.id;
     data['status'] = this.status;
 
@@ -1199,7 +1208,7 @@ class Customer_types_Model {
 
     data['created_at'] = this.created_at;
     data['updated_at'] = this.updated_at;
-  }
+   return data;}
 }
 class Temporary_tabel_cart{
 String  user_id ;
@@ -1213,12 +1222,12 @@ String  supervisor_id ;
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   Temporary_tabel_cart({
-    @required this.user_id,
-    @required this.customer_id,
-    @required this.employee_id,
-    @required this.salesmanager_id,
-    @required this.store_id,
-    @required this.supervisor_id,
+    required this.user_id,
+    required this.customer_id,
+    required this.employee_id,
+    required this.salesmanager_id,
+    required this.store_id,
+    required this.supervisor_id,
 
   });
 
@@ -1251,17 +1260,17 @@ String  supervisor_id ;
 
 }
 class Temporary_tabel_cart_item{
- int  order_id ;
- String  id ;
- String  item_count ;
+late int  order_id ;
+late String  id ;
+late String  item_count ;
 
 
 
 
   Temporary_tabel_cart_item({
-    @required this.order_id,
-    @required this.id,
-    @required this.item_count,
+    required this.order_id,
+    required this.id,
+    required this.item_count,
   });
 
 

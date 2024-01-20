@@ -1,8 +1,8 @@
 class Insert_invoice_salesorder_json {
-  String key;
-  List<ListInvoice> listInvoice;
+  late  String key;
+  late List<ListInvoice> listInvoice;
 
-  Insert_invoice_salesorder_json({this.key, this.listInvoice});
+  Insert_invoice_salesorder_json({ required this.listInvoice});
 
   Insert_invoice_salesorder_json.fromJson(Map<String, dynamic> json) {
     key = json['key'];
@@ -25,60 +25,60 @@ class Insert_invoice_salesorder_json {
 }
 
 class ListInvoice {
-  int user_id;
-  int order_id;
-  int no_invoice;
-  String request_level;
-  String request_type;
-  int employee_id;
-  int customer_id;
-  int storeId;
-  int supervisorId;
-  int salesmanagerId;
-  int noOfItems;
-  String supervisorNote;
-  String salesmanagerNote;
-  double totalPriceWithoutTaxDiscount;
-  double totalTax;
-  double totalDiscount;
-  double totalPrice;
-  String requestStatus;
-  int itemId;
-  int categoryId;
-  int measurementUnitId;
-  double basePricePerUnit;
-  double bonus;
-  double quantity;
-  String taxType;
-  double totalPriceBeforeTax;
-  double totalPriceWithTax;
+ late int user_id;
+ late int order_id;
+ late int no_invoice;
+ late String request_level;
+ late String request_type;
+ late int employee_id;
+ late int customer_id;
+ late int storeId;
+ late int supervisorId;
+ late int salesmanagerId;
+ late int noOfItems;
+ late String supervisorNote;
+ late String salesmanagerNote;
+ late double totalPriceWithoutTaxDiscount;
+ late double totalTax;
+ late double totalDiscount;
+ late double totalPrice;
+ late String requestStatus;
+ late int itemId;
+ late int categoryId;
+ late int measurementUnitId;
+ late double basePricePerUnit;
+ late double bonus;
+ late double quantity;
+ late String taxType;
+ late double totalPriceBeforeTax;
+ late double totalPriceWithTax;
 
   ListInvoice(
-      {this.user_id,this.order_id,this.no_invoice,
-        this.request_level,
-        this.request_type,
-        this.employee_id,
-        this.customer_id,
-        this.storeId,
-        this.supervisorId,
-        this.salesmanagerId,
-        this.noOfItems,
-        this.supervisorNote,
-        this.salesmanagerNote,
-        this.totalPriceWithoutTaxDiscount,
-        this.totalTax,
-        this.totalDiscount,
-        this.totalPrice,
-        this.requestStatus,
-        this.itemId,
-        this.categoryId,
-        this.measurementUnitId,
-        this.basePricePerUnit,
-        this.bonus,
-        this.quantity,
-        this.taxType,
-        this.totalPriceBeforeTax,
-        this.totalPriceWithTax});
+      {required this.user_id,required this.order_id, required this.no_invoice,
+       required  this.request_level,
+       required  this.request_type,
+       required  this.employee_id,
+       required  this.customer_id,
+       required  this.storeId,
+       required  this.supervisorId,
+       required  this.salesmanagerId,
+       required  this.noOfItems,
+       required  this.supervisorNote,
+       required  this.salesmanagerNote,
+       required  this.totalPriceWithoutTaxDiscount,
+       required  this.totalTax,
+       required  this.totalDiscount,
+       required  this.totalPrice,
+       required  this.requestStatus,
+       required  this.itemId,
+       required  this.categoryId,
+       required  this.measurementUnitId,
+       required  this.basePricePerUnit,
+       required  this.bonus,
+       required  this.quantity,
+       required  this.taxType,
+       required  this.totalPriceBeforeTax,
+       required  this.totalPriceWithTax});
 
   ListInvoice.fromJson(Map<String, dynamic> json) {
     user_id = json['user_id'];

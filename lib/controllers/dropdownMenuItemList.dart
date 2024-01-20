@@ -35,7 +35,7 @@ class DropdownMenuItemList extends GetxController{
     listtextEditingControllerOfItem.add(list);
     update();
   }
-  setValOfdropdownValue({int pos,AllStockItems dropdownValue}){
+  setValOfdropdownValue({required int pos,required AllStockItems dropdownValue}){
     listdropdownValue[pos]=dropdownValue;
     update();
   }
@@ -57,7 +57,7 @@ class DropdownMenuItemList extends GetxController{
     serach_listtextEditingControllerOfItem.add(list);
     update();
   }
-  serach_setValOfdropdownValue({int pos,AllStockItems dropdownValue}){
+  serach_setValOfdropdownValue({required int pos,required AllStockItems dropdownValue}){
     serach_listdropdownValue[pos]=dropdownValue;
     update();
   }

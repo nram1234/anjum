@@ -33,7 +33,7 @@ import 'package:get_storage/get_storage.dart';
 import '../home.dart';
 
 class GetAllDataFRomWeb extends StatefulWidget {
-  const GetAllDataFRomWeb({Key key}) : super(key: key);
+
 
   @override
   _GetAllDataFRomWebState createState() => _GetAllDataFRomWebState();
@@ -55,13 +55,13 @@ bool getdata=false;
 
   AllCategoriesController allCategoriesController =
       Get.put(AllCategoriesController(), permanent: true);
-  int userId;
+  int userId=0;
 
 //  _userAndPermissions.user.id.toString()
   var box = GetStorage();
 
   @override
-  Future<void> initState() {
+  Future<void> initState() async {
     super.initState();
     userId = _userAndPermissions.user.id;
 
@@ -480,7 +480,7 @@ print( value.result.allStockItems);
         ));
   }
 
-  Widget itemInList({String titl, fun, lod}) {
+  Widget itemInList({required String titl, fun, lod}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(

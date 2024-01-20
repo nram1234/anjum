@@ -128,7 +128,7 @@ class OrderStatusdetails extends StatelessWidget {
                                   Container(
                                     width: size.width * .4,
                                     child: Text(
-                                      Get.locale.languageCode == "ar"
+                                      Get.locale?.languageCode == "ar"
                                           ? data.customerNameAr
                                           : data.customerNameEn,
                                       //Get.find<AllCustomersControllers>().mapofCustomer[data.customerId].customerNameEn:Get.find<AllCustomersControllers>().mapofCustomer[data.customerId].customerNameAr,
@@ -407,7 +407,7 @@ class OrderStatusdetails extends StatelessWidget {
     ));
   }
 
-  Widget listItem({Size size}) {
+  Widget listItem({required Size size}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

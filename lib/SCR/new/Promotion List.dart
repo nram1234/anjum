@@ -129,7 +129,7 @@ if( _all_promotionsController.allPromotionss[index].id.contains(serchword)||_all
     );
   }
 
-  Widget PRomotionListCardUI({AllPromotions allPromotions}) {
+  Widget PRomotionListCardUI({required AllPromotions allPromotions}) {
     return Container(
       height: 150,
       margin: EdgeInsets.all(10),

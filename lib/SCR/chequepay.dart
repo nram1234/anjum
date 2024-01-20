@@ -18,8 +18,8 @@ class ChequePay extends StatefulWidget {
 }
 
 class _ChequePayState extends State<ChequePay> {
-  String getDate, date2;
-  int orderid;
+late  String getDate, date2;
+ late int orderid;
   var box = GetStorage();
   var allBanks = Get.find<AllBanksController>();
   var allCheques = Get.find<AllChequesController>();
@@ -31,8 +31,8 @@ class _ChequePayState extends State<ChequePay> {
   AllNetworking _allNetworking=AllNetworking();
   Future<String> pickdate() async {
     var lastDate = DateTime.now().add(new Duration(
-        days: int.tryParse(allCheques.customer.chequeDueDate)));
-    DateTime time = await showDatePicker(
+        days: int.parse(allCheques.customer.chequeDueDate)));
+    DateTime? time = await showDatePicker(
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: lastDate, //DateTime(2050),
@@ -43,13 +43,13 @@ class _ChequePayState extends State<ChequePay> {
     return date2;
   }
 
-  AllBanks dropdownValueAllBanks;
+ late AllBanks dropdownValueAllBanks;
   List<DropdownMenuItem<AllBanks>> _listDropdownAllBanks = [];
 
   //------------------------------------
-  AllBankBranches dropdownValueAllBankBranches;
+ late AllBankBranches dropdownValueAllBankBranches;
   List<DropdownMenuItem<AllBankBranches>> _listDropdownAllBankBranches = [];
-  String drawerName;
+  late String drawerName;
   List<DropdownMenuItem<String>> drawer_nameDRMlist = [];
 
   @override
@@ -213,8 +213,8 @@ class _ChequePayState extends State<ChequePay> {
                                 child: DropdownButtonHideUnderline(
                                     child: DropdownButton<AllBanks>(
                                         value: dropdownValueAllBanks,
-                                        onChanged: (AllBanks newValue) {
-                                          dropdownValueAllBanks = newValue;
+                                        onChanged: (AllBanks? newValue) {
+                                          dropdownValueAllBanks = newValue!;
                                           _listDropdownAllBankBranches.clear();
                                           for (int i = 0;
                                               i <
@@ -263,9 +263,9 @@ class _ChequePayState extends State<ChequePay> {
                                 child: DropdownButtonHideUnderline(
                                     child: DropdownButton<AllBankBranches>(
                                         value: dropdownValueAllBankBranches,
-                                        onChanged: (AllBankBranches newValue) {
+                                        onChanged: (AllBankBranches? newValue) {
                                           dropdownValueAllBankBranches =
-                                              newValue;
+                                              newValue!;
 
                                           setState(() {});
                                         },
@@ -299,8 +299,8 @@ class _ChequePayState extends State<ChequePay> {
                                 child: DropdownButtonHideUnderline(
                                     child: DropdownButton<String>(
                                         value: drawerName,
-                                        onChanged: (String newValue) {
-                                          drawerName = newValue;
+                                        onChanged: (String? newValue) {
+                                          drawerName = newValue!;
 
                                           setState(() {});
                                         },
@@ -451,15 +451,15 @@ class _ChequePayState extends State<ChequePay> {
                                     customer_id: int.parse(
                                         Get.find<AllChequesController>()
                                             .customer_id),
-                                    amount: double.tryParse(
+                                    amount: double.parse(
                                         chechamount.text),
-                                    bank_id: int.tryParse(
+                                    bank_id: int.parse(
                                         dropdownValueAllBanks.id),
-                                    branch_id: int.tryParse(
+                                    branch_id: int.parse(
                                         dropdownValueAllBankBranches
                                             .id),
                                     cheque_no:
-                                    int.tryParse(cheqnumber.text),
+                                    int.parse(cheqnumber.text),
                                     customer_name: allCheques.customer
                                         .customerNameEn,
                                     note: addnote.text,
@@ -470,7 +470,7 @@ class _ChequePayState extends State<ChequePay> {
                                     supervisor_id: _userAndPermissions.user.supervisorId,
                                     salesmanager_id: _userAndPermissions.user.salesmanagerId,
                                     due_date: Chequetime,
-                                    drawer_name: drawerName,).toJson()];
+                                    drawer_name: drawerName, salesman_name: '',).toJson()];
                                   _allNetworking.insert_cheque_to_Web( data: mydata).then((value) {
                                     print(value);
                                     return showDialog(
@@ -565,15 +565,15 @@ class _ChequePayState extends State<ChequePay> {
                                                 customer_id: int.parse(
                                                     Get.find<AllChequesController>()
                                                         .customer_id),
-                                                amount: double.tryParse(
+                                                amount: double.parse(
                                                     chechamount.text),
-                                                bank_id: int.tryParse(
+                                                bank_id: int.parse(
                                                     dropdownValueAllBanks.id),
-                                                branch_id: int.tryParse(
+                                                branch_id: int.parse(
                                                     dropdownValueAllBankBranches
                                                         .id),
                                                 cheque_no:
-                                                    int.tryParse(cheqnumber.text),
+                                                    int.parse(cheqnumber.text),
                                                 customer_name: allCheques.customer
                                                     .customerNameEn,
                                                 note: addnote.text,
@@ -584,7 +584,7 @@ class _ChequePayState extends State<ChequePay> {
                                                 supervisor_id: _userAndPermissions.user.supervisorId,
                                                 salesmanager_id: _userAndPermissions.user.salesmanagerId,
                                                 due_date: Chequetime,
-                                                drawer_name: drawerName))
+                                                drawer_name: drawerName, searialno: '', salesman_name: ''))
                                         .then((value) {
                                       print(
                                           '999999999999999999999999999999999999999999');
@@ -625,7 +625,7 @@ class _ChequePayState extends State<ChequePay> {
     );
   }
 
-  Widget forinput({size, titel, TextEditingController textEditingController}) {
+  Widget forinput({required size, titel,required TextEditingController textEditingController}) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(4.0),

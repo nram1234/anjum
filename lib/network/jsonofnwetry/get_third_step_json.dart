@@ -1,17 +1,17 @@
 class Get_third_step_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+ late String message;
+ late int codenum;
+ late bool status;
+ late Result result;
 
-  Get_third_step_json({this.message, this.codenum, this.status, this.result});
+  Get_third_step_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_third_step_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']!) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,15 +27,15 @@ class Get_third_step_json {
 }
 
 class Result {
-  List<AllCategories> allCategories;
-  List<AllItems> allItems;
-  SalesOrder salesOrder;
+ late List<AllCategories> allCategories;
+ late List<AllItems> allItems;
+ late SalesOrder salesOrder;
 
-  Result({this.allCategories, this.allItems, this.salesOrder});
+  Result({required this.allCategories,required this.allItems,required this.salesOrder});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['all_categories'] != null) {
-      allCategories = new List<AllCategories>();
+      allCategories = [];
       json['all_categories'].forEach((v) {
         allCategories.add(new AllCategories.fromJson(v));
       });
@@ -46,9 +46,9 @@ class Result {
         allItems.add(new AllItems.fromJson(v));
       });
     }
-    salesOrder = json['sales_order'] != null
+    salesOrder = (json['sales_order'] != null
         ? new SalesOrder.fromJson(json['sales_order'])
-        : null;
+        : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -68,22 +68,22 @@ class Result {
 }
 
 class AllCategories {
-  String id;
-  String userId;
-  String categoryNameEn;
-  String categoryNameAr;
-  String categoryImage;
-  String status;
-  List<SubCategories> subCategories;
+late  String id;
+late  String userId;
+late  String categoryNameEn;
+late  String categoryNameAr;
+late  String categoryImage;
+late  String status;
+late  List<SubCategories> subCategories;
 
   AllCategories(
-      {this.id,
-        this.userId,
-        this.categoryNameEn,
-        this.categoryNameAr,
-        this.categoryImage,
-        this.status,
-        this.subCategories});
+      {required this.id,
+       required  this.userId,
+       required  this.categoryNameEn,
+       required  this.categoryNameAr,
+       required  this.categoryImage,
+       required  this.status,
+       required  this.subCategories});
 
   AllCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -93,7 +93,7 @@ class AllCategories {
     categoryImage = json['category_image'];
     status = json['status'];
     if (json['sub_categories'] != null) {
-      subCategories = new List<SubCategories>();
+      subCategories = [];
       json['sub_categories'].forEach((v) {
         subCategories.add(new SubCategories.fromJson(v));
       });
@@ -117,20 +117,20 @@ class AllCategories {
 }
 
 class SubCategories {
-  String id;
-  String userId;
-  String categoryId;
-  String subCategoryNameEn;
-  String subCategoryNameAr;
-  String categoryNameEn;
+ late String id;
+ late String userId;
+ late String categoryId;
+ late String subCategoryNameEn;
+ late String subCategoryNameAr;
+ late String categoryNameEn;
 
   SubCategories(
-      {this.id,
-        this.userId,
-        this.categoryId,
-        this.subCategoryNameEn,
-        this.subCategoryNameAr,
-        this.categoryNameEn});
+      {required this.id,
+       required  this.userId,
+       required  this.categoryId,
+       required  this.subCategoryNameEn,
+       required  this.subCategoryNameAr,
+       required  this.categoryNameEn});
 
   SubCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -154,20 +154,20 @@ class SubCategories {
 }
 
 class AllItems {
-  String id;
-  String userId;
-  String employeeId;
-  String itemId;
-  String status;
-  List<ItemDetails> itemDetails;
+late  String id;
+late  String userId;
+late  String employeeId;
+late  String itemId;
+late  String status;
+late  List<ItemDetails> itemDetails;
 
   AllItems(
-      {this.id,
-        this.userId,
-        this.employeeId,
-        this.itemId,
-        this.status,
-        this.itemDetails});
+      {required this.id,
+       required  this.userId,
+       required  this.employeeId,
+       required  this.itemId,
+       required  this.status,
+       required  this.itemDetails});
 
   AllItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -176,7 +176,7 @@ class AllItems {
     itemId = json['item_id'];
     status = json['status'];
     if (json['item_details'] != null) {
-      itemDetails = new List<ItemDetails>();
+      itemDetails = [];
       json['item_details'].forEach((v) {
         itemDetails.add(new ItemDetails.fromJson(v));
       });
@@ -198,46 +198,46 @@ class AllItems {
 }
 
 class ItemDetails {
-  String id;
-  String userId;
-  String itemNameEn;
-  String itemNameAr;
-  String itemNumber;
-  String categoryId;
-  String subCategoryId;
-  String subCategory2Id;
-  String inventoryId;
-  String sellingPrice;
-  String minimumQuantity;
-  String reference;
-  String image;
-  String itemCost;
-  String tax;
-  String status;
-  String stockStatus;
-  String taxStatus;
-  String taxType;
+late  String id;
+late  String userId;
+late  String itemNameEn;
+late  String itemNameAr;
+late  String itemNumber;
+late  String categoryId;
+late  String subCategoryId;
+late  String subCategory2Id;
+late  String inventoryId;
+late  String sellingPrice;
+late  String minimumQuantity;
+late  String reference;
+late  String image;
+late  String itemCost;
+late  String tax;
+late  String status;
+late  String stockStatus;
+late  String taxStatus;
+late  String taxType;
 
   ItemDetails(
-      {this.id,
-        this.userId,
-        this.itemNameEn,
-        this.itemNameAr,
-        this.itemNumber,
-        this.categoryId,
-        this.subCategoryId,
-        this.subCategory2Id,
-        this.inventoryId,
-        this.sellingPrice,
-        this.minimumQuantity,
-        this.reference,
-        this.image,
-        this.itemCost,
-        this.tax,
-        this.status,
-        this.stockStatus,
-        this.taxStatus,
-        this.taxType});
+      {required this.id,
+       required  this.userId,
+       required  this.itemNameEn,
+       required  this.itemNameAr,
+       required  this.itemNumber,
+       required  this.categoryId,
+       required  this.subCategoryId,
+       required  this.subCategory2Id,
+       required  this.inventoryId,
+       required  this.sellingPrice,
+       required  this.minimumQuantity,
+       required  this.reference,
+       required  this.image,
+       required  this.itemCost,
+       required  this.tax,
+       required  this.status,
+       required  this.stockStatus,
+       required  this.taxStatus,
+       required  this.taxType});
 
   ItemDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -287,22 +287,22 @@ class ItemDetails {
 }
 
 class SalesOrder {
-  String id;
-  String userId;
-  String employeeId;
-  String itemId;
-  String status;
-  String createdAt;
-  String updatedAt;
+late String id;
+late String userId;
+late String employeeId;
+late String itemId;
+late String status;
+late String createdAt;
+late String updatedAt;
 
   SalesOrder(
-      {this.id,
-        this.userId,
-        this.employeeId,
-        this.itemId,
-        this.status,
-        this.createdAt,
-        this.updatedAt});
+      {required this.id,
+       required  this.userId,
+       required  this.employeeId,
+       required  this.itemId,
+       required  this.status,
+       required  this.createdAt,
+       required  this.updatedAt});
 
   SalesOrder.fromJson(Map<String, dynamic> json) {
     id = json['id'];

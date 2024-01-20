@@ -20,16 +20,17 @@ class CashPay extends StatefulWidget {
 }
 
 class _CashPayState extends State<CashPay> {
- // CurenceController _curenceController = Get.find<CurenceController>();
+  // CurenceController _curenceController = Get.find<CurenceController>();
   var box = GetStorage();
   String date2 = 'Select Date';
   UserAndPermissions _userAndPermissions = Get.find<UserAndPermissions>();
   var allCheques = Get.find<AllChequesController>();
   String amount = '', addnote = '';
-  AllNetworking _allNetworking=AllNetworking();
-  int orderid;
+  AllNetworking _allNetworking = AllNetworking();
+  int orderid = 1;
+
   Future<String> pickdate() async {
-    DateTime time = await showDatePicker(
+    DateTime? time = await showDatePicker(
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(2050),
@@ -48,12 +49,12 @@ class _CashPayState extends State<CashPay> {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     date2 = formatter.format(now);
-    orderid = box.read( "cashnumber");
+    orderid = box.read("cashnumber");
     if (orderid == null) {
-      orderid =    int.parse(_userAndPermissions.user.id.toString()+"001");
+      orderid = int.parse(_userAndPermissions.user.id.toString() + "001");
       print("orderidorderidorderidorderid      ${orderid}");
       box.write("cashnumber", orderid);
-    }else{
+    } else {
       orderid++;
       box.write("cashnumber", orderid);
     }
@@ -136,7 +137,7 @@ class _CashPayState extends State<CashPay> {
                             topRight: Radius.circular(30),
                             topLeft: Radius.circular(30))),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      padding: const EdgeInsets.only(left: 16, right: 16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -165,8 +166,8 @@ class _CashPayState extends State<CashPay> {
                                   width: size.width * .85,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(color: Colors.black, width: 1),
+                                    border: Border.all(
+                                        color: Colors.black, width: 1),
                                     color: Colors.white,
                                     // boxShadow: [
                                     //   BoxShadow(
@@ -202,7 +203,8 @@ class _CashPayState extends State<CashPay> {
                               width: size.width * .85,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.black, width: 1),
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
                                 color: Colors.white,
                                 // boxShadow: [
                                 //   BoxShadow(
@@ -218,7 +220,8 @@ class _CashPayState extends State<CashPay> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: TextField(keyboardType: TextInputType.number,
+                                    child: TextField(
+                                      keyboardType: TextInputType.number,
                                       onChanged: (v) {
                                         amount = v;
                                       },
@@ -235,26 +238,24 @@ class _CashPayState extends State<CashPay> {
                                     builder: (logic) {
                                       return DropdownButton(
                                           elevation: 8,
-                                          value:
-                                          logic.defultCurrencies,
+                                          value: logic.defultCurrencies,
                                           hint: Text("اختار العملة"),
                                           onChanged: (v) {
-                                            logic.setCurrenciedropdowen(allCurrencies: v);
-
+                                            logic.setCurrenciedropdowen(
+                                                allCurrencies: v!);
                                           },
-                                          items: logic
-                                              .allCurrencie.entries
-                                              .map<
-                                                  DropdownMenuItem<
-                                                      AllCurrencies>>((e) {
+                                          items: logic.allCurrencie.entries.map<
+                                              DropdownMenuItem<
+                                                  AllCurrencies>>((e) {
                                             return DropdownMenuItem<
                                                 AllCurrencies>(
-                                              value:
-                                              logic.allCurrencie[
-                                                      e.value.currencyName],
+                                              value: logic.allCurrencie[
+                                                  e.value.currencyName],
                                               child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text('${e.value.currencyName  } ${e.value.currencySymbol}'),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                    '${e.value.currencyName} ${e.value.currencySymbol}'),
                                               ),
                                             );
                                           }).toList());
@@ -277,7 +278,8 @@ class _CashPayState extends State<CashPay> {
                               width: size.width * .85,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.black, width: 1),
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
                                 color: Colors.white,
                                 // boxShadow: [
                                 //   BoxShadow(
@@ -309,228 +311,250 @@ class _CashPayState extends State<CashPay> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
-                                onTap: ()async {
-                                  var d=[  Insert_cheque_DB(  searialno:orderid.toString() , user_id: _userAndPermissions.user.userId,
+                                onTap: () async {
+                                  var d = [
+                                    Insert_cheque_DB(
+                                            searialno: orderid.toString(),
+                                            user_id:
+                                                _userAndPermissions.user.userId,
+                                            employee_id:
+                                                _userAndPermissions.user.id,
+                                            customer_id: int.parse(
+                                                Get.find<AllChequesController>()
+                                                    .customer_id),
+                                            amount: double.parse(amount),
+                                            due_date: date2,
+                                            customer_name: allCheques
+                                                .customer.customerNameEn,
+                                            note: addnote,
+                                            payment_type: "cash",
+                                            reference_no:
+                                                allCheques.customer.refId,
+                                            supervisor_id: _userAndPermissions
+                                                .user.supervisorId,
+                                            salesmanager_id: _userAndPermissions
+                                                .user.salesmanagerId,
+                                            salesman_name: '',
+                                            payment_date: '',
+                                            payment_no: '',
+                                            bank_id: 55,
+                                            branch_id: 5,
+                                            drawer_name: "iiiuy" '',
+                                            cheque_no: 5)
+                                        .toJson()
+                                  ];
+
+                                  await Get.find<NetWorkController>()
+                                      .initConnctivity();
+
+                                  if (Get.find<NetWorkController>()
+                                      .connectionStatus
+                                      .value) {
+                                    await _allNetworking.insert_cash(data: d);
+
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Container(
+                                            width: size.width * .8,
+                                            height: 60,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Anjum',
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color:
+                                                            Colors.indigoAccent,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ),
+                                          content: Container(
+                                            width: size.width * .8,
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text('Paymentdone'.tr),
+                                                  Row(
+                                                    children: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            // Navigator.pop(context);
+                                                            int count = 0;
+                                                            Navigator.popUntil(
+                                                                context,
+                                                                (route) {
+                                                              return count++ ==
+                                                                  3;
+                                                            });
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .arrow_back),
+                                                              SizedBox(
+                                                                width: 8,
+                                                              ),
+                                                              Text('Back'.tr),
+                                                              SizedBox(
+                                                                width: 50,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  TextButton(
+                                                                      onPressed:
+                                                                          () {},
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          Icon(Icons
+                                                                              .print),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                8,
+                                                                          ),
+                                                                          Text('printers'
+                                                                              .tr)
+                                                                        ],
+                                                                      ))
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ))
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    DatabaseHelper()
+                                        .insert_insert_cheque(
+                                            item: Insert_cheque_DB(
+                                      user_id: _userAndPermissions.user.userId,
                                       employee_id: _userAndPermissions.user.id,
                                       customer_id: int.parse(
                                           Get.find<AllChequesController>()
                                               .customer_id),
-                                      amount: double.tryParse(amount),
+                                      amount: double.parse(amount),
                                       due_date: date2,
-                                      customer_name: allCheques
-                                          .customer .customerNameEn,
+                                      customer_name:
+                                          allCheques.customer.customerNameEn,
                                       note: addnote,
                                       payment_type: "cash",
-                                      reference_no:
-                                      allCheques.customer .refId,
+                                      reference_no: allCheques.customer.refId,
                                       supervisor_id:
-                                      _userAndPermissions.user.supervisorId,
-                                      salesmanager_id:
-                                      _userAndPermissions.user.salesmanagerId).toJson()];
+                                          _userAndPermissions.user.supervisorId,
+                                      salesmanager_id: _userAndPermissions
+                                          .user.salesmanagerId,
+                                      searialno: '',
+                                      salesman_name: '',
+                                      payment_date: '',
+                                      payment_no: '',
+                                      bank_id: 5,branch_id: 55,cheque_no: 55,drawer_name: "ii",
+                                    ))
+                                        .then((value) {
+                                      print(
+                                          '999999999999999999999999999999999999999999');
+                                      print(value);
+                                    });
 
-    await Get.find<NetWorkController>()
-        .initConnctivity();
-
-    if (Get.find<NetWorkController>()
-        .connectionStatus
-        .value)  {
-      await   _allNetworking.insert_cash( data: d );
-
-
-      return showDialog(
-      context: context,
-      builder: (context) {
-
-
-
-
-
-        return AlertDialog(
-          title: Container(
-            width: size.width * .8,
-            height: 60,
-            child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
-              children: [
-                Text('Anjum',
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.indigoAccent,
-                        fontWeight:
-                        FontWeight.bold)),
-              ],
-            ),
-          ),
-          content: Container(
-            width: size.width * .8,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text('Paymentdone'.tr),
-                  Row(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            // Navigator.pop(context);
-                            int count = 0;
-                            Navigator.popUntil(
-                                context, (route) {
-                              return count++ == 3;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                  Icons.arrow_back),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text('Back'.tr),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              Row(
-                                children: [
-                                  TextButton(
-                                      onPressed:
-                                          () {},
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons
-                                              .print),
-                                          SizedBox(
-                                            width:
-                                            8,
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Container(
+                                            width: size.width * .8,
+                                            height: 60,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Anjum',
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color:
+                                                            Colors.indigoAccent,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            ),
                                           ),
-                                          Text(
-                                              'printers'.tr)
-                                        ],
-                                      ))
-                                ],
-                              )
-                            ],
-                          ))
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );}else{ DatabaseHelper()
-        .insert_insert_cheque(
-        item: Insert_cheque_DB(
-          user_id: _userAndPermissions.user.userId,
-          employee_id: _userAndPermissions.user.id,
-          customer_id: int.parse(
-              Get.find<AllChequesController>()
-                  .customer_id),
-          amount: double.tryParse(amount),
-          due_date: date2,
-          customer_name: allCheques
-              .customer .customerNameEn,
-          note: addnote,
-          payment_type: "cash",
-          reference_no:
-          allCheques.customer .refId,
-          supervisor_id:
-          _userAndPermissions.user.supervisorId,
-          salesmanager_id:
-          _userAndPermissions.user.salesmanagerId,
-        ))
-        .then((value) {
-      print(
-          '999999999999999999999999999999999999999999');
-      print(value);
-    });
-
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Container(
-            width: size.width * .8,
-            height: 60,
-            child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
-              children: [
-                Text('Anjum',
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.indigoAccent,
-                        fontWeight:
-                        FontWeight.bold)),
-              ],
-            ),
-          ),
-          content: Container(
-            width: size.width * .8,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text('Paymentdone'.tr),
-                  Row(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            // Navigator.pop(context);
-                            int count = 0;
-                            Navigator.popUntil(
-                                context, (route) {
-                              return count++ == 3;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                  Icons.arrow_back),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text('Back'.tr),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              Row(
-                                children: [
-                                  TextButton(
-                                      onPressed:
-                                          () {},
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons
-                                              .print),
-                                          SizedBox(
-                                            width:
-                                            8,
+                                          content: Container(
+                                            width: size.width * .8,
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text('Paymentdone'.tr),
+                                                  Row(
+                                                    children: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            // Navigator.pop(context);
+                                                            int count = 0;
+                                                            Navigator.popUntil(
+                                                                context,
+                                                                (route) {
+                                                              return count++ ==
+                                                                  3;
+                                                            });
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .arrow_back),
+                                                              SizedBox(
+                                                                width: 8,
+                                                              ),
+                                                              Text('Back'.tr),
+                                                              SizedBox(
+                                                                width: 50,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  TextButton(
+                                                                      onPressed:
+                                                                          () {},
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          Icon(Icons
+                                                                              .print),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                8,
+                                                                          ),
+                                                                          Text('printers'
+                                                                              .tr)
+                                                                        ],
+                                                                      ))
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ))
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                          Text(
-                                              'printers'.tr)
-                                        ],
-                                      ))
-                                ],
-                              )
-                            ],
-                          ))
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );}
-
+                                        );
+                                      },
+                                    );
+                                  }
                                 },
                                 child: Container(
                                   height: 50,

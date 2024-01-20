@@ -81,7 +81,7 @@ class _ProductsScrState extends State<ProductsScr> {
   CurenceController _curenceController = Get.find<CurenceController>();
 
   //====================
-  AllStockItems _allStockItems;
+  late AllStockItems _allStockItems;
   var keysOfMap;
 
   @override
@@ -95,7 +95,6 @@ class _ProductsScrState extends State<ProductsScr> {
     _UnitController.all_Uint_List.clear();
     _UnitController.val_Of_uint_map.clear();
     _UnitController.MeasurementUnit_map;
-
   } //getstock
   //
   // getmeasurementUnit() {
@@ -162,8 +161,15 @@ class _ProductsScrState extends State<ProductsScr> {
       textEditingbounce.text = "0";
       textEditingControllerbounce.add(textEditingbounce);
 
-      AllStockItems allStockItems;
-      dropdownMenuItemList.listdropdownValue.add(allStockItems);
+      AllStockItems? allStockItems;
+      dropdownMenuItemList.listdropdownValue.add(allStockItems ?? AllStockItems(
+          id: '0',
+          userId: '0',
+          itemId: '0',
+          storeId: '0',
+          measurementUnitId: '',
+          quantity: '',
+          measurementUnitName: ''));
       //  for(int z=0;z<stocitem.length;z++){
       //
       //   dropdownMenuItemList.allStockItems[i].add(stocitem[z]);
@@ -182,7 +188,7 @@ class _ProductsScrState extends State<ProductsScr> {
         .of(context)
         .size;
     for (int i = 0; i < 10; i++) {
-      alert_item.add(AlirtItem());
+      //  alert_item.add(AlirtItem(products: ItemDetails()));
     }
     // biledjsonpost();
 
@@ -353,8 +359,9 @@ class _ProductsScrState extends State<ProductsScr> {
                                           .serach_listtextEditingControllerOfItem[
                                       i]
                                           .text) *
-                                          double.tryParse(bata.allItems[i]
-                                              .itemDetails[0].sellingPrice));
+                                          double.parse(
+                                              bata.allItems[i]!.itemDetails[0]!
+                                                  .sellingPrice));
 
                                   for (int p = 0;
                                   p <
@@ -393,7 +400,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       (int.parse(dropdownMenuItemList
                                           .listtextEditingControllerOfItem[i]
                                           .text) *
-                                          double.tryParse(bata.allItems[i]
+                                          double.parse(bata.allItems[i]
                                               .itemDetails[0].sellingPrice));
 
                                   for (int p = 0;
@@ -408,7 +415,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                 }
                               }
 
-                              int customer_id = int.tryParse(
+                              int customer_id = int.parse(
                                   Get
                                       .find<AllChequesController>()
                                       .customer_id);
@@ -417,7 +424,7 @@ class _ProductsScrState extends State<ProductsScr> {
                               i < cartListItem.cartlist.length;
                               i++) {
                                 totalprice = totalprice +
-                                    double.tryParse(cartListItem
+                                    double.parse(cartListItem
                                         .cartlist[i].itemDetails[0]
                                         .sellingPrice);
                               }
@@ -576,19 +583,19 @@ class _ProductsScrState extends State<ProductsScr> {
                                     var unitlist = _UnitController
                                         .MeasurementUnit_map[
                                     _myProdectListController
-                                        .item[keysOfMap[pos]].value.id
+                                        .item[keysOfMap[pos]]!.value.id
                                     // bata.search_word.value.trim().isNotEmpty
                                     //   ? bata.search_wordListItems[pos].itemId
                                     //   : bata.allItems[pos].itemId
                                     ];
                                     if (_myProdectListController.issearch) {
                                       if (_myProdectListController
-                                          .item[keysOfMap[pos]].value.enName
+                                          .item[keysOfMap[pos]]!.value.enName
                                           .contains(
                                           _myProdectListController
                                               .searchWord)) {
                                         return iteminthelist(
-                                          unitslist: unitlist,
+                                          unitslist: unitlist!,
 
                                           pos: pos,
                                           bounceController:
@@ -599,8 +606,10 @@ class _ProductsScrState extends State<ProductsScr> {
                                               .listtextEditingControllerOfItem[pos],
                                           products:
                                           _myProdectListController
-                                              .item[keysOfMap[pos]],
+                                              .item[keysOfMap[pos]]!,
                                           size: size,
+                                            dropdowenval: AllStockItems(id: '', userId: '', itemId: '', storeId: '', measurementUnitId: '', quantity: '', measurementUnitName: '')
+                                          ,
                                         );
                                       }
                                       else {
@@ -609,7 +618,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                     }
                                     else {
                                       return iteminthelist(
-                                        unitslist: unitlist,
+                                        unitslist: unitlist ?? [],
 
                                         pos: pos,
                                         bounceController:
@@ -620,8 +629,15 @@ class _ProductsScrState extends State<ProductsScr> {
                                             .listtextEditingControllerOfItem[pos],
                                         products:
                                         _myProdectListController
-                                            .item[keysOfMap[pos]],
+                                            .item[keysOfMap[pos]] !,
                                         size: size,
+                                        dropdowenval: AllStockItems(id: "0",
+                                            userId: "3",
+                                            itemId: "4",
+                                            storeId: "5",
+                                            measurementUnitId: "measurementUnitId",
+                                            quantity: "5",
+                                            measurementUnitName: "measurementUnitName"),
                                       );
                                     }
                                   });
@@ -666,11 +682,11 @@ class _ProductsScrState extends State<ProductsScr> {
                                 child: GestureDetector(
                                   onTap: () {
                                     if (!c.swatch.isRunning) {
-                                      getMyLoction(firesvisittlocation);
+                                      getMyLoction(firesvisittlocation!);
 
                                       c.startjor();
                                     } else {
-                                      getMyLoction(endvisittlocation);
+                                      getMyLoction(endvisittlocation!);
                                       DatabaseHelper()
                                           .insert_insert_visit(Insert_visit_DB(
                                         customer_id:
@@ -681,12 +697,13 @@ class _ProductsScrState extends State<ProductsScr> {
                                             .id,
                                         user_id:
                                         _userAndPermissions.user.id.toString(),
+                                        employ_id: '', start_lat: '', start_lang: '', end_lat: '', end_lang: '', start_date: '', end_date: '', current_visit_status: '', visit_type: '',
                                       ))
                                           .then((value) {
-                                        Get
-                                            .find<AllChequesController>()
-                                            .customer =
-                                        null;
+                                        // Get
+                                        //     .find<AllChequesController>()
+                                        //     .customer =
+                                        // null;
                                       });
                                       c.stopjor();
                                       cartListItem.cartlist.clear();
@@ -738,7 +755,7 @@ class _ProductsScrState extends State<ProductsScr> {
         countofitem[cartListItem.cartlist[count].itemId] = 1;
         cartListItem.itemInCart.value++;
       } else {
-        countofitem[cartListItem.cartlist[count].itemId] += 1;
+        countofitem[cartListItem.cartlist[count].itemId] = 100;
       }
     }
     // for (int oo = 0; oo < cartListItem.cartlist.length; oo++) {
@@ -1529,7 +1546,7 @@ class _ProductsScrState extends State<ProductsScr> {
   //   );
   // }
 
-  Widget AlirtItem({ItemDetails products, funadd, funremov}) {
+  Widget AlirtItem({required ItemDetails products, funadd, funremov}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -1595,11 +1612,11 @@ class _ProductsScrState extends State<ProductsScr> {
     );
   }
 
-  biledjsonpost({UserAndPermissions userAndPermissions,
-    CartItemController cartListItem}) {
+  biledjsonpost({required UserAndPermissions userAndPermissions,
+    required CartItemController cartListItem}) {
     EmployeDataController employeDataController = EmployeDataController();
     OlderPost_json listOrder = OlderPost_json(listOrder: [
-      ListOrderToJson(
+      ListOrderToJson(requestStatus: "",
           item: [],
           userId: userAndPermissions.user.id,
           requestLevel: 5,
@@ -1607,22 +1624,28 @@ class _ProductsScrState extends State<ProductsScr> {
           storeId: 44,
           requestType: 'nn',
           employeeId: 5,
-          customerId: 5)
+          customerId: 5,
+          supervisorId: 55,
+          salesmanagerId: 5,
+          supervisorNote: '',
+          salesmanagerNote: '',
+          totalPriceWithoutTaxDiscount: '',
+          totalTax: 5, totalDiscount: 5, totalPrice: 55)
     ]);
 
     String jsonUser = jsonEncode(listOrder);
   }
 
   Widget iteminthelist({
-    List<ItemUnits> unitslist,
+    required List<ItemUnits> unitslist,
     list,
-    Size size,
-    int pos,
-    Rx<TheItemInList> products,
-    TextEditingController textEditingController,
-    TextEditingController discountController,
-    TextEditingController bounceController,
-    AllStockItems dropdowenval,
+    required Size size,
+    required int pos,
+    required Rx<TheItemInList> products,
+    required TextEditingController textEditingController,
+    required TextEditingController discountController,
+    required TextEditingController bounceController,
+    required AllStockItems dropdowenval,
   }) {
     bool showdropdowen = (unitslist.length > 1);
     if (showdropdowen) {
@@ -1650,11 +1673,13 @@ class _ProductsScrState extends State<ProductsScr> {
               Row(
                 children: [
                   Container(
-                    height: size.height * .15,
-                    width: size.height * .15,
+                      height: size.height * .15,
+                      width: size.height * .15,
 
-                    child:CachedNetworkImage(imageUrl: products.value.pic,     height: size.height * .1,
-                      width: size.height * .1,) //_netWorkController.connectionStatus.value ?
+                      child: CachedNetworkImage(
+                        imageUrl: products.value.pic, height: size.height * .1,
+                        width: size.height *
+                            .1,) //_netWorkController.connectionStatus.value ?
                     // Image
                     //     .network(
                     //   products.value.pic,
@@ -1675,7 +1700,8 @@ class _ProductsScrState extends State<ProductsScr> {
                           height: 8,
                         ),
                         Text(
-                          Get.locale.languageCode =="en" ?      products.value.enName: products.value.arName,
+                          Get.locale?.languageCode == "en" ? products.value
+                              .enName : products.value.arName,
                           maxLines: 2,
                         ),
                         SizedBox(
@@ -1759,11 +1785,11 @@ class _ProductsScrState extends State<ProductsScr> {
                                         'invoice') {
                                       if (int.parse(v) <=
                                           _myProdectListController
-                                              .item[keysOfMap[pos]].value
+                                              .item[keysOfMap[pos]]!.value
                                               .quantity_in_store) {
                                         _myProdectListController.setCount(
                                             id: _myProdectListController
-                                                .item[keysOfMap[pos]].value.id,
+                                                .item[keysOfMap[pos]]!.value.id,
                                             count: double.parse(v));
                                       } else {
                                         Get.snackbar('',
@@ -1773,7 +1799,7 @@ class _ProductsScrState extends State<ProductsScr> {
 
                                     _myProdectListController.setCount(
                                         id: _myProdectListController
-                                            .item[keysOfMap[pos]].value.id,
+                                            .item[keysOfMap[pos]]!.value.id,
                                         count: double.parse(v));
                                   }
                                 },
@@ -2117,7 +2143,8 @@ class _ProductsScrState extends State<ProductsScr> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                     child: Obx(() {
-                                      return Text(products.value.bonce.toString());
+                                      return Text(
+                                          products.value.bonce.toString());
                                     }),
                                   ),
                                 ),
@@ -2190,7 +2217,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                         builder: (logic) {
                                           return Text(logic
                                               .item[products.value.id]
-                                              .value
+                                          !.value
                                               .count
                                               .toString());
                                         },
@@ -2216,7 +2243,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       builder: (logic) {
                                         return Text((logic
                                             .item[products.value.id]
-                                            .value
+                                        !.value
                                             .befordes * double.parse(
                                             _curenceController.defultCurrencies
                                                 .currencyRate))
@@ -2253,7 +2280,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                       builder: (logic) {
                                         return Text((logic
                                             .item[products.value.id]
-                                            .value
+                                        !.value
                                             .afterdes * double.parse(
                                             _curenceController.defultCurrencies
                                                 .currencyRate))
@@ -2300,7 +2327,7 @@ class _ProductsScrState extends State<ProductsScr> {
                                   GetBuilder<MyProdectListController>(
                                     builder: (logic) {
                                       return Text((logic.item[products.value.id]
-                                          .value.totalPriceForItem *
+                                          !.value.totalPriceForItem *
                                           double.parse(_curenceController
                                               .defultCurrencies.currencyRate))
                                           .toStringAsFixed(3));

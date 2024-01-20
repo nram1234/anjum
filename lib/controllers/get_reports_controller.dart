@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 
 class GetReportsController extends GetxController{
   AllNetworking _allNetworking = AllNetworking();
-  Get_Reports_json get_reports_json;
+ late Get_Reports_json get_reports_json;
   updateGet_Reports_json(){
     DateTime selectedfromDate = DateTime.now();
     String formattedDateto=   DateFormat('yyyy-MM-dd').format(selectedfromDate);
@@ -17,7 +17,7 @@ class GetReportsController extends GetxController{
       update();
     });
   }
-  getreportsbydate({String from,String to}){
+  getreportsbydate({required String from,required String to}){
     print("11111111111111");
     print(to);
     print(from);

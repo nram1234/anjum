@@ -327,7 +327,7 @@ class _LoginState extends State<Login> {
                                     .login(
                                         user_name: name.text,
                                         password: password.text,
-                                        user_id: int.tryParse(user_Id.text))
+                                        user_id: int.parse(user_Id.text))
                                     .then((value) {
                                   if (value != null) {
                                     print(value.user);

@@ -1,17 +1,17 @@
 class Get_Reports_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+ late String message;
+ late int codenum;
+ late bool status;
+ late Result result;
 
-  Get_Reports_json({this.message, this.codenum, this.status, this.result});
+  Get_Reports_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_Reports_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,13 +27,13 @@ class Get_Reports_json {
 }
 
 class Result {
-  Reports reports;
+ late Reports reports;
 
-  Result({this.reports});
+  Result({required this.reports});
 
   Result.fromJson(Map<String, dynamic> json) {
     reports =
-    json['reports'] != null ? new Reports.fromJson(json['reports']) : null;
+    (json['reports'] != null ? new Reports.fromJson(json['reports']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -46,28 +46,28 @@ class Result {
 }
 
 class Reports {
-  String totalInvoice;
-  String totalSales;
-  String totalReturnInvoice;
-  String totalCash;
-  String totalCheque;
-  String totalInvoiceValue;
-  String totalSalesValue;
-  String totalReturnInvoiceValue;
-  String totalCashValue;
-  String totalChequeValue;
+late  String totalInvoice;
+late  String totalSales;
+late  String totalReturnInvoice;
+late  String totalCash;
+late  String totalCheque;
+late  String totalInvoiceValue;
+late  String totalSalesValue;
+late  String totalReturnInvoiceValue;
+late  String totalCashValue;
+late  String totalChequeValue;
 
   Reports(
-      {this.totalInvoice,
-        this.totalSales,
-        this.totalReturnInvoice,
-        this.totalCash,
-        this.totalCheque,
-        this.totalInvoiceValue,
-        this.totalSalesValue,
-        this.totalReturnInvoiceValue,
-        this.totalCashValue,
-        this.totalChequeValue});
+      {required this.totalInvoice,
+       required  this.totalSales,
+       required  this.totalReturnInvoice,
+       required  this.totalCash,
+       required  this.totalCheque,
+       required  this.totalInvoiceValue,
+       required  this.totalSalesValue,
+       required  this.totalReturnInvoiceValue,
+       required  this.totalCashValue,
+       required  this.totalChequeValue});
 
   Reports.fromJson(Map<String, dynamic> json) {
     totalInvoice = json['total_invoice'].toString();

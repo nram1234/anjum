@@ -1,8 +1,8 @@
 class Insert_photos_json {
-  String key;
-  List<ListInvoice> listInvoice;
+ late String key;
+ late List<ListInvoice> listInvoice;
 
-  Insert_photos_json({this.key, this.listInvoice});
+  Insert_photos_json({required this.listInvoice});
 
   Insert_photos_json.fromJson(Map<String, dynamic> json) {
     key = json['key'];
@@ -25,30 +25,30 @@ class Insert_photos_json {
 }
 
 class ListInvoice {
-  int userId;
-  int employeeId;
-  int customerId;
-  String storeId;
-  int batteryLife;
-  int androidVersion;
-  int appVersion;
-  String supervisorNote;
-  String salesmanagerNote;
-  String latitude;
-  String longitude;
+late  int userId;
+late  int employeeId;
+late  int customerId;
+late  String storeId;
+late  int batteryLife;
+late  int androidVersion;
+late  int appVersion;
+late  String supervisorNote;
+late  String salesmanagerNote;
+late  String latitude;
+late  String longitude;
 
   ListInvoice(
-      {this.userId,
-        this.employeeId,
-        this.customerId,
-        this.storeId,
-        this.batteryLife,
-        this.androidVersion,
-        this.appVersion,
-        this.supervisorNote,
-        this.salesmanagerNote,
-        this.latitude,
-        this.longitude});
+      {required this.userId,
+       required  this.employeeId,
+       required  this.customerId,
+       required  this.storeId,
+       required  this.batteryLife,
+       required  this.androidVersion,
+       required  this.appVersion,
+       required  this.supervisorNote,
+       required  this.salesmanagerNote,
+       required  this.latitude,
+       required  this.longitude});
 
   ListInvoice.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];

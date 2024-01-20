@@ -1,17 +1,17 @@
 class Get_Fifth_step_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+late String message;
+late int codenum;
+late bool status;
+late Result result;
 
-  Get_Fifth_step_json({this.message, this.codenum, this.status, this.result});
+  Get_Fifth_step_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_Fifth_step_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,20 +27,20 @@ class Get_Fifth_step_json {
 }
 
 class Result {
-  List<AllStockItems> allStockItems;
-  List<AllPromotions> allPromotions;
+late  List<AllStockItems> allStockItems;
+late  List<AllPromotions> allPromotions;
 
-  Result({this.allStockItems, this.allPromotions});
+  Result({required this.allStockItems,required this.allPromotions});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['all_stock_items'] != null) {
-      allStockItems = new List<AllStockItems>();
+      allStockItems =[];
       json['all_stock_items'].forEach((v) {
         allStockItems.add(new AllStockItems.fromJson(v));
       });
     }
     if (json['all_promotions'] != null) {
-      allPromotions = new List<AllPromotions>();
+      allPromotions = [];
       json['all_promotions'].forEach((v) {
         allPromotions.add(new AllPromotions.fromJson(v));
       });
@@ -62,22 +62,22 @@ class Result {
 }
 
 class AllStockItems {
-  String id;
-  String userId;
-  String itemId;
-  String storeId;
-  String measurementUnitId;
-  String quantity;
-  String measurementUnitName;
+late String id;
+late String userId;
+late String itemId;
+late String storeId;
+late String measurementUnitId;
+late String quantity;
+late String measurementUnitName;
 
   AllStockItems(
-      {this.id,
-        this.userId,
-        this.itemId,
-        this.storeId,
-        this.measurementUnitId,
-        this.quantity,
-        this.measurementUnitName});
+      {required this.id,
+       required  this.userId,
+       required  this.itemId,
+       required  this.storeId,
+       required  this.measurementUnitId,
+       required  this.quantity,
+       required  this.measurementUnitName});
 
   AllStockItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -103,60 +103,60 @@ class AllStockItems {
 }
 
 class AllPromotions {
-  String id;
-  String name;
-  String description;
-  String promotionType;
-  String priorityId;
-  String priority;
-  String categoryId;
-  String subcategoryId;
-  String subcategory2Id;
-  String salesmanGroupId;
-  String customerGroupId;
-  List<AllGroupCustomers> allGroupCustomers;
-  List<AllGroupSalesmans> allGroupSalesmans;
-  String startDateTime;
-  String endDateTime;
-  String validFor;
-  String isBonusDuplicate;
-  String strictlyListedItem;
-  String discount;
-  String discountType;
-  String bonusQty;
-  String invoicePerSalesman;
-  String invoicePerCustomer;
-  String minimumQuantityValue;
-  List<AllInQuantityPromotionItems> allInQuantityPromotionItems;
-  List<AllOutQuantityPromotionItems> allOutQuantityPromotionItems;
+late   String id;
+late   String name;
+late   String description;
+late   String promotionType;
+late   String priorityId;
+late   String priority;
+late   String categoryId;
+late   String subcategoryId;
+late   String subcategory2Id;
+late   String salesmanGroupId;
+late   String customerGroupId;
+late   List<AllGroupCustomers> allGroupCustomers;
+late   List<AllGroupSalesmans> allGroupSalesmans;
+late   String startDateTime;
+late   String endDateTime;
+late   String validFor;
+late   String isBonusDuplicate;
+late   String strictlyListedItem;
+late   String discount;
+late   String discountType;
+late   String bonusQty;
+late   String invoicePerSalesman;
+late   String invoicePerCustomer;
+late   String minimumQuantityValue;
+late   List<AllInQuantityPromotionItems> allInQuantityPromotionItems;
+late   List<AllOutQuantityPromotionItems> allOutQuantityPromotionItems;
 
   AllPromotions(
-      {this.id,
-        this.name,
-        this.description,
-        this.promotionType,
-        this.priorityId,
-        this.priority,
-        this.categoryId,
-        this.subcategoryId,
-        this.subcategory2Id,
-        this.salesmanGroupId,
-        this.customerGroupId,
-        this.allGroupCustomers,
-        this.allGroupSalesmans,
-        this.startDateTime,
-        this.endDateTime,
-        this.validFor,
-        this.isBonusDuplicate,
-        this.strictlyListedItem,
-        this.discount,
-        this.discountType,
-        this.bonusQty,
-        this.invoicePerSalesman,
-        this.invoicePerCustomer,
-        this.minimumQuantityValue,
-        this.allInQuantityPromotionItems,
-        this.allOutQuantityPromotionItems});
+      {required this.id,
+       required  this.name,
+       required  this.description,
+       required  this.promotionType,
+       required  this.priorityId,
+       required  this.priority,
+       required  this.categoryId,
+       required  this.subcategoryId,
+       required  this.subcategory2Id,
+       required  this.salesmanGroupId,
+       required  this.customerGroupId,
+       required  this.allGroupCustomers,
+       required  this.allGroupSalesmans,
+       required  this.startDateTime,
+       required  this.endDateTime,
+       required  this.validFor,
+       required  this.isBonusDuplicate,
+       required  this.strictlyListedItem,
+       required  this.discount,
+       required  this.discountType,
+       required  this.bonusQty,
+       required  this.invoicePerSalesman,
+       required  this.invoicePerCustomer,
+       required  this.minimumQuantityValue,
+       required  this.allInQuantityPromotionItems,
+       required  this.allOutQuantityPromotionItems});
 
   AllPromotions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -171,13 +171,13 @@ class AllPromotions {
     salesmanGroupId = json['salesman_group_id'];
     customerGroupId = json['customer_group_id'];
     if (json['all_group_customers'] != null) {
-      allGroupCustomers = new List<AllGroupCustomers>();
+      allGroupCustomers = [];
       json['all_group_customers'].forEach((v) {
         allGroupCustomers.add(new AllGroupCustomers.fromJson(v));
       });
     }
     if (json['all_group_salesmans'] != null) {
-      allGroupSalesmans = new List<AllGroupSalesmans>();
+      allGroupSalesmans = [];
       json['all_group_salesmans'].forEach((v) {
         allGroupSalesmans.add(new AllGroupSalesmans.fromJson(v));
       });
@@ -194,14 +194,14 @@ class AllPromotions {
     invoicePerCustomer = json['invoice_per_customer'];
     minimumQuantityValue = json['minimum_quantity_value'];
     if (json['all_in_quantity_promotion_items'] != null) {
-      allInQuantityPromotionItems = new List<AllInQuantityPromotionItems>();
+      allInQuantityPromotionItems = [];
       json['all_in_quantity_promotion_items'].forEach((v) {
         allInQuantityPromotionItems
             .add(new AllInQuantityPromotionItems.fromJson(v));
       });
     }
     if (json['all_out_quantity_promotion_items'] != null) {
-      allOutQuantityPromotionItems = new List<AllOutQuantityPromotionItems>();
+      allOutQuantityPromotionItems =[];
       json['all_out_quantity_promotion_items'].forEach((v) {
         allOutQuantityPromotionItems
             .add(new AllOutQuantityPromotionItems.fromJson(v));
@@ -254,12 +254,12 @@ class AllPromotions {
 }
 
 class AllGroupCustomers {
-  String id;
-  String groupId;
-  String userId;
-  String customerId;
+ late String id;
+ late String groupId;
+ late String userId;
+ late String customerId;
 
-  AllGroupCustomers({this.id, this.groupId, this.userId, this.customerId});
+  AllGroupCustomers({required this.id,required this.groupId,required this.userId,required this.customerId});
 
   AllGroupCustomers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -279,11 +279,11 @@ class AllGroupCustomers {
 }
 
 class AllGroupSalesmans {
-  String id;
-  String userId;
-  String employeeId;
+late  String id;
+late  String userId;
+late  String employeeId;
 
-  AllGroupSalesmans({this.id, this.userId, this.employeeId});
+  AllGroupSalesmans({required this.id,required this.userId,required this.employeeId});
 
   AllGroupSalesmans.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -301,20 +301,20 @@ class AllGroupSalesmans {
 }
 
 class AllInQuantityPromotionItems {
-  String id;
-  String userId;
-  String qtyPromotionId;
-  String itemId;
-  String measurementUnitId;
+late  String id;
+late  String userId;
+late  String qtyPromotionId;
+late  String itemId;
+late  String measurementUnitId;
 
   AllInQuantityPromotionItems(
-      {this.id,
-        this.userId,
-        this.qtyPromotionId,
-        this.itemId,
-        this.measurementUnitId});
+      {required this.id,
+       required  this.userId,
+       required  this.qtyPromotionId,
+       required  this.itemId,
+       required  this.measurementUnitId});
 
-  AllInQuantityPromotionItems.fromJson(Map<String, dynamic> json) {
+  AllInQuantityPromotionItems.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     qtyPromotionId = json['qty_promotion_id'];
@@ -334,18 +334,18 @@ class AllInQuantityPromotionItems {
 }
 
 class AllOutQuantityPromotionItems {
-  String id;
-  String userId;
-  String qtyPromotionId;
-  String itemId;
-  String measurementUnitId;
+late String id;
+late String userId;
+late String qtyPromotionId;
+late String itemId;
+late String measurementUnitId;
 
   AllOutQuantityPromotionItems(
-      {this.id,
-        this.userId,
-        this.qtyPromotionId,
-        this.itemId,
-        this.measurementUnitId});
+      {required this.id,
+       required  this.userId,
+       required  this.qtyPromotionId,
+       required  this.itemId,
+       required  this.measurementUnitId});
 
   AllOutQuantityPromotionItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];

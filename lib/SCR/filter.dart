@@ -225,7 +225,7 @@ class _FilterState extends State<Filter> {
     );
   }
 
-  Widget items({AllCategories data}) {
+  Widget items({required AllCategories data}) {
     return GestureDetector(
       onTap: () {
         // removefromcat(  data);
@@ -242,7 +242,7 @@ class _FilterState extends State<Filter> {
           height: 50, //data.categoryNameAr
           child: Center(
               child: Text(
-            Get.locale.languageCode == "en"
+            Get.locale?.languageCode == "en"
                 ? data.categoryNameEn
                 : data.categoryNameAr,
             textAlign: TextAlign.center,
@@ -260,7 +260,7 @@ class _FilterState extends State<Filter> {
     );
   }
 
-  Widget subitems({SubCategories data}) {
+  Widget subitems({required SubCategories data}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(

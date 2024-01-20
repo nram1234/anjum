@@ -1,17 +1,17 @@
 class Get_fourth_step_json {
-  String message;
-  int codenum;
-  bool status;
-  Result result;
+ late String message;
+ late int codenum;
+ late bool status;
+ late Result result;
 
-  Get_fourth_step_json({this.message, this.codenum, this.status, this.result});
+  Get_fourth_step_json({required this.message,required this.codenum,required this.status,required this.result});
 
   Get_fourth_step_json.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    (json['result'] != null ? new Result.fromJson(json['result']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,31 +27,31 @@ class Get_fourth_step_json {
 }
 
 class Result {
-  UserData userData;
-  List<AllCurrencies> allCurrencies;
-  List<AllBanks> allBanks;
-  List<AllCheques> allCheques;
+late  UserData userData;
+late  List<AllCurrencies> allCurrencies;
+late  List<AllBanks> allBanks;
+late  List<AllCheques> allCheques;
 
-  Result({this.userData, this.allCurrencies, this.allBanks, this.allCheques});
+  Result({required this.userData,required this.allCurrencies, required this.allBanks,required this.allCheques});
 
   Result.fromJson(Map<String, dynamic> json) {
-    userData = json['user_data'] != null
+    userData = (json['user_data'] != null
         ? new UserData.fromJson(json['user_data'])
-        : null;
+        : null)!;
     if (json['all_currencies'] != null) {
-      allCurrencies = new List<AllCurrencies>();
+      allCurrencies = [];
       json['all_currencies'].forEach((v) {
         allCurrencies.add(new AllCurrencies.fromJson(v));
       });
     }
     if (json['all_banks'] != null) {
-      allBanks = new List<AllBanks>();
+      allBanks = [];
       json['all_banks'].forEach((v) {
         allBanks.add(new AllBanks.fromJson(v));
       });
     }
     if (json['all_cheques'] != null) {
-      allCheques = new List<AllCheques>();
+      allCheques =[];
       json['all_cheques'].forEach((v) {
         allCheques.add(new AllCheques.fromJson(v));
       });
@@ -78,44 +78,44 @@ class Result {
 }
 
 class UserData {
-  String branchNameEn;
-  String branchNameAr;
-  String branchLocation;
-  String companyId;
-  String area1;
-  String locationLat;
-  String locationLng;
-  String email;
-  String area2;
-  String cityId;
-  String stateId;
-  String countryId;
-  String currency;
-  String phoneNo;
-  String faxNo;
-  String vatNo;
-  String taxableStatus;
-  String rememberToken;
+ late String branchNameEn;
+ late String branchNameAr;
+ late String branchLocation;
+ late String companyId;
+ late String area1;
+ late String locationLat;
+ late String locationLng;
+ late String email;
+ late String area2;
+ late String cityId;
+ late String stateId;
+ late String countryId;
+ late String currency;
+ late String phoneNo;
+ late String faxNo;
+ late String vatNo;
+ late String taxableStatus;
+ late String rememberToken;
 
   UserData(
-      {this.branchNameEn,
-        this.branchNameAr,
-        this.branchLocation,
-        this.companyId,
-        this.area1,
-        this.locationLat,
-        this.locationLng,
-        this.email,
-        this.area2,
-        this.cityId,
-        this.stateId,
-        this.countryId,
-        this.currency,
-        this.phoneNo,
-        this.faxNo,
-        this.vatNo,
-        this.taxableStatus,
-        this.rememberToken});
+      {required this.branchNameEn,
+       required  this.branchNameAr,
+       required  this.branchLocation,
+       required  this.companyId,
+       required  this.area1,
+       required  this.locationLat,
+       required  this.locationLng,
+       required  this.email,
+       required  this.area2,
+       required  this.cityId,
+       required  this.stateId,
+       required  this.countryId,
+       required  this.currency,
+       required  this.phoneNo,
+       required  this.faxNo,
+       required  this.vatNo,
+       required  this.taxableStatus,
+       required  this.rememberToken});
 
   UserData.fromJson(Map<String, dynamic> json) {
     branchNameEn = json['branch_name_en'];
@@ -163,24 +163,24 @@ class UserData {
 }
 
 class AllCurrencies {
-  String currencyName;
-  String currencyCode;
-  String currencyRate;
-  String currencyPrecision;
-  String currencySymbol;
-  String currencySymbolFirst;
-  String currencyDecimalMark;
-  String currencyThousandsSeparator;
+ late String currencyName;
+ late String currencyCode;
+ late String currencyRate;
+ late String currencyPrecision;
+ late String currencySymbol;
+ late String currencySymbolFirst;
+ late String currencyDecimalMark;
+ late String currencyThousandsSeparator;
 
   AllCurrencies(
-      {this.currencyName,
-        this.currencyCode,
-        this.currencyRate,
-        this.currencyPrecision,
-        this.currencySymbol,
-        this.currencySymbolFirst,
-        this.currencyDecimalMark,
-        this.currencyThousandsSeparator});
+      {required this.currencyName,
+       required  this.currencyCode,
+       required  this.currencyRate,
+       required  this.currencyPrecision,
+       required  this.currencySymbol,
+       required  this.currencySymbolFirst,
+       required  this.currencyDecimalMark,
+       required  this.currencyThousandsSeparator});
 
   AllCurrencies.fromJson(Map<String, dynamic> json) {
     currencyName = json['currency_name'];
@@ -208,20 +208,20 @@ class AllCurrencies {
 }
 
 class AllBanks {
-  String id;
-  String bankNameEn;
-  String bankNameAr;
-  String userId;
-  String note;
-  List<AllBankBranches> allBankBranches;
+ late String id;
+ late String bankNameEn;
+ late String bankNameAr;
+ late String userId;
+ late String note;
+ late List<AllBankBranches> allBankBranches;
 
   AllBanks(
-      {this.id,
-        this.bankNameEn,
-        this.bankNameAr,
-        this.userId,
-        this.note,
-        this.allBankBranches});
+      {required this.id,
+       required  this.bankNameEn,
+       required  this.bankNameAr,
+       required  this.userId,
+       required  this.note,
+       required  this.allBankBranches});
 
   AllBanks.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -230,7 +230,7 @@ class AllBanks {
     userId = json['user_id'];
     note = json['note'];
     if (json['all_bank_branches'] != null) {
-      allBankBranches = new List<AllBankBranches>();
+      allBankBranches =[];
       json['all_bank_branches'].forEach((v) {
         allBankBranches.add(new AllBankBranches.fromJson(v));
       });
@@ -253,36 +253,36 @@ class AllBanks {
 }
 
 class AllBankBranches {
-  String id;
-  String bankId;
-  String userId;
-  String branchNameEn;
-  String branchNameAr;
-  String phoneNo;
-  String faxNo;
-  String email;
-  String area1;
-  String area2;
-  String stateId;
-  String cityId;
-  String contactPerson;
-  String note;
+late String id;
+late String bankId;
+late String userId;
+late String branchNameEn;
+late String branchNameAr;
+late String phoneNo;
+late String faxNo;
+late String email;
+late String area1;
+late String area2;
+late String stateId;
+late String cityId;
+late String contactPerson;
+late String note;
 
   AllBankBranches(
-      {this.id,
-        this.bankId,
-        this.userId,
-        this.branchNameEn,
-        this.branchNameAr,
-        this.phoneNo,
-        this.faxNo,
-        this.email,
-        this.area1,
-        this.area2,
-        this.stateId,
-        this.cityId,
-        this.contactPerson,
-        this.note});
+      {required  this.id,
+       required   this.bankId,
+       required   this.userId,
+       required   this.branchNameEn,
+       required   this.branchNameAr,
+       required   this.phoneNo,
+       required   this.faxNo,
+       required   this.email,
+       required   this.area1,
+       required   this.area2,
+       required   this.stateId,
+       required   this.cityId,
+       required   this.contactPerson,
+       required   this.note});
 
   AllBankBranches.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -322,23 +322,23 @@ class AllBankBranches {
 }
 
 class AllCheques {
-  String customerId;
-  String customerName;
-  String customerNameEn;
-  List<ListCheques> listCheques;
+ late String customerId;
+ late String customerName;
+ late String customerNameEn;
+ late List<ListCheques> listCheques;
 
   AllCheques(
-      {this.customerId,
-        this.customerName,
-        this.customerNameEn,
-        this.listCheques});
+      {required this.customerId,
+       required  this.customerName,
+       required  this.customerNameEn,
+       required  this.listCheques});
 
   AllCheques.fromJson(Map<String, dynamic> json) {
     customerId = json['customer_id'];
     customerName = json['customer_name'];
     customerNameEn = json['customer_name_en'];
     if (json['list_cheques'] != null) {
-      listCheques = new List<ListCheques>();
+      listCheques =[];
       json['list_cheques'].forEach((v) {
         listCheques.add(new ListCheques.fromJson(v));
       });
@@ -358,26 +358,26 @@ class AllCheques {
 }
 
 class ListCheques {
-  String id;
-  String customerId;
-  String chequeDueDate;
-  String drawerName;
-  String bankId;
-  String bankNameEn;
-  String bankNameAr;
-  String branchNameEn;
-  String branchNameAr;
+late  String id;
+late  String customerId;
+late  String chequeDueDate;
+late  String drawerName;
+late  String bankId;
+late  String bankNameEn;
+late  String bankNameAr;
+late  String branchNameEn;
+late  String branchNameAr;
 
   ListCheques(
-      {this.id,
-        this.customerId,
-        this.chequeDueDate,
-        this.drawerName,
-        this.bankId,
-        this.bankNameEn,
-        this.bankNameAr,
-        this.branchNameEn,
-        this.branchNameAr});
+      {required this.id,
+       required  this.customerId,
+       required  this.chequeDueDate,
+       required  this.drawerName,
+       required  this.bankId,
+       required  this.bankNameEn,
+       required  this.bankNameAr,
+       required  this.branchNameEn,
+       required  this.branchNameAr});
 
   ListCheques.fromJson(Map<String, dynamic> json) {
     id = json['id'];

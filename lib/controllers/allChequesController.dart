@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class AllChequesController extends GetxController{
 String customer_id='';
-AllCustomers  customer ;
+late AllCustomers  customer ;
 
 
   List<AllCheques> allCheques=[];

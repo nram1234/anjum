@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 class GetOrderStatusController extends GetxController {
   AllNetworking _allNetworking = AllNetworking();
   // ignore: non_constant_identifier_names
-  Get_Order_Status_json  get_order_status_json;
+ late Get_Order_Status_json  get_order_status_json;
 String searchword="";
   searchwordupdate(String word){
     searchword=word;
@@ -23,7 +23,7 @@ String searchword="";
       setgetOrderStatus(value);
     });
   }
-  getorderstatbydate({String from,String to}){
+  getorderstatbydate({required String from,required String to}){
 
 
     _allNetworking.get_order_status(user_id: Get.find<UserAndPermissions>().user.id,to: to,from: from).then((value) {

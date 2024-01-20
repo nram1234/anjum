@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class CurenceController extends GetxController {
   Map<String, AllCurrencies> allCurrencie = {};
-  AllCurrencies defultCurrencies;
+  late AllCurrencies defultCurrencies;
 
 
   setallCurrencie(List<AllCurrencies> list){
@@ -28,7 +28,7 @@ class CurenceController extends GetxController {
 
   showDio(context){
     List<Widget>action=[];
-    defultCurrencies=null;
+    defultCurrencies ;
     // allCurrencie
     //     .entries
     //     .map((e) {
@@ -101,7 +101,7 @@ class CurenceController extends GetxController {
                             value: e.value,
                             groupValue: logic.defultCurrencies,
                             onChanged: (v) {
-                              logic.setCurrencie(context: cont, allCurrencies: v);
+                              logic.setCurrencie(context: cont, allCurrencies: v!);
                               Navigator.pop(cont);
                               //Get.to(ProductsScr());
                               Get.to(ProdectTestt());
@@ -122,13 +122,13 @@ class CurenceController extends GetxController {
 
 
 
-  setCurrencie({AllCurrencies allCurrencies, context}){
+  setCurrencie({required AllCurrencies allCurrencies, context}){
     defultCurrencies=allCurrencies;
     update();
     // Navigator.pop(context);
     // Get.to(() =>ProductsScr());
   }
-  setCurrenciedropdowen({AllCurrencies allCurrencies }){
+  setCurrenciedropdowen({required AllCurrencies allCurrencies }){
     defultCurrencies=allCurrencies;
     update();
     // Navigator.pop(context);

@@ -41,8 +41,8 @@ class _All_CustomerState extends State<All_Customer> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => TimeController());
     var size = MediaQuery.of(context).size;
-    return  WillPopScope(
-        onWillPop: ()
+    return   PopScope( canPop: true,
+      onPopInvoked: (didPop)
     {
  Get.offAll(()=>Home());
         },
